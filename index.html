@@ -3,8 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="application-name" content="Jasiri E-Hub">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Jasiri E-Hub">
+    <meta name="description" content="Enterprise Management Suite for DSOG Business Solutions">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#0a192f">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="theme-color" content="#0a192f">
+    
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/icons/touch-icon-ipad.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/touch-icon-iphone-retina.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="/icons/touch-icon-ipad-retina.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
+    
+    <!-- Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- Title -->
     <title>Jasiri E-Hub | DSOG Enterprise Suite</title>
+    
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             /* Professional DSOG Theme */
@@ -21,17 +52,20 @@
             --border-radius: 12px;
             --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             --content-max-width: 1400px;
+            --online-color: #4ade80;
+            --offline-color: #f87171;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
         }
 
         html {
             font-size: 15px;
+            scroll-behavior: smooth;
         }
 
         body {
@@ -52,6 +86,201 @@
                 radial-gradient(circle at 10% 20%, rgba(255, 107, 139, 0.05) 0%, transparent 20%),
                 radial-gradient(circle at 90% 80%, rgba(129, 200, 190, 0.03) 0%, transparent 20%);
             z-index: -1;
+        }
+
+        /* PWA Installation Banner */
+        .pwa-install-banner {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--medium-blue);
+            border: 1px solid var(--light-pink);
+            border-radius: var(--border-radius);
+            padding: 16px 20px;
+            display: none;
+            align-items: center;
+            gap: 15px;
+            z-index: 9999;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            max-width: 500px;
+            width: 90%;
+        }
+        
+        .pwa-install-text {
+            flex: 1;
+        }
+        
+        .pwa-install-text h4 {
+            color: var(--text-primary);
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+        
+        .pwa-install-text p {
+            color: var(--text-secondary);
+            font-size: 12px;
+        }
+        
+        .pwa-install-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .pwa-install-btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: var(--transition);
+        }
+        
+        .pwa-install-primary {
+            background: var(--light-pink);
+            color: white;
+        }
+        
+        .pwa-install-primary:hover {
+            background: #ff7d9b;
+            transform: translateY(-1px);
+        }
+        
+        .pwa-install-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .pwa-install-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .pwa-install-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 16px;
+            padding: 4px;
+            border-radius: 4px;
+        }
+        
+        .pwa-install-close:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Online/Offline Indicator */
+        .connection-status {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 10001;
+            display: none;
+            align-items: center;
+            gap: 6px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .connection-status.online {
+            background: rgba(74, 222, 128, 0.2);
+            color: var(--online-color);
+            border: 1px solid rgba(74, 222, 128, 0.3);
+        }
+        
+        .connection-status.offline {
+            background: rgba(248, 113, 113, 0.2);
+            color: var(--offline-color);
+            border: 1px solid rgba(248, 113, 113, 0.3);
+        }
+        
+        .connection-status i {
+            font-size: 10px;
+        }
+
+        /* Syncing Indicator */
+        .sync-status {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background: rgba(23, 42, 69, 0.9);
+            border-radius: var(--border-radius);
+            padding: 12px 16px;
+            font-size: 13px;
+            display: none;
+            align-items: center;
+            gap: 8px;
+            z-index: 10000;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        
+        .sync-status.syncing {
+            color: var(--accent-gold);
+        }
+        
+        .sync-status.synced {
+            color: var(--soft-teal);
+        }
+        
+        .sync-status i {
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Update Available Banner */
+        .update-banner {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--medium-blue);
+            border: 1px solid var(--accent-gold);
+            border-radius: var(--border-radius);
+            padding: 12px 20px;
+            display: none;
+            align-items: center;
+            gap: 12px;
+            z-index: 10002;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            max-width: 400px;
+            width: 90%;
+        }
+        
+        .update-banner-content {
+            flex: 1;
+            font-size: 13px;
+            color: var(--text-primary);
+        }
+        
+        .update-btn {
+            padding: 6px 12px;
+            background: var(--accent-gold);
+            color: var(--dark-blue);
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .update-btn:hover {
+            background: #f0d5a5;
+            transform: translateY(-1px);
         }
 
         /* Login Container - Centered */
@@ -186,6 +415,39 @@
             background: rgba(255, 107, 107, 0.1);
             border-radius: 6px;
             border: 1px solid rgba(255, 107, 107, 0.2);
+        }
+
+        /* Remember Me & Forgot Password */
+        .login-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 13px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+
+        .remember-me input {
+            width: auto;
+            margin: 0;
+        }
+
+        .forgot-password {
+            color: var(--light-pink);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .forgot-password:hover {
+            color: #ff7d9b;
+            text-decoration: underline;
         }
 
         /* Main App Container */
@@ -776,6 +1038,37 @@
             color: var(--light-pink);
         }
 
+        /* Loading Spinner */
+        .loading-spinner {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 25, 47, 0.9);
+            z-index: 10003;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            border-top-color: var(--light-pink);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        .loading-text {
+            color: var(--text-primary);
+            font-size: 16px;
+            font-weight: 600;
+        }
+
         /* Responsive Design - Perfect for All Screens */
         @media (max-width: 1400px) {
             .content-container {
@@ -854,6 +1147,17 @@
             .stats-grid {
                 gap: 16px;
             }
+            
+            .pwa-install-banner {
+                flex-direction: column;
+                text-align: center;
+                gap: 12px;
+            }
+            
+            .pwa-install-buttons {
+                width: 100%;
+                justify-content: center;
+            }
         }
 
         @media (max-width: 768px) {
@@ -926,6 +1230,11 @@
             .footer {
                 padding: 24px 0;
             }
+            
+            .connection-status {
+                top: 75px;
+                right: 16px;
+            }
         }
 
         @media (max-width: 576px) {
@@ -992,6 +1301,11 @@
             .activity-header a {
                 align-self: flex-end;
             }
+            
+            .pwa-install-banner {
+                width: 95%;
+                bottom: 10px;
+            }
         }
 
         @media (max-width: 400px) {
@@ -1030,11 +1344,112 @@
             .app-description {
                 font-size: 12px;
             }
+            
+            .pwa-install-buttons {
+                flex-direction: column;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .login-container,
+            .top-nav,
+            .sidebar,
+            .pwa-install-banner,
+            .connection-status,
+            .sync-status,
+            .update-banner,
+            .footer {
+                display: none !important;
+            }
+            
+            .main-content {
+                margin: 0;
+                padding: 20px;
+            }
+            
+            .app-card {
+                break-inside: avoid;
+            }
+            
+            .stat-card,
+            .activity-item {
+                border: 1px solid #ddd;
+            }
+        }
+
+        /* High Contrast Mode */
+        @media (prefers-contrast: high) {
+            :root {
+                --text-primary: #ffffff;
+                --text-secondary: #cccccc;
+            }
+            
+            .stat-card,
+            .app-card,
+            .activity-section,
+            .welcome-section {
+                border-width: 2px;
+            }
+        }
+
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
         }
     </style>
 </head>
 <body>
     <div class="background-pattern"></div>
+
+    <!-- PWA Installation Banner -->
+    <div class="pwa-install-banner" id="pwaInstallBanner">
+        <div class="pwa-install-text">
+            <h4>Install Jasiri E-Hub</h4>
+            <p>Install this app for a better experience. Works offline and loads faster.</p>
+        </div>
+        <div class="pwa-install-buttons">
+            <button class="pwa-install-btn pwa-install-primary" id="pwaInstallBtn">
+                Install
+            </button>
+            <button class="pwa-install-btn pwa-install-secondary" id="pwaLaterBtn">
+                Later
+            </button>
+        </div>
+        <button class="pwa-install-close" id="pwaCloseBtn">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <!-- Connection Status -->
+    <div class="connection-status" id="connectionStatus">
+        <i class="fas fa-circle"></i>
+        <span>Online</span>
+    </div>
+
+    <!-- Sync Status -->
+    <div class="sync-status" id="syncStatus">
+        <i class="fas fa-sync-alt"></i>
+        <span>Syncing data...</span>
+    </div>
+
+    <!-- Update Available Banner -->
+    <div class="update-banner" id="updateBanner">
+        <div class="update-banner-content">
+            New version available. Update to get the latest features.
+        </div>
+        <button class="update-btn" id="updateBtn">Update Now</button>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div class="loading-spinner" id="loadingSpinner">
+        <div class="spinner"></div>
+        <div class="loading-text">Loading...</div>
+    </div>
 
     <!-- Login Container -->
     <div class="login-container" id="loginContainer">
@@ -1048,6 +1463,9 @@
                 <div style="margin-top: 16px; font-size: 12px; color: var(--text-secondary); font-weight: 500;">
                     DSOG Business Solutions
                 </div>
+                <div style="margin-top: 8px; font-size: 11px; color: var(--text-secondary);">
+                    <i class="fas fa-cloud"></i> Cloud PWA Version 2.1
+                </div>
             </div>
             
             <form class="login-form" id="loginForm">
@@ -1059,6 +1477,14 @@
                 <div class="input-group">
                     <label for="loginPassword">Password</label>
                     <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                </div>
+                
+                <div class="login-options">
+                    <label class="remember-me">
+                        <input type="checkbox" id="rememberMe">
+                        <span>Remember me</span>
+                    </label>
+                    <a href="#" class="forgot-password">Forgot password?</a>
                 </div>
                 
                 <button type="button" class="login-btn" id="loginBtn">
@@ -1086,7 +1512,7 @@
                     </div>
                     <div>
                         <div class="brand-text">Jasiri E-Hub</div>
-                        <div class="brand-subtitle">DSOG Enterprise Suite</div>
+                        <div class="brand-subtitle">DSOG Cloud Enterprise Suite</div>
                     </div>
                 </div>
             </div>
@@ -1120,6 +1546,7 @@
                 <a href="#" class="nav-item">
                     <i class="fas fa-bell"></i>
                     <span>Notifications</span>
+                    <span class="notification-badge" style="margin-left: auto; background: var(--light-pink); color: white; font-size: 10px; padding: 2px 6px; border-radius: 10px;">3</span>
                 </a>
             </div>
             
@@ -1136,6 +1563,7 @@
                 <a href="#" class="nav-item">
                     <i class="fas fa-money-bill-wave"></i>
                     <span>Finance Hub</span>
+                    <span class="app-badge" style="margin-left: auto; font-size: 9px; padding: 1px 6px;">Soon</span>
                 </a>
             </div>
             
@@ -1153,6 +1581,26 @@
                     <i class="fas fa-file-invoice"></i>
                     <span>Reports</span>
                 </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-cloud-download-alt"></i>
+                    <span>Offline Data</span>
+                </a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-title">Cloud Services</div>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-database"></i>
+                    <span>Backup & Sync</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Security</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-cogs"></i>
+                    <span>Settings</span>
+                </a>
             </div>
         </aside>
 
@@ -1164,10 +1612,23 @@
                     <div class="welcome-text">
                         <h1 id="greetingText">Welcome back</h1>
                         <p>Here's your comprehensive business overview for today. Monitor key metrics, access enterprise applications, and stay updated with recent activities.</p>
+                        <div style="margin-top: 16px; display: flex; align-items: center; gap: 12px;">
+                            <div style="display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--text-secondary);">
+                                <i class="fas fa-cloud" id="cloudStatusIcon"></i>
+                                <span id="cloudStatusText">Connected to Cloud</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--text-secondary);">
+                                <i class="fas fa-database"></i>
+                                <span id="storageStatus">Storage: 2.4GB used</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="current-datetime">
                         <div class="current-date" id="currentDate">Friday, June 14, 2024</div>
                         <div class="current-time" id="currentTime">10:30 AM</div>
+                        <div style="margin-top: 8px; font-size: 12px; color: var(--text-secondary);">
+                            <i class="fas fa-sync-alt"></i> Last sync: <span id="lastSyncTime">Just now</span>
+                        </div>
                     </div>
                 </section>
 
@@ -1182,6 +1643,9 @@
                         <h2 class="section-title">
                             <i class="fas fa-th-large"></i> Enterprise Applications
                         </h2>
+                        <button class="pwa-install-btn pwa-install-secondary" style="padding: 6px 12px; font-size: 12px;" id="installShortcutBtn">
+                            <i class="fas fa-plus"></i> Add to Home Screen
+                        </button>
                     </div>
                     
                     <div class="app-grid">
@@ -1217,6 +1681,17 @@
                             <span class="app-badge">Coming Soon</span>
                             <div class="app-status">Launching Q3 2024</div>
                         </div>
+                        
+                        <!-- Cloud Backup App -->
+                        <div class="app-card" onclick="openCloudBackup()">
+                            <div class="app-icon" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </div>
+                            <div class="app-name">Cloud Backup</div>
+                            <div class="app-description">Automatic backup, sync across devices, and data recovery</div>
+                            <span class="app-badge">Cloud</span>
+                            <div class="app-status" id="backupStatus">Last backup: Today</div>
+                        </div>
                     </div>
                 </section>
 
@@ -1233,14 +1708,64 @@
                     </div>
                 </section>
 
+                <!-- Sync Status Section -->
+                <section class="activity-section">
+                    <div class="activity-header">
+                        <h3 class="activity-title">
+                            <i class="fas fa-sync-alt"></i> Cloud Sync Status
+                        </h3>
+                        <button class="pwa-install-btn pwa-install-primary" style="padding: 6px 12px; font-size: 12px;" id="syncNowBtn">
+                            <i class="fas fa-sync"></i> Sync Now
+                        </button>
+                    </div>
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-database"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-description">Sales data synchronized with cloud servers</div>
+                                <div class="activity-meta">
+                                    <span class="activity-module">CLOUD SYNC</span>
+                                    <span style="color: var(--soft-teal);">✓ Complete</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-description">Employee records updated across all devices</div>
+                                <div class="activity-meta">
+                                    <span class="activity-module">CLOUD SYNC</span>
+                                    <span style="color: var(--soft-teal);">✓ Complete</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-description">Security backup created in cloud storage</div>
+                                <div class="activity-meta">
+                                    <span class="activity-module">CLOUD BACKUP</span>
+                                    <span style="color: var(--soft-teal);">✓ Encrypted</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
                 <!-- Footer -->
                 <footer class="footer">
                     <div class="footer-logo">
-                        <i class="fas fa-cube"></i> Jasiri E-Hub
+                        <i class="fas fa-cloud"></i> Jasiri E-Hub Cloud PWA
                     </div>
                     <div>© 2024 DSOG Business Solutions. All rights reserved.</div>
                     <div style="margin-top: 10px; font-size: 12px; color: var(--text-secondary);">
-                        Version 2.1 • Enterprise Edition • Secure Connection
+                        Version 2.1 • Cloud Edition • Secure Connection • Offline Capable
                     </div>
                     <div class="footer-links">
                         <a href="#" class="footer-link">Support Center</a>
@@ -1248,6 +1773,7 @@
                         <a href="#" class="footer-link">Privacy Policy</a>
                         <a href="#" class="footer-link">Terms of Service</a>
                         <a href="#" class="footer-link">Contact Us</a>
+                        <a href="#" class="footer-link" id="clearCacheBtn">Clear Cache</a>
                     </div>
                 </footer>
             </div>
@@ -1258,6 +1784,8 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-messaging-compat.js"></script>
 
     <script>
         // Firebase Configuration
@@ -1275,6 +1803,14 @@
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const database = firebase.database();
+        const storage = firebase.storage();
+        const messaging = firebase.messaging();
+
+        // PWA Variables
+        let deferredPrompt = null;
+        let isOnline = navigator.onLine;
+        let syncInterval = null;
+        let lastSyncTime = new Date();
 
         // DOM Elements
         const loginContainer = document.getElementById('loginContainer');
@@ -1296,6 +1832,46 @@
         const statsGrid = document.getElementById('statsGrid');
         const activityList = document.getElementById('activityList');
         const emhStatus = document.getElementById('emhStatus');
+        const connectionStatus = document.getElementById('connectionStatus');
+        const syncStatus = document.getElementById('syncStatus');
+        const updateBanner = document.getElementById('updateBanner');
+        const updateBtn = document.getElementById('updateBtn');
+        const pwaInstallBanner = document.getElementById('pwaInstallBanner');
+        const pwaInstallBtn = document.getElementById('pwaInstallBtn');
+        const pwaLaterBtn = document.getElementById('pwaLaterBtn');
+        const pwaCloseBtn = document.getElementById('pwaCloseBtn');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const installShortcutBtn = document.getElementById('installShortcutBtn');
+        const syncNowBtn = document.getElementById('syncNowBtn');
+        const cloudStatusIcon = document.getElementById('cloudStatusIcon');
+        const cloudStatusText = document.getElementById('cloudStatusText');
+        const storageStatus = document.getElementById('storageStatus');
+        const lastSyncTimeElement = document.getElementById('lastSyncTime');
+        const clearCacheBtn = document.getElementById('clearCacheBtn');
+        const rememberMe = document.getElementById('rememberMe');
+
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registered: ', registration.scope);
+                        
+                        // Check for updates
+                        registration.addEventListener('updatefound', () => {
+                            const newWorker = registration.installing;
+                            newWorker.addEventListener('statechange', () => {
+                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                    showUpdateBanner();
+                                }
+                            });
+                        });
+                    })
+                    .catch(error => {
+                        console.log('ServiceWorker registration failed: ', error);
+                    });
+            });
+        }
 
         // Check Authentication State
         auth.onAuthStateChanged((user) => {
@@ -1319,6 +1895,11 @@
             
             loadDashboardData();
             initializeSidebar();
+            initializePWAFeatures();
+            startSyncInterval();
+            
+            // Update last sync time
+            updateLastSyncTime();
         }
 
         function handleUserSignedOut() {
@@ -1328,6 +1909,12 @@
             loginEmail.value = '';
             loginPassword.value = '';
             loginError.style.display = 'none';
+            
+            // Stop sync interval
+            if (syncInterval) {
+                clearInterval(syncInterval);
+                syncInterval = null;
+            }
         }
 
         // Login Functionality
@@ -1342,10 +1929,16 @@
             
             this.disabled = true;
             this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in...';
+            showLoading();
             
             auth.signInWithEmailAndPassword(email, password)
-                .then(() => {
-                    // Success handled by onAuthStateChanged
+                .then((userCredential) => {
+                    if (rememberMe.checked) {
+                        localStorage.setItem('rememberedEmail', email);
+                    } else {
+                        localStorage.removeItem('rememberedEmail');
+                    }
+                    hideLoading();
                 })
                 .catch((error) => {
                     console.error("Login error:", error);
@@ -1353,7 +1946,17 @@
                     
                     loginBtn.disabled = false;
                     loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In';
+                    hideLoading();
                 });
+        });
+
+        // Check for remembered email
+        window.addEventListener('DOMContentLoaded', () => {
+            const rememberedEmail = localStorage.getItem('rememberedEmail');
+            if (rememberedEmail) {
+                loginEmail.value = rememberedEmail;
+                rememberMe.checked = true;
+            }
         });
 
         loginPassword.addEventListener('keypress', function(e) {
@@ -1372,7 +1975,12 @@
 
         // Logout Functionality
         logoutBtn.addEventListener('click', function() {
-            auth.signOut().catch(console.error);
+            showLoading();
+            auth.signOut()
+                .then(() => {
+                    hideLoading();
+                })
+                .catch(console.error);
         });
 
         // Update User Information
@@ -1385,7 +1993,7 @@
             userRole.textContent = user.email.includes('admin') ? 'Administrator' : 'User';
         }
 
-        // Update Greeting Based on Time (Removed Admin)
+        // Update Greeting Based on Time
         function updateGreeting() {
             const hour = new Date().getHours();
             let greeting;
@@ -1408,6 +2016,30 @@
             currentTime.textContent = now.toLocaleTimeString('en-US', timeOptions);
         }
 
+        // Update Last Sync Time
+        function updateLastSyncTime() {
+            const now = new Date();
+            lastSyncTime = now;
+            
+            const timeDiff = Math.floor((new Date() - now) / 1000);
+            let timeText;
+            
+            if (timeDiff < 60) {
+                timeText = "Just now";
+            } else if (timeDiff < 3600) {
+                const minutes = Math.floor(timeDiff / 60);
+                timeText = `${minutes}m ago`;
+            } else if (timeDiff < 86400) {
+                const hours = Math.floor(timeDiff / 3600);
+                timeText = `${hours}h ago`;
+            } else {
+                const days = Math.floor(timeDiff / 86400);
+                timeText = `${days}d ago`;
+            }
+            
+            lastSyncTimeElement.textContent = timeText;
+        }
+
         // Load Dashboard Data from Firebase
         function loadDashboardData() {
             database.ref('dashboard').on('value', (snapshot) => {
@@ -1415,7 +2047,13 @@
                 if (data) {
                     updateDashboardStats(data);
                     updateActivityFeed(data);
+                    updateCloudStatus(true);
                 }
+            }, (error) => {
+                console.error("Database error:", error);
+                updateCloudStatus(false);
+                // Try to load from local storage
+                loadFromLocalStorage();
             });
         }
 
@@ -1477,9 +2115,12 @@
             if (data.metrics?.weeklySales) {
                 emhStatus.textContent = formatCurrency(data.metrics.weeklySales) + ' sales';
             }
+            
+            // Save to local storage for offline use
+            saveToLocalStorage('dashboardStats', stats);
         }
 
-        // Update Activity Feed (removed time indicators)
+        // Update Activity Feed
         function updateActivityFeed(data) {
             activityList.innerHTML = '';
             
@@ -1522,6 +2163,9 @@
                 `;
                 activityList.appendChild(activityItem);
             });
+            
+            // Save to local storage for offline use
+            saveToLocalStorage('recentActivities', activities);
         }
 
         // Format Currency
@@ -1565,6 +2209,279 @@
                 }
             });
         }
+
+        // Initialize PWA Features
+        function initializePWAFeatures() {
+            // PWA Installation
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                showPWAInstallBanner();
+            });
+
+            // Online/Offline Detection
+            window.addEventListener('online', updateOnlineStatus);
+            window.addEventListener('offline', updateOnlineStatus);
+            updateOnlineStatus();
+
+            // Sync button
+            syncNowBtn.addEventListener('click', syncData);
+            
+            // Install shortcut button
+            installShortcutBtn.addEventListener('click', () => {
+                if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    deferredPrompt.userChoice.then((choiceResult) => {
+                        if (choiceResult.outcome === 'accepted') {
+                            console.log('User accepted the install prompt');
+                            hidePWAInstallBanner();
+                        }
+                        deferredPrompt = null;
+                    });
+                }
+            });
+
+            // PWA Install Banner buttons
+            pwaInstallBtn.addEventListener('click', () => {
+                if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    deferredPrompt.userChoice.then((choiceResult) => {
+                        if (choiceResult.outcome === 'accepted') {
+                            console.log('User accepted the install prompt');
+                        }
+                        deferredPrompt = null;
+                        hidePWAInstallBanner();
+                    });
+                }
+            });
+
+            pwaLaterBtn.addEventListener('click', hidePWAInstallBanner);
+            pwaCloseBtn.addEventListener('click', hidePWAInstallBanner);
+
+            // Update button
+            updateBtn.addEventListener('click', () => {
+                if ('serviceWorker' in navigator) {
+                    navigator.serviceWorker.ready.then(registration => {
+                        registration.update();
+                        hideUpdateBanner();
+                    });
+                }
+            });
+
+            // Clear cache button
+            clearCacheBtn.addEventListener('click', clearCache);
+        }
+
+        // Show/Hide PWA Install Banner
+        function showPWAInstallBanner() {
+            // Don't show if already installed
+            if (window.matchMedia('(display-mode: standalone)').matches || 
+                window.navigator.standalone === true) {
+                return;
+            }
+            
+            // Show after 3 seconds
+            setTimeout(() => {
+                pwaInstallBanner.style.display = 'flex';
+            }, 3000);
+        }
+
+        function hidePWAInstallBanner() {
+            pwaInstallBanner.style.display = 'none';
+        }
+
+        // Update Online/Offline Status
+        function updateOnlineStatus() {
+            isOnline = navigator.onLine;
+            
+            if (isOnline) {
+                connectionStatus.innerHTML = '<i class="fas fa-circle"></i><span>Online</span>';
+                connectionStatus.className = 'connection-status online';
+                cloudStatusIcon.className = 'fas fa-cloud';
+                cloudStatusText.textContent = 'Connected to Cloud';
+                cloudStatusText.style.color = 'var(--soft-teal)';
+                
+                // Auto-sync when coming back online
+                if (auth.currentUser) {
+                    syncData();
+                }
+            } else {
+                connectionStatus.innerHTML = '<i class="fas fa-circle"></i><span>Offline</span>';
+                connectionStatus.className = 'connection-status offline';
+                cloudStatusIcon.className = 'fas fa-cloud-slash';
+                cloudStatusText.textContent = 'Offline Mode';
+                cloudStatusText.style.color = 'var(--offline-color)';
+            }
+            
+            connectionStatus.style.display = 'flex';
+            setTimeout(() => {
+                connectionStatus.style.display = 'none';
+            }, 3000);
+        }
+
+        // Sync Data
+        function syncData() {
+            if (!isOnline) {
+                showSyncStatus('offline');
+                return;
+            }
+            
+            showSyncStatus('syncing');
+            
+            // Simulate sync process
+            setTimeout(() => {
+                updateLastSyncTime();
+                showSyncStatus('synced');
+                
+                // Load fresh data
+                loadDashboardData();
+            }, 1500);
+        }
+
+        // Show Sync Status
+        function showSyncStatus(status) {
+            if (status === 'syncing') {
+                syncStatus.innerHTML = '<i class="fas fa-sync-alt"></i><span>Syncing data...</span>';
+                syncStatus.className = 'sync-status syncing';
+            } else if (status === 'synced') {
+                syncStatus.innerHTML = '<i class="fas fa-check-circle"></i><span>Data synced successfully</span>';
+                syncStatus.className = 'sync-status synced';
+            } else if (status === 'offline') {
+                syncStatus.innerHTML = '<i class="fas fa-wifi-slash"></i><span>Cannot sync - Offline</span>';
+                syncStatus.className = 'sync-status offline';
+            }
+            
+            syncStatus.style.display = 'flex';
+            setTimeout(() => {
+                syncStatus.style.display = 'none';
+            }, 3000);
+        }
+
+        // Start Sync Interval
+        function startSyncInterval() {
+            // Sync every 5 minutes when online
+            syncInterval = setInterval(() => {
+                if (isOnline && auth.currentUser) {
+                    syncData();
+                }
+            }, 5 * 60 * 1000);
+        }
+
+        // Show Update Banner
+        function showUpdateBanner() {
+            updateBanner.style.display = 'flex';
+        }
+
+        function hideUpdateBanner() {
+            updateBanner.style.display = 'none';
+        }
+
+        // Show/Hide Loading Spinner
+        function showLoading() {
+            loadingSpinner.style.display = 'flex';
+        }
+
+        function hideLoading() {
+            loadingSpinner.style.display = 'none';
+        }
+
+        // Local Storage Functions
+        function saveToLocalStorage(key, data) {
+            try {
+                localStorage.setItem(`jasiri_${key}`, JSON.stringify(data));
+                localStorage.setItem(`jasiri_${key}_timestamp`, new Date().toISOString());
+            } catch (e) {
+                console.error('Error saving to localStorage:', e);
+            }
+        }
+
+        function loadFromLocalStorage() {
+            try {
+                const statsData = localStorage.getItem('jasiri_dashboardStats');
+                const activitiesData = localStorage.getItem('jasiri_recentActivities');
+                
+                if (statsData) {
+                    const stats = JSON.parse(statsData);
+                    // You would need to update the UI with cached data here
+                    console.log('Loaded from cache:', stats);
+                }
+            } catch (e) {
+                console.error('Error loading from localStorage:', e);
+            }
+        }
+
+        // Update Cloud Status
+        function updateCloudStatus(connected) {
+            if (connected) {
+                cloudStatusIcon.className = 'fas fa-cloud';
+                cloudStatusText.textContent = 'Connected to Cloud';
+                cloudStatusText.style.color = 'var(--soft-teal)';
+            } else {
+                cloudStatusIcon.className = 'fas fa-cloud-slash';
+                cloudStatusText.textContent = 'Cloud Disconnected';
+                cloudStatusText.style.color = 'var(--offline-color)';
+            }
+        }
+
+        // Clear Cache
+        function clearCache() {
+            if (confirm('Clear all cached data? This will remove offline data but not your account.')) {
+                showLoading();
+                
+                // Clear localStorage
+                Object.keys(localStorage).forEach(key => {
+                    if (key.startsWith('jasiri_')) {
+                        localStorage.removeItem(key);
+                    }
+                });
+                
+                // Clear service worker cache
+                if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+                    navigator.serviceWorker.controller.postMessage({type: 'CLEAR_CACHE'});
+                }
+                
+                // Clear IndexedDB
+                indexedDB.databases().then(databases => {
+                    databases.forEach(db => {
+                        indexedDB.deleteDatabase(db.name);
+                    });
+                });
+                
+                setTimeout(() => {
+                    hideLoading();
+                    alert('Cache cleared successfully');
+                    location.reload();
+                }, 1000);
+            }
+        }
+
+        // Open Cloud Backup
+        function openCloudBackup() {
+            alert('Cloud Backup feature would open here. This is a demo of cloud PWA functionality.');
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check if user was previously logged in
+            auth.onAuthStateChanged((user) => {
+                if (user) {
+                    // Already handled by auth state change
+                } else {
+                    // Check for PWA installation
+                    if (window.matchMedia('(display-mode: standalone)').matches) {
+                        console.log('Running in standalone PWA mode');
+                    }
+                }
+            });
+        });
+
+        // Handle beforeunload for data sync
+        window.addEventListener('beforeunload', () => {
+            if (auth.currentUser && isOnline) {
+                // Sync any pending data before leaving
+                navigator.sendBeacon('/api/sync-last-minute');
+            }
+        });
     </script>
 </body>
 </html>
