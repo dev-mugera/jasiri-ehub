@@ -3,170 +3,274 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jasiri E-Hub System | Enterprise Management Suite</title>
+    <title>Jasiri E-Hub | DSOG Enterprise Suite</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            /* Jasiri Brand Colors */
-            --primary-blue: #0a4f8a;
-            --secondary-blue: #1c6ca3;
-            --accent-teal: #2ab7ca;
-            --accent-gold: #ffc857;
-            --light-gray: #f8f9fa;
-            --medium-gray: #e9ecef;
-            --dark-gray: #343a40;
-            --success-green: #28a745;
-            --warning-orange: #fd7e14;
-            --danger-red: #dc3545;
-            --text-primary: #212529;
-            --text-secondary: #6c757d;
+            /* DSOG EMH Theme Colors - Matching your EMH */
+            --dark-blue: #0a192f;
+            --medium-blue: #172a45;
+            --light-pink: #ff6b8b;
+            --accent-gold: #e6c78a;
+            --soft-teal: #81c8be;
+            --text-primary: #f0e6ef;
+            --text-secondary: #b8b8d1;
+            --card-bg: rgba(23, 42, 69, 0.7);
+            --sidebar-width: 280px;
+            --topbar-height: 70px;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', 'Poppins', sans-serif;
         }
 
         body {
-            background-color: var(--light-gray);
+            background-color: var(--dark-blue);
             color: var(--text-primary);
             min-height: 100vh;
             overflow-x: hidden;
         }
 
-        /* Top Navigation Bar */
-        .top-nav {
-            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
-            color: white;
-            padding: 0 20px;
-            height: 60px;
+        .background-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(255, 107, 139, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(129, 200, 190, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 40% 80%, rgba(230, 199, 138, 0.03) 0%, transparent 40%);
+            background-size: 400% 400%;
+            z-index: -1;
+            animation: gradientMove 25s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 100% 100%; }
+            100% { background-position: 0% 0%; }
+        }
+
+        /* Login Container */
+        .login-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--dark-blue);
             display: flex;
+            justify-content: center;
             align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 10000;
+        }
+
+        .login-box {
+            background: var(--medium-blue);
+            padding: 50px;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 420px;
+            border-left: 4px solid var(--light-pink);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-logo {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .login-logo-icon {
+            font-size: 48px;
+            color: var(--accent-gold);
+            margin-bottom: 15px;
+        }
+
+        .login-logo h1 {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--light-pink), var(--accent-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .login-logo p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        .login-form .input-group {
+            margin-bottom: 24px;
+        }
+
+        .login-form label {
+            display: block;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .login-form input {
+            width: 100%;
+            padding: 14px 18px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 107, 139, 0.3);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            font-size: 15px;
+            transition: all 0.3s;
+        }
+
+        .login-form input:focus {
+            outline: none;
+            border-color: var(--light-pink);
+            box-shadow: 0 0 0 3px rgba(255, 107, 139, 0.1);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--light-pink), #ff8ba7);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 107, 139, 0.3);
+        }
+
+        .login-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .login-error {
+            color: #ff4757;
+            font-size: 14px;
+            text-align: center;
+            margin-top: 15px;
+            display: none;
+            padding: 10px;
+            background: rgba(255, 71, 87, 0.1);
+            border-radius: 6px;
+        }
+
+        /* Main App Container */
+        .app-container {
+            display: none;
+            min-height: 100vh;
+        }
+
+        /* Top Navigation */
+        .top-nav {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
+            height: var(--topbar-height);
+            background: rgba(23, 42, 69, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
             z-index: 1000;
+            border-bottom: 1px solid rgba(255, 107, 139, 0.1);
         }
 
-        .logo-container {
+        .nav-left {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 25px;
         }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .logo-icon {
-            font-size: 28px;
-            color: var(--accent-gold);
-        }
-
-        .logo-text {
-            font-size: 20px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-
-        .logo-subtitle {
-            font-size: 11px;
-            opacity: 0.8;
-            margin-top: 2px;
-        }
-
-        .nav-search {
-            flex: 1;
-            max-width: 500px;
-            margin: 0 30px;
-            position: relative;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 10px 15px 10px 40px;
-            border-radius: 20px;
+        .menu-toggle {
+            background: none;
             border: none;
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
-            font-size: 14px;
+            color: var(--text-secondary);
+            font-size: 20px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 6px;
             transition: all 0.3s;
         }
 
-        .search-input::placeholder {
-            color: rgba(255, 255, 255, 0.7);
+        .menu-toggle:hover {
+            color: var(--light-pink);
+            background: rgba(255, 107, 139, 0.1);
         }
 
-        .search-input:focus {
-            outline: none;
-            background: rgba(255, 255, 255, 0.25);
-            box-shadow: 0 0 0 2px var(--accent-teal);
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
-        .search-icon {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: rgba(255, 255, 255, 0.7);
+        .brand-logo-icon {
+            font-size: 24px;
+            color: var(--light-pink);
         }
 
-        .nav-actions {
+        .brand-text {
+            font-size: 20px;
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--light-pink), var(--accent-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-subtitle {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-right {
             display: flex;
             align-items: center;
             gap: 20px;
         }
 
-        .notification-btn, .help-btn {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 18px;
-            cursor: pointer;
-            position: relative;
-            padding: 8px;
-            border-radius: 50%;
-            transition: background 0.3s;
-        }
-
-        .notification-btn:hover, .help-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .notification-badge {
-            position: absolute;
-            top: 2px;
-            right: 2px;
-            background: var(--danger-red);
-            color: white;
-            font-size: 10px;
-            font-weight: bold;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
+        .user-profile {
             display: flex;
             align-items: center;
-            justify-content: center;
-        }
-
-        .user-menu {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            gap: 12px;
+            padding: 8px 16px;
+            border-radius: 10px;
             cursor: pointer;
-            padding: 5px 10px;
-            border-radius: 20px;
-            transition: background 0.3s;
+            transition: all 0.3s;
+            background: rgba(255, 255, 255, 0.05);
         }
 
-        .user-menu:hover {
+        .user-profile:hover {
             background: rgba(255, 255, 255, 0.1);
         }
 
@@ -174,434 +278,521 @@
             width: 36px;
             height: 36px;
             border-radius: 50%;
-            background: var(--accent-teal);
+            background: linear-gradient(135deg, var(--light-pink), var(--accent-gold));
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
+            font-weight: 600;
             font-size: 16px;
         }
 
+        .user-info {
+            display: flex;
+            flex-direction: column;
+        }
+
         .user-name {
-            font-weight: 500;
             font-size: 14px;
+            font-weight: 500;
         }
 
         .user-role {
             font-size: 12px;
-            opacity: 0.8;
+            color: var(--text-secondary);
         }
 
-        /* Main Layout */
-        .app-container {
-            display: flex;
-            min-height: calc(100vh - 60px);
-            margin-top: 60px;
+        .logout-btn {
+            background: rgba(255, 107, 139, 0.1);
+            color: var(--light-pink);
+            border: 1px solid rgba(255, 107, 139, 0.3);
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.3s;
         }
 
-        /* Left Sidebar */
+        .logout-btn:hover {
+            background: rgba(255, 107, 139, 0.2);
+            border-color: var(--light-pink);
+        }
+
+        /* Sidebar */
         .sidebar {
-            width: 250px;
-            background: white;
-            border-right: 1px solid var(--medium-gray);
-            padding: 20px 0;
             position: fixed;
-            top: 60px;
-            bottom: 0;
+            top: var(--topbar-height);
             left: 0;
+            width: var(--sidebar-width);
+            height: calc(100vh - var(--topbar-height));
+            background: rgba(23, 42, 69, 0.8);
+            backdrop-filter: blur(10px);
+            border-right: 1px solid rgba(255, 107, 139, 0.1);
+            padding: 30px 0;
             overflow-y: auto;
-            z-index: 900;
-            transition: transform 0.3s;
+            transition: transform 0.3s ease;
+            z-index: 999;
+        }
+
+        .sidebar.collapsed {
+            transform: translateX(-100%);
         }
 
         .nav-section {
-            margin-bottom: 25px;
+            padding: 0 20px;
+            margin-bottom: 30px;
         }
 
-        .nav-section-title {
-            padding: 0 20px 10px 20px;
+        .nav-title {
             font-size: 12px;
             font-weight: 600;
-            text-transform: uppercase;
             color: var(--text-secondary);
-            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            padding-left: 10px;
         }
 
         .nav-item {
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 12px 20px;
-            color: var(--text-primary);
+            gap: 15px;
+            padding: 14px 20px;
+            color: var(--text-secondary);
             text-decoration: none;
+            border-radius: 10px;
+            margin-bottom: 8px;
             transition: all 0.3s;
             border-left: 3px solid transparent;
         }
 
         .nav-item:hover {
-            background: var(--light-gray);
-            color: var(--primary-blue);
+            background: rgba(255, 107, 139, 0.1);
+            color: var(--text-primary);
         }
 
         .nav-item.active {
-            background: rgba(10, 79, 138, 0.05);
-            color: var(--primary-blue);
-            border-left: 3px solid var(--primary-blue);
-            font-weight: 500;
+            background: rgba(255, 107, 139, 0.15);
+            color: var(--light-pink);
+            border-left-color: var(--light-pink);
         }
 
         .nav-item i {
             font-size: 18px;
             width: 24px;
-            text-align: center;
         }
 
-        .nav-item-text {
-            flex: 1;
+        .nav-item span {
+            font-size: 15px;
+            font-weight: 500;
         }
 
-        .nav-badge {
-            background: var(--accent-teal);
-            color: white;
-            font-size: 10px;
-            padding: 2px 6px;
-            border-radius: 10px;
-            font-weight: bold;
-        }
-
-        /* Main Content Area */
+        /* Main Content */
         .main-content {
-            flex: 1;
-            padding: 30px;
-            margin-left: 250px;
-            min-height: calc(100vh - 60px);
+            margin-left: var(--sidebar-width);
+            margin-top: var(--topbar-height);
+            padding: 40px;
+            min-height: calc(100vh - var(--topbar-height));
+            transition: margin-left 0.3s ease;
+        }
+
+        .main-content.expanded {
+            margin-left: 0;
         }
 
         /* Welcome Section */
         .welcome-section {
-            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
-            color: white;
-            padding: 30px;
-            border-radius: 12px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
         }
 
-        .welcome-title {
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
-
-        .welcome-subtitle {
-            font-size: 16px;
-            opacity: 0.9;
-            margin-bottom: 20px;
-        }
-
-        .date-time {
+        .welcome-header {
             display: flex;
-            gap: 20px;
-            font-size: 14px;
-            opacity: 0.9;
-        }
-
-        /* Quick Stats */
-        .quick-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 30px;
         }
 
-        .stat-card {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        .welcome-text h1 {
+            font-size: 36px;
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .welcome-text p {
+            color: var(--text-secondary);
+            font-size: 16px;
+        }
+
+        .current-datetime {
+            background: var(--card-bg);
+            padding: 20px 30px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 107, 139, 0.1);
+        }
+
+        .current-date {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .current-time {
+            font-size: 32px;
+            font-weight: 600;
+            color: var(--accent-gold);
+            font-family: 'Courier New', monospace;
+        }
+
+        /* Enterprise Dashboard */
+        .enterprise-dashboard {
+            margin-bottom: 50px;
+        }
+
+        .dashboard-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            color: var(--text-primary);
             display: flex;
             align-items: center;
             gap: 15px;
-            transition: transform 0.3s;
+        }
+
+        .dashboard-title i {
+            color: var(--light-pink);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid rgba(255, 107, 139, 0.1);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
         }
 
         .stat-card:hover {
             transform: translateY(-5px);
+            border-color: rgba(255, 107, 139, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--light-pink), var(--accent-gold));
+        }
+
+        .stat-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
         }
 
         .stat-icon {
             width: 50px;
             height: 50px;
-            border-radius: 10px;
+            border-radius: 12px;
+            background: rgba(255, 107, 139, 0.1);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
-            color: white;
+            font-size: 22px;
+            color: var(--light-pink);
         }
 
-        .stat-info {
-            flex: 1;
-        }
-
-        .stat-label {
-            font-size: 13px;
+        .stat-title {
+            font-size: 16px;
             color: var(--text-secondary);
-            margin-bottom: 5px;
         }
 
         .stat-value {
-            font-size: 24px;
-            font-weight: 700;
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 8px;
             color: var(--text-primary);
         }
 
-        .stat-change {
-            font-size: 12px;
+        .stat-trend {
             display: flex;
             align-items: center;
-            gap: 5px;
-            margin-top: 5px;
+            gap: 8px;
+            font-size: 14px;
         }
 
-        .stat-change.positive {
-            color: var(--success-green);
+        .trend-up {
+            color: var(--soft-teal);
         }
 
-        .stat-change.negative {
-            color: var(--danger-red);
+        .trend-down {
+            color: #ff4757;
         }
 
         /* Modules Grid */
-        .modules-section {
-            margin-bottom: 40px;
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .section-title {
-            font-size: 22px;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .section-subtitle {
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
-
         .modules-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
         }
 
         .module-card {
-            background: white;
-            border-radius: 12px;
+            background: var(--card-bg);
+            border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s;
-            cursor: pointer;
-            border: 2px solid transparent;
+            border: 1px solid rgba(255, 107, 139, 0.1);
+            transition: all 0.4s;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
 
         .module-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-            border-color: var(--accent-teal);
+            border-color: var(--light-pink);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
         .module-header {
-            padding: 25px 25px 15px 25px;
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(255, 107, 139, 0.1), rgba(129, 200, 190, 0.05));
+            border-bottom: 1px solid rgba(255, 107, 139, 0.1);
+        }
+
+        .module-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 10px;
             display: flex;
             align-items: center;
             gap: 15px;
         }
 
-        .module-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            color: white;
-        }
-
-        .module-title {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 5px;
+        .module-title i {
+            font-size: 24px;
+            color: var(--light-pink);
         }
 
         .module-subtitle {
+            color: var(--text-secondary);
             font-size: 14px;
-            color: var(--text-secondary);
+            line-height: 1.6;
         }
 
-        .module-status {
-            padding: 3px 10px;
-            border-radius: 15px;
-            font-size: 11px;
-            font-weight: bold;
+        .module-badge {
             display: inline-block;
-            margin-top: 5px;
-        }
-
-        .status-active {
-            background: rgba(40, 167, 69, 0.1);
-            color: var(--success-green);
-        }
-
-        .status-beta {
-            background: rgba(253, 126, 20, 0.1);
-            color: var(--warning-orange);
-        }
-
-        .status-coming {
-            background: rgba(108, 117, 125, 0.1);
-            color: var(--text-secondary);
+            padding: 4px 12px;
+            background: rgba(255, 107, 139, 0.2);
+            color: var(--light-pink);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 10px;
         }
 
         .module-body {
-            padding: 0 25px 20px 25px;
-        }
-
-        .module-description {
-            font-size: 14px;
-            color: var(--text-secondary);
-            line-height: 1.6;
-            margin-bottom: 15px;
-        }
-
-        .module-features {
+            padding: 30px;
+            flex: 1;
             display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 20px;
+            flex-direction: column;
         }
 
-        .feature-tag {
-            background: var(--light-gray);
-            padding: 5px 10px;
-            border-radius: 15px;
+        .module-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .module-stat {
+            text-align: center;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .module-stat-value {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--accent-gold);
+            margin-bottom: 5px;
+        }
+
+        .module-stat-label {
             font-size: 12px;
             color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .module-actions {
+            margin-top: auto;
             display: flex;
+            gap: 15px;
+        }
+
+        .btn-module {
+            flex: 1;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            text-align: center;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             gap: 10px;
         }
 
-        .btn-primary, .btn-secondary {
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-weight: 500;
-            font-size: 14px;
-            cursor: pointer;
-            border: none;
-            transition: all 0.3s;
-            flex: 1;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-        }
-
         .btn-primary {
-            background: var(--primary-blue);
+            background: linear-gradient(135deg, var(--light-pink), #ff8ba7);
             color: white;
         }
 
         .btn-primary:hover {
-            background: var(--secondary-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 107, 139, 0.3);
         }
 
         .btn-secondary {
-            background: var(--light-gray);
+            background: rgba(255, 255, 255, 0.1);
             color: var(--text-primary);
-            border: 1px solid var(--medium-gray);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .btn-secondary:hover {
-            background: var(--medium-gray);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 107, 139, 0.3);
         }
 
         /* Recent Activity */
         .activity-section {
-            background: white;
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 30px;
+            border: 1px solid rgba(255, 107, 139, 0.1);
+        }
+
+        .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .activity-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-primary);
         }
 
         .activity-list {
-            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
 
         .activity-item {
             display: flex;
-            gap: 15px;
-            padding: 15px 0;
-            border-bottom: 1px solid var(--light-gray);
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            border-left: 4px solid var(--light-pink);
+            transition: all 0.3s;
         }
 
-        .activity-item:last-child {
-            border-bottom: none;
+        .activity-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateX(5px);
         }
 
         .activity-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: rgba(255, 107, 139, 0.1);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
-            color: white;
+            font-size: 20px;
+            color: var(--light-pink);
         }
 
-        .activity-details {
+        .activity-content {
             flex: 1;
         }
 
-        .activity-title {
-            font-weight: 500;
-            margin-bottom: 5px;
-        }
-
         .activity-description {
-            font-size: 14px;
-            color: var(--text-secondary);
+            font-size: 15px;
             margin-bottom: 5px;
         }
 
-        .activity-time {
-            font-size: 12px;
+        .activity-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 13px;
             color: var(--text-secondary);
+        }
+
+        .activity-module {
+            color: var(--accent-gold);
+            font-weight: 500;
         }
 
         /* Footer */
         .footer {
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid var(--medium-gray);
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 107, 139, 0.1);
+            text-align: center;
             color: var(--text-secondary);
             font-size: 14px;
-            text-align: center;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            font-size: 16px;
+            color: var(--text-primary);
         }
 
         .footer-links {
             display: flex;
             justify-content: center;
-            gap: 20px;
-            margin-top: 10px;
+            gap: 30px;
+            margin-top: 20px;
         }
 
         .footer-link {
@@ -611,13 +802,16 @@
         }
 
         .footer-link:hover {
-            color: var(--primary-blue);
+            color: var(--light-pink);
         }
 
         /* Responsive Design */
         @media (max-width: 1200px) {
-            .modules-grid {
-                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            .sidebar {
+                width: 250px;
+            }
+            .main-content {
+                margin-left: 250px;
             }
         }
 
@@ -625,371 +819,317 @@
             .sidebar {
                 transform: translateX(-100%);
             }
-            
-            .main-content {
-                margin-left: 0;
-            }
-            
             .sidebar.active {
                 transform: translateX(0);
             }
-            
-            .mobile-menu-toggle {
-                display: block;
+            .main-content {
+                margin-left: 0;
+            }
+            .welcome-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
             }
         }
 
         @media (max-width: 768px) {
             .top-nav {
-                padding: 0 15px;
+                padding: 0 20px;
             }
-            
-            .nav-search {
-                display: none;
-            }
-            
-            .user-name, .user-role {
-                display: none;
-            }
-            
             .main-content {
-                padding: 20px;
+                padding: 30px 20px;
             }
-            
-            .quick-stats {
-                grid-template-columns: 1fr;
-            }
-            
             .modules-grid {
                 grid-template-columns: 1fr;
             }
-            
-            .welcome-section {
-                padding: 20px;
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
-            
-            .date-time {
+            .module-actions {
                 flex-direction: column;
-                gap: 5px;
+            }
+            .welcome-text h1 {
+                font-size: 28px;
             }
         }
 
-        /* Mobile Menu Toggle */
-        .mobile-menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-            padding: 8px;
-        }
-
-        @media (max-width: 992px) {
-            .mobile-menu-toggle {
-                display: block;
+        @media (max-width: 576px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
             }
-        }
-
-        /* Overlay for mobile sidebar */
-        .sidebar-overlay {
-            display: none;
-            position: fixed;
-            top: 60px;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 800;
-        }
-
-        @media (max-width: 992px) {
-            .sidebar-overlay.active {
-                display: block;
+            .nav-right {
+                gap: 10px;
+            }
+            .user-info {
+                display: none;
+            }
+            .login-box {
+                padding: 40px 30px;
+                margin: 20px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Top Navigation Bar -->
-    <nav class="top-nav">
-        <div class="logo-container">
-            <button class="mobile-menu-toggle" id="mobileMenuToggle">
-                <i class="fas fa-bars"></i>
-            </button>
-            <div class="logo">
-                <div class="logo-icon">
-                    <i class="fas fa-cube"></i>
-                </div>
-                <div>
-                    <div class="logo-text">JASIRI E-HUB SYSTEM</div>
-                    <div class="logo-subtitle">Enterprise Management Suite</div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="nav-search">
-            <i class="fas fa-search search-icon"></i>
-            <input type="text" class="search-input" placeholder="Search across all modules...">
-        </div>
-        
-        <div class="nav-actions">
-            <button class="help-btn" title="Help">
-                <i class="fas fa-question-circle"></i>
-            </button>
-            <button class="notification-btn" title="Notifications">
-                <i class="fas fa-bell"></i>
-                <span class="notification-badge">3</span>
-            </button>
-            <div class="user-menu" id="userMenu">
-                <div class="user-avatar">JD</div>
-                <div>
-                    <div class="user-name">John Doe</div>
-                    <div class="user-role">Administrator</div>
-                </div>
-                <i class="fas fa-chevron-down" style="font-size: 12px;"></i>
-            </div>
-        </div>
-    </nav>
+    <div class="background-pattern"></div>
 
-    <!-- Sidebar Overlay (Mobile) -->
-    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <!-- Login Container -->
+    <div class="login-container" id="loginContainer">
+        <div class="login-box">
+            <div class="login-logo">
+                <div class="login-logo-icon">
+                    <i class="fas fa-cubes"></i>
+                </div>
+                <h1>Jasiri E-Hub</h1>
+                <p>ENTERPRISE MANAGEMENT SUITE</p>
+                <div style="margin-top: 20px; font-size: 13px; color: var(--text-secondary);">
+                    Powered by DSOG Business Solutions
+                </div>
+            </div>
+            
+            <form class="login-form" id="loginForm">
+                <div class="input-group">
+                    <label for="loginEmail"><i class="fas fa-envelope"></i> Email Address</label>
+                    <input type="email" id="loginEmail" placeholder="admin@dsogbusiness.com" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="loginPassword"><i class="fas fa-lock"></i> Password</label>
+                    <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                </div>
+                
+                <button type="button" class="login-btn" id="loginBtn">
+                    <i class="fas fa-sign-in-alt"></i> Sign In to Jasiri
+                </button>
+                
+                <div class="login-error" id="loginError">
+                    Invalid credentials. Please try again.
+                </div>
+            </form>
+        </div>
+    </div>
 
     <!-- Main App Container -->
-    <div class="app-container">
-        <!-- Left Sidebar -->
+    <div class="app-container" id="appContainer">
+        <!-- Top Navigation -->
+        <nav class="top-nav">
+            <div class="nav-left">
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="brand-logo">
+                    <div class="brand-logo-icon">
+                        <i class="fas fa-cubes"></i>
+                    </div>
+                    <div>
+                        <div class="brand-text">Jasiri E-Hub</div>
+                        <div class="brand-subtitle">DSOG Enterprise Suite</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="nav-right">
+                <div class="user-profile" id="userProfile">
+                    <div class="user-avatar" id="userAvatar">JD</div>
+                    <div class="user-info">
+                        <div class="user-name" id="userName">John Doe</div>
+                        <div class="user-role" id="userRole">Administrator</div>
+                    </div>
+                </div>
+                <button class="logout-btn" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </nav>
+
+        <!-- Sidebar -->
         <aside class="sidebar" id="sidebar">
             <div class="nav-section">
-                <div class="nav-section-title">Main Navigation</div>
+                <div class="nav-title">Dashboard</div>
                 <a href="#" class="nav-item active">
                     <i class="fas fa-home"></i>
-                    <span class="nav-item-text">Home Dashboard</span>
+                    <span>Home</span>
                 </a>
                 <a href="#" class="nav-item">
                     <i class="fas fa-chart-line"></i>
-                    <span class="nav-item-text">Analytics</span>
+                    <span>Analytics</span>
                 </a>
                 <a href="#" class="nav-item">
                     <i class="fas fa-bell"></i>
-                    <span class="nav-item-text">Notifications</span>
-                    <span class="nav-badge">3</span>
+                    <span>Notifications</span>
                 </a>
             </div>
             
             <div class="nav-section">
-                <div class="nav-section-title">Enterprise Modules</div>
-                <a href="emh.html" class="nav-item">
+                <div class="nav-title">Enterprise Modules</div>
+                <a href="emh-workspace.html" class="nav-item">
                     <i class="fas fa-chart-bar"></i>
-                    <span class="nav-item-text">Management Hub (EMH)</span>
+                    <span>Management Hub (EMH)</span>
                 </a>
                 <a href="erh.html" class="nav-item">
                     <i class="fas fa-users"></i>
-                    <span class="nav-item-text">Resource Hub (ERH)</span>
+                    <span>Resource Hub (ERH)</span>
                 </a>
                 <a href="#" class="nav-item">
                     <i class="fas fa-money-bill-wave"></i>
-                    <span class="nav-item-text">Finance Hub (EFH)</span>
-                    <span class="nav-badge">Beta</span>
+                    <span>Finance Hub (EFH)</span>
                 </a>
             </div>
             
             <div class="nav-section">
-                <div class="nav-section-title">Tools & Settings</div>
+                <div class="nav-title">Business Operations</div>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Sales & Orders</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-warehouse"></i>
+                    <span>Inventory</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-user-friends"></i>
+                    <span>Customers</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                    <span>Reports</span>
+                </a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-title">System</div>
                 <a href="#" class="nav-item">
                     <i class="fas fa-cog"></i>
-                    <span class="nav-item-text">System Settings</span>
+                    <span>Settings</span>
                 </a>
                 <a href="#" class="nav-item">
                     <i class="fas fa-user-shield"></i>
-                    <span class="nav-item-text">User Management</span>
-                </a>
-                <a href="#" class="nav-item">
-                    <i class="fas fa-database"></i>
-                    <span class="nav-item-text">Data Management</span>
+                    <span>Administration</span>
                 </a>
                 <a href="#" class="nav-item">
                     <i class="fas fa-question-circle"></i>
-                    <span class="nav-item-text">Help & Support</span>
-                </a>
-            </div>
-            
-            <div class="nav-section">
-                <div class="nav-section-title">Coming Soon</div>
-                <a href="#" class="nav-item">
-                    <i class="fas fa-truck"></i>
-                    <span class="nav-item-text">Supply Chain Hub</span>
-                </a>
-                <a href="#" class="nav-item">
-                    <i class="fas fa-bullhorn"></i>
-                    <span class="nav-item-text">Marketing Hub</span>
-                </a>
-                <a href="#" class="nav-item">
-                    <i class="fas fa-shield-alt"></i>
-                    <span class="nav-item-text">Compliance Hub</span>
+                    <span>Help Center</span>
                 </a>
             </div>
         </aside>
 
         <!-- Main Content -->
-        <main class="main-content">
+        <main class="main-content" id="mainContent">
             <!-- Welcome Section -->
             <section class="welcome-section">
-                <h1 class="welcome-title">Welcome back, John!</h1>
-                <p class="welcome-subtitle">Here's what's happening with your business today.</p>
-                <div class="date-time">
-                    <div><i class="far fa-calendar"></i> Friday, June 14, 2024</div>
-                    <div><i class="far fa-clock"></i> 10:30 AM</div>
+                <div class="welcome-header">
+                    <div class="welcome-text">
+                        <h1 id="greetingText">Good Morning, Admin</h1>
+                        <p>Welcome to DSOG's Jasiri Enterprise Hub. Here's your business overview.</p>
+                    </div>
+                    <div class="current-datetime">
+                        <div class="current-date" id="currentDate">Friday, June 14, 2024</div>
+                        <div class="current-time" id="currentTime">10:30:45 AM</div>
+                    </div>
                 </div>
             </section>
 
-            <!-- Quick Stats -->
-            <div class="quick-stats">
-                <div class="stat-card">
-                    <div class="stat-icon" style="background: var(--primary-blue);">
-                        <i class="fas fa-shopping-cart"></i>
-                    </div>
-                    <div class="stat-info">
-                        <div class="stat-label">Today's Sales</div>
-                        <div class="stat-value">$12,458</div>
-                        <div class="stat-change positive">
-                            <i class="fas fa-arrow-up"></i> 12% from yesterday
-                        </div>
-                    </div>
+            <!-- Enterprise Dashboard -->
+            <section class="enterprise-dashboard">
+                <h2 class="dashboard-title">
+                    <i class="fas fa-chart-pie"></i> Business Overview
+                </h2>
+                
+                <!-- Stats Grid -->
+                <div class="stats-grid" id="statsGrid">
+                    <!-- Stats will be populated from Firebase -->
                 </div>
                 
-                <div class="stat-card">
-                    <div class="stat-icon" style="background: var(--success-green);">
-                        <i class="fas fa-user-check"></i>
-                    </div>
-                    <div class="stat-info">
-                        <div class="stat-label">Active Users</div>
-                        <div class="stat-value">24</div>
-                        <div class="stat-change positive">
-                            <i class="fas fa-arrow-up"></i> 3 online now
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="stat-icon" style="background: var(--warning-orange);">
-                        <i class="fas fa-tasks"></i>
-                    </div>
-                    <div class="stat-info">
-                        <div class="stat-label">Pending Tasks</div>
-                        <div class="stat-value">18</div>
-                        <div class="stat-change negative">
-                            <i class="fas fa-exclamation-circle"></i> 5 overdue
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="stat-icon" style="background: var(--accent-teal);">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <div class="stat-info">
-                        <div class="stat-label">Performance</div>
-                        <div class="stat-value">94%</div>
-                        <div class="stat-change positive">
-                            <i class="fas fa-arrow-up"></i> Meeting targets
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Enterprise Modules Section -->
-            <section class="modules-section">
-                <div class="section-header">
-                    <div>
-                        <h2 class="section-title">Enterprise Modules</h2>
-                        <p class="section-subtitle">Access all business management tools from one place</p>
-                    </div>
-                </div>
-                
+                <!-- Modules Grid -->
                 <div class="modules-grid">
                     <!-- EMH Card -->
-                    <div class="module-card" id="emhCard">
+                    <div class="module-card">
                         <div class="module-header">
-                            <div class="module-icon" style="background: linear-gradient(135deg, #0a4f8a, #1c6ca3);">
-                                <i class="fas fa-chart-bar"></i>
+                            <div class="module-title">
+                                <i class="fas fa-chart-bar"></i> Enterprise Management Hub
                             </div>
-                            <div>
-                                <h3 class="module-title">Enterprise Management Hub</h3>
-                                <p class="module-subtitle">Sales, Operations & Analytics</p>
-                                <span class="module-status status-active">Active</span>
+                            <div class="module-subtitle">
+                                Comprehensive business management system for sales operations, customer management, and performance analytics.
                             </div>
+                            <span class="module-badge">Active • Live Data</span>
                         </div>
                         <div class="module-body">
-                            <p class="module-description">
-                                Complete business management system for sales operations, customer management, inventory control, and performance analytics.
-                            </p>
-                            <div class="module-features">
-                                <span class="feature-tag">Dashboard Analytics</span>
-                                <span class="feature-tag">Sales Operations</span>
-                                <span class="feature-tag">Customer Management</span>
-                                <span class="feature-tag">Inventory Control</span>
+                            <div class="module-stats" id="emhStats">
+                                <!-- EMH stats will be populated from Firebase -->
                             </div>
                             <div class="module-actions">
-                                <a href="emh.html" class="btn-primary">Open EMH</a>
-                                <a href="#" class="btn-secondary">Learn More</a>
+                                <a href="emh.html" class="btn-module btn-primary">
+                                    <i class="fas fa-external-link-alt"></i> Open EMH
+                                </a>
+                                <a href="#" class="btn-module btn-secondary">
+                                    <i class="fas fa-chart-line"></i> View Analytics
+                                </a>
                             </div>
                         </div>
                     </div>
                     
                     <!-- ERH Card -->
-                    <div class="module-card" id="erhCard">
+                    <div class="module-card">
                         <div class="module-header">
-                            <div class="module-icon" style="background: linear-gradient(135deg, #28a745, #20c997);">
-                                <i class="fas fa-users"></i>
+                            <div class="module-title">
+                                <i class="fas fa-users"></i> Enterprise Resource Hub
                             </div>
-                            <div>
-                                <h3 class="module-title">Enterprise Resource Hub</h3>
-                                <p class="module-subtitle">HR, Assets & Projects</p>
-                                <span class="module-status status-active">Active</span>
+                            <div class="module-subtitle">
+                                Human resources management, employee portal, asset tracking, and project management system.
                             </div>
+                            <span class="module-badge">Active</span>
                         </div>
                         <div class="module-body">
-                            <p class="module-description">
-                                Human resources management, employee portal, asset tracking, project management, and training modules.
-                            </p>
-                            <div class="module-features">
-                                <span class="feature-tag">HR Management</span>
-                                <span class="feature-tag">Employee Portal</span>
-                                <span class="feature-tag">Asset Tracking</span>
-                                <span class="feature-tag">Project Management</span>
+                            <div class="module-stats" id="erhStats">
+                                <div class="module-stat">
+                                    <div class="module-stat-value">24</div>
+                                    <div class="module-stat-label">Employees</div>
+                                </div>
+                                <div class="module-stat">
+                                    <div class="module-stat-value">8</div>
+                                    <div class="module-stat-label">Departments</div>
+                                </div>
                             </div>
                             <div class="module-actions">
-                                <a href="erh.html" class="btn-primary">Open ERH</a>
-                                <a href="#" class="btn-secondary">Learn More</a>
+                                <a href="erh.html" class="btn-module btn-primary">
+                                    <i class="fas fa-external-link-alt"></i> Open ERH
+                                </a>
+                                <a href="#" class="btn-module btn-secondary">
+                                    <i class="fas fa-users-cog"></i> Manage Users
+                                </a>
                             </div>
                         </div>
                     </div>
                     
                     <!-- EFH Card -->
-                    <div class="module-card" id="efhCard">
+                    <div class="module-card">
                         <div class="module-header">
-                            <div class="module-icon" style="background: linear-gradient(135deg, #6610f2, #6f42c1);">
-                                <i class="fas fa-money-bill-wave"></i>
+                            <div class="module-title">
+                                <i class="fas fa-money-bill-wave"></i> Enterprise Finance Hub
                             </div>
-                            <div>
-                                <h3 class="module-title">Enterprise Finance Hub</h3>
-                                <p class="module-subtitle">Accounting & Financial Management</p>
-                                <span class="module-status status-beta">Coming Soon</span>
+                            <div class="module-subtitle">
+                                Complete financial management system with accounting, invoicing, expense management, and financial reporting.
                             </div>
+                            <span class="module-badge">Coming Soon</span>
                         </div>
                         <div class="module-body">
-                            <p class="module-description">
-                                Comprehensive financial management system including accounting, invoicing, expense management, and financial reporting.
-                            </p>
-                            <div class="module-features">
-                                <span class="feature-tag">Accounting</span>
-                                <span class="feature-tag">Invoicing & Billing</span>
-                                <span class="feature-tag">Expense Management</span>
-                                <span class="feature-tag">Financial Reports</span>
+                            <div class="module-stats">
+                                <div class="module-stat">
+                                    <div class="module-stat-value">—</div>
+                                    <div class="module-stat-label">Invoices</div>
+                                </div>
+                                <div class="module-stat">
+                                    <div class="module-stat-value">—</div>
+                                    <div class="module-stat-label">Revenue</div>
+                                </div>
                             </div>
                             <div class="module-actions">
-                                <button class="btn-primary" disabled>Coming Soon</button>
-                                <a href="#" class="btn-secondary">Notify Me</a>
+                                <button class="btn-module btn-primary" disabled>
+                                    <i class="fas fa-clock"></i> Coming Soon
+                                </button>
+                                <a href="#" class="btn-module btn-secondary">
+                                    <i class="fas fa-bell"></i> Notify Me
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -998,64 +1138,26 @@
 
             <!-- Recent Activity -->
             <section class="activity-section">
-                <div class="section-header">
-                    <div>
-                        <h2 class="section-title">Recent Activity</h2>
-                        <p class="section-subtitle">Latest actions across your enterprise</p>
-                    </div>
-                    <a href="#" class="btn-secondary">View All</a>
+                <div class="activity-header">
+                    <h3 class="activity-title">Recent Activity</h3>
+                    <a href="#" class="btn-secondary" style="padding: 8px 16px; font-size: 14px;">
+                        <i class="fas fa-history"></i> View All
+                    </a>
                 </div>
-                
-                <div class="activity-list">
-                    <div class="activity-item">
-                        <div class="activity-icon" style="background: var(--primary-blue);">
-                            <i class="fas fa-shopping-cart"></i>
-                        </div>
-                        <div class="activity-details">
-                            <div class="activity-title">New Sale Completed</div>
-                            <div class="activity-description">Order #45892 for $1,250 from Acme Corp</div>
-                            <div class="activity-time">10 minutes ago • EMH Module</div>
-                        </div>
-                    </div>
-                    
-                    <div class="activity-item">
-                        <div class="activity-icon" style="background: var(--success-green);">
-                            <i class="fas fa-user-plus"></i>
-                        </div>
-                        <div class="activity-details">
-                            <div class="activity-title">New Employee Added</div>
-                            <div class="activity-description">Sarah Johnson joined as Marketing Manager</div>
-                            <div class="activity-time">1 hour ago • ERH Module</div>
-                        </div>
-                    </div>
-                    
-                    <div class="activity-item">
-                        <div class="activity-icon" style="background: var(--warning-orange);">
-                            <i class="fas fa-exclamation-triangle"></i>
-                        </div>
-                        <div class="activity-details">
-                            <div class="activity-title">Low Stock Alert</div>
-                            <div class="activity-description">Product "Premium T-Shirt" is below minimum stock</div>
-                            <div class="activity-time">2 hours ago • EMH Module</div>
-                        </div>
-                    </div>
-                    
-                    <div class="activity-item">
-                        <div class="activity-icon" style="background: var(--accent-teal);">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        <div class="activity-details">
-                            <div class="activity-title">Monthly Report Generated</div>
-                            <div class="activity-description">May 2024 performance report is ready</div>
-                            <div class="activity-time">3 hours ago • Analytics</div>
-                        </div>
-                    </div>
+                <div class="activity-list" id="activityList">
+                    <!-- Activities will be populated from Firebase -->
                 </div>
             </section>
 
             <!-- Footer -->
             <footer class="footer">
-                <p>Jasiri E-Hub System v2.1 • © 2024 Jasiri Technologies. All rights reserved.</p>
+                <div class="footer-logo">
+                    <i class="fas fa-cubes"></i> Jasiri E-Hub System
+                </div>
+                <div>© 2024 DSOG Business Solutions. All rights reserved.</div>
+                <div style="margin-top: 10px; font-size: 13px; color: var(--text-secondary);">
+                    Version 2.1 • Enterprise Edition
+                </div>
                 <div class="footer-links">
                     <a href="#" class="footer-link">Privacy Policy</a>
                     <a href="#" class="footer-link">Terms of Service</a>
@@ -1066,73 +1168,376 @@
         </main>
     </div>
 
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
     <script>
-        // Mobile sidebar toggle
-        document.getElementById('mobileMenuToggle').addEventListener('click', function() {
-            document.getElementById('sidebar').classList.toggle('active');
-            document.getElementById('sidebarOverlay').classList.toggle('active');
+        // Firebase Configuration (from your EMH)
+        const firebaseConfig = {
+            apiKey: "AIzaSyCOb4BqfiN3vt1Y13UTEpA_boCqNRH6rrQ",
+            authDomain: "dsog-stores-dashboard.firebaseapp.com",
+            databaseURL: "https://dsog-stores-dashboard-default-rtdb.firebaseio.com",
+            projectId: "dsog-stores-dashboard",
+            storageBucket: "dsog-stores-dashboard.firebasestorage.app",
+            messagingSenderId: "1085972125142",
+            appId: "1:1085972125142:web:9abea9ee0dd792a052c077"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const database = firebase.database();
+
+        // DOM Elements
+        const loginContainer = document.getElementById('loginContainer');
+        const appContainer = document.getElementById('appContainer');
+        const loginBtn = document.getElementById('loginBtn');
+        const loginEmail = document.getElementById('loginEmail');
+        const loginPassword = document.getElementById('loginPassword');
+        const loginError = document.getElementById('loginError');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('mainContent');
+        const userAvatar = document.getElementById('userAvatar');
+        const userName = document.getElementById('userName');
+        const userRole = document.getElementById('userRole');
+        const greetingText = document.getElementById('greetingText');
+        const currentDate = document.getElementById('currentDate');
+        const currentTime = document.getElementById('currentTime');
+        const statsGrid = document.getElementById('statsGrid');
+        const activityList = document.getElementById('activityList');
+        const emhStats = document.getElementById('emhStats');
+
+        // Check Authentication State
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                handleUserSignedIn(user);
+            } else {
+                handleUserSignedOut();
+            }
         });
 
-        // Close sidebar when clicking overlay
-        document.getElementById('sidebarOverlay').addEventListener('click', function() {
-            this.classList.remove('active');
-            document.getElementById('sidebar').classList.remove('active');
-        });
-
-        // Update date and time
-        function updateDateTime() {
-            const now = new Date();
-            const options = { 
-                weekday: 'long', 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-            };
+        function handleUserSignedIn(user) {
+            console.log("User signed in:", user.email);
             
-            // You can add code here to update date/time elements if needed
-            console.log('Date/time updated:', now.toLocaleDateString('en-US', options));
+            // Hide login, show app
+            loginContainer.style.display = 'none';
+            appContainer.style.display = 'flex';
+            
+            // Update user info
+            updateUserInfo(user);
+            
+            // Update greeting based on time
+            updateGreeting();
+            
+            // Update date and time
+            updateDateTime();
+            setInterval(updateDateTime, 1000);
+            
+            // Load dashboard data from Firebase
+            loadDashboardData();
+            
+            // Initialize sidebar
+            initializeSidebar();
         }
 
-        // Update every minute
-        setInterval(updateDateTime, 60000);
+        function handleUserSignedOut() {
+            console.log("User signed out");
+            
+            // Show login, hide app
+            loginContainer.style.display = 'flex';
+            appContainer.style.display = 'none';
+            
+            // Clear form
+            loginEmail.value = '';
+            loginPassword.value = '';
+            loginError.style.display = 'none';
+        }
 
-        // User menu dropdown (simplified)
-        document.getElementById('userMenu').addEventListener('click', function() {
-            alert('User menu would open here with options: Profile, Settings, Logout');
+        // Login Functionality
+        loginBtn.addEventListener('click', function() {
+            const email = loginEmail.value.trim();
+            const password = loginPassword.value.trim();
+            
+            if (!email || !password) {
+                showLoginError("Please enter both email and password");
+                return;
+            }
+            
+            // Show loading state
+            this.disabled = true;
+            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in...';
+            
+            auth.signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    // Success - handled by onAuthStateChanged
+                })
+                .catch((error) => {
+                    console.error("Login error:", error);
+                    showLoginError("Invalid email or password. Please try again.");
+                    
+                    // Reset button
+                    loginBtn.disabled = false;
+                    loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In to Jasiri';
+                });
         });
 
-        // Search functionality
-        document.querySelector('.search-input').addEventListener('keypress', function(e) {
+        // Allow Enter key to login
+        loginPassword.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
-                const query = this.value.trim();
-                if (query) {
-                    alert(`Searching for: ${query}\n\nThis would search across all modules including:\n- EMH (Sales, Customers, Inventory)\n- ERH (Employees, Projects)\n- EFH (Invoices, Expenses)`);
-                    this.value = '';
+                loginBtn.click();
+            }
+        });
+
+        function showLoginError(message) {
+            loginError.textContent = message;
+            loginError.style.display = 'block';
+            setTimeout(() => {
+                loginError.style.display = 'none';
+            }, 5000);
+        }
+
+        // Logout Functionality
+        logoutBtn.addEventListener('click', function() {
+            auth.signOut()
+                .then(() => {
+                    console.log("User signed out successfully");
+                })
+                .catch((error) => {
+                    console.error("Logout error:", error);
+                });
+        });
+
+        // Update User Information
+        function updateUserInfo(user) {
+            const displayName = user.displayName || user.email.split('@')[0];
+            const initials = displayName.split(' ').map(n => n[0]).join('').toUpperCase();
+            
+            userAvatar.textContent = initials;
+            userName.textContent = displayName;
+            userRole.textContent = user.email.includes('admin') ? 'Administrator' : 'User';
+        }
+
+        // Update Greeting Based on Time
+        function updateGreeting() {
+            const hour = new Date().getHours();
+            let greeting;
+            
+            if (hour < 12) greeting = "Good Morning";
+            else if (hour < 18) greeting = "Good Afternoon";
+            else greeting = "Good Evening";
+            
+            const userName = auth.currentUser?.displayName || 'Admin';
+            greetingText.textContent = `${greeting}, ${userName}`;
+        }
+
+        // Update Date and Time
+        function updateDateTime() {
+            const now = new Date();
+            
+            // Format date
+            const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            currentDate.textContent = now.toLocaleDateString('en-US', dateOptions);
+            
+            // Format time
+            const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+            currentTime.textContent = now.toLocaleTimeString('en-US', timeOptions);
+        }
+
+        // Load Dashboard Data from Firebase
+        function loadDashboardData() {
+            // Load EMH Statistics from your existing dashboard data
+            database.ref('dashboard').on('value', (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    updateDashboardStats(data);
+                    updateActivityFeed(data);
                 }
-            }
-        });
+            });
+        }
 
-        // Module card interactions
-        document.getElementById('emhCard').addEventListener('click', function(e) {
-            if (!e.target.closest('.btn-primary') && !e.target.closest('.btn-secondary')) {
-                window.location.href = 'emh.html';
-            }
-        });
+        // Update Dashboard Statistics
+        function updateDashboardStats(data) {
+            // Clear existing stats
+            statsGrid.innerHTML = '';
+            
+            // Create stat cards from EMH data
+            const stats = [
+                {
+                    icon: 'fas fa-shopping-bag',
+                    title: 'Weekly Sales',
+                    value: formatCurrency(data.metrics?.weeklySales || 0),
+                    trend: `+${data.metrics?.growth || 0}%`,
+                    trendClass: 'trend-up'
+                },
+                {
+                    icon: 'fas fa-box',
+                    title: 'Products Sold',
+                    value: data.metrics?.productsSold || 0,
+                    trend: 'This Week',
+                    trendClass: 'trend-up'
+                },
+                {
+                    icon: 'fas fa-calendar-check',
+                    title: 'Days Remaining',
+                    value: data.metrics?.daysRemaining || 0,
+                    trend: 'In Week',
+                    trendClass: 'trend-down'
+                },
+                {
+                    icon: 'fas fa-store',
+                    title: 'Active Franchises',
+                    value: data.stats?.franchises || 0,
+                    trend: 'Locations',
+                    trendClass: 'trend-up'
+                }
+            ];
+            
+            // Add stat cards to grid
+            stats.forEach(stat => {
+                const statCard = document.createElement('div');
+                statCard.className = 'stat-card';
+                statCard.innerHTML = `
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <i class="${stat.icon}"></i>
+                        </div>
+                        <div class="stat-title">${stat.title}</div>
+                    </div>
+                    <div class="stat-value">${stat.value}</div>
+                    <div class="stat-trend ${stat.trendClass}">
+                        <i class="fas ${stat.trendClass === 'trend-up' ? 'fa-arrow-up' : 'fa-arrow-down'}"></i>
+                        ${stat.trend}
+                    </div>
+                `;
+                statsGrid.appendChild(statCard);
+            });
+            
+            // Update EMH module stats
+            updateEMHModuleStats(data);
+        }
 
-        document.getElementById('erhCard').addEventListener('click', function(e) {
-            if (!e.target.closest('.btn-primary') && !e.target.closest('.btn-secondary')) {
-                window.location.href = 'erh.html';
-            }
-        });
+        // Update EMH Module Statistics
+        function updateEMHModuleStats(data) {
+            // Calculate total sales from daily sales
+            const dailySales = data.target?.dailySales || [0, 0, 0, 0, 0, 0, 0];
+            const totalSales = dailySales.reduce((sum, val) => sum + val, 0);
+            
+            emhStats.innerHTML = `
+                <div class="module-stat">
+                    <div class="module-stat-value">${formatCurrency(data.metrics?.weeklySales || 0)}</div>
+                    <div class="module-stat-label">Weekly Sales</div>
+                </div>
+                <div class="module-stat">
+                    <div class="module-stat-value">${data.metrics?.productsSold || 0}</div>
+                    <div class="module-stat-label">Products Sold</div>
+                </div>
+            `;
+        }
 
-        // Notification button
-        document.querySelector('.notification-btn').addEventListener('click', function() {
-            alert('Notifications:\n1. New sale recorded\n2. Low stock alert\n3. Employee anniversary reminder');
-        });
+        // Update Activity Feed
+        function updateActivityFeed(data) {
+            // Clear existing activities
+            activityList.innerHTML = '';
+            
+            // Sample activities based on EMH data
+            const activities = [
+                {
+                    icon: 'fas fa-chart-line',
+                    description: `Weekly sales target at ${Math.round((data.metrics?.weeklySales / data.target?.weeklyTarget) * 100)}%`,
+                    module: 'EMH',
+                    time: 'Just now'
+                },
+                {
+                    icon: 'fas fa-shopping-cart',
+                    description: `${data.metrics?.productsSold || 0} products sold this week`,
+                    module: 'EMH',
+                    time: 'Today'
+                },
+                {
+                    icon: 'fas fa-users',
+                    description: `${data.stats?.staff || 0} staff members active`,
+                    module: 'ERH',
+                    time: 'Today'
+                },
+                {
+                    icon: 'fas fa-truck',
+                    description: `${data.stats?.deliveries || 0} pending deliveries`,
+                    module: 'EMH',
+                    time: 'Today'
+                }
+            ];
+            
+            // Add activities to list
+            activities.forEach(activity => {
+                const activityItem = document.createElement('div');
+                activityItem.className = 'activity-item';
+                activityItem.innerHTML = `
+                    <div class="activity-icon">
+                        <i class="${activity.icon}"></i>
+                    </div>
+                    <div class="activity-content">
+                        <div class="activity-description">${activity.description}</div>
+                        <div class="activity-meta">
+                            <span class="activity-module">${activity.module}</span>
+                            <span>•</span>
+                            <span>${activity.time}</span>
+                        </div>
+                    </div>
+                `;
+                activityList.appendChild(activityItem);
+            });
+        }
 
-        // Help button
-        document.querySelector('.help-btn').addEventListener('click', function() {
-            alert('Help & Support:\n\n1. Documentation: User guides and tutorials\n2. Video Tutorials: Step-by-step videos\n3. Contact Support: support@jasiri.com\n4. Live Chat: Available 9AM-5PM');
+        // Format Currency
+        function formatCurrency(amount) {
+            return 'Ksh ' + amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        // Initialize Sidebar
+        function initializeSidebar() {
+            // Toggle sidebar on mobile
+            menuToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('active');
+                mainContent.classList.toggle('expanded');
+            });
+            
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', function(event) {
+                if (window.innerWidth <= 992) {
+                    if (!sidebar.contains(event.target) && !menuToggle.contains(event.target)) {
+                        sidebar.classList.remove('active');
+                        mainContent.classList.remove('expanded');
+                    }
+                }
+            });
+            
+            // Handle nav item clicks
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    if (this.getAttribute('href') === '#') {
+                        e.preventDefault();
+                    }
+                    
+                    // Update active state
+                    document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Close sidebar on mobile after selection
+                    if (window.innerWidth <= 992) {
+                        sidebar.classList.remove('active');
+                        mainContent.classList.remove('expanded');
+                    }
+                });
+            });
+        }
+
+        // User profile dropdown (simplified)
+        document.getElementById('userProfile').addEventListener('click', function() {
+            alert('Profile options:\n\n• View Profile\n• Account Settings\n• Notification Preferences\n• Security Settings');
         });
     </script>
 </body>
