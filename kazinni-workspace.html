@@ -3,115 +3,502 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KazInni Admin | Workforce Console</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>ERH - KazInni Workforce Console</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --dark-blue: #95ecff2a;
-            --navy: #112240;
-            --teal: #64ffda;
-            --text-light: #e6f1ff;
-            --text-muted: #8892b0;
-            --sidebar-width: 220px;
+            --dark-blue: #0a192f;
+            --medium-blue: #172a45;
+            --light-blue: #64ffda;
+            --accent-gold: #e6c78a;
+            --soft-teal: #81c8be;
+            --text-primary: #f0e6ef;
+            --text-secondary: #b8b8d1;
         }
 
         body, html {
             margin: 0;
             padding: 0;
             height: 100%;
-            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--dark-blue);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--dark-blue);
+            z-index: -2;
+        }
+        
+        .background-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle at 25% 25%, rgba(100, 255, 218, 0.1) 0%, transparent 50%);
+            background-size: 400% 400%;
+            z-index: -1;
+            animation: gradientMove 30s ease infinite;
+        }
+        
+        @keyframes gradientMove {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 100% 100%; }
+            100% { background-position: 0% 0%; }
+        }
+
+        /* Authentication Loader */
+        .auth-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: var(--dark-blue);
             display: flex;
             flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10001;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .auth-loader-text {
+            color: var(--light-blue);
+            margin-top: 25px;
+            font-size: 1.2rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
         }
 
+        /* Sheet Loader */
+        .sheet-loader {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--medium-blue);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .sheet-loader-text {
+            color: var(--light-blue);
+            margin-top: 25px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            animation: pulse 1.5s ease-in-out infinite;
+            max-width: 80%;
+            text-align: center;
+        }
+        
+        .sheet-loader small {
+            color: var(--text-secondary);
+            margin-top: 10px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Loader animation */
+        .loader {
+            width: 45px;
+            aspect-ratio: 1;
+            --c: no-repeat linear-gradient(var(--light-blue) 0 0);
+            background: var(--c), var(--c), var(--c), var(--c), var(--c), var(--c);
+            animation: 
+                l14-1 .5s infinite alternate,
+                l14-2 2s infinite;
+        }
+        
+        @keyframes l14-1 {
+            0%,10% { background-size: 20% 100%; }
+            100% { background-size: 20% 20%; }
+        }
+        
+        @keyframes l14-2 {
+            0%,49.9% { background-position: 0 0, 0 100%, 50% 50%, 50% 50%, 100% 0, 100% 100%; }
+            50%,100% { background-position: 0 50%, 0 50%, 50% 0, 50% 100%, 100% 50%, 100% 50%; }
+        }
+
+        /* Access Denied Message */
+        .access-denied {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 25, 47, 0.95);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .access-denied h2 {
+            color: var(--light-blue);
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+        
+        .access-denied p {
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+            max-width: 500px;
+            line-height: 1.6;
+        }
+        
+        .access-denied-btn {
+            background: var(--light-blue);
+            color: var(--dark-blue);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .access-denied-btn:hover {
+            background: var(--accent-gold);
+            color: var(--dark-blue);
+            transform: translateY(-2px);
+        }
+
+        /* Layout structure */
         .app-container {
+            display: none;
+            height: 100vh;
+            min-height: 0;
+            width: 100%;
+        }
+
+        /* Side navigation */
+        .sidenav {
+            width: 280px;
+            background: var(--medium-blue);
+            color: var(--text-primary);
             display: flex;
-            flex: 1;
+            flex-direction: column;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            flex-shrink: 0;
+            z-index: 10;
             overflow: hidden;
         }
 
-        /* Sidebar Navigation */
-        .sidebar {
-            width: var(--sidebar-width);
-            background-color: var(--navy);
-            padding: 1.5rem 0;
-            border-right: 1px solid rgba(55, 61, 101, 0.1);
+        .nav-logo-placeholder {
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid rgba(100, 255, 218, 0.2);
+            padding: 20px 0;
         }
 
-        .logo {
-            font-size: 1.25rem;
+        .logo-img {
+            width: 60px;
+            height: 60px;
+            background: rgba(100, 255, 218, 0.15);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--light-blue);
+            font-size: 1.8rem;
+        }
+
+        .hub-code {
+            padding: 20px;
+            font-size: 1.1rem;
             font-weight: 600;
-            color: var(--teal);
-            padding: 0 1.5rem 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            border-bottom: 1px solid rgba(100, 255, 218, 0.1);
-            margin-bottom: 1rem;
+            letter-spacing: 1px;
+            text-align: center;
+            border-bottom: 1px solid rgba(100, 255, 218, 0.2);
+            margin-bottom: 20px;
+            color: var(--light-blue);
         }
 
-        .nav-item {
+        .nav-spacer {
+            height: 30px;
+        }
+
+        .nav-links {
+            list-style: none;
+            padding: 0 15px;
+            margin: 0;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .nav-section {
+            margin-bottom: 15px;
+        }
+
+        .nav-section-title {
+            padding: 12px 20px;
             display: flex;
             align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem 1.5rem;
-            color: var(--text-light);
+            cursor: pointer;
+            color: var(--light-blue);
+            font-weight: 600;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+
+        .nav-section-title:hover {
+            background: rgba(100, 255, 218, 0.1);
+        }
+
+        .nav-section-title i {
+            margin-right: 15px;
+            width: 20px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .nav-submenu {
+            list-style: none;
+            padding: 0;
+            margin: 5px 0 15px 0;
+            display: none;
+        }
+
+        .nav-section.active .nav-submenu {
+            display: block;
+        }
+
+        .nav-link {
+            padding: 12px 20px 12px 50px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-secondary);
             text-decoration: none;
-            font-size: 1rem;
-            transition: all 0.2s;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            position: relative;
+            user-select: none;
         }
 
-        .nav-item:hover {
+        .nav-link:hover {
+            color: var(--text-primary);
             background: rgba(100, 255, 218, 0.05);
         }
 
-        .nav-item.active {
-            background: rgba(100, 255, 218, 0.1);
-            color: var(--teal);
+        .nav-link.active {
+            color: var(--light-blue);
             font-weight: 500;
+            background: rgba(100, 255, 218, 0.1);
         }
 
-        .nav-item i {
-            width: 20px;
-            text-align: center;
+        .nav-link.active::before {
+            content: "";
+            position: absolute;
+            left: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 6px;
+            height: 6px;
+            background: var(--light-blue);
+            border-radius: 50%;
         }
 
-        /* Main Content */
+        /* Main content area */
         .main-content {
             flex: 1;
             display: flex;
             flex-direction: column;
+            background-color: var(--medium-blue);
+            min-height: 0;
+            position: relative;
             overflow: hidden;
         }
 
-        .sheet-header {
-            padding: 1rem 1.5rem;
-            background: var(--navy);
-            color: var(--teal);
+        /* Header styles */
+        header {
+            background: var(--medium-blue);
+            color: var(--text-primary);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-bottom: 1px solid rgba(100, 255, 218, 0.2);
+            flex-shrink: 0;
+            z-index: 5;
+        }
+
+        .hub-info {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .hub-name {
             font-size: 1.3rem;
             font-weight: 500;
-            border-bottom: 1px solid rgba(100, 255, 218, 0.1);
+            color: var(--light-blue);
+            margin: 0;
+        }
+
+        .hub-status {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .dashboard-nav {
+            display: flex;
+            gap: 10px;
+        }
+
+        .dashboard-nav a {
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .dashboard-nav a:hover {
+            color: var(--text-primary);
+            background: rgba(100, 255, 218, 0.05);
+        }
+
+        .dashboard-nav a.active {
+            color: var(--light-blue);
+            background: rgba(100, 255, 218, 0.1);
+        }
+
+        /* User Info in Header */
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-right: 20px;
+        }
+
+        .user-email {
+            color: var(--text-primary);
+            font-weight: 500;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        .logout-btn {
+            background: var(--soft-teal);
+            color: var(--dark-blue);
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .logout-btn:hover {
+            background: var(--light-blue);
+            color: var(--dark-blue);
+            transform: translateY(-2px);
+        }
+
+        .datetime {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            white-space: nowrap;
+        }
+
+        #time {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        #date {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 3px;
+        }
+
+        /* Content area */
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            overflow: auto;
+            position: relative;
+        }
+
+        /* KazInni Specific Styles */
+        .sheet-header {
+            padding: 1rem 1.5rem;
+            background: var(--medium-blue);
+            color: var(--light-blue);
+            font-size: 1.3rem;
+            font-weight: 500;
+            border-bottom: 1px solid rgba(100, 255, 218, 0.2);
             display: flex;
             align-items: center;
             gap: 10px;
+            margin-bottom: 20px;
         }
 
         .sheet-container {
             flex: 1;
-            padding: 1rem;
             display: flex;
-            justify-content: center;
-            align-items: flex-start;
+            flex-direction: column;
             overflow: hidden;
         }
 
-        /* Improved iframe styling for all sheets */
         .iframe-wrapper {
             width: 100%;
             height: 100%;
             display: flex;
             flex-direction: column;
+            flex: 1;
         }
 
         .iframe-container {
@@ -121,16 +508,18 @@
             border-radius: 8px;
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
             background: white;
+            position: relative;
         }
 
-        iframe {
+        .workspace-iframe {
+            border: none;
             width: 100%;
             height: 100%;
-            border: none;
-            display: block;
+            min-height: 500px;
+            background-color: #fff;
         }
 
-        /* Tasking Profile Search */
+        /* Tasking Profile Search Styles */
         .tasking-profile-container {
             width: 100%;
             height: 100%;
@@ -154,10 +543,10 @@
         .search-input {
             width: 100%;
             padding: 12px 20px;
-            border: 1px solid var(--teal);
+            border: 1px solid var(--light-blue);
             border-radius: 30px;
-            background: var(--navy);
-            color: var(--text-light);
+            background: var(--medium-blue);
+            color: var(--text-primary);
             font-size: 16px;
             outline: none;
             transition: all 0.3s;
@@ -171,8 +560,8 @@
             position: absolute;
             right: 5px;
             top: 5px;
-            background: var(--teal);
-            color: var(--navy);
+            background: var(--light-blue);
+            color: var(--dark-blue);
             border: none;
             border-radius: 50%;
             width: 36px;
@@ -186,7 +575,7 @@
         }
 
         .profile-results {
-            background: var(--navy);
+            background: var(--medium-blue);
             border-radius: 8px;
             padding: 15px;
             margin: 0 auto 20px;
@@ -195,6 +584,7 @@
             width: 100%;
             max-width: 600px;
             display: none;
+            border: 1px solid rgba(100, 255, 218, 0.2);
         }
 
         .profile-result-item {
@@ -209,13 +599,19 @@
         }
 
         .profile-result-name {
-            color: var(--teal);
+            color: var(--light-blue);
             font-weight: 500;
         }
 
         .profile-result-role {
-            color: var(--text-muted);
+            color: var(--text-secondary);
             font-size: 0.9em;
+        }
+
+        .profile-result-skills {
+            color: var(--text-secondary);
+            font-size: 0.8em;
+            margin-top: 5px;
         }
 
         .tasking-iframe-container {
@@ -235,32 +631,126 @@
         }
 
         .tasking-iframe-title {
-            color: var(--navy);
+            color: var(--text-primary);
             font-size: 1.1em;
+            font-weight: 500;
         }
 
         .back-to-search {
-            background: var(--navy);
-            color: var(--teal);
-            border: 1px solid var(--teal);
+            background: var(--medium-blue);
+            color: var(--light-blue);
+            border: 1px solid var(--light-blue);
             border-radius: 4px;
-            padding: 5px 10px;
+            padding: 8px 16px;
             cursor: pointer;
             transition: all 0.2s;
             font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
         .back-to-search:hover {
             background: rgba(100, 255, 218, 0.1);
         }
 
+        /* Current Sheet Info */
+        .current-sheet-info {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(10, 25, 47, 0.9);
+            padding: 8px 15px;
+            border-radius: 6px;
+            color: var(--light-blue);
+            font-size: 0.9rem;
+            font-weight: 500;
+            z-index: 998;
+            display: none;
+            border: 1px solid rgba(100, 255, 218, 0.2);
+            backdrop-filter: blur(5px);
+            max-width: 80%;
+        }
+
+        /* Footer */
         footer {
-            padding: 0.75rem;
-            background: var(--navy);
-            border-top: 1px solid rgba(100, 255, 218, 0.1);
-            font-size: 0.75rem;
-            color: var(--text-muted);
+            background: var(--medium-blue);
+            color: var(--text-secondary);
             text-align: center;
+            font-size: 13px;
+            padding: 12px 20px;
+            border-top: 1px solid rgba(100, 255, 218, 0.2);
+            flex-shrink: 0;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 1200px) {
+            .sidenav {
+                width: 240px;
+            }
+            
+            .header-actions {
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .sidenav {
+                width: 80px;
+            }
+            
+            .hub-code, .nav-section-title span, .nav-link span {
+                display: none;
+            }
+            
+            .nav-section-title {
+                justify-content: center;
+                padding: 16px 0;
+            }
+            
+            .nav-section-title i {
+                margin-right: 0;
+                font-size: 1.3rem;
+            }
+
+            .nav-link {
+                padding: 16px 0;
+                justify-content: center;
+            }
+
+            .nav-link.active::before {
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+            
+            header {
+                padding: 15px 20px;
+            }
+            
+            .header-actions {
+                gap: 12px;
+            }
+            
+            .user-email {
+                display: none;
+            }
+            
+            .logout-btn span {
+                display: none;
+            }
+            
+            .logout-btn {
+                padding: 6px;
+                width: 32px;
+                height: 32px;
+                justify-content: center;
+            }
+            
+            .current-sheet-info {
+                font-size: 0.8rem;
+                padding: 6px 12px;
+                max-width: 70%;
+            }
         }
 
         @media (max-width: 768px) {
@@ -268,104 +758,435 @@
                 flex-direction: column;
             }
             
-            .sidebar {
+            .sidenav {
                 width: 100%;
-                padding: 1rem 0;
+                flex-direction: row;
+                height: auto;
+                margin-bottom: 0;
             }
             
-            .nav-menu {
+            .nav-logo-placeholder, .hub-code, .nav-spacer {
+                display: none;
+            }
+            
+            .nav-links {
                 display: flex;
                 overflow-x: auto;
-                padding: 0 0.75rem;
+                padding: 0 10px;
             }
             
-            .nav-item {
+            .nav-section {
+                margin-bottom: 0;
+                margin-right: 5px;
+                min-width: 80px;
+            }
+
+            .nav-section-title {
+                padding: 15px 10px;
+                border-radius: 0;
                 white-space: nowrap;
             }
+
+            .nav-submenu {
+                position: absolute;
+                background: var(--medium-blue);
+                z-index: 100;
+                min-width: 200px;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+                border-radius: 8px;
+                overflow: hidden;
+            }
+
+            .nav-link {
+                padding: 12px 15px;
+                white-space: nowrap;
+            }
+
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+                padding: 15px;
+            }
+
+            .header-actions {
+                width: 100%;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .dashboard-nav {
+                flex-wrap: wrap;
+                order: 3;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .user-info {
+                order: 1;
+                margin-right: 0;
+            }
             
-            .sheet-container {
+            .datetime {
+                order: 2;
+                align-items: flex-start;
+            }
+            
+            main {
+                padding: 15px;
+            }
+            
+            .current-sheet-info {
+                top: 5px;
+                left: 5px;
+                font-size: 0.75rem;
+                padding: 5px 10px;
+                max-width: 60%;
+            }
+            
+            .sheet-header {
+                padding: 0.75rem 1rem;
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .header-actions {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+            
+            .dashboard-nav {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .datetime {
+                width: 100%;
+                align-items: flex-start;
+            }
+            
+            .sheet-loader-text {
+                font-size: 1rem;
+                max-width: 90%;
+            }
+            
+            .profile-search {
+                padding: 0;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            header {
+                padding: 12px;
+            }
+            
+            main {
+                padding: 12px;
+            }
+            
+            .hub-name {
+                font-size: 1.1rem;
+            }
+            
+            .dashboard-nav a {
+                padding: 6px 10px;
+                font-size: 0.9rem;
+            }
+            
+            .logout-btn {
+                padding: 4px 8px;
+                font-size: 11px;
+            }
+            
+            .current-sheet-info {
+                font-size: 0.7rem;
+                padding: 4px 8px;
+                max-width: 50%;
+            }
+            
+            .sheet-loader-text {
+                font-size: 0.9rem;
+            }
+            
+            .sheet-header {
+                font-size: 1rem;
                 padding: 0.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="app-container">
-        <!-- Sidebar Navigation -->
-        <nav class="sidebar">
-            <div class="logo">
-                <i class="fas fa-server"></i>
-                <span>KazInni</span>
+    <div class="background"></div>
+    <div class="background-pattern"></div>
+
+    <!-- Authentication Loader (Shows first) -->
+    <div class="auth-loader" id="authLoader">
+        <div class="loader"></div>
+        <div class="auth-loader-text">Verifying your access to KazInni Workforce Console...</div>
+    </div>
+
+    <!-- Access Denied Message (Shows when not logged in) -->
+    <div class="access-denied" id="accessDenied">
+        <h2>🔒 Access Restricted</h2>
+        <p>You need to be logged in to access the KazInni Workforce Console. Please sign in through the main dashboard first.</p>
+        <a href="index.html" class="access-denied-btn">Go to Dashboard</a>
+    </div>
+
+    <!-- Workspace Content (Shows when logged in) -->
+    <div class="app-container" id="workspaceContainer">
+        
+        <!-- Side Navigation -->
+        <nav class="sidenav">
+            <div class="nav-logo-placeholder">
+                <div class="logo-img"><i class="fas fa-server"></i></div>
             </div>
-            <a href="#" class="nav-item active" data-sheet="talent">
-                <i class="fas fa-users"></i>
-                <span>Talent Pool</span>
-            </a>
-            <a href="#" class="nav-item" data-sheet="jobs">
-                <i class="fa fa-briefcase"></i>
-                <span>Jobs</span>
-            </a>
-            <a href="#" class="nav-item" data-sheet="freelance">
-                <i class="fas fa-project-diagram"></i>
-                <span>Freelance</span>
-            </a>
-            <a href="#" class="nav-item" data-sheet="tasking">
-                <i class="fas fa-user-tag"></i>
-                <span>Tasking Profile</span>
-            </a>
-            <a href="#" class="nav-item" data-sheet="performance">
-                <i class="fas fa-chart-line"></i>
-                <span>Performance</span>
-            </a>
+            
+            <div class="hub-code">KAZINNI-001</div>
+            
+            <div class="nav-spacer"></div>
+            
+            <ul class="nav-links">
+                <!-- Workforce Management Section -->
+                <li class="nav-section active">
+                    <div class="nav-section-title">
+                        <i class="fas fa-users"></i>
+                        <span>Workforce Management</span>
+                    </div>
+                    <ul class="nav-submenu">
+                        <li>
+                            <a href="#" class="nav-link active" data-sheet="talent">
+                                <span>Talent Pool</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-link" data-sheet="jobs">
+                                <span>Jobs</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-link" data-sheet="freelance">
+                                <span>Freelance</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-link" data-sheet="tasking">
+                                <span>Tasking Profile</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-link" data-sheet="performance">
+                                <span>Performance</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- Employee Resources Section -->
+                <li class="nav-section">
+                    <div class="nav-section-title">
+                        <i class="fas fa-id-card"></i>
+                        <span>Employee Resources</span>
+                    </div>
+                    <ul class="nav-submenu">
+                        <li>
+                            <a href="#" class="nav-link" data-sheet="onboarding">
+                                <span>Onboarding</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-link" data-sheet="training">
+                                <span>Training & Development</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-link" data-sheet="benefits">
+                                <span>Benefits</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- Project Management Section -->
+                <li class="nav-section">
+                    <div class="nav-section-title">
+                        <i class="fas fa-project-diagram"></i>
+                        <span>Project Management</span>
+                    </div>
+                    <ul class="nav-submenu">
+                        <li>
+                            <a href="#" class="nav-link" data-sheet="projects">
+                                <span>Project Portfolio</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-link" data-sheet="tasks">
+                                <span>Task Management</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-link" data-sheet="timeline">
+                                <span>Project Timeline</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                
+                <!-- Analytics Section -->
+                <li class="nav-section">
+                    <div class="nav-section-title">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Analytics</span>
+                    </div>
+                    <ul class="nav-submenu">
+                        <li>
+                            <a href="#" class="nav-link" data-sheet="workforce-analytics">
+                                <span>Workforce Analytics</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-link" data-sheet="kpi-dashboard">
+                                <span>KPI Dashboard</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-link" data-sheet="reports">
+                                <span>Reports</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
         </nav>
 
         <!-- Main Content -->
-        <main class="main-content">
-            <div class="sheet-header">
-                <i class="fas fa-users"></i>
-                <span>Talent Pool Management</span>
-            </div>
-            <div class="sheet-container">
-                <div id="sheet-iframe-container" class="iframe-wrapper">
-                    <div class="iframe-container">
-                        <iframe id="sheet-iframe" src="https://docs.google.com/spreadsheets/d/1wRD0swwVKjKYgBjo8UxZ6dU4fGWrNrPa3_AK4qDzjlo/edit?usp=sharing"></iframe>
+        <div class="main-content">
+            <header>
+                <div class="hub-info">
+                    <h1 class="hub-name">KazInni Workforce Console</h1>
+                    <div class="hub-status">Workforce Management System • All Systems Operational</div>
+                </div>
+
+                <div class="header-actions">
+                    <!-- User Info in Header -->
+                    <div class="user-info">
+                        <div class="user-email" id="userEmail">admin@kazinni.com</div>
+                        <button class="logout-btn" id="logoutBtn">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Logout</span>
+                        </button>
+                    </div>
+
+                    <div class="datetime">
+                        <div id="time">10:45 AM</div>
+                        <div id="date">Friday, June 10, 2023</div>
+                    </div>
+                    
+                    <div class="dashboard-nav">
+                        <a href="index.html" id="homeButton">Home</a>
+                        <a href="#" class="active" id="workspaceButton">Workspace</a>
                     </div>
                 </div>
-                <div id="tasking-profile-container" class="tasking-profile-container" style="display: none;">
-                    <div class="profile-search">
-                        <div class="search-container">
-                            <input type="text" class="search-input" id="profile-search" placeholder="Search for a team member by name...">
-                            <button class="search-btn" id="search-btn">
-                                <i class="fas fa-search"></i>
-                            </button>
+            </header>
+
+            <main>
+                <div class="sheet-header" id="sheetHeader">
+                    <i class="fas fa-users"></i>
+                    <span id="sheetTitle">Talent Pool Management</span>
+                </div>
+                
+                <div class="sheet-container">
+                    <!-- Default Sheet View -->
+                    <div id="sheet-iframe-container" class="iframe-wrapper">
+                        <!-- Sheet Loader -->
+                        <div class="sheet-loader" id="sheetLoader">
+                            <div class="loader"></div>
+                            <div class="sheet-loader-text" id="sheetLoaderText">Loading sheet...</div>
+                            <small>This may take a moment for larger sheets</small>
                         </div>
-                        <div class="profile-results" id="profile-results">
-                            <!-- Search results will appear here -->
-                        </div>
-                    </div>
-                    <div class="tasking-iframe-container" id="tasking-iframe-container">
-                        <div class="tasking-iframe-header">
-                            <div class="tasking-iframe-title" id="tasking-iframe-title">
-                                Profile View: <span id="current-profile-name"></span>
-                            </div>
-                            <button class="back-to-search" id="back-to-search">
-                                <i class="fas fa-arrow-left"></i> Back to Search
-                            </button>
-                        </div>
+                        
+                        <!-- Current Sheet Info -->
+                        <div class="current-sheet-info" id="currentSheetInfo"></div>
+                        
                         <div class="iframe-container">
-                            <iframe id="tasking-iframe" class="tasking-iframe"></iframe>
+                            <iframe id="sheet-iframe" class="workspace-iframe"></iframe>
+                        </div>
+                    </div>
+                    
+                    <!-- Tasking Profile View -->
+                    <div id="tasking-profile-container" class="tasking-profile-container" style="display: none;">
+                        <div class="profile-search">
+                            <div class="search-container">
+                                <input type="text" class="search-input" id="profile-search" placeholder="Search for a team member by name...">
+                                <button class="search-btn" id="search-btn">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                            <div class="profile-results" id="profile-results">
+                                <!-- Search results will appear here -->
+                            </div>
+                        </div>
+                        <div class="tasking-iframe-container" id="tasking-iframe-container">
+                            <!-- Sheet Loader -->
+                            <div class="sheet-loader" id="taskingSheetLoader">
+                                <div class="loader"></div>
+                                <div class="sheet-loader-text" id="taskingSheetLoaderText">Loading profile sheet...</div>
+                                <small>This may take a moment for larger sheets</small>
+                            </div>
+                            
+                            <div class="tasking-iframe-header">
+                                <div class="tasking-iframe-title" id="tasking-iframe-title">
+                                    Profile View: <span id="current-profile-name"></span>
+                                </div>
+                                <button class="back-to-search" id="back-to-search">
+                                    <i class="fas fa-arrow-left"></i> Back to Search
+                                </button>
+                            </div>
+                            <div class="iframe-container">
+                                <iframe id="tasking-iframe" class="workspace-iframe"></iframe>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </main>
+            </main>
+
+            <footer>Powered by ERH - KazInni Workforce Console &copy; <span id="current-year"></span> Teleioō Savour</footer>
+        </div>
     </div>
 
-    <footer>
-        KazInni Workforce Management System | © <span id="current-year"></span> Teleioō Savour
-    </footer>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
     <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCOb4BqfiN3vt1Y13UTEpA_boCqNRH6rrQ",
+            authDomain: "dsog-stores-dashboard.firebaseapp.com",
+            databaseURL: "https://dsog-stores-dashboard-default-rtdb.firebaseio.com",
+            projectId: "dsog-stores-dashboard",
+            storageBucket: "dsog-stores-dashboard.firebasestorage.app",
+            messagingSenderId: "1085972125142",
+            appId: "1:1085972125142:web:9abea9ee0dd792a052c077"
+        };
+        
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        
+        // DOM elements
+        const authLoader = document.getElementById('authLoader');
+        const accessDenied = document.getElementById('accessDenied');
+        const workspaceContainer = document.getElementById('workspaceContainer');
+        const sheetLoader = document.getElementById('sheetLoader');
+        const sheetLoaderText = document.getElementById('sheetLoaderText');
+        const currentSheetInfo = document.getElementById('currentSheetInfo');
+        const taskingSheetLoader = document.getElementById('taskingSheetLoader');
+        const taskingSheetLoaderText = document.getElementById('taskingSheetLoaderText');
+        
         // Set current year
         document.getElementById('current-year').textContent = new Date().getFullYear();
         
@@ -394,10 +1215,55 @@
                 url: "https://docs.google.com/spreadsheets/d/1wyVg7YNwfWcTSOHmbmUA9SxzrOfB8fZwSfslFVaJYaw/edit?usp=sharing",
                 title: "Performance Metrics",
                 icon: "fas fa-chart-line"
+            },
+            onboarding: {
+                url: "https://docs.google.com/spreadsheets/d/1/create-your-onboarding-sheet/edit",
+                title: "Employee Onboarding",
+                icon: "fas fa-user-plus"
+            },
+            training: {
+                url: "https://docs.google.com/spreadsheets/d/1/create-your-training-sheet/edit",
+                title: "Training & Development",
+                icon: "fas fa-graduation-cap"
+            },
+            benefits: {
+                url: "https://docs.google.com/spreadsheets/d/1/create-your-benefits-sheet/edit",
+                title: "Employee Benefits",
+                icon: "fas fa-heart"
+            },
+            projects: {
+                url: "https://docs.google.com/spreadsheets/d/1/create-your-projects-sheet/edit",
+                title: "Project Portfolio",
+                icon: "fas fa-project-diagram"
+            },
+            tasks: {
+                url: "https://docs.google.com/spreadsheets/d/1/create-your-tasks-sheet/edit",
+                title: "Task Management",
+                icon: "fas fa-tasks"
+            },
+            timeline: {
+                url: "https://docs.google.com/spreadsheets/d/1/create-your-timeline-sheet/edit",
+                title: "Project Timeline",
+                icon: "fas fa-calendar-alt"
+            },
+            "workforce-analytics": {
+                url: "https://docs.google.com/spreadsheets/d/1/create-your-analytics-sheet/edit",
+                title: "Workforce Analytics",
+                icon: "fas fa-chart-bar"
+            },
+            "kpi-dashboard": {
+                url: "https://docs.google.com/spreadsheets/d/1/create-your-kpi-sheet/edit",
+                title: "KPI Dashboard",
+                icon: "fas fa-tachometer-alt"
+            },
+            reports: {
+                url: "https://docs.google.com/spreadsheets/d/1/create-your-reports-sheet/edit",
+                title: "Reports",
+                icon: "fas fa-file-alt"
             }
         };
 
-        // Sample user profiles database (in a real app, this would come from an API)
+        // Sample user profiles database
         const userProfiles = [
             {
                 id: "user1",
@@ -429,32 +1295,199 @@
             }
         ];
 
-        // DOM elements
-        const navItems = document.querySelectorAll('.nav-item');
-        const iframe = document.getElementById('sheet-iframe');
-        const iframeContainer = document.getElementById('sheet-iframe-container');
-        const taskingContainer = document.getElementById('tasking-profile-container');
-        const sheetTitle = document.querySelector('.sheet-header span');
-        const sheetIcon = document.querySelector('.sheet-header i');
-        const searchInput = document.getElementById('profile-search');
-        const searchBtn = document.getElementById('search-btn');
-        const profileResults = document.getElementById('profile-results');
-        const taskingIframeContainer = document.getElementById('tasking-iframe-container');
-        const taskingIframe = document.getElementById('tasking-iframe');
-        const currentProfileName = document.getElementById('current-profile-name');
-        const backToSearchBtn = document.getElementById('back-to-search');
+        // Show auth loader initially
+        authLoader.style.display = 'flex';
+        accessDenied.style.display = 'none';
+        workspaceContainer.style.display = 'none';
+        
+        // Track current sheet info
+        let currentSheetName = '';
+        let currentSheetUrl = '';
+        
+        // Authentication state observer
+        let authCheckTimeout;
+        
+        auth.onAuthStateChanged((user) => {
+            // Clear any existing timeout
+            clearTimeout(authCheckTimeout);
+            
+            if (user) {
+                // User is signed in - show workspace after a short delay
+                setTimeout(() => {
+                    handleUserSignedIn(user);
+                }, 800);
+            } else {
+                // User is signed out - show access denied after a short delay
+                setTimeout(() => {
+                    handleUserSignedOut();
+                }, 800);
+            }
+        });
+        
+        // Set a timeout in case Firebase auth takes too long
+        authCheckTimeout = setTimeout(() => {
+            const currentUser = auth.currentUser;
+            if (!currentUser) {
+                handleUserSignedOut();
+            }
+        }, 3000);
 
-        // Navigation
-        navItems.forEach(item => {
-            item.addEventListener('click', function(e) {
-                e.preventDefault();
+        function handleUserSignedIn(user) {
+            console.log("User signed in:", user.email);
+            
+            // Hide auth loader
+            authLoader.style.display = 'none';
+            
+            // Show workspace content
+            workspaceContainer.style.display = 'flex';
+            
+            // Update user email display
+            document.getElementById('userEmail').textContent = user.email;
+            
+            // Initialize the workspace functionality
+            initWorkspace();
+        }
+
+        function handleUserSignedOut() {
+            console.log("User signed out");
+            
+            // Hide auth loader
+            authLoader.style.display = 'none';
+            
+            // Show access denied message
+            accessDenied.style.display = 'flex';
+            
+            // Hide workspace content
+            workspaceContainer.style.display = 'none';
+        }
+
+        // Logout functionality
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            auth.signOut()
+                .then(() => {
+                    window.location.href = 'index.html';
+                })
+                .catch((error) => {
+                    console.error("Logout error:", error);
+                });
+        });
+
+        // Initialize workspace functionality
+        function initWorkspace() {
+            // DOM elements
+            const navSections = document.querySelectorAll(".nav-section");
+            const navLinks = document.querySelectorAll(".nav-link");
+            const iframe = document.getElementById('sheet-iframe');
+            const iframeContainer = document.getElementById('sheet-iframe-container');
+            const taskingContainer = document.getElementById('tasking-profile-container');
+            const sheetTitle = document.getElementById('sheetTitle');
+            const sheetIcon = document.querySelector('.sheet-header i');
+            const searchInput = document.getElementById('profile-search');
+            const searchBtn = document.getElementById('search-btn');
+            const profileResults = document.getElementById('profile-results');
+            const taskingIframeContainer = document.getElementById('tasking-iframe-container');
+            const taskingIframe = document.getElementById('tasking-iframe');
+            const currentProfileName = document.getElementById('current-profile-name');
+            const backToSearchBtn = document.getElementById('back-to-search');
+            const timeElement = document.getElementById('time');
+            const dateElement = document.getElementById('date');
+
+            // Initialize the application
+            function initApp() {
+                setupEventListeners();
+                loadInitialSection();
+                updateClock();
+                setInterval(updateClock, 60000);
                 
-                // Update active nav item
-                document.querySelector('.nav-item.active').classList.remove('active');
-                this.classList.add('active');
+                // Set up iframe load event listeners
+                setupIframeEvents();
+            }
+
+            // Set up iframe load event listeners
+            function setupIframeEvents() {
+                iframe.addEventListener('load', function() {
+                    setTimeout(() => {
+                        sheetLoader.style.display = 'none';
+                        if (currentSheetName) {
+                            currentSheetInfo.textContent = currentSheetName;
+                            currentSheetInfo.style.display = 'block';
+                        }
+                    }, 500);
+                });
                 
-                // Load the selected sheet
-                const sheetKey = this.dataset.sheet;
+                iframe.addEventListener('loadstart', function() {
+                    sheetLoader.style.display = 'flex';
+                    currentSheetInfo.style.display = 'none';
+                });
+                
+                iframe.addEventListener('error', function() {
+                    sheetLoader.style.display = 'none';
+                    currentSheetInfo.style.display = 'none';
+                });
+                
+                // Tasking iframe events
+                taskingIframe.addEventListener('load', function() {
+                    setTimeout(() => {
+                        taskingSheetLoader.style.display = 'none';
+                    }, 500);
+                });
+                
+                taskingIframe.addEventListener('loadstart', function() {
+                    taskingSheetLoader.style.display = 'flex';
+                });
+                
+                taskingIframe.addEventListener('error', function() {
+                    taskingSheetLoader.style.display = 'none';
+                });
+            }
+
+            // Set up all event listeners
+            function setupEventListeners() {
+                // Navigation section toggles
+                document.querySelectorAll(".nav-section-title").forEach(title => {
+                    title.addEventListener("click", function(e) {
+                        e.stopPropagation();
+                        const section = this.parentElement;
+                        navSections.forEach(s => {
+                            if (s !== section) s.classList.remove("active");
+                        });
+                        section.classList.toggle("active");
+                    });
+                });
+
+                // Navigation links
+                navLinks.forEach(link => {
+                    link.addEventListener("click", function(e) {
+                        e.preventDefault();
+                        handleNavLinkClick(this);
+                    });
+                });
+
+                // Tasking profile search
+                searchBtn.addEventListener('click', searchProfiles);
+                searchInput.addEventListener('keyup', function(e) {
+                    if (e.key === 'Enter') {
+                        searchProfiles();
+                    } else if (searchInput.value.length > 1) {
+                        searchProfiles();
+                    } else {
+                        profileResults.style.display = 'none';
+                    }
+                });
+
+                // Back to search button
+                backToSearchBtn.addEventListener('click', function() {
+                    taskingIframeContainer.style.display = 'none';
+                    profileResults.style.display = 'none';
+                    taskingIframe.src = '';
+                });
+            }
+
+            function handleNavLinkClick(link) {
+                navLinks.forEach(l => l.classList.remove("active"));
+                link.classList.add("active");
+                
+                const sheetKey = link.dataset.sheet;
                 const sheetConfig = sheets[sheetKey];
                 
                 // Update title and icon
@@ -468,94 +1501,289 @@
                     profileResults.style.display = 'none';
                     taskingIframeContainer.style.display = 'none';
                     searchInput.value = '';
+                    currentSheetInfo.style.display = 'none';
                 } else {
                     iframeContainer.style.display = 'flex';
                     taskingContainer.style.display = 'none';
                     if (sheetConfig.url) {
-                        iframe.src = sheetConfig.url;
+                        loadSheetContent(sheetConfig.url, sheetConfig.title);
                     }
                 }
-            });
-        });
-
-        // Search functionality
-        searchBtn.addEventListener('click', searchProfiles);
-        searchInput.addEventListener('keyup', function(e) {
-            if (e.key === 'Enter') {
-                searchProfiles();
-            } else if (searchInput.value.length > 1) {
-                searchProfiles();
-            } else {
-                profileResults.style.display = 'none';
             }
-        });
 
-        function searchProfiles() {
-            const searchTerm = searchInput.value.trim().toLowerCase();
-            
-            if (searchTerm === '') {
-                profileResults.style.display = 'none';
-                return;
+            function loadSheetContent(sheetUrl, sheetName) {
+                currentSheetName = sheetName;
+                currentSheetUrl = sheetUrl;
+                
+                // Show sheet loader with specific text
+                sheetLoaderText.textContent = `Loading ${currentSheetName}...`;
+                sheetLoader.style.display = 'flex';
+                currentSheetInfo.style.display = 'none';
+                
+                if (sheetUrl && sheetUrl.includes('docs.google.com')) {
+                    const sheetId = extractSheetId(sheetUrl);
+                    if (sheetId) {
+                        // Clear iframe first to trigger loadstart event
+                        iframe.src = '';
+                        
+                        // Small delay to ensure loadstart event fires
+                        setTimeout(() => {
+                            iframe.src = `https://docs.google.com/spreadsheets/d/${sheetId}/edit?usp=sharing`;
+                        }, 100);
+                    } else {
+                        showPlaceholderContent("Invalid Google Sheet URL format");
+                    }
+                } else {
+                    showPlaceholderContent("No Google Sheet configured for this module");
+                }
             }
-            
-            // Filter profiles
-            const filteredProfiles = userProfiles.filter(profile => 
-                profile.name.toLowerCase().includes(searchTerm) ||
-                profile.role.toLowerCase().includes(searchTerm) ||
-                profile.skills.some(skill => skill.toLowerCase().includes(searchTerm))
-            );
-            
-            if (filteredProfiles.length > 0) {
-                displayProfileResults(filteredProfiles);
-            } else {
-                profileResults.innerHTML = '<div class="profile-result-item">No matching profiles found</div>';
+
+            function showPlaceholderContent(message) {
+                sheetLoader.style.display = 'none';
+                currentSheetInfo.style.display = 'none';
+                
+                iframe.srcdoc = `
+                    <!DOCTYPE html>
+                    <html>
+                    <head>
+                        <style>
+                            body {
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                height: 100%;
+                                font-family: Arial, sans-serif;
+                                color: #666;
+                                background: #f9f9f9;
+                            }
+                            .content {
+                                text-align: center;
+                                padding: 20px;
+                                max-width: 500px;
+                            }
+                            i {
+                                font-size: 3rem;
+                                color: #ddd;
+                                margin-bottom: 20px;
+                            }
+                            h2 {
+                                color: #444;
+                                margin: 0 0 15px 0;
+                            }
+                            p {
+                                margin: 5px 0;
+                                line-height: 1.5;
+                            }
+                        </style>
+                        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+                    </head>
+                    <body>
+                        <div class="content">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <h2>Content Not Available</h2>
+                            <p>${message}</p>
+                            ${message.includes('configured') ? '<p>Please configure a valid Google Sheet URL in the sheets object.</p>' : ''}
+                        </div>
+                    </body>
+                    </html>
+                `;
+            }
+
+            function searchProfiles() {
+                const searchTerm = searchInput.value.trim().toLowerCase();
+                
+                if (searchTerm === '') {
+                    profileResults.style.display = 'none';
+                    return;
+                }
+                
+                // Filter profiles
+                const filteredProfiles = userProfiles.filter(profile => 
+                    profile.name.toLowerCase().includes(searchTerm) ||
+                    profile.role.toLowerCase().includes(searchTerm) ||
+                    profile.skills.some(skill => skill.toLowerCase().includes(searchTerm))
+                );
+                
+                if (filteredProfiles.length > 0) {
+                    displayProfileResults(filteredProfiles);
+                } else {
+                    profileResults.innerHTML = '<div class="profile-result-item">No matching profiles found</div>';
+                    profileResults.style.display = 'block';
+                }
+            }
+
+            function displayProfileResults(profiles) {
+                profileResults.innerHTML = '';
+                
+                profiles.forEach(profile => {
+                    const profileItem = document.createElement('div');
+                    profileItem.className = 'profile-result-item';
+                    profileItem.dataset.id = profile.id;
+                    profileItem.innerHTML = `
+                        <div class="profile-result-name">${profile.name}</div>
+                        <div class="profile-result-role">${profile.role}</div>
+                        <div class="profile-result-skills">${profile.skills.join(', ')}</div>
+                    `;
+                    
+                    profileItem.addEventListener('click', () => loadProfileSheet(profile));
+                    profileResults.appendChild(profileItem);
+                });
+                
                 profileResults.style.display = 'block';
             }
-        }
 
-        function displayProfileResults(profiles) {
-            profileResults.innerHTML = '';
-            
-            profiles.forEach(profile => {
-                const profileItem = document.createElement('div');
-                profileItem.className = 'profile-result-item';
-                profileItem.dataset.id = profile.id;
-                profileItem.innerHTML = `
-                    <div class="profile-result-name">${profile.name}</div>
-                    <div class="profile-result-role">${profile.role}</div>
-                    <div class="profile-result-skills">${profile.skills.join(', ')}</div>
-                `;
+            function loadProfileSheet(profile) {
+                currentProfileName.textContent = profile.name;
                 
-                profileItem.addEventListener('click', () => loadProfileSheet(profile));
-                profileResults.appendChild(profileItem);
-            });
-            
-            profileResults.style.display = 'block';
+                // Show tasking sheet loader
+                taskingSheetLoaderText.textContent = `Loading ${profile.name}'s profile...`;
+                taskingSheetLoader.style.display = 'flex';
+                
+                if (profile.sheetUrl && profile.sheetUrl.includes('docs.google.com')) {
+                    const sheetId = extractSheetId(profile.sheetUrl);
+                    if (sheetId) {
+                        taskingIframe.src = `https://docs.google.com/spreadsheets/d/${sheetId}/edit?usp=sharing`;
+                    } else {
+                        taskingIframe.srcdoc = `
+                            <!DOCTYPE html>
+                            <html>
+                            <head>
+                                <style>
+                                    body {
+                                        display: flex;
+                                        justify-content: center;
+                                        align-items: center;
+                                        height: 100%;
+                                        font-family: Arial, sans-serif;
+                                        color: #666;
+                                        background: #f9f9f9;
+                                    }
+                                    .content {
+                                        text-align: center;
+                                        padding: 20px;
+                                        max-width: 500px;
+                                    }
+                                    i {
+                                        font-size: 3rem;
+                                        color: #ddd;
+                                        margin-bottom: 20px;
+                                    }
+                                    h2 {
+                                        color: #444;
+                                        margin: 0 0 15px 0;
+                                    }
+                                    p {
+                                        margin: 5px 0;
+                                        line-height: 1.5;
+                                    }
+                                </style>
+                                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+                            </head>
+                            <body>
+                                <div class="content">
+                                    <i class="fas fa-user-circle"></i>
+                                    <h2>${profile.name}</h2>
+                                    <p><strong>Role:</strong> ${profile.role}</p>
+                                    <p><strong>Skills:</strong> ${profile.skills.join(', ')}</p>
+                                    <p>Profile sheet URL is not properly configured.</p>
+                                </div>
+                            </body>
+                            </html>
+                        `;
+                        taskingSheetLoader.style.display = 'none';
+                    }
+                } else {
+                    taskingIframe.srcdoc = `
+                        <!DOCTYPE html>
+                        <html>
+                        <head>
+                            <style>
+                                body {
+                                    display: flex;
+                                    justify-content: center;
+                                    align-items: center;
+                                    height: 100%;
+                                    font-family: Arial, sans-serif;
+                                    color: #666;
+                                    background: #f9f9f9;
+                                }
+                                .content {
+                                    text-align: center;
+                                    padding: 20px;
+                                    max-width: 500px;
+                                }
+                                i {
+                                    font-size: 3rem;
+                                    color: #ddd;
+                                    margin-bottom: 20px;
+                                }
+                                h2 {
+                                    color: #444;
+                                    margin: 0 0 15px 0;
+                                }
+                                p {
+                                    margin: 5px 0;
+                                    line-height: 1.5;
+                                }
+                            </style>
+                            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+                        </head>
+                        <body>
+                            <div class="content">
+                                <i class="fas fa-user-circle"></i>
+                                <h2>${profile.name}</h2>
+                                <p><strong>Role:</strong> ${profile.role}</p>
+                                <p><strong>Skills:</strong> ${profile.skills.join(', ')}</p>
+                                <p>No profile sheet configured for this user.</p>
+                            </div>
+                        </body>
+                        </html>
+                    `;
+                    taskingSheetLoader.style.display = 'none';
+                }
+                
+                profileResults.style.display = 'none';
+                taskingIframeContainer.style.display = 'flex';
+                searchInput.value = '';
+            }
+
+            function updateClock() {
+                const now = new Date();
+                let hours = now.getHours();
+                const ampm = hours >= 12 ? 'PM' : 'AM';
+                hours = hours % 12;
+                hours = hours ? hours : 12;
+                const minutes = now.getMinutes().toString().padStart(2, '0');
+                
+                timeElement.textContent = `${hours}:${minutes} ${ampm}`;
+                
+                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                dateElement.textContent = now.toLocaleDateString('en-US', options);
+            }
+
+            function extractSheetId(url) {
+                try {
+                    const match = url.match(/\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/);
+                    return match ? match[1] : null;
+                } catch (e) {
+                    console.error("Error extracting sheet ID:", e);
+                    return null;
+                }
+            }
+
+            function loadInitialSection() {
+                const activeLink = document.querySelector('.nav-link.active');
+                if (activeLink) {
+                    handleNavLinkClick(activeLink);
+                } else if (navLinks.length > 0) {
+                    navLinks[0].classList.add("active");
+                    handleNavLinkClick(navLinks[0]);
+                }
+            }
+
+            // Initialize the application
+            initApp();
         }
-
-        function loadProfileSheet(profile) {
-            currentProfileName.textContent = profile.name;
-            taskingIframe.src = profile.sheetUrl + "?rm=minimal";
-            profileResults.style.display = 'none';
-            taskingIframeContainer.style.display = 'flex';
-            searchInput.value = '';
-            
-            // Force the iframe to resize to show entire sheet
-            setTimeout(() => {
-                taskingIframe.style.height = '100%';
-                taskingIframe.style.width = '100%';
-            }, 1000);
-        }
-
-        // Back to search button
-        backToSearchBtn.addEventListener('click', function() {
-            taskingIframeContainer.style.display = 'none';
-            profileResults.style.display = 'none';
-            taskingIframe.src = '';
-        });
-
-        // Initialize the default view
-        iframe.src = sheets.talent.url;
     </script>
 </body>
 </html>
