@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Jasiri E-Hub | EFH</title>
+  <title>Enterprise Finance Hub (EFH)</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <style>
@@ -582,55 +582,6 @@
       flex-shrink: 0;
     }
 
-    /* Financial Stats Widget */
-    .financial-stats {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 15px;
-      margin-bottom: 20px;
-    }
-
-    .stat-card {
-      background: rgba(100, 255, 218, 0.05);
-      border-radius: 8px;
-      padding: 15px;
-      border: 1px solid rgba(100, 255, 218, 0.1);
-      transition: all 0.3s ease;
-    }
-
-    .stat-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    }
-
-    .stat-title {
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .stat-value {
-      font-size: 1.4rem;
-      font-weight: 600;
-      color: var(--finance-light-green);
-    }
-
-    .stat-change {
-      font-size: 0.8rem;
-      margin-top: 5px;
-    }
-
-    .positive {
-      color: var(--finance-green);
-    }
-
-    .negative {
-      color: #ff6b6b;
-    }
-
     /* Responsive styles */
     @media (max-width: 1200px) {
       .sidenav {
@@ -698,10 +649,6 @@
         font-size: 0.8rem;
         padding: 6px 12px;
         max-width: 70%;
-      }
-      
-      .financial-stats {
-        grid-template-columns: repeat(2, 1fr);
       }
     }
 
@@ -811,10 +758,6 @@
         font-size: 0.75rem;
         padding: 5px 10px;
         max-width: 60%;
-      }
-      
-      .financial-stats {
-        grid-template-columns: 1fr;
       }
     }
 
@@ -1038,7 +981,7 @@
     <div class="main-content">
       <header>
         <div class="hub-info">
-          <h1 class="hub-name">Enterprise Resource Hub - Finance Operations</h1>
+          <h1 class="hub-name">Enterprise Finance Hub (EFH)</h1>
           <div class="hub-status">Financial System • All Systems Operational</div>
         </div>
 
@@ -1079,53 +1022,6 @@
       </header>
 
       <main>
-        <!-- Financial Stats Widget -->
-        <div class="financial-stats" id="financialStats">
-          <div class="stat-card">
-            <div class="stat-title">
-              <i class="fas fa-wallet"></i>
-              <span>Total Revenue</span>
-            </div>
-            <div class="stat-value" id="revenueValue">$1,245,678</div>
-            <div class="stat-change positive">
-              <i class="fas fa-arrow-up"></i> 12.5% from last month
-            </div>
-          </div>
-          
-          <div class="stat-card">
-            <div class="stat-title">
-              <i class="fas fa-money-bill-wave"></i>
-              <span>Net Profit</span>
-            </div>
-            <div class="stat-value" id="profitValue">$245,890</div>
-            <div class="stat-change positive">
-              <i class="fas fa-arrow-up"></i> 8.2% from last month
-            </div>
-          </div>
-          
-          <div class="stat-card">
-            <div class="stat-title">
-              <i class="fas fa-cash-register"></i>
-              <span>Accounts Receivable</span>
-            </div>
-            <div class="stat-value" id="arValue">$189,450</div>
-            <div class="stat-change negative">
-              <i class="fas fa-arrow-down"></i> 3.1% from last month
-            </div>
-          </div>
-          
-          <div class="stat-card">
-            <div class="stat-title">
-              <i class="fas fa-credit-card"></i>
-              <span>Accounts Payable</span>
-            </div>
-            <div class="stat-value" id="apValue">$156,780</div>
-            <div class="stat-change negative">
-              <i class="fas fa-arrow-up"></i> 5.7% from last month
-            </div>
-          </div>
-        </div>
-        
         <div class="iframe-container">
           <!-- Sheet Loader -->
           <div class="sheet-loader" id="sheetLoader">
@@ -1137,11 +1033,11 @@
           <!-- Current Sheet Info -->
           <div class="current-sheet-info" id="currentSheetInfo"></div>
           
-          <iframe id="iframe" loading="lazy" title="ERH Finance Workspace"></iframe>
+          <iframe id="iframe" loading="lazy" title="EFH Finance Workspace"></iframe>
         </div>
       </main>
 
-      <footer>Powered by ERH - Finance Operations Hub &copy; 2025</footer>
+      <footer>Powered by Enterprise Finance Hub (EFH) &copy; 2025</footer>
     </div>
   </div>
 
@@ -1174,7 +1070,6 @@
     const sheetLoaderText = document.getElementById('sheetLoaderText');
     const currentSheetInfo = document.getElementById('currentSheetInfo');
     const iframe = document.getElementById('iframe');
-    const financialStats = document.getElementById('financialStats');
     
     // Show auth loader initially
     authLoader.style.display = 'flex';
@@ -1227,9 +1122,6 @@
       
       // Initialize the workspace functionality
       initWorkspace();
-      
-      // Update financial stats with random data
-      updateFinancialStats();
     }
 
     function handleUserSignedOut() {
@@ -1243,23 +1135,6 @@
       
       // Hide workspace content
       workspaceContainer.style.display = 'none';
-    }
-
-    // Update financial stats with random data
-    function updateFinancialStats() {
-      const revenue = Math.floor(Math.random() * 2000000) + 1000000;
-      const profit = Math.floor(revenue * 0.2);
-      const ar = Math.floor(Math.random() * 300000) + 100000;
-      const ap = Math.floor(Math.random() * 250000) + 80000;
-      
-      document.getElementById('revenueValue').textContent = formatCurrency(revenue);
-      document.getElementById('profitValue').textContent = formatCurrency(profit);
-      document.getElementById('arValue').textContent = formatCurrency(ar);
-      document.getElementById('apValue').textContent = formatCurrency(ap);
-    }
-    
-    function formatCurrency(amount) {
-      return '$' + amount.toLocaleString('en-US');
     }
 
     // Logout functionality
@@ -1699,9 +1574,6 @@
         if (data.tools.length > 0) {
           loadToolContent(data.tools[0].sheetUrl, data.tools[0].name);
         }
-        
-        // Update financial stats when switching sections
-        updateFinancialStats();
       }
 
       function updateToolsMenu(tools) {
