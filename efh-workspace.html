@@ -1,0 +1,1844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jasiri E-Hub | EFH</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    :root {
+      --dark-blue: #0a192f;
+      --medium-blue: #172a45;
+      --light-blue: #64ffda;
+      --accent-gold: #e6c78a;
+      --soft-teal: #81c8be;
+      --text-primary: #f0e6ef;
+      --text-secondary: #b8b8d1;
+      --finance-green: #4CAF50;
+      --finance-light-green: #66BB6A;
+    }
+
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--dark-blue);
+      color: var(--text-primary);
+      overflow-x: hidden;
+    }
+
+    .background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--dark-blue);
+      z-index: -2;
+    }
+    
+    .background-pattern {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: radial-gradient(circle at 25% 25%, rgba(100, 255, 218, 0.1) 0%, transparent 50%);
+      background-size: 400% 400%;
+      z-index: -1;
+      animation: gradientMove 30s ease infinite;
+    }
+    
+    @keyframes gradientMove {
+      0% { background-position: 0% 0%; }
+      50% { background-position: 100% 100%; }
+      100% { background-position: 0% 0%; }
+    }
+
+    /* Authentication Loader */
+    .auth-loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--dark-blue);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 10001;
+      text-align: center;
+      padding: 20px;
+    }
+    
+    .auth-loader-text {
+      color: var(--light-blue);
+      margin-top: 25px;
+      font-size: 1.2rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 0.7; }
+      50% { opacity: 1; }
+    }
+
+    /* Sheet Loader */
+    .sheet-loader {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--medium-blue);
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      text-align: center;
+      padding: 20px;
+    }
+    
+    .sheet-loader-text {
+      color: var(--light-blue);
+      margin-top: 25px;
+      font-size: 1.1rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      animation: pulse 1.5s ease-in-out infinite;
+      max-width: 80%;
+      text-align: center;
+    }
+    
+    .sheet-loader small {
+      color: var(--text-secondary);
+      margin-top: 10px;
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    /* Loader animation */
+    .loader {
+      width: 45px;
+      aspect-ratio: 1;
+      --c: no-repeat linear-gradient(var(--light-blue) 0 0);
+      background: var(--c), var(--c), var(--c), var(--c), var(--c), var(--c);
+      animation: 
+        l14-1 .5s infinite alternate,
+        l14-2 2s infinite;
+    }
+    
+    @keyframes l14-1 {
+      0%,10% { background-size: 20% 100%; }
+      100% { background-size: 20% 20%; }
+    }
+    
+    @keyframes l14-2 {
+      0%,49.9% { background-position: 0 0, 0 100%, 50% 50%, 50% 50%, 100% 0, 100% 100%; }
+      50%,100% { background-position: 0 50%, 0 50%, 50% 0, 50% 100%, 100% 50%, 100% 50%; }
+    }
+
+    /* Access Denied Message */
+    .access-denied {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(10, 25, 47, 0.95);
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+      text-align: center;
+      padding: 20px;
+    }
+    
+    .access-denied h2 {
+      color: var(--light-blue);
+      margin-bottom: 20px;
+      font-size: 2rem;
+    }
+    
+    .access-denied p {
+      color: var(--text-secondary);
+      margin-bottom: 30px;
+      font-size: 1.1rem;
+      max-width: 500px;
+      line-height: 1.6;
+    }
+    
+    .access-denied-btn {
+      background: var(--light-blue);
+      color: var(--dark-blue);
+      border: none;
+      padding: 12px 30px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 16px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    
+    .access-denied-btn:hover {
+      background: var(--accent-gold);
+      color: var(--dark-blue);
+      transform: translateY(-2px);
+    }
+
+    /* Layout structure */
+    .app-container {
+      display: none;
+      height: 100vh;
+      min-height: 0;
+      width: 100%;
+    }
+
+    /* Side navigation */
+    .sidenav {
+      width: 280px;
+      background: var(--medium-blue);
+      color: var(--text-primary);
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      flex-shrink: 0;
+      z-index: 10;
+      overflow: hidden;
+    }
+
+    .nav-logo-placeholder {
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid rgba(100, 255, 218, 0.2);
+      padding: 20px 0;
+    }
+
+    .logo-img {
+      width: 60px;
+      height: 60px;
+      background: rgba(100, 255, 218, 0.15);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--light-blue);
+      font-size: 1.8rem;
+    }
+
+    .hub-code {
+      padding: 20px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-align: center;
+      border-bottom: 1px solid rgba(100, 255, 218, 0.2);
+      margin-bottom: 20px;
+      color: var(--light-blue);
+    }
+
+    .nav-spacer {
+      height: 30px;
+    }
+
+    .nav-links {
+      list-style: none;
+      padding: 0 15px;
+      margin: 0;
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .nav-section {
+      margin-bottom: 15px;
+    }
+
+    .nav-section-title {
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      color: var(--light-blue);
+      font-weight: 600;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      user-select: none;
+    }
+
+    .nav-section-title:hover {
+      background: rgba(100, 255, 218, 0.1);
+    }
+
+    .nav-section-title i {
+      margin-right: 15px;
+      width: 20px;
+      text-align: center;
+      font-size: 1.1rem;
+    }
+
+    .nav-submenu {
+      list-style: none;
+      padding: 0;
+      margin: 5px 0 15px 0;
+      display: none;
+    }
+
+    .nav-section.active .nav-submenu {
+      display: block;
+    }
+
+    .nav-link {
+      padding: 12px 20px 12px 50px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: var(--text-secondary);
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      position: relative;
+      user-select: none;
+    }
+
+    .nav-link:hover {
+      color: var(--text-primary);
+      background: rgba(100, 255, 218, 0.05);
+    }
+
+    .nav-link.active {
+      color: var(--finance-light-green);
+      font-weight: 500;
+      background: rgba(76, 175, 80, 0.1);
+    }
+
+    .nav-link.active::before {
+      content: "";
+      position: absolute;
+      left: 30px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 6px;
+      height: 6px;
+      background: var(--finance-light-green);
+      border-radius: 50%;
+    }
+
+    /* Main content area */
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background-color: var(--medium-blue);
+      min-height: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Header styles */
+    header {
+      background: var(--medium-blue);
+      color: var(--text-primary);
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      border-bottom: 1px solid rgba(100, 255, 218, 0.2);
+      flex-shrink: 0;
+      z-index: 5;
+    }
+
+    .hub-info {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .hub-name {
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: var(--light-blue);
+      margin: 0;
+    }
+
+    .hub-status {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      margin-top: 5px;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .dashboard-nav {
+      display: flex;
+      gap: 10px;
+    }
+
+    .dashboard-nav a {
+      padding: 8px 16px;
+      border-radius: 6px;
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .dashboard-nav a:hover {
+      color: var(--text-primary);
+      background: rgba(100, 255, 218, 0.05);
+    }
+
+    .dashboard-nav a.active {
+      color: var(--light-blue);
+      background: rgba(100, 255, 218, 0.1);
+    }
+
+    /* User Info in Header */
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-right: 20px;
+    }
+
+    .user-email {
+      color: var(--text-primary);
+      font-weight: 500;
+      font-size: 0.9rem;
+      white-space: nowrap;
+    }
+
+    .logout-btn {
+      background: var(--soft-teal);
+      color: var(--dark-blue);
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+
+    .logout-btn:hover {
+      background: var(--light-blue);
+      color: var(--dark-blue);
+      transform: translateY(-2px);
+    }
+
+    .datetime {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      white-space: nowrap;
+    }
+
+    #time {
+      font-size: 1.1rem;
+      font-weight: 500;
+    }
+
+    #date {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-top: 3px;
+    }
+
+    .dropdown {
+      position: relative;
+    }
+
+    .menu-button {
+      background: rgba(100, 255, 218, 0.1);
+      color: var(--light-blue);
+      padding: 8px 16px;
+      border-radius: 6px;
+      border: 1px solid rgba(100, 255, 218, 0.2);
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .menu-button:hover {
+      background: rgba(100, 255, 218, 0.2);
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      top: calc(100% + 5px);
+      right: 0;
+      min-width: 220px;
+      background: var(--medium-blue);
+      border-radius: 6px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      border: 1px solid rgba(100, 255, 218, 0.2);
+      overflow: hidden;
+    }
+
+    .dropdown-content a {
+      display: block;
+      padding: 10px 16px;
+      text-decoration: none;
+      font-size: 14px;
+      color: var(--text-secondary);
+      border-bottom: 1px solid rgba(100, 255, 218, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .dropdown-content a:hover {
+      color: var(--text-primary);
+      background: rgba(100, 255, 218, 0.05);
+    }
+
+    .dropdown-content a:last-child {
+      border-bottom: none;
+    }
+
+    .dropdown.open .dropdown-content {
+      display: block;
+    }
+
+    /* Content area */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      overflow: auto;
+      position: relative;
+    }
+
+    .iframe-container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+
+    iframe {
+      border: none;
+      width: 100%;
+      height: 100%;
+      min-height: 500px;
+      background-color: #fff;
+    }
+
+    /* Current Sheet Info */
+    .current-sheet-info {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(10, 25, 47, 0.9);
+      padding: 8px 15px;
+      border-radius: 6px;
+      color: var(--finance-light-green);
+      font-size: 0.9rem;
+      font-weight: 500;
+      z-index: 998;
+      display: none;
+      border: 1px solid rgba(100, 255, 218, 0.2);
+      backdrop-filter: blur(5px);
+      max-width: 80%;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--medium-blue);
+      color: var(--text-secondary);
+      text-align: center;
+      font-size: 13px;
+      padding: 12px 20px;
+      border-top: 1px solid rgba(100, 255, 218, 0.2);
+      flex-shrink: 0;
+    }
+
+    /* Financial Stats Widget */
+    .financial-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .stat-card {
+      background: rgba(100, 255, 218, 0.05);
+      border-radius: 8px;
+      padding: 15px;
+      border: 1px solid rgba(100, 255, 218, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .stat-title {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .stat-value {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--finance-light-green);
+    }
+
+    .stat-change {
+      font-size: 0.8rem;
+      margin-top: 5px;
+    }
+
+    .positive {
+      color: var(--finance-green);
+    }
+
+    .negative {
+      color: #ff6b6b;
+    }
+
+    /* Responsive styles */
+    @media (max-width: 1200px) {
+      .sidenav {
+        width: 240px;
+      }
+      
+      .header-actions {
+        gap: 15px;
+      }
+    }
+
+    @media (max-width: 992px) {
+      .sidenav {
+        width: 80px;
+      }
+      
+      .hub-code, .nav-section-title span, .nav-link span {
+        display: none;
+      }
+      
+      .nav-section-title {
+        justify-content: center;
+        padding: 16px 0;
+      }
+      
+      .nav-section-title i {
+        margin-right: 0;
+        font-size: 1.3rem;
+      }
+
+      .nav-link {
+        padding: 16px 0;
+        justify-content: center;
+      }
+
+      .nav-link.active::before {
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      
+      header {
+        padding: 15px 20px;
+      }
+      
+      .header-actions {
+        gap: 12px;
+      }
+      
+      .user-email {
+        display: none;
+      }
+      
+      .logout-btn span {
+        display: none;
+      }
+      
+      .logout-btn {
+        padding: 6px;
+        width: 32px;
+        height: 32px;
+        justify-content: center;
+      }
+      
+      .current-sheet-info {
+        font-size: 0.8rem;
+        padding: 6px 12px;
+        max-width: 70%;
+      }
+      
+      .financial-stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .app-container {
+        flex-direction: column;
+      }
+      
+      .sidenav {
+        width: 100%;
+        flex-direction: row;
+        height: auto;
+        margin-bottom: 0;
+      }
+      
+      .nav-logo-placeholder, .hub-code, .nav-spacer {
+        display: none;
+      }
+      
+      .nav-links {
+        display: flex;
+        overflow-x: auto;
+        padding: 0 10px;
+      }
+      
+      .nav-section {
+        margin-bottom: 0;
+        margin-right: 5px;
+        min-width: 80px;
+      }
+
+      .nav-section-title {
+        padding: 15px 10px;
+        border-radius: 0;
+        white-space: nowrap;
+      }
+
+      .nav-submenu {
+        position: absolute;
+        background: var(--medium-blue);
+        z-index: 100;
+        min-width: 200px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .nav-link {
+        padding: 12px 15px;
+        white-space: nowrap;
+      }
+
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+        padding: 15px;
+      }
+
+      .header-actions {
+        width: 100%;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .dashboard-nav {
+        flex-wrap: wrap;
+        order: 3;
+        width: 100%;
+        justify-content: center;
+      }
+
+      .user-info {
+        order: 1;
+        margin-right: 0;
+      }
+      
+      .datetime {
+        order: 2;
+        align-items: flex-start;
+      }
+      
+      .dropdown {
+        order: 4;
+        width: 100%;
+      }
+
+      .dropdown-content {
+        left: 0;
+        right: auto;
+        width: 100%;
+      }
+
+      .menu-button {
+        width: 100%;
+        justify-content: center;
+      }
+      
+      main {
+        padding: 15px;
+      }
+      
+      .current-sheet-info {
+        top: 5px;
+        left: 5px;
+        font-size: 0.75rem;
+        padding: 5px 10px;
+        max-width: 60%;
+      }
+      
+      .financial-stats {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .header-actions {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+      }
+      
+      .dashboard-nav {
+        width: 100%;
+        justify-content: space-between;
+      }
+      
+      .datetime {
+        width: 100%;
+        align-items: flex-start;
+      }
+      
+      .sheet-loader-text {
+        font-size: 1rem;
+        max-width: 90%;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      header {
+        padding: 12px;
+      }
+      
+      main {
+        padding: 12px;
+      }
+      
+      .hub-name {
+        font-size: 1.1rem;
+      }
+      
+      .dashboard-nav a {
+        padding: 6px 10px;
+        font-size: 0.9rem;
+      }
+      
+      .logout-btn {
+        padding: 4px 8px;
+        font-size: 11px;
+      }
+      
+      .current-sheet-info {
+        font-size: 0.7rem;
+        padding: 4px 8px;
+        max-width: 50%;
+      }
+      
+      .sheet-loader-text {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="background"></div>
+  <div class="background-pattern"></div>
+
+  <!-- Authentication Loader (Shows first) -->
+  <div class="auth-loader" id="authLoader">
+    <div class="loader"></div>
+    <div class="auth-loader-text">Verifying your access...</div>
+  </div>
+
+  <!-- Access Denied Message (Shows when not logged in) -->
+  <div class="access-denied" id="accessDenied">
+    <h2>🔒 Access Restricted</h2>
+    <p>You need to be logged in to access the Enterprise Finance Hub. Please sign in through the main dashboard first.</p>
+    <a href="index.html" class="access-denied-btn">Go to Dashboard</a>
+  </div>
+
+  <!-- Workspace Content (Shows when logged in) -->
+  <div class="app-container" id="workspaceContainer">
+    
+    <!-- Side Navigation -->
+    <nav class="sidenav">
+      <div class="nav-logo-placeholder">
+        <div class="logo-img"><i class="fas fa-chart-line"></i></div>
+      </div>
+      
+      <div class="hub-code">EFH-FIN001</div>
+      
+      <div class="nav-spacer"></div>
+      
+      <ul class="nav-links">
+        <!-- Accounting Section -->
+        <li class="nav-section active">
+          <div class="nav-section-title">
+            <i class="fas fa-calculator"></i>
+            <span>Accounting</span>
+          </div>
+          <ul class="nav-submenu">
+            <li>
+              <a href="#" class="nav-link active" data-section="general-ledger">
+                <span>General Ledger</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="nav-link" data-section="accounts-payable">
+                <span>Accounts Payable</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="nav-link" data-section="accounts-receivable">
+                <span>Accounts Receivable</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        
+        <!-- Financial Reporting Section -->
+        <li class="nav-section">
+          <div class="nav-section-title">
+            <i class="fas fa-file-invoice-dollar"></i>
+            <span>Financial Reporting</span>
+          </div>
+          <ul class="nav-submenu">
+            <li>
+              <a href="#" class="nav-link" data-section="balance-sheet">
+                <span>Balance Sheet</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="nav-link" data-section="income-statement">
+                <span>Income Statement</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="nav-link" data-section="cash-flow">
+                <span>Cash Flow</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        
+        <!-- Budgeting Section -->
+        <li class="nav-section">
+          <div class="nav-section-title">
+            <i class="fas fa-coins"></i>
+            <span>Budgeting</span>
+          </div>
+          <ul class="nav-submenu">
+            <li>
+              <a href="#" class="nav-link" data-section="budget-planning">
+                <span>Budget Planning</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="nav-link" data-section="expense-tracking">
+                <span>Expense Tracking</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="nav-link" data-section="forecasting">
+                <span>Financial Forecasting</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        
+        <!-- Treasury Section -->
+        <li class="nav-section">
+          <div class="nav-section-title">
+            <i class="fas fa-piggy-bank"></i>
+            <span>Treasury</span>
+          </div>
+          <ul class="nav-submenu">
+            <li>
+              <a href="#" class="nav-link" data-section="cash-management">
+                <span>Cash Management</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="nav-link" data-section="bank-reconciliation">
+                <span>Bank Reconciliation</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="nav-link" data-section="investment">
+                <span>Investment Tracking</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        
+        <!-- Tax Section -->
+        <li class="nav-section">
+          <div class="nav-section-title">
+            <i class="fas fa-receipt"></i>
+            <span>Tax Management</span>
+          </div>
+          <ul class="nav-submenu">
+            <li>
+              <a href="#" class="nav-link" data-section="tax-compliance">
+                <span>Tax Compliance</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="nav-link" data-section="vat-management">
+                <span>VAT Management</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="nav-link" data-section="tax-reporting">
+                <span>Tax Reporting</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <header>
+        <div class="hub-info">
+          <h1 class="hub-name">Enterprise Resource Hub - Finance Operations</h1>
+          <div class="hub-status">Financial System • All Systems Operational</div>
+        </div>
+
+        <div class="header-actions">
+          <!-- User Info in Header -->
+          <div class="user-info">
+            <div class="user-email" id="userEmail">finance@erh.com</div>
+            <button class="logout-btn" id="logoutBtn">
+              <i class="fas fa-sign-out-alt"></i>
+              <span>Logout</span>
+            </button>
+          </div>
+
+          <div class="datetime">
+            <div id="time">10:45 AM</div>
+            <div id="date">Friday, June 10, 2023</div>
+          </div>
+
+          <div class="dropdown" id="dropdown">
+            <button class="menu-button" id="menuToggle">
+              <i class="fas fa-tools"></i>
+              <span>Tools</span>
+            </button>
+            <div class="dropdown-content" id="menuContent">
+              <a href="#" data-link="journal-entries">Journal Entries</a>
+              <a href="#" data-link="trial-balance">Trial Balance</a>
+              <a href="#" data-link="chart-of-accounts">Chart of Accounts</a>
+              <a href="#" data-link="account-reconciliation">Account Reconciliation</a>
+              <a href="#" data-link="financial-periods">Financial Periods</a> 
+            </div>
+          </div>
+          
+          <div class="dashboard-nav">
+            <a href="index.html" id="homeButton">Home</a>
+            <a href="#" class="active" id="workspaceButton">Finance Hub</a>
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <!-- Financial Stats Widget -->
+        <div class="financial-stats" id="financialStats">
+          <div class="stat-card">
+            <div class="stat-title">
+              <i class="fas fa-wallet"></i>
+              <span>Total Revenue</span>
+            </div>
+            <div class="stat-value" id="revenueValue">$1,245,678</div>
+            <div class="stat-change positive">
+              <i class="fas fa-arrow-up"></i> 12.5% from last month
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-title">
+              <i class="fas fa-money-bill-wave"></i>
+              <span>Net Profit</span>
+            </div>
+            <div class="stat-value" id="profitValue">$245,890</div>
+            <div class="stat-change positive">
+              <i class="fas fa-arrow-up"></i> 8.2% from last month
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-title">
+              <i class="fas fa-cash-register"></i>
+              <span>Accounts Receivable</span>
+            </div>
+            <div class="stat-value" id="arValue">$189,450</div>
+            <div class="stat-change negative">
+              <i class="fas fa-arrow-down"></i> 3.1% from last month
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-title">
+              <i class="fas fa-credit-card"></i>
+              <span>Accounts Payable</span>
+            </div>
+            <div class="stat-value" id="apValue">$156,780</div>
+            <div class="stat-change negative">
+              <i class="fas fa-arrow-up"></i> 5.7% from last month
+            </div>
+          </div>
+        </div>
+        
+        <div class="iframe-container">
+          <!-- Sheet Loader -->
+          <div class="sheet-loader" id="sheetLoader">
+            <div class="loader"></div>
+            <div class="sheet-loader-text" id="sheetLoaderText">Loading financial sheet...</div>
+            <small>This may take a moment for larger sheets</small>
+          </div>
+          
+          <!-- Current Sheet Info -->
+          <div class="current-sheet-info" id="currentSheetInfo"></div>
+          
+          <iframe id="iframe" loading="lazy" title="ERH Finance Workspace"></iframe>
+        </div>
+      </main>
+
+      <footer>Powered by ERH - Finance Operations Hub &copy; 2025</footer>
+    </div>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
+  <script>
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyCOb4BqfiN3vt1Y13UTEpA_boCqNRH6rrQ",
+      authDomain: "dsog-stores-dashboard.firebaseapp.com",
+      databaseURL: "https://dsog-stores-dashboard-default-rtdb.firebaseio.com",
+      projectId: "dsog-stores-dashboard",
+      storageBucket: "dsog-stores-dashboard.firebasestorage.app",
+      messagingSenderId: "1085972125142",
+      appId: "1:1085972125142:web:9abea9ee0dd792a052c077"
+    };
+    
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    
+    // DOM elements
+    const authLoader = document.getElementById('authLoader');
+    const accessDenied = document.getElementById('accessDenied');
+    const workspaceContainer = document.getElementById('workspaceContainer');
+    const sheetLoader = document.getElementById('sheetLoader');
+    const sheetLoaderText = document.getElementById('sheetLoaderText');
+    const currentSheetInfo = document.getElementById('currentSheetInfo');
+    const iframe = document.getElementById('iframe');
+    const financialStats = document.getElementById('financialStats');
+    
+    // Show auth loader initially
+    authLoader.style.display = 'flex';
+    accessDenied.style.display = 'none';
+    workspaceContainer.style.display = 'none';
+    
+    // Track current sheet info
+    let currentSheetName = '';
+    let currentSheetUrl = '';
+    
+    // Authentication state observer
+    let authCheckTimeout;
+    
+    auth.onAuthStateChanged((user) => {
+      // Clear any existing timeout
+      clearTimeout(authCheckTimeout);
+      
+      if (user) {
+        // User is signed in - show workspace after a short delay
+        setTimeout(() => {
+          handleUserSignedIn(user);
+        }, 800);
+      } else {
+        // User is signed out - show access denied after a short delay
+        setTimeout(() => {
+          handleUserSignedOut();
+        }, 800);
+      }
+    });
+    
+    // Set a timeout in case Firebase auth takes too long
+    authCheckTimeout = setTimeout(() => {
+      const currentUser = auth.currentUser;
+      if (!currentUser) {
+        handleUserSignedOut();
+      }
+    }, 3000);
+
+    function handleUserSignedIn(user) {
+      console.log("User signed in:", user.email);
+      
+      // Hide auth loader
+      authLoader.style.display = 'none';
+      
+      // Show workspace content
+      workspaceContainer.style.display = 'flex';
+      
+      // Update user email display
+      document.getElementById('userEmail').textContent = user.email;
+      
+      // Initialize the workspace functionality
+      initWorkspace();
+      
+      // Update financial stats with random data
+      updateFinancialStats();
+    }
+
+    function handleUserSignedOut() {
+      console.log("User signed out");
+      
+      // Hide auth loader
+      authLoader.style.display = 'none';
+      
+      // Show access denied message
+      accessDenied.style.display = 'flex';
+      
+      // Hide workspace content
+      workspaceContainer.style.display = 'none';
+    }
+
+    // Update financial stats with random data
+    function updateFinancialStats() {
+      const revenue = Math.floor(Math.random() * 2000000) + 1000000;
+      const profit = Math.floor(revenue * 0.2);
+      const ar = Math.floor(Math.random() * 300000) + 100000;
+      const ap = Math.floor(Math.random() * 250000) + 80000;
+      
+      document.getElementById('revenueValue').textContent = formatCurrency(revenue);
+      document.getElementById('profitValue').textContent = formatCurrency(profit);
+      document.getElementById('arValue').textContent = formatCurrency(ar);
+      document.getElementById('apValue').textContent = formatCurrency(ap);
+    }
+    
+    function formatCurrency(amount) {
+      return '$' + amount.toLocaleString('en-US');
+    }
+
+    // Logout functionality
+    document.getElementById('logoutBtn').addEventListener('click', function() {
+      auth.signOut()
+        .then(() => {
+          window.location.href = 'index.html';
+        })
+        .catch((error) => {
+          console.error("Logout error:", error);
+        });
+    });
+
+    // Data for each section with sheet URLs for each tool
+    const moduleData = {
+      // Accounting
+      "general-ledger": {
+        title: "General Ledger",
+        tools: [
+          { 
+            name: "Journal Entries", 
+            link: "journal-entries",
+            sheetUrl: "https://docs.google.com/spreadsheets/d/11HjoAqdGt3erQfUwqPLP9bOK_qDa2PxZ1Xd0z85tS3o/edit" 
+          },
+          { 
+            name: "Trial Balance", 
+            link: "trial-balance",
+            sheetUrl: "https://docs.google.com/spreadsheets/d/1ebqFtXi33SbfSR5rD-0taq-ven-p_Cv-ZvHVDYhtIkU/edit" 
+          },
+          { 
+            name: "Chart of Accounts", 
+            link: "chart-of-accounts",
+            sheetUrl: "https://docs.google.com/spreadsheets/d/171Yoqv6tXKYK6iVrRNQ5NfwQlI1DpvjAOb5iKqDSuGA/edit" 
+          },
+          { 
+            name: "Account Reconciliation", 
+            link: "account-reconciliation",
+            sheetUrl: "https://docs.google.com/spreadsheets/d/1Ztkj7jw0zx_LC8A1Lw0BYqMI1DuVI3d1zKanZ73I9js/edit" 
+          },
+          { 
+            name: "Financial Periods", 
+            link: "financial-periods",
+            sheetUrl: "https://docs.google.com/spreadsheets/d/1aSIc-HRqDK86hDVyxBfWn7dSBJi0aUswsp1C9QcVMtw/edit" 
+          }
+        ]
+      },
+      "accounts-payable": {
+        title: "Accounts Payable",
+        tools: [
+          { 
+            name: "Vendor Invoices", 
+            link: "vendor-invoices",
+            sheetUrl: "https://docs.google.com/spreadsheets/d/1suFSmzKkFsxmelu_XFR2kWv3QuIHzvGl24y_sPGzZdk/edit" 
+          },
+          { 
+            name: "Payment Processing", 
+            link: "payment-processing",
+            sheetUrl: "https://docs.google.com/spreadsheets/d/17s9L2xvHMgERp6tPjIPvTO-YwoDAn4ZTK4EWUKKaxRc/edit" 
+          },
+          { 
+            name: "Aging Report", 
+            link: "aging-report",
+            sheetUrl: "https://docs.google.com/spreadsheets/d/1qxqFQilPT0sY7-wPqggHC9lbvLs5022nUsuybg3JACg/edit" 
+          }
+        ]
+      },
+      "accounts-receivable": {
+        title: "Accounts Receivable",
+        tools: [
+          { 
+            name: "Customer Invoices", 
+            link: "customer-invoices",
+            sheetUrl: "https://docs.google.com/spreadsheets/d/1R1LH8KIIJmSuEzRW_dfI3H1Slu9w9vW4tY1XJ2Krcs4/edit?usp=sharing" 
+          },
+          { 
+            name: "Receipts Processing", 
+            link: "receipts-processing",
+            sheetUrl: "https://docs.google.com/spreadsheets/d/107XRqs2EHfSPUGLgy2A27wpKKP3--rWDN-D_YOBeE_U/edit?usp=sharing" 
+          },
+          { 
+            name: "Collections Tracking", 
+            link: "collections-tracking",
+            sheetUrl: "https://docs.google.com/spreadsheets/d/1qn7D-iTAcN_OgxQsoIhvYVZvzNB_ZGROH0U70wKGOAg/edit?usp=sharing" 
+          }
+        ]
+      },
+      
+      // Financial Reporting
+      "balance-sheet": {
+        title: "Balance Sheet",
+        tools: [
+          { 
+            name: "Current Period", 
+            link: "current-period",
+            sheetUrl: "https://docs.google.com/spreadsheets/d/1eXDwP5MWIAzmHexlCEbIjaXVrTf_ykxNJ2WHsYqD6F8/edit?usp=sharing" 
+          },
+          { 
+            name: "Comparative Analysis", 
+            link: "comparative-analysis",
+            sheetUrl: "https://docs.google.com/spreadsheets/d/1nh-UbCS6OP9k6PkXF_D-C2j5z6u1wXJ6JTP7t69VTzY/edit?usp=sharing" 
+          },
+          { 
+            name: "Trend Analysis", 
+            link: "trend-analysis",
+            sheetUrl: "https://docs.google.com/spreadsheets/d/1598_e9JlTmQO6EIBKg1xQs7wmgqk1aesUiiRDEpa08U/edit?usp=sharing" 
+          }
+        ]
+      },
+      "income-statement": {
+        title: "Income Statement",
+        tools: [
+          { 
+            name: "Profit & Loss", 
+            link: "profit-loss",
+            sheetUrl: "https://docs.google.com/spreadsheets/d/1xG5MDM6_bgRJsSr6TVWTclrC8Y8EwO40yHXLpYodP1E/edit?usp=sharing" 
+          },
+          { 
+            name: "Revenue Analysis", 
+            link: "revenue-analysis",
+            sheetUrl: "https://docs.google.com/spreadsheets/d/1dplQdjdFtUKoIXDbI_AZjBlPN1rIiXkCaHwnfv_lfo0/edit?usp=sharing" 
+          },
+          { 
+            name: "Expense Analysis", 
+            link: "expense-analysis",
+            sheetUrl: "https://docs.google.com/spreadsheets/d/1AEIm5nGG9JrXODSCu17yVp1ZHEemzup2VohlHM6bldE/edit?usp=sharing" 
+          }
+        ]
+      },
+      "cash-flow": {
+        title: "Cash Flow",
+        tools: [
+          { 
+            name: "Cash Flow Statement", 
+            link: "cash-flow-statement",
+            sheetUrl: "https://docs.google.com/spreadsheets/d/1ZUbYU7xY0dU-raazatsrUz3Ks9P_HgoomAfFY0c7zx0/edit?usp=sharing" 
+          },
+          { 
+            name: "Cash Position", 
+            link: "cash-position",
+            sheetUrl: "https://docs.google.com/spreadsheets/d/1ZMUstQY9kWb6DmUxJO_6I-Dbuhc19drW9caKlGG-ulE/edit?usp=sharing" 
+          },
+          { 
+            name: "Liquidity Analysis", 
+            link: "liquidity-analysis",
+            sheetUrl: "https://docs.google.com/spreadsheets/d/191e0v2emLzkBvJYDglV_BhBt18XZiRGEboKazvPQizM/edit?usp=sharing" 
+          }
+        ]
+      },
+      
+      // Budgeting
+      "budget-planning": {
+        title: "Budget Planning",
+        tools: [
+          { 
+            name: "Budget Creation", 
+            link: "budget-creation",
+            sheetUrl: "https://docs.google.com/spreadsheets/d/1OOlDVUUGN3DhpN4hqhBlqjfqncgp03gUPlcBkwH88ck/edit?usp=sharing" 
+          },
+          { 
+            name: "Department Budgets", 
+            link: "department-budgets",
+            sheetUrl: "https://docs.google.com/spreadsheets/d/1VksZXDIZt3NOyy0HIvDsHcazwWTFUcDMhTWYeCWyFH0/edit?usp=sharing" 
+          },
+          { 
+            name: "Capital Budgets", 
+            link: "capital-budgets",
+            sheetUrl: "https://docs.google.com/spreadsheets/d/1n11zWoivieJKdGsgrYIdPu1nz-f9nOcwZ_vMgvwZAWs/edit?usp=sharing" 
+          }
+        ]
+      },
+      "expense-tracking": {
+        title: "Expense Tracking",
+        tools: [
+          { 
+            name: "Expense Approval", 
+            link: "expense-approval",
+            sheetUrl: "https://docs.google.com/spreadsheets/d/17ic4OgH9wscTDw8R59SS6Uv4irAjj-qfx20iiNxZ020/edit?usp=sharing" 
+          },
+          { 
+            name: "Expense Categories", 
+            link: "expense-categories",
+            sheetUrl: "https://docs.google.com/spreadsheets/d/1AiFnBcz6qrSqFnPFQQ_cwNpSbzZyvXWQjWeg2LIEwYA/edit?usp=sharing" 
+          },
+          { 
+            name: "Budget vs Actual", 
+            link: "budget-vs-actual",
+            sheetUrl: "https://docs.google.com/spreadsheets/d/1-y-bKwPbmixNpHYR8PdMQBGlHfvR_IRdpNNxKRv-Dj4/edit?usp=sharing" 
+          }
+        ]
+      },
+      "forecasting": {
+        title: "Financial Forecasting",
+        tools: [
+          { 
+            name: "Revenue Forecast", 
+            link: "revenue-forecast",
+            sheetUrl: "https://docs.google.com/spreadsheets/d/111lOwR67sSFlu2YuMYY8hBkVuCGhDsEuvl8Eb823G3Y/edit?usp=sharing" 
+          },
+          { 
+            name: "Expense Forecast", 
+            link: "expense-forecast",
+            sheetUrl: "https://docs.google.com/spreadsheets/d/1mO13uMd9K9pHOOdnpdPQ70LU4n8hm3E1HASiO5CSSTA/edit?usp=sharing" 
+          },
+          { 
+            name: "Scenario Planning", 
+            link: "scenario-planning",
+            sheetUrl: "https://docs.google.com/spreadsheets/d/1PZ8CmPd9ETHWRJ-lI2OoGoQ52yKlAZ2pFhqYdHr6_sA/edit?usp=sharing" 
+          }
+        ]
+      },
+      
+      // Treasury
+      "cash-management": {
+        title: "Cash Management",
+        tools: [
+          { 
+            name: "Daily Cash Position", 
+            link: "daily-cash",
+            sheetUrl: "https://docs.google.com/spreadsheets/d/1PAKyoZPbuuM-DFA3y5lEsno6CzfkXjTlJbhDgQMNcJY/edit?usp=sharing" 
+          },
+          { 
+            name: "Cash Flow Projection", 
+            link: "cash-projection",
+            sheetUrl: "https://docs.google.com/spreadsheets/d/11TTwm4CLbo-Gxqvwau43rka12qIyT7Sr38KsLyC3gNA/edit?usp=sharing" 
+          },
+          { 
+            name: "Bank Accounts", 
+            link: "bank-accounts",
+            sheetUrl: "https://docs.google.com/spreadsheets/d/16gzLQNpRnaabfbPFxgCmZBBr8Qc9zt1KasztN7qQY4o/edit?usp=sharing" 
+          }
+        ]
+      },
+      "bank-reconciliation": {
+        title: "Bank Reconciliation",
+        tools: [
+          { 
+            name: "Reconciliation Tool", 
+            link: "reconciliation-tool",
+            sheetUrl: "https://docs.google.com/spreadsheets/d/1bcUZVpaBzLurFqp1ZN4lr7QCcA5E24U3jT9DUglhMNA/edit?usp=sharing" 
+          },
+          { 
+            name: "Statement Import", 
+            link: "statement-import",
+            sheetUrl: "https://docs.google.com/spreadsheets/d/1PHa7wNFO5WvAhUeHwFefLvQGOH3u0uULJNYsCygzSwg/edit?usp=sharing" 
+          },
+          { 
+            name: "Discrepancy Tracking", 
+            link: "discrepancy-tracking",
+            sheetUrl: "https://docs.google.com/spreadsheets/d/1y3hGF5GtoPYmuQEoW68ezsZ43pikrt2pzYAMrFrwYHU/edit?usp=sharing" 
+          }
+        ]
+      },
+      "investment": {
+        title: "Investment Tracking",
+        tools: [
+          { 
+            name: "Portfolio Management", 
+            link: "portfolio-management",
+            sheetUrl: "https://docs.google.com/spreadsheets/d/1sQIjzeD-wVIfjap7obuSTUWKnnoOSqc7_vLKaRu8gaI/edit?usp=sharing" 
+          },
+          { 
+            name: "Investment Performance", 
+            link: "investment-performance",
+            sheetUrl: "https://docs.google.com/spreadsheets/d/11J0JT57ZwQd38YkDmE7wf7aQRNx6asIVIHAV75v1ZUk/edit?usp=sharing" 
+          },
+          { 
+            name: "Maturity Schedule", 
+            link: "maturity-schedule",
+            sheetUrl: "https://docs.google.com/spreadsheets/d/1Xy1PciOccMImPLQxmqnV8ZYCq8W2BLQu0rjSU3f2I_Y/edit?usp=sharing" 
+          }
+        ]
+      },
+      
+      // Tax Management
+      "tax-compliance": {
+        title: "Tax Compliance",
+        tools: [
+          { 
+            name: "Tax Calculations", 
+            link: "tax-calculations",
+            sheetUrl: "https://docs.google.com/spreadsheets/d/1NbEikVb7uuMji6wpGnwVMCNdAMXc1Wn8q0NOPsy6j0E/edit?usp=sharing" 
+          },
+          { 
+            name: "Tax Calendar", 
+            link: "tax-calendar",
+            sheetUrl: "https://docs.google.com/spreadsheets/d/1o7eVtZ14P_HJl50DE5WQMCekWxkwj0mrJXXVQC4DqLc/edit?usp=sharing" 
+          },
+          { 
+            name: "Compliance Checklist", 
+            link: "compliance-checklist",
+            sheetUrl: "https://docs.google.com/spreadsheets/d/1JDN-CGFujP3U3OxvzMIQGJaRtjxD0U1wgSf7s0Q_uf0/edit?usp=sharing"
+          }
+        ]
+      },
+      "vat-management": {
+        title: "VAT Management",
+        tools: [
+          { 
+            name: "VAT Returns", 
+            link: "vat-returns",
+            sheetUrl: "https://docs.google.com/spreadsheets/d/1yfSEZK5w_PrxXdk66rIwFhrK9hCfIfi4aXWpggxVgZw/edit?usp=sharing" 
+          },
+          { 
+            name: "VAT Reconciliation", 
+            link: "vat-reconciliation",
+            sheetUrl: "https://docs.google.com/spreadsheets/d/1YH8Yd2Fl7uhbNxWMMluDXU9W5o1q3kHI4BzBCrH9Ri0/edit?usp=sharing" 
+          },
+          { 
+            name: "VAT Rates", 
+            link: "vat-rates",
+            sheetUrl: "https://docs.google.com/spreadsheets/d/1INPcTmJ-0hCPXyYnVYVXDjbTdRNnD91etg_YLVmfhOw/edit?usp=sharing" 
+          }
+        ]
+      },
+      "tax-reporting": {
+        title: "Tax Reporting",
+        tools: [
+          { 
+            name: "Tax Reports", 
+            link: "tax-reports",
+            sheetUrl: "https://docs.google.com/spreadsheets/d/1KRGPMbTYK2uNZAsdcy9c6CUDuP0quJfiBZ7Zk3Ilbes/edit?usp=sharing" 
+          },
+          { 
+            name: "Tax Provision", 
+            link: "tax-provision",
+            sheetUrl: "https://docs.google.com/spreadsheets/d/1k2mnp8g9u_qwwsANpB_vpw8jw0Ntq7BeINYq0D7CG6o/edit?usp=sharing" 
+          },
+          { 
+            name: "Tax Audit", 
+            link: "tax-audit",
+            sheetUrl: "https://docs.google.com/spreadsheets/d/1Rx_zVGalxUPvElwNB5RGM3DLmvd1JLOwfSykKZm-J7s/edit?usp=sharing" 
+          }
+        ]
+      }
+    };
+
+    // Initialize workspace functionality
+    function initWorkspace() {
+      // DOM elements
+      const dropdown = document.getElementById("dropdown");
+      const menuToggle = document.getElementById("menuToggle");
+      const menuContent = document.getElementById("menuContent");
+      const timeElement = document.getElementById("time");
+      const dateElement = document.getElementById("date");
+      const navSections = document.querySelectorAll(".nav-section");
+      const navLinks = document.querySelectorAll(".nav-link");
+
+      // Initialize the application
+      function initApp() {
+        setupEventListeners();
+        loadInitialSection();
+        updateClock();
+        setInterval(updateClock, 60000); // Update time every minute
+        
+        // Set up iframe load event listeners
+        setupIframeEvents();
+      }
+
+      // Set up iframe load event listeners
+      function setupIframeEvents() {
+        iframe.addEventListener('load', function() {
+          // Hide sheet loader when iframe is fully loaded
+          setTimeout(() => {
+            sheetLoader.style.display = 'none';
+            // Show current sheet info
+            if (currentSheetName) {
+              currentSheetInfo.textContent = currentSheetName;
+              currentSheetInfo.style.display = 'block';
+            }
+          }, 500); // Small delay for smoother transition
+        });
+        
+        iframe.addEventListener('loadstart', function() {
+          // Show sheet loader when iframe starts loading
+          sheetLoader.style.display = 'flex';
+          currentSheetInfo.style.display = 'none';
+        });
+        
+        iframe.addEventListener('error', function() {
+          // Hide sheet loader on error
+          sheetLoader.style.display = 'none';
+          currentSheetInfo.style.display = 'none';
+        });
+      }
+
+      // Set up all event listeners
+      function setupEventListeners() {
+        document.querySelectorAll(".nav-section-title").forEach(title => {
+          title.addEventListener("click", function(e) {
+            e.stopPropagation();
+            const section = this.parentElement;
+            navSections.forEach(s => {
+              if (s !== section) s.classList.remove("active");
+            });
+            section.classList.toggle("active");
+          });
+        });
+
+        navLinks.forEach(link => {
+          link.addEventListener("click", function(e) {
+            e.preventDefault();
+            handleNavLinkClick(this);
+          });
+        });
+
+        menuContent.addEventListener("click", function(e) {
+          if (e.target.tagName === 'A') {
+            e.preventDefault();
+            handleToolClick(e.target);
+          }
+        });
+
+        menuToggle.addEventListener("click", function(e) {
+          e.stopPropagation();
+          dropdown.classList.toggle("open");
+        });
+
+        document.addEventListener("click", function() {
+          dropdown.classList.remove("open");
+        });
+      }
+
+      function handleNavLinkClick(link) {
+        navLinks.forEach(l => l.classList.remove("active"));
+        link.classList.add("active");
+        
+        const section = link.dataset.section;
+        const data = moduleData[section];
+        
+        if (!data) {
+          console.error("No data found for section:", section);
+          return;
+        }
+        
+        updateToolsMenu(data.tools);
+        
+        if (data.tools.length > 0) {
+          loadToolContent(data.tools[0].sheetUrl, data.tools[0].name);
+        }
+        
+        // Update financial stats when switching sections
+        updateFinancialStats();
+      }
+
+      function updateToolsMenu(tools) {
+        menuContent.innerHTML = '';
+        tools.forEach(tool => {
+          const link = document.createElement('a');
+          link.href = '#';
+          link.textContent = tool.name;
+          link.dataset.link = tool.link;
+          link.dataset.sheetUrl = tool.sheetUrl;
+          link.dataset.sheetName = tool.name;
+          menuContent.appendChild(link);
+        });
+      }
+
+      function handleToolClick(toolElement) {
+        dropdown.classList.remove("open");
+        const sheetUrl = toolElement.dataset.sheetUrl;
+        const sheetName = toolElement.dataset.sheetName;
+        loadToolContent(sheetUrl, sheetName);
+      }
+
+      function loadToolContent(sheetUrl, sheetName) {
+        currentSheetName = sheetName || 'Financial Sheet';
+        currentSheetUrl = sheetUrl;
+        
+        // Show sheet loader with specific text
+        sheetLoaderText.textContent = `Loading ${currentSheetName}...`;
+        sheetLoader.style.display = 'flex';
+        currentSheetInfo.style.display = 'none';
+        
+        if (sheetUrl && sheetUrl.includes('docs.google.com')) {
+          const sheetId = extractSheetId(sheetUrl);
+          if (sheetId) {
+            // Clear iframe first to trigger loadstart event
+            iframe.src = '';
+            
+            // Small delay to ensure loadstart event fires
+            setTimeout(() => {
+              iframe.src = `https://docs.google.com/spreadsheets/d/${sheetId}/edit?usp=sharing`;
+            }, 100);
+          } else {
+            showPlaceholderContent("Invalid Google Sheet URL format");
+          }
+        } else {
+          showPlaceholderContent("No Google Sheet configured for this tool");
+        }
+      }
+
+      function showPlaceholderContent(message) {
+        sheetLoader.style.display = 'none';
+        currentSheetInfo.style.display = 'none';
+        
+        iframe.srcdoc = `
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <style>
+              body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100%;
+                font-family: Arial, sans-serif;
+                color: #666;
+                background: #f9f9f9;
+              }
+              .content {
+                text-align: center;
+                padding: 20px;
+                max-width: 500px;
+              }
+              i {
+                font-size: 3rem;
+                color: #ddd;
+                margin-bottom: 20px;
+              }
+              h2 {
+                color: #444;
+                margin: 0 0 15px 0;
+              }
+              p {
+                margin: 5px 0;
+                line-height: 1.5;
+              }
+            </style>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+          </head>
+          <body>
+            <div class="content">
+              <i class="fas fa-exclamation-triangle"></i>
+              <h2>Content Not Available</h2>
+              <p>${message}</p>
+              ${message.includes('configured') ? '<p>Please configure a valid Google Sheet URL in the moduleData object.</p>' : ''}
+            </div>
+          </body>
+          </html>
+        `;
+      }
+
+      function updateClock() {
+        const now = new Date();
+        let hours = now.getHours();
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12;
+        hours = hours ? hours : 12;
+        const minutes = now.getMinutes().toString().padStart(2, '0');
+        
+        timeElement.textContent = `${hours}:${minutes} ${ampm}`;
+        
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        dateElement.textContent = now.toLocaleDateString('en-US', options);
+      }
+
+      function extractSheetId(url) {
+        try {
+          const match = url.match(/\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/);
+          return match ? match[1] : null;
+        } catch (e) {
+          console.error("Error extracting sheet ID:", e);
+          return null;
+        }
+      }
+
+      function loadInitialSection() {
+        const activeLink = document.querySelector('.nav-link.active');
+        if (activeLink) {
+          handleNavLinkClick(activeLink);
+        } else if (navLinks.length > 0) {
+          navLinks[0].classList.add("active");
+          handleNavLinkClick(navLinks[0]);
+        }
+      }
+
+      // Initialize the application
+      initApp();
+    }
+  </script>
+</body>
+</html>
