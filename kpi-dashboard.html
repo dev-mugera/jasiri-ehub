@@ -3,57 +3,193 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KPI Dashboard - DSOG Stores</title>
+    <title>DSOG Sales Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-        
         :root {
             --dark-blue: #0a192f;
-            --medium-blue: #172a45;
-            --light-pink: #ff6b8b;
+            --medium-blue: #1a2a44;
+            --light-blue: #233554;
+            --accent-blue: #64ffda;
+            --accent-pink: #ff6b8b;
             --accent-gold: #e6c78a;
             --soft-teal: #81c8be;
             --text-primary: #f0e6ef;
-            --text-secondary: #b8b8d1;
+            --text-secondary: #8892b0;
             --success-green: #4CAF50;
             --warning-orange: #ff9800;
+            --gradient-1: linear-gradient(135deg, #0a192f 0%, #1a2a44 100%);
+            --gradient-2: linear-gradient(135deg, #ff6b8b 0%, #64ffda 100%);
+            --gradient-3: linear-gradient(135deg, #e6c78a 0%, #81c8be 100%);
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            --card-shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
         
         body, html {
-            margin: 0;
-            padding: 0;
             height: 100%;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Inter', 'Poppins', sans-serif;
             color: var(--text-primary);
-            background-color: var(--dark-blue);
+            background: var(--dark-blue);
             overflow-x: hidden;
         }
         
-        .background-pattern {
+        /* Animated Background */
+        .animated-bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: radial-gradient(circle at 25% 25%, rgba(255, 107, 139, 0.1) 0%, transparent 50%);
-            background-size: 400% 400%;
+            z-index: -2;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(100, 255, 218, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 107, 139, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 50% 50%, rgba(230, 199, 138, 0.03) 0%, transparent 30%);
+            animation: pulse 20s ease-in-out infinite alternate;
+        }
+        
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             z-index: -1;
-            animation: gradientMove 30s ease infinite;
         }
         
-        @keyframes gradientMove {
-            0% { background-position: 0% 0%; }
-            50% { background-position: 100% 100%; }
-            100% { background-position: 0% 0%; }
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(100, 255, 218, 0.1);
+            animation: float 15s infinite linear;
         }
         
+        @keyframes pulse {
+            0% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+            100% { opacity: 0.3; }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; }
+        }
+        
+        /* Login Modal Styles */
+        .login-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 25, 47, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+        }
+        
+        .login-form {
+            background: var(--medium-blue);
+            padding: 40px;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 400px;
+            border: 1px solid rgba(100, 255, 218, 0.3);
+            box-shadow: var(--card-shadow-hover);
+            animation: slideUp 0.5s ease;
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .login-form h2 {
+            color: var(--accent-blue);
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 24px;
+        }
+        
+        .login-input-group {
+            margin-bottom: 20px;
+        }
+        
+        .login-input-group label {
+            display: block;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .login-input-group input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--accent-blue);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .login-input-group input:focus {
+            outline: none;
+            border-color: var(--accent-pink);
+            box-shadow: 0 0 0 2px rgba(255, 107, 139, 0.3);
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--gradient-2);
+            color: var(--dark-blue);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .login-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .login-btn:disabled {
+            background: var(--text-secondary);
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .login-error {
+            color: var(--accent-pink);
+            font-size: 14px;
+            text-align: center;
+            margin-top: 10px;
+            display: none;
+        }
+        
+        /* Layout */
         .container {
-            min-height: 100vh;
             max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
-            position: relative;
+            display: none;
         }
         
         /* Header */
@@ -63,52 +199,89 @@
             align-items: center;
             padding: 20px 0;
             margin-bottom: 30px;
-            border-bottom: 1px solid var(--medium-blue);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .logo {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--light-pink);
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
         
-        .logo span {
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: var(--dark-blue);
+        }
+        
+        .logo-text h1 {
+            font-size: 24px;
+            font-weight: 700;
+            background: var(--gradient-2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .logo-text p {
             font-size: 14px;
             color: var(--text-secondary);
-            display: block;
             margin-top: 5px;
         }
         
-        .nav-links {
+        .user-controls {
             display: flex;
+            align-items: center;
             gap: 20px;
         }
         
-        .nav-link {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-weight: 500;
+        .user-info {
+            background: rgba(255, 255, 255, 0.05);
             padding: 8px 15px;
-            border-radius: 6px;
-            transition: all 0.3s ease;
-            position: relative;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            background: var(--gradient-2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark-blue);
+            font-weight: 600;
+        }
+        
+        .user-email {
             font-size: 14px;
+            color: var(--text-primary);
         }
         
-        .nav-link:hover, .nav-link.active {
-            color: var(--light-pink);
-            background-color: rgba(255, 107, 139, 0.1);
+        .logout-btn {
+            background: rgba(255, 107, 139, 0.1);
+            color: var(--accent-pink);
+            border: 1px solid rgba(255, 107, 139, 0.3);
+            padding: 8px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
         }
         
-        .nav-link.active::after {
-            content: '';
-            position: absolute;
-            bottom: -17px;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background-color: var(--light-pink);
-            border-radius: 3px 3px 0 0;
+        .logout-btn:hover {
+            background: rgba(255, 107, 139, 0.2);
+            transform: translateY(-2px);
         }
         
         .datetime {
@@ -116,926 +289,744 @@
         }
         
         #time {
-            font-size: 22px;
-            font-weight: 300;
+            font-size: 28px;
+            font-weight: 600;
+            background: var(--gradient-2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
         #date {
             font-size: 14px;
             color: var(--text-secondary);
-        }
-        
-        .admin-link {
-            color: var(--accent-gold);
-            font-size: 12px;
-            text-decoration: none;
-            display: block;
             margin-top: 5px;
-            opacity: 0.8;
         }
         
-        .admin-link:hover {
-            opacity: 1;
-        }
-        
-        /* KPI Dashboard */
-        .kpi-dashboard {
+        /* Main Dashboard Grid */
+        .dashboard {
             display: grid;
-            grid-template-columns: 1fr;
+            grid-template-columns: repeat(12, 1fr);
             gap: 25px;
+            margin-bottom: 30px;
         }
         
-        /* KPI Cards Grid */
-        .kpi-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin-bottom: 25px;
-        }
-        
+        /* KPI Cards */
         .kpi-card {
-            background-color: var(--medium-blue);
-            border-radius: 10px;
+            grid-column: span 3;
+            background: rgba(26, 42, 68, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
             padding: 25px;
-            display: flex;
-            align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.6s ease forwards;
             opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s ease-out;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            border-left: 4px solid var(--light-pink);
         }
         
-        .kpi-card.visible {
-            opacity: 1;
-            transform: translateY(0);
+        .kpi-card:nth-child(1) { animation-delay: 0.1s; }
+        .kpi-card:nth-child(2) { animation-delay: 0.2s; }
+        .kpi-card:nth-child(3) { animation-delay: 0.3s; }
+        .kpi-card:nth-child(4) { animation-delay: 0.4s; }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
-        .kpi-icon {
-            font-size: 32px;
-            margin-right: 20px;
-            width: 60px;
-            height: 60px;
-            background: rgba(255, 107, 139, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--light-pink);
+        .kpi-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-shadow-hover);
+            border-color: rgba(100, 255, 218, 0.3);
+        }
+        
+        .kpi-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-2);
         }
         
         .kpi-content {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .kpi-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            background: rgba(100, 255, 218, 0.1);
+            color: var(--accent-blue);
+        }
+        
+        .kpi-text {
             flex: 1;
         }
         
         .kpi-value {
-            font-size: 28px;
-            font-weight: 600;
+            font-size: 32px;
+            font-weight: 700;
             margin-bottom: 5px;
-            color: var(--text-primary);
+            background: var(--gradient-2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
         .kpi-label {
             font-size: 14px;
             color: var(--text-secondary);
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
         
         .kpi-trend {
-            font-size: 12px;
-            padding: 3px 8px;
-            border-radius: 12px;
-            display: inline-block;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+            font-weight: 600;
         }
         
         .trend-up {
-            background: rgba(76, 175, 80, 0.2);
             color: var(--success-green);
         }
         
         .trend-down {
-            background: rgba(244, 67, 54, 0.2);
-            color: #f44336;
+            color: var(--accent-pink);
         }
         
-        .trend-neutral {
-            background: rgba(255, 152, 0, 0.2);
-            color: var(--warning-orange);
-        }
-        
-        /* Sales Target Section */
-        .sales-target-section {
-            background-color: var(--medium-blue);
-            border-radius: 10px;
-            padding: 30px;
+        /* Sales Target Card */
+        .sales-target-card {
+            grid-column: span 8;
+            background: rgba(26, 42, 68, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: var(--card-shadow);
+            animation: fadeInUp 0.6s ease 0.5s forwards;
             opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.6s ease-out;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            border-left: 4px solid var(--accent-gold);
         }
         
-        .sales-target-section.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .section-header {
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid rgba(255, 107, 139, 0.2);
+        .target-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 25px;
         }
         
-        .section-title {
-            font-size: 22px;
-            font-weight: 500;
-            color: var(--light-pink);
-            margin: 0;
+        .target-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-primary);
         }
         
-        .section-subtitle {
-            color: var(--text-secondary);
+        .target-period {
             font-size: 14px;
+            color: var(--text-secondary);
+            background: rgba(255, 255, 255, 0.1);
+            padding: 5px 15px;
+            border-radius: 20px;
         }
         
         .target-progress {
             margin-bottom: 30px;
         }
         
-        .progress-header {
+        .progress-info {
             display: flex;
             justify-content: space-between;
-            align-items: center;
             margin-bottom: 10px;
         }
         
-        .progress-label {
-            color: var(--text-secondary);
+        .progress-labels span {
             font-size: 14px;
+            color: var(--text-secondary);
         }
         
-        .progress-percentage {
-            color: var(--accent-gold);
+        .progress-labels .current {
+            color: var(--accent-blue);
             font-weight: 600;
-            font-size: 16px;
         }
         
-        .progress-container {
-            background-color: rgba(255, 107, 139, 0.1);
-            height: 24px;
-            border-radius: 12px;
+        .progress-bar-container {
+            height: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
             overflow: hidden;
-            position: relative;
         }
         
         .progress-bar {
             height: 100%;
-            background: linear-gradient(90deg, var(--light-pink), var(--accent-gold));
-            border-radius: 12px;
+            background: var(--gradient-2);
+            border-radius: 6px;
+            width: 65%;
             position: relative;
-            transition: width 1.5s ease-out;
-            min-width: 5%;
+            transition: width 1s ease-in-out;
         }
         
-        .progress-text {
+        .progress-percentage {
             position: absolute;
             right: 10px;
             top: 50%;
             transform: translateY(-50%);
-            font-size: 12px;
+            font-size: 11px;
             color: var(--dark-blue);
             font-weight: bold;
         }
         
-        .target-details {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 25px;
+        /* Weekly Performance Card */
+        .weekly-performance-card {
+            grid-column: span 4;
+            background: rgba(26, 42, 68, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: var(--card-shadow);
+            animation: fadeInUp 0.6s ease 0.6s forwards;
+            opacity: 0;
         }
         
-        .target-detail {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 15px;
-            border-radius: 8px;
-            text-align: center;
+        .performance-header {
+            margin-bottom: 25px;
         }
         
-        .target-detail-value {
-            font-size: 22px;
+        .performance-title {
+            font-size: 20px;
             font-weight: 600;
-            color: var(--soft-teal);
+            color: var(--text-primary);
             margin-bottom: 5px;
         }
         
-        .target-detail-label {
-            font-size: 12px;
+        .performance-subtitle {
+            font-size: 14px;
             color: var(--text-secondary);
-        }
-        
-        /* Sales Tracker Chart */
-        .sales-tracker {
-            margin-top: 40px;
-        }
-        
-        .tracker-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        
-        .tracker-title {
-            font-size: 18px;
-            color: var(--text-primary);
-        }
-        
-        .tracker-subtitle {
-            color: var(--text-secondary);
-            font-size: 12px;
-        }
-        
-        .sales-bars-container {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 8px;
-            padding: 20px;
-        }
-        
-        .sales-bars {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            height: 180px;
-            padding: 0 10px;
-            position: relative;
-        }
-        
-        .sales-bars::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 25%;
-            height: 1px;
-            background: rgba(255, 255, 255, 0.1);
-        }
-        
-        .sales-bars::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 50%;
-            height: 1px;
-            background: rgba(255, 255, 255, 0.1);
-        }
-        
-        .sales-bar {
-            flex: 1;
-            margin: 0 8px;
-            background: rgba(255, 107, 139, 0.2);
-            border-radius: 6px 6px 0 0;
-            position: relative;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            height: 100%;
-            display: flex;
-            align-items: flex-end;
-        }
-        
-        .sales-bar:hover {
-            background: rgba(255, 107, 139, 0.3);
-        }
-        
-        .sales-bar-fill {
-            background: linear-gradient(to top, var(--light-pink), var(--accent-gold));
-            border-radius: 6px 6px 0 0;
-            width: 100%;
-            position: relative;
-            transition: height 1.2s ease-out;
-        }
-        
-        .sales-bar-label {
-            position: absolute;
-            bottom: -30px;
-            width: 100%;
-            text-align: center;
-            font-size: 12px;
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
-        
-        .sales-bar-value {
-            position: absolute;
-            top: -25px;
-            width: 100%;
-            text-align: center;
-            font-size: 12px;
-            color: var(--accent-gold);
-            font-weight: 600;
-        }
-        
-        /* Weekly Performance */
-        .weekly-performance {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-top: 25px;
-        }
-        
-        .performance-card {
-            background-color: var(--medium-blue);
-            border-radius: 10px;
-            padding: 25px;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s ease-out;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-        
-        .performance-card.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .performance-card:nth-child(1) {
-            border-left: 4px solid var(--soft-teal);
-        }
-        
-        .performance-card:nth-child(2) {
-            border-left: 4px solid var(--light-pink);
         }
         
         .performance-stats {
-            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
         
         .performance-stat {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            transition: all 0.3s ease;
         }
         
-        .performance-stat:last-child {
-            border-bottom: none;
+        .performance-stat:hover {
+            background: rgba(100, 255, 218, 0.1);
+            transform: translateX(5px);
         }
         
-        .stat-label {
-            color: var(--text-secondary);
+        .stat-info h4 {
             font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
         }
         
         .stat-value {
-            font-weight: 600;
-            font-size: 16px;
-        }
-        
-        /* Store Metrics */
-        .store-metrics {
-            margin-top: 25px;
-        }
-        
-        .metrics-grid-small {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
-        }
-        
-        .metric-item {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            padding: 20px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-        
-        .metric-item:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.08);
-        }
-        
-        .metric-icon-small {
-            font-size: 24px;
-            color: var(--soft-teal);
-            margin-bottom: 10px;
-        }
-        
-        .metric-value-small {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 600;
             color: var(--text-primary);
-            margin-bottom: 5px;
         }
         
-        .metric-label-small {
-            font-size: 12px;
-            color: var(--text-secondary);
-        }
-        
-        /* Daily Breakdown */
-        .daily-breakdown {
-            margin-top: 40px;
-        }
-        
-        .breakdown-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-        
-        .day-card {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            padding: 15px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-        
-        .day-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-        
-        .day-card.best-day {
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             background: rgba(255, 107, 139, 0.1);
-            border: 1px solid rgba(255, 107, 139, 0.3);
+            color: var(--accent-pink);
         }
         
-        .day-name {
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--text-primary);
-            margin-bottom: 10px;
+        /* Chart Card */
+        .chart-card {
+            grid-column: span 12;
+            background: rgba(26, 42, 68, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: var(--card-shadow);
+            animation: fadeInUp 0.6s ease 0.7s forwards;
+            opacity: 0;
         }
         
-        .day-sales {
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--accent-gold);
-            margin-bottom: 5px;
-        }
-        
-        .day-percentage {
-            font-size: 12px;
-            color: var(--text-secondary);
-        }
-        
-        /* Product Performance */
-        .product-performance {
-            margin-top: 40px;
-        }
-        
-        .product-stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-        
-        .product-stat-card {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            padding: 20px;
-            transition: all 0.3s ease;
-        }
-        
-        .product-stat-card:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.08);
-        }
-        
-        .product-stat-header {
+        .chart-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 25px;
         }
         
-        .product-stat-title {
-            font-size: 16px;
-            font-weight: 500;
+        .chart-title {
+            font-size: 20px;
+            font-weight: 600;
             color: var(--text-primary);
         }
         
-        .product-stat-value {
-            font-size: 24px;
+        .chart-container {
+            height: 300px;
+            position: relative;
+        }
+        
+        /* Daily Sales Card */
+        .daily-sales-card {
+            grid-column: span 6;
+            background: rgba(26, 42, 68, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: var(--card-shadow);
+            animation: fadeInUp 0.6s ease 0.8s forwards;
+            opacity: 0;
+        }
+        
+        .daily-sales-title {
+            font-size: 20px;
             font-weight: 600;
-            color: var(--soft-teal);
-            text-align: center;
-            margin: 10px 0;
+            color: var(--text-primary);
+            margin-bottom: 25px;
         }
         
-        .product-stat-details {
+        .daily-sales-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 15px;
+        }
+        
+        .day-sale {
+            text-align: center;
+            padding: 15px 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .day-sale:hover {
+            background: rgba(100, 255, 218, 0.1);
+            transform: translateY(-5px);
+        }
+        
+        .day-name {
             font-size: 12px;
             color: var(--text-secondary);
-            text-align: center;
-        }
-        
-        /* Info Box */
-        .info-box {
-            background: rgba(129, 200, 190, 0.1);
-            border-radius: 8px;
-            padding: 20px;
-            margin-top: 30px;
-            border-left: 4px solid var(--soft-teal);
-        }
-        
-        .info-title {
-            color: var(--soft-teal);
-            font-size: 16px;
             margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
         
-        .info-text {
-            color: var(--text-secondary);
-            font-size: 14px;
-            line-height: 1.6;
+        .day-amount {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 5px;
         }
         
-        /* Footer */
-        .footer {
-            text-align: center;
-            color: var(--text-secondary);
-            font-size: 12px;
-            margin-top: 50px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        .day-bar {
+            height: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            position: relative;
+            overflow: hidden;
+            margin-top: 10px;
         }
         
-        /* Loading Overlay */
-        .loading-overlay {
-            position: fixed;
-            top: 0;
+        .day-fill {
+            position: absolute;
+            bottom: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            background: rgba(10, 25, 47, 0.9);
+            background: var(--gradient-2);
+            border-radius: 5px;
+            transition: height 1s ease-in-out;
+        }
+        
+        /* Top Products Card */
+        .top-products-card {
+            grid-column: span 6;
+            background: rgba(26, 42, 68, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: var(--card-shadow);
+            animation: fadeInUp 0.6s ease 0.9s forwards;
+            opacity: 0;
+        }
+        
+        .products-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 25px;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        
+        .product-item {
             display: flex;
-            justify-content: center;
             align-items: center;
-            z-index: 10000;
-            display: none;
+            gap: 15px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            transition: all 0.3s ease;
         }
         
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid rgba(255, 107, 139, 0.3);
-            border-radius: 50%;
-            border-top-color: var(--light-pink);
-            animation: spin 1s ease-in-out infinite;
+        .product-item:hover {
+            background: rgba(100, 255, 218, 0.1);
+            transform: translateX(5px);
         }
         
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        .product-rank {
+            width: 32px;
+            height: 32px;
+            background: var(--gradient-2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: var(--dark-blue);
+            font-size: 14px;
         }
         
-        /* Responsive */
+        .product-info {
+            flex: 1;
+        }
+        
+        .product-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 5px;
+        }
+        
+        .product-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        
+        .product-sales {
+            font-weight: 600;
+            color: var(--accent-blue);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .kpi-card {
+                grid-column: span 6;
+            }
+            
+            .sales-target-card {
+                grid-column: span 8;
+            }
+            
+            .weekly-performance-card {
+                grid-column: span 4;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .sales-target-card,
+            .weekly-performance-card,
+            .daily-sales-card,
+            .top-products-card {
+                grid-column: span 12;
+            }
+            
+            .daily-sales-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
         @media (max-width: 768px) {
             .header {
                 flex-direction: column;
-                align-items: flex-start;
-                gap: 15px;
+                gap: 20px;
+                text-align: center;
             }
             
-            .nav-links {
+            .user-controls {
                 width: 100%;
-                overflow-x: auto;
-                padding-bottom: 10px;
+                justify-content: space-between;
             }
             
             .datetime {
-                width: 100%;
-                text-align: left;
+                text-align: center;
             }
             
-            .kpi-grid {
+            .kpi-card {
+                grid-column: span 12;
+            }
+            
+            .daily-sales-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .products-grid {
                 grid-template-columns: 1fr;
-            }
-            
-            .weekly-performance {
-                grid-template-columns: 1fr;
-            }
-            
-            .sales-bars {
-                height: 150px;
-            }
-            
-            .sales-bar {
-                margin: 0 3px;
-            }
-            
-            .sales-bar-label {
-                font-size: 10px;
-            }
-            
-            .sales-bar-value {
-                font-size: 10px;
             }
         }
         
         @media (max-width: 480px) {
-            .container {
-                padding: 15px;
+            .daily-sales-grid {
+                grid-template-columns: 1fr;
             }
             
-            .kpi-card {
-                padding: 15px;
-            }
-            
-            .kpi-value {
-                font-size: 24px;
-            }
-            
-            .section-header {
+            .user-controls {
                 flex-direction: column;
-                align-items: flex-start;
                 gap: 10px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="background-pattern"></div>
+    <!-- Animated Background -->
+    <div class="animated-bg"></div>
+    <div class="particles" id="particles"></div>
     
-    <!-- Loading Overlay -->
-    <div class="loading-overlay" id="loadingOverlay">
-        <div class="spinner"></div>
+    <!-- Login Modal -->
+    <div class="login-modal" id="loginModal">
+        <div class="login-form">
+            <div class="logo-icon" style="margin: 0 auto 20px; width: 70px; height: 70px;">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <h2>DSOG Sales Dashboard</h2>
+            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 30px;">
+                Enter credentials to access sales statistics
+            </p>
+            <div class="login-input-group">
+                <label for="loginEmail">Email Address</label>
+                <input type="email" id="loginEmail" placeholder="admin@dsogstores.com">
+            </div>
+            <div class="login-input-group">
+                <label for="loginPassword">Password</label>
+                <input type="password" id="loginPassword" placeholder="Enter your password">
+            </div>
+            <button class="login-btn" id="loginBtn">Sign In</button>
+            <div class="login-error" id="loginError">
+                Invalid email or password. Please try again.
+            </div>
+            <div style="text-align: center; color: var(--text-secondary); font-size: 12px; margin-top: 20px;">
+                <i class="fas fa-lock"></i> Secure access required
+            </div>
+        </div>
     </div>
     
-    <div class="container">
-        <!-- Header -->
+    <!-- Main Dashboard Content -->
+    <div class="container" id="dashboardContainer">
         <header class="header">
-            <div>
-                <div class="logo">
-                    DSOG Stores - KPI Dashboard
-                    <span>Real-time Performance Metrics & Analytics</span>
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-chart-line"></i>
                 </div>
-                <div class="nav-links">
-                    <a href="index.html" class="nav-link">Dashboard</a>
-                    <a href="kpis.html" class="nav-link active">KPI's</a>
-                    <a href="best-selling.html" class="nav-link">Best Selling</a>
-                    <a href="new-arrivals.html" class="nav-link">New Arrivals</a>
-                    <a href="admin.html" class="nav-link">Admin Panel</a>
+                <div class="logo-text">
+                    <h1>DSOG SALES DASHBOARD</h1>
+                    <p>Real-time sales statistics & performance metrics</p>
                 </div>
             </div>
+            
+            <div class="user-controls">
+                <div class="user-info" id="userInfo">
+                    <div class="user-avatar" id="userAvatar">A</div>
+                    <div class="user-email" id="userEmail">admin@dsogstores.com</div>
+                </div>
+                <button class="logout-btn" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+            
             <div class="datetime">
                 <div id="time">10:45 AM</div>
                 <div id="date">Friday, June 10, 2023</div>
-                <a href="admin.html" class="admin-link">⚙️ Admin Control Panel</a>
             </div>
         </header>
         
-        <!-- KPI Dashboard -->
-        <div class="kpi-dashboard">
-            
-            <!-- KPI Cards Grid -->
-            <div class="kpi-grid">
-                <div class="kpi-card" id="kpiCard1">
+        <main class="dashboard">
+            <!-- KPI Cards -->
+            <div class="kpi-card">
+                <div class="kpi-content">
                     <div class="kpi-icon">
-                        <i class="fas fa-chart-line"></i>
+                        <i class="fas fa-shopping-bag"></i>
                     </div>
-                    <div class="kpi-content">
-                        <div class="kpi-value" id="weeklySalesKPI">Loading...</div>
+                    <div class="kpi-text">
+                        <div class="kpi-value" id="weeklySales">14,285</div>
                         <div class="kpi-label">Weekly Sales</div>
-                        <span class="kpi-trend" id="growthTrend">Loading...</span>
+                        <div class="kpi-trend trend-up">
+                            <i class="fas fa-arrow-up"></i>
+                            <span id="salesGrowth">+12%</span> vs last week
+                        </div>
                     </div>
                 </div>
-                
-                <div class="kpi-card" id="kpiCard2">
-                    <div class="kpi-icon">
-                        <i class="fas fa-bullseye"></i>
-                    </div>
-                    <div class="kpi-content">
-                        <div class="kpi-value" id="targetProgressKPI">Loading...</div>
-                        <div class="kpi-label">Weekly Target Progress</div>
-                        <span class="kpi-trend" id="targetTrend">Loading...</span>
-                    </div>
-                </div>
-                
-                <div class="kpi-card" id="kpiCard3">
+            </div>
+            
+            <div class="kpi-card">
+                <div class="kpi-content">
                     <div class="kpi-icon">
                         <i class="fas fa-box"></i>
                     </div>
-                    <div class="kpi-content">
-                        <div class="kpi-value" id="productsSoldKPI">Loading...</div>
+                    <div class="kpi-text">
+                        <div class="kpi-value" id="productsSold">117</div>
                         <div class="kpi-label">Products Sold</div>
-                        <span class="kpi-trend" id="productsTrend">Loading...</span>
-                    </div>
-                </div>
-                
-                <div class="kpi-card" id="kpiCard4">
-                    <div class="kpi-icon">
-                        <i class="fas fa-calendar-day"></i>
-                    </div>
-                    <div class="kpi-content">
-                        <div class="kpi-value" id="daysRemainingKPI">Loading...</div>
-                        <div class="kpi-label">Days Remaining</div>
-                        <span class="kpi-trend" id="daysTrend">Week 24</span>
+                        <div class="kpi-trend trend-up">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>+8%</span> vs last week
+                        </div>
                     </div>
                 </div>
             </div>
             
-            <!-- Sales Target Section -->
-            <div class="sales-target-section" id="salesTargetSection">
-                <div class="section-header">
-                    <div>
-                        <h2 class="section-title">🎯 Weekly Sales Target</h2>
-                        <div class="section-subtitle">Performance against weekly goal</div>
+            <div class="kpi-card">
+                <div class="kpi-content">
+                    <div class="kpi-icon">
+                        <i class="fas fa-calendar"></i>
                     </div>
-                    <div class="progress-percentage" id="progressPercentage">0%</div>
+                    <div class="kpi-text">
+                        <div class="kpi-value" id="daysRemaining">4</div>
+                        <div class="kpi-label">Days Remaining</div>
+                        <div class="kpi-trend trend-down">
+                            <i class="fas fa-clock"></i>
+                            <span>Week ends Friday</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="kpi-card">
+                <div class="kpi-content">
+                    <div class="kpi-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <div class="kpi-text">
+                        <div class="kpi-value" id="targetProgress">65%</div>
+                        <div class="kpi-label">Target Progress</div>
+                        <div class="kpi-trend trend-up">
+                            <i class="fas fa-chart-line"></i>
+                            <span>On track</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sales Target Card -->
+            <div class="sales-target-card">
+                <div class="target-header">
+                    <h2 class="target-title">Weekly Sales Target</h2>
+                    <div class="target-period">Week 24, 2023</div>
                 </div>
                 
                 <div class="target-progress">
-                    <div class="progress-header">
-                        <div class="progress-label">Weekly Progress</div>
-                        <div class="progress-label"><span id="currentSales">Ksh 0</span> / <span id="weeklyTarget">Ksh 0</span></div>
-                    </div>
-                    <div class="progress-container">
-                        <div class="progress-bar" id="progressBar">
-                            <span class="progress-text">0%</span>
+                    <div class="progress-info">
+                        <div class="progress-labels">
+                            <span class="current">Ksh <span id="currentSales">14,285</span></span>
+                            <span> / Ksh <span id="weeklyTarget">22,000</span></span>
                         </div>
+                        <div class="progress-percentage" id="targetPercentage">65%</div>
                     </div>
-                </div>
-                
-                <div class="target-details">
-                    <div class="target-detail">
-                        <div class="target-detail-value" id="targetAchieved">0</div>
-                        <div class="target-detail-label">Achieved</div>
-                    </div>
-                    <div class="target-detail">
-                        <div class="target-detail-value" id="targetRemaining">0</div>
-                        <div class="target-detail-label">Remaining</div>
-                    </div>
-                    <div class="target-detail">
-                        <div class="target-detail-value" id="dailyAverage">0</div>
-                        <div class="target-detail-label">Daily Average Needed</div>
-                    </div>
-                    <div class="target-detail">
-                        <div class="target-detail-value" id="completionDate">--</div>
-                        <div class="target-detail-label">Projected Completion</div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="progressBar"></div>
                     </div>
                 </div>
                 
-                <!-- Sales Tracker Chart -->
-                <div class="sales-tracker">
-                    <div class="tracker-header">
-                        <div>
-                            <h3 class="tracker-title">📊 Daily Sales Tracker</h3>
-                            <div class="tracker-subtitle">Real-time sales performance by day</div>
-                        </div>
-                        <div class="tracker-subtitle" id="weekTotal">Week Total: Ksh 0</div>
-                    </div>
-                    
-                    <div class="sales-bars-container">
-                        <div class="sales-bars" id="salesBars">
-                            <!-- Sales bars will be populated by JavaScript -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Weekly Performance -->
-            <div class="weekly-performance">
-                <div class="performance-card" id="performanceCard1">
-                    <h3 class="section-title">📈 Performance Metrics</h3>
-                    <div class="section-subtitle">Calculated from your actual sales data</div>
-                    
-                    <div class="performance-stats">
-                        <div class="performance-stat">
-                            <span class="stat-label">Growth vs Last Week</span>
-                            <span class="stat-value" id="growthValue">Loading...</span>
-                        </div>
-                        <div class="performance-stat">
-                            <span class="stat-label">Average Transaction Value</span>
-                            <span class="stat-value" id="avgTransaction">Loading...</span>
-                        </div>
-                        <div class="performance-stat">
-                            <span class="stat-label">Total Products Value</span>
-                            <span class="stat-value" id="totalProductsValue">Loading...</span>
-                        </div>
-                        <div class="performance-stat">
-                            <span class="stat-label">Product Sell-through Rate</span>
-                            <span class="stat-value" id="sellThroughRate">Loading...</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="performance-card" id="performanceCard2">
-                    <h3 class="section-title">🏪 Store Operations</h3>
-                    <div class="section-subtitle">Direct from admin panel data</div>
-                    
-                    <div class="performance-stats">
-                        <div class="performance-stat">
-                            <span class="stat-label">Active Franchises</span>
-                            <span class="stat-value" id="franchisesValue">Loading...</span>
-                        </div>
-                        <div class="performance-stat">
-                            <span class="stat-label">Staff Members</span>
-                            <span class="stat-value" id="staffValue">Loading...</span>
-                        </div>
-                        <div class="performance-stat">
-                            <span class="stat-label">Pending Deliveries</span>
-                            <span class="stat-value" id="deliveriesValue">Loading...</span>
-                        </div>
-                        <div class="performance-stat">
-                            <span class="stat-label">Days in Week</span>
-                            <span class="stat-value" id="daysValue">7</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Store Metrics -->
-            <div class="store-metrics">
-                <h3 class="section-title">🏬 Store Metrics</h3>
-                <div class="section-subtitle">Operational statistics from admin panel</div>
-                
-                <div class="metrics-grid-small">
-                    <div class="metric-item">
-                        <div class="metric-icon-small">
-                            <i class="fas fa-store"></i>
-                        </div>
-                        <div class="metric-value-small" id="franchisesCount">0</div>
-                        <div class="metric-label-small">Active Franchises</div>
-                    </div>
-                    
-                    <div class="metric-item">
-                        <div class="metric-icon-small">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <div class="metric-value-small" id="staffCount">0</div>
-                        <div class="metric-label-small">Staff Members</div>
-                    </div>
-                    
-                    <div class="metric-item">
-                        <div class="metric-icon-small">
-                            <i class="fas fa-truck"></i>
-                        </div>
-                        <div class="metric-value-small" id="deliveriesCount">0</div>
-                        <div class="metric-label-small">Pending Deliveries</div>
-                    </div>
-                    
-                    <div class="metric-item">
-                        <div class="metric-icon-small">
-                            <i class="fas fa-calculator"></i>
-                        </div>
-                        <div class="metric-value-small" id="daysCount">4</div>
-                        <div class="metric-label-small">Days Remaining</div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Product Performance -->
-            <div class="product-performance">
-                <h3 class="section-title">📦 Product Performance Analysis</h3>
-                <div class="section-subtitle">Calculated from best selling products data</div>
-                
-                <div class="product-stats-grid" id="productStatsGrid">
+                <div class="daily-sales-title" style="margin-top: 30px;">Daily Sales Breakdown</div>
+                <div class="daily-sales-grid" id="dailySalesGrid">
                     <!-- Will be populated by JavaScript -->
                 </div>
             </div>
             
-            <!-- Daily Breakdown -->
-            <div class="daily-breakdown">
-                <h3 class="section-title">📅 Daily Sales Breakdown</h3>
-                <div class="section-subtitle">Actual sales data from admin panel</div>
+            <!-- Weekly Performance Card -->
+            <div class="weekly-performance-card">
+                <div class="performance-header">
+                    <h2 class="performance-title">Store Performance</h2>
+                    <div class="performance-subtitle">Key metrics this week</div>
+                </div>
                 
-                <div class="breakdown-grid" id="dailyBreakdown">
-                    <!-- Day cards will be populated by JavaScript -->
+                <div class="performance-stats">
+                    <div class="performance-stat">
+                        <div class="stat-info">
+                            <h4>Active Franchises</h4>
+                            <div class="stat-value" id="franchisesCount">8</div>
+                        </div>
+                        <div class="stat-icon">
+                            <i class="fas fa-store"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="performance-stat">
+                        <div class="stat-info">
+                            <h4>Staff Members</h4>
+                            <div class="stat-value" id="staffCount">24</div>
+                        </div>
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="performance-stat">
+                        <div class="stat-info">
+                            <h4>Pending Deliveries</h4>
+                            <div class="stat-value" id="deliveriesCount">3</div>
+                        </div>
+                        <div class="stat-icon">
+                            <i class="fas fa-truck"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
             
-            <!-- Info Box -->
-            <div class="info-box">
-                <div class="info-title">
-                    <i class="fas fa-info-circle"></i> Real-time Data Source
+            <!-- Chart Card -->
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h2 class="chart-title">Sales Trend (Last 30 Days)</h2>
+                    <div class="target-period">Daily Sales in Ksh</div>
                 </div>
-                <div class="info-text">
-                    All metrics on this page are pulled directly from the Firebase database in real-time. 
-                    When administrators update data in the Admin Panel, this dashboard automatically reflects those changes. 
-                    Data updates occur instantly without page refresh.
+                <div class="chart-container">
+                    <canvas id="salesChart"></canvas>
                 </div>
             </div>
             
-            <!-- Footer -->
-            <div class="footer">
-                <p>DSOG Stores KPI Dashboard • Real-time Firebase Data • Last updated: <span id="dataTimestamp">Just now</span></p>
-                <p style="margin-top: 5px; font-size: 11px; opacity: 0.7;">
-                    <i class="fas fa-sync-alt"></i> Auto-refreshes every 5 seconds • <i class="fas fa-database"></i> Data Source: Firebase Realtime Database
-                </p>
+            <!-- Top Products Card -->
+            <div class="top-products-card">
+                <h2 class="products-title">Top Selling Products</h2>
+                <div class="products-grid" id="topProductsGrid">
+                    <!-- Will be populated by JavaScript -->
+                </div>
             </div>
-        </div>
+        </main>
     </div>
 
     <!-- Firebase SDK -->
@@ -1044,7 +1035,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
     <script>
-        // Firebase Configuration
+        // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyCOb4BqfiN3vt1Y13UTEpA_boCqNRH6rrQ",
             authDomain: "dsog-stores-dashboard.firebaseapp.com",
@@ -1058,462 +1049,400 @@
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
+        const auth = firebase.auth();
         
-        // Initialize the page
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeClock();
-            showLoading(true);
-            setupFirebaseListener();
-            setupScrollAnimations();
-        });
-        
-        // Clock functionality
-        function initializeClock() {
-            function updateClock() {
-                const now = new Date();
-                let hours = now.getHours();
-                const ampm = hours >= 12 ? 'PM' : 'AM';
-                hours = hours % 12;
-                hours = hours ? hours : 12;
-                const minutes = now.getMinutes().toString().padStart(2, '0');
+        // Initialize particles
+        function initParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
                 
-                document.getElementById('time').textContent = `${hours}:${minutes} ${ampm}`;
+                // Random properties
+                const size = Math.random() * 100 + 50; // 50-150px
+                const left = Math.random() * 100; // 0-100%
+                const delay = Math.random() * 15; // 0-15s delay
+                const duration = Math.random() * 10 + 15; // 15-25s duration
                 
-                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-                document.getElementById('date').textContent = now.toLocaleDateString('en-US', options);
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${left}%`;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.animationDuration = `${duration}s`;
+                
+                particlesContainer.appendChild(particle);
             }
-            
-            updateClock();
-            setInterval(updateClock, 60000);
         }
         
-        // Setup Firebase real-time listener
-        function setupFirebaseListener() {
-            // Listen for real-time updates from Firebase
-            const dashboardRef = database.ref('dashboard');
-            
-            dashboardRef.on('value', (snapshot) => {
-                const data = snapshot.val();
-                if (data) {
-                    console.log("Received data from Firebase:", data);
-                    updateDashboard(data);
-                    showLoading(false);
-                } else {
-                    console.log("No data found in Firebase");
-                    showLoading(false);
-                    // Show empty state
-                    document.getElementById('weeklySalesKPI').textContent = "No Data";
-                    document.getElementById('targetProgressKPI').textContent = "0%";
-                    document.getElementById('productsSoldKPI').textContent = "0";
-                    document.getElementById('daysRemainingKPI').textContent = "7";
-                }
-                
-                updateDataTimestamp();
-            }, (error) => {
-                console.error("Firebase error:", error);
-                showLoading(false);
-                alert("Error loading data from Firebase. Please check your connection.");
-            });
-        }
-        
-        // Update the entire dashboard with real data
-        function updateDashboard(data) {
-            console.log("Updating dashboard with actual data:", data);
-            
-            // Extract data with fallbacks
-            const metrics = data.metrics || {};
-            const stats = data.stats || {};
-            const target = data.target || {};
-            const bestSellingProducts = data.bestSellingProducts || [];
-            const newArrivals = data.newArrivals || [];
-            
-            // Update KPI cards with ACTUAL data
-            updateKPICards(metrics, target);
-            
-            // Update sales target section with ACTUAL data
-            updateSalesTarget(metrics, target);
-            
-            // Update sales chart with ACTUAL daily sales
-            updateSalesChart(target);
-            
-            // Update store metrics with ACTUAL data
-            updateStoreMetrics(stats, metrics);
-            
-            // Update daily breakdown with ACTUAL data
-            updateDailyBreakdown(target);
-            
-            // Update product performance with ACTUAL product data
-            updateProductPerformance(bestSellingProducts);
-            
-            // Update calculated metrics
-            updateCalculatedMetrics(metrics, bestSellingProducts);
-        }
-        
-        // Update KPI cards with actual data
-        function updateKPICards(metrics, target) {
-            // Weekly Sales - ACTUAL from Firebase
-            const weeklySales = metrics.weeklySales || 0;
-            document.getElementById('weeklySalesKPI').innerHTML = `<span class="currency">${formatNumber(weeklySales)}</span>`;
-            
-            // Growth - ACTUAL from Firebase
-            const growth = metrics.growth || 0;
-            const growthText = `${growth >= 0 ? '+' : ''}${growth}%`;
-            document.getElementById('growthTrend').textContent = growthText;
-            document.getElementById('growthTrend').className = `kpi-trend ${growth > 0 ? 'trend-up' : growth < 0 ? 'trend-down' : 'trend-neutral'}`;
-            
-            // Target progress - CALCULATED from actual data
-            const weeklyTarget = target.weeklyTarget || 22000;
-            const progress = weeklyTarget > 0 ? Math.round((weeklySales / weeklyTarget) * 100) : 0;
-            document.getElementById('targetProgressKPI').textContent = `${progress}%`;
-            
-            // Target trend
-            let targetTrend = progress >= 100 ? "Target achieved!" : progress >= 75 ? "On track" : progress >= 50 ? "Needs improvement" : "Behind schedule";
-            document.getElementById('targetTrend').textContent = targetTrend;
-            document.getElementById('targetTrend').className = `kpi-trend ${progress >= 75 ? 'trend-up' : progress >= 50 ? 'trend-neutral' : 'trend-down'}`;
-            
-            // Products sold - ACTUAL from Firebase
-            const productsSold = metrics.productsSold || 0;
-            document.getElementById('productsSoldKPI').textContent = productsSold;
-            
-            // Products trend
-            const productsTarget = 100; // Assuming target of 100 products
-            const productsProgress = Math.round((productsSold / productsTarget) * 100);
-            const productsDifference = productsProgress - 100;
-            const productsTrendText = `${productsDifference >= 0 ? '+' : ''}${productsDifference}% vs target`;
-            document.getElementById('productsTrend').textContent = productsTrendText;
-            document.getElementById('productsTrend').className = `kpi-trend ${productsDifference > 0 ? 'trend-up' : productsDifference < 0 ? 'trend-down' : 'trend-neutral'}`;
-            
-            // Days remaining - ACTUAL from Firebase
-            const daysRemaining = metrics.daysRemaining || 7;
-            document.getElementById('daysRemainingKPI').textContent = daysRemaining;
-            
-            // Days trend
-            let daysTrend = `Week ${getWeekNumber()}`;
-            if (daysRemaining <= 2) daysTrend = "Week ending soon";
-            else if (daysRemaining <= 0) daysTrend = "Week completed";
-            document.getElementById('daysTrend').textContent = daysTrend;
-        }
-        
-        // Update sales target section with actual data
-        function updateSalesTarget(metrics, target) {
-            const weeklySales = metrics.weeklySales || 0;
-            const weeklyTarget = target.weeklyTarget || 22000;
-            const progress = weeklyTarget > 0 ? Math.round((weeklySales / weeklyTarget) * 100) : 0;
-            const remaining = Math.max(0, weeklyTarget - weeklySales);
-            const daysRemaining = metrics.daysRemaining || 7;
-            const dailyAverageNeeded = daysRemaining > 0 ? Math.round(remaining / daysRemaining) : 0;
-            
-            // Update progress bar
-            document.getElementById('progressPercentage').textContent = `${progress}%`;
-            const progressBar = document.getElementById('progressBar');
-            progressBar.style.width = `${Math.min(100, progress)}%`;
-            progressBar.querySelector('.progress-text').textContent = `${progress}%`;
-            
-            // Update numbers with actual data
-            document.getElementById('currentSales').innerHTML = `Ksh <span class="currency">${formatNumber(weeklySales)}</span>`;
-            document.getElementById('weeklyTarget').innerHTML = `Ksh <span class="currency">${formatNumber(weeklyTarget)}</span>`;
-            document.getElementById('targetAchieved').innerHTML = `<span class="currency">${formatNumber(weeklySales)}</span>`;
-            document.getElementById('targetRemaining').innerHTML = `<span class="currency">${formatNumber(remaining)}</span>`;
-            document.getElementById('dailyAverage').innerHTML = `<span class="currency">${formatNumber(dailyAverageNeeded)}</span>`;
-            
-            // Calculate projected completion date
-            const completionDate = calculateCompletionDate(dailyAverageNeeded, weeklySales, weeklyTarget);
-            document.getElementById('completionDate').textContent = completionDate;
-        }
-        
-        // Update sales chart with actual daily sales
-        function updateSalesChart(target) {
-            const dailySales = target.dailySales || [0, 0, 0, 0, 0, 0, 0];
-            const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-            const salesBarsContainer = document.getElementById('salesBars');
-            
-            // Calculate week total
-            const weekTotal = dailySales.reduce((a, b) => a + b, 0);
-            document.getElementById('weekTotal').innerHTML = `Week Total: Ksh <span class="currency">${formatNumber(weekTotal)}</span>`;
-            
-            // Find max value for scaling
-            const maxValue = Math.max(...dailySales, 1); // Minimum of 1 to avoid division by zero
-            
-            let barsHTML = '';
-            dailySales.forEach((sales, index) => {
-                const percentage = maxValue > 0 ? (sales / maxValue) * 100 : 0;
-                const dayName = days[index];
-                
-                barsHTML += `
-                    <div class="sales-bar" data-day="${dayName}" data-value="${sales}">
-                        <div class="sales-bar-fill" style="height: ${percentage}%"></div>
-                        <div class="sales-bar-value">${sales > 0 ? 'Ksh ' + formatNumber(sales) : ''}</div>
-                        <div class="sales-bar-label">${dayName}</div>
-                    </div>
-                `;
-            });
-            
-            salesBarsContainer.innerHTML = barsHTML;
-            
-            // Add hover effects
-            const salesBars = salesBarsContainer.querySelectorAll('.sales-bar');
-            salesBars.forEach(bar => {
-                bar.addEventListener('mouseenter', function() {
-                    this.style.background = 'rgba(255, 107, 139, 0.4)';
-                });
-                
-                bar.addEventListener('mouseleave', function() {
-                    this.style.background = 'rgba(255, 107, 139, 0.2)';
-                });
-            });
-        }
-        
-        // Update store metrics with actual data
-        function updateStoreMetrics(stats, metrics) {
-            // ACTUAL data from Firebase
-            document.getElementById('franchisesCount').textContent = stats.franchises || 0;
-            document.getElementById('staffCount').textContent = stats.staff || 0;
-            document.getElementById('deliveriesCount').textContent = stats.deliveries || 0;
-            document.getElementById('daysCount').textContent = metrics.daysRemaining || 7;
-            
-            // Also update the performance card
-            document.getElementById('franchisesValue').textContent = stats.franchises || 0;
-            document.getElementById('staffValue').textContent = stats.staff || 0;
-            document.getElementById('deliveriesValue').textContent = stats.deliveries || 0;
-            document.getElementById('daysValue').textContent = 7 - (metrics.daysRemaining || 7) + " / 7";
-        }
-        
-        // Update daily breakdown with actual data
-        function updateDailyBreakdown(target) {
-            const dailySales = target.dailySales || [0, 0, 0, 0, 0, 0, 0];
-            const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-            const weekTotal = dailySales.reduce((a, b) => a + b, 0);
-            const breakdownContainer = document.getElementById('dailyBreakdown');
-            
-            // Find best day
-            const maxSales = Math.max(...dailySales);
-            const bestDayIndex = maxSales > 0 ? dailySales.indexOf(maxSales) : -1;
-            
-            let breakdownHTML = '';
-            dailySales.forEach((sales, index) => {
-                const percentage = weekTotal > 0 ? Math.round((sales / weekTotal) * 100) : 0;
-                const isBestDay = sales > 0 && index === bestDayIndex;
-                
-                breakdownHTML += `
-                    <div class="day-card ${isBestDay ? 'best-day' : ''}">
-                        <div class="day-name">${days[index]}</div>
-                        <div class="day-sales">Ksh ${formatNumber(sales)}</div>
-                        <div class="day-percentage">${percentage}% of total</div>
-                    </div>
-                `;
-            });
-            
-            breakdownContainer.innerHTML = breakdownHTML;
-        }
-        
-        // Update product performance with actual product data
-        function updateProductPerformance(bestSellingProducts) {
-            const productStatsGrid = document.getElementById('productStatsGrid');
-            
-            if (!bestSellingProducts || bestSellingProducts.length === 0) {
-                productStatsGrid.innerHTML = `
-                    <div class="product-stat-card" style="grid-column: 1 / -1; text-align: center; padding: 40px;">
-                        <div style="color: var(--text-secondary);">
-                            <i class="fas fa-box-open" style="font-size: 48px; margin-bottom: 15px; opacity: 0.5;"></i>
-                            <div>No product data available</div>
-                            <div style="font-size: 12px; margin-top: 10px;">Update products in Admin Panel</div>
-                        </div>
-                    </div>
-                `;
-                return;
-            }
-            
-            // Calculate stats from actual product data
-            let totalRevenue = 0;
-            let totalUnitsSold = 0;
-            let topProduct = null;
-            let topRevenue = 0;
-            
-            bestSellingProducts.forEach(product => {
-                const revenue = parseInt(product.sold || 0) * parseInt(product.price || 0);
-                totalRevenue += revenue;
-                totalUnitsSold += parseInt(product.sold || 0);
-                
-                if (revenue > topRevenue) {
-                    topRevenue = revenue;
-                    topProduct = product;
-                }
-            });
-            
-            const avgPrice = bestSellingProducts.length > 0 ? 
-                totalRevenue / totalUnitsSold : 0;
-            
-            let productStatsHTML = '';
-            
-            // Top Product Card
-            if (topProduct) {
-                productStatsHTML += `
-                    <div class="product-stat-card">
-                        <div class="product-stat-header">
-                            <div class="product-stat-title">Top Product</div>
-                            <span style="color: var(--accent-gold); font-size: 12px;">🏆</span>
-                        </div>
-                        <div class="product-stat-value">${topProduct.name}</div>
-                        <div class="product-stat-details">
-                            Revenue: Ksh ${formatNumber(topRevenue)}<br>
-                            Units Sold: ${topProduct.sold}
-                        </div>
-                    </div>
-                `;
-            }
-            
-            // Total Revenue Card
-            productStatsHTML += `
-                <div class="product-stat-card">
-                    <div class="product-stat-header">
-                        <div class="product-stat-title">Total Revenue</div>
-                        <span style="color: var(--soft-teal); font-size: 12px;">💰</span>
-                    </div>
-                    <div class="product-stat-value">Ksh ${formatNumber(totalRevenue)}</div>
-                    <div class="product-stat-details">
-                        From ${bestSellingProducts.length} products<br>
-                        ${totalUnitsSold} total units sold
-                    </div>
-                </div>
-            `;
-            
-            // Average Price Card
-            productStatsHTML += `
-                <div class="product-stat-card">
-                    <div class="product-stat-header">
-                        <div class="product-stat-title">Average Price</div>
-                        <span style="color: var(--light-pink); font-size: 12px;">📊</span>
-                    </div>
-                    <div class="product-stat-value">Ksh ${formatNumber(Math.round(avgPrice))}</div>
-                    <div class="product-stat-details">
-                        Weighted by sales volume<br>
-                        Based on ${bestSellingProducts.length} products
-                    </div>
-                </div>
-            `;
-            
-            // Products Count Card
-            productStatsHTML += `
-                <div class="product-stat-card">
-                    <div class="product-stat-header">
-                        <div class="product-stat-title">Active Products</div>
-                        <span style="color: var(--text-secondary); font-size: 12px;">📦</span>
-                    </div>
-                    <div class="product-stat-value">${bestSellingProducts.length}</div>
-                    <div class="product-stat-details">
-                        Best selling products<br>
-                        In inventory
-                    </div>
-                </div>
-            `;
-            
-            productStatsGrid.innerHTML = productStatsHTML;
-        }
-        
-        // Update calculated metrics
-        function updateCalculatedMetrics(metrics, bestSellingProducts) {
-            const weeklySales = metrics.weeklySales || 0;
-            const productsSold = metrics.productsSold || 0;
-            const growth = metrics.growth || 0;
-            
-            // Calculate average transaction value
-            const avgTransaction = productsSold > 0 ? Math.round(weeklySales / productsSold) : 0;
-            document.getElementById('avgTransaction').innerHTML = `Ksh <span class="currency">${formatNumber(avgTransaction)}</span>`;
-            
-            // Update growth value
-            document.getElementById('growthValue').textContent = `${growth >= 0 ? '+' : ''}${growth}%`;
-            
-            // Calculate total products value
-            let totalProductsValue = 0;
-            if (bestSellingProducts && bestSellingProducts.length > 0) {
-                bestSellingProducts.forEach(product => {
-                    const revenue = parseInt(product.sold || 0) * parseInt(product.price || 0);
-                    totalProductsValue += revenue;
-                });
-            }
-            document.getElementById('totalProductsValue').innerHTML = `Ksh <span class="currency">${formatNumber(totalProductsValue)}</span>`;
-            
-            // Calculate sell-through rate (assuming total inventory of 500)
-            const totalInventory = 500; // Example value
-            const sellThroughRate = totalInventory > 0 ? Math.round((productsSold / totalInventory) * 100) : 0;
-            document.getElementById('sellThroughRate').textContent = `${sellThroughRate}%`;
-        }
-        
-        // Setup scroll animations
-        function setupScrollAnimations() {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add("visible");
-                    }
-                });
-            }, { threshold: 0.1 });
-            
-            const animatableElements = [
-                'kpiCard1', 'kpiCard2', 'kpiCard3', 'kpiCard4',
-                'salesTargetSection', 'performanceCard1', 'performanceCard2'
-            ];
-            
-            animatableElements.forEach(id => {
-                const element = document.getElementById(id);
-                if (element) observer.observe(element);
-            });
-        }
-        
-        // Update data timestamp
-        function updateDataTimestamp() {
+        // Initialize clock
+        function updateClock() {
             const now = new Date();
-            const timeString = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-            document.getElementById('dataTimestamp').textContent = `${timeString}`;
+            let hours = now.getHours();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            
+            document.getElementById('time').textContent = `${hours}:${minutes} ${ampm}`;
+            
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('date').textContent = now.toLocaleDateString('en-US', options);
         }
         
-        // Utility functions
+        // Format numbers with commas
         function formatNumber(num) {
             return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
         
-        function getWeekNumber() {
-            const now = new Date();
-            const startDate = new Date(now.getFullYear(), 0, 1);
-            const days = Math.floor((now - startDate) / (24 * 60 * 60 * 1000));
-            return Math.ceil(days / 7);
-        }
-        
-        function calculateCompletionDate(dailyAverageNeeded, currentSales, target) {
-            if (currentSales >= target) return "Target achieved!";
-            if (dailyAverageNeeded <= 0) return "No sales needed";
+        // Update sales chart
+        let salesChart = null;
+        function updateSalesChart(dailySales) {
+            const ctx = document.getElementById('salesChart').getContext('2d');
             
-            const now = new Date();
-            const remaining = target - currentSales;
-            const daysNeeded = Math.ceil(remaining / dailyAverageNeeded);
+            const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
             
-            const completionDate = new Date(now);
-            completionDate.setDate(now.getDate() + daysNeeded);
+            if (salesChart) {
+                salesChart.destroy();
+            }
             
-            const options = { month: 'short', day: 'numeric' };
-            return completionDate.toLocaleDateString('en-US', options);
-        }
-        
-        function showLoading(show) {
-            document.getElementById('loadingOverlay').style.display = show ? 'flex' : 'none';
-        }
-        
-        // Add currency formatting to elements with .currency class
-        function initializeCurrencyFormatting() {
-            document.querySelectorAll('.currency').forEach(element => {
-                const originalText = element.textContent;
-                const num = parseFloat(originalText.replace(/[^0-9.]/g, ''));
-                if (!isNaN(num)) {
-                    element.textContent = formatNumber(Math.round(num));
+            salesChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: days,
+                    datasets: [{
+                        label: 'Daily Sales (Ksh)',
+                        data: dailySales,
+                        borderColor: '#ff6b8b',
+                        backgroundColor: 'rgba(255, 107, 139, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4,
+                        pointBackgroundColor: '#64ffda',
+                        pointBorderColor: '#0a192f',
+                        pointBorderWidth: 2,
+                        pointRadius: 6,
+                        pointHoverRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#8892b0',
+                                font: {
+                                    size: 14
+                                }
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(26, 42, 68, 0.9)',
+                            titleColor: '#64ffda',
+                            bodyColor: '#f0e6ef',
+                            borderColor: '#ff6b8b',
+                            borderWidth: 1,
+                            callbacks: {
+                                label: function(context) {
+                                    return `Ksh ${formatNumber(context.raw)}`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#8892b0'
+                            }
+                        },
+                        y: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#8892b0',
+                                callback: function(value) {
+                                    return 'Ksh ' + formatNumber(value);
+                                }
+                            },
+                            beginAtZero: true
+                        }
+                    }
                 }
             });
         }
         
-        // Auto-refresh currency formatting
-        setInterval(initializeCurrencyFormatting, 1000);
+        // Update daily sales grid
+        function updateDailySalesGrid(dailySales) {
+            const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+            const grid = document.getElementById('dailySalesGrid');
+            const maxValue = Math.max(...dailySales, 4000);
+            
+            let html = '';
+            days.forEach((day, index) => {
+                const value = dailySales[index] || 0;
+                const percentage = maxValue > 0 ? (value / maxValue) * 100 : 0;
+                
+                html += `
+                    <div class="day-sale">
+                        <div class="day-name">${day}</div>
+                        <div class="day-amount">Ksh ${formatNumber(value)}</div>
+                        <div class="day-bar">
+                            <div class="day-fill" style="height: ${percentage}%"></div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            grid.innerHTML = html;
+        }
         
-        // Initial call
-        initializeCurrencyFormatting();
+        // Update top products
+        function updateTopProducts(products) {
+            const grid = document.getElementById('topProductsGrid');
+            // Limit to 4 products for display
+            const topProducts = products.slice(0, 4);
+            
+            let html = '';
+            topProducts.forEach((product, index) => {
+                html += `
+                    <div class="product-item">
+                        <div class="product-rank">${index + 1}</div>
+                        <div class="product-info">
+                            <div class="product-name">${product.name}</div>
+                            <div class="product-meta">
+                                <span>${product.category}</span>
+                                <span class="product-sales">Ksh ${formatNumber(product.total)}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            grid.innerHTML = html;
+        }
+        
+        // Update dashboard with data from Firebase
+        function updateDashboard(data) {
+            console.log("Updating dashboard with:", data);
+            
+            // Update metrics
+            document.getElementById('weeklySales').textContent = formatNumber(data.metrics.weeklySales);
+            document.getElementById('salesGrowth').textContent = `+${data.metrics.growth}%`;
+            document.getElementById('productsSold').textContent = data.metrics.productsSold;
+            document.getElementById('daysRemaining').textContent = data.metrics.daysRemaining;
+            
+            // Update target progress
+            const progress = (data.metrics.weeklySales / data.target.weeklyTarget) * 100;
+            const progressBar = document.getElementById('progressBar');
+            progressBar.style.width = `${progress}%`;
+            
+            document.getElementById('currentSales').textContent = formatNumber(data.metrics.weeklySales);
+            document.getElementById('weeklyTarget').textContent = formatNumber(data.target.weeklyTarget);
+            document.getElementById('targetPercentage').textContent = `${Math.round(progress)}%`;
+            document.getElementById('targetProgress').textContent = `${Math.round(progress)}%`;
+            
+            // Update store performance
+            document.getElementById('franchisesCount').textContent = data.stats.franchises;
+            document.getElementById('staffCount').textContent = data.stats.staff;
+            document.getElementById('deliveriesCount').textContent = data.stats.deliveries;
+            
+            // Update charts and grids
+            updateSalesChart(data.target.dailySales);
+            updateDailySalesGrid(data.target.dailySales);
+            updateTopProducts(data.bestSellingProducts);
+        }
+        
+        // Authentication state observer
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                // User is signed in
+                handleUserSignedIn(user);
+            } else {
+                // User is signed out
+                handleUserSignedOut();
+            }
+        });
+        
+        function handleUserSignedIn(user) {
+            console.log("User signed in:", user.email);
+            
+            // Hide login modal
+            document.getElementById('loginModal').style.display = 'none';
+            
+            // Show dashboard
+            document.getElementById('dashboardContainer').style.display = 'block';
+            
+            // Update user info
+            document.getElementById('userEmail').textContent = user.email;
+            const avatar = document.getElementById('userAvatar');
+            avatar.textContent = user.email.charAt(0).toUpperCase();
+            
+            // Initialize dashboard
+            initParticles();
+            updateClock();
+            setInterval(updateClock, 60000);
+            
+            // Listen for real-time data updates
+            database.ref('dashboard').on('value', (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    updateDashboard(data);
+                } else {
+                    // Initialize with default data if no data exists
+                    const defaultData = {
+                        metrics: {
+                            weeklySales: 14285,
+                            growth: 12,
+                            daysRemaining: 4,
+                            productsSold: 117
+                        },
+                        stats: {
+                            franchises: 8,
+                            staff: 24,
+                            deliveries: 3
+                        },
+                        target: {
+                            weeklyTarget: 22000,
+                            dailySales: [2100, 3200, 2800, 3900, 2285, 0, 0]
+                        },
+                        bestSellingProducts: [
+                            {
+                                name: "Epitome White T-Shirt",
+                                category: "Accessories",
+                                total: "10458"
+                            },
+                            {
+                                name: "Designer Tote",
+                                category: "Handbags",
+                                total: "5292"
+                            },
+                            {
+                                name: "Classic Denim Jacket",
+                                category: "Fashion",
+                                total: "12215"
+                            },
+                            {
+                                name: "Leather Wallet",
+                                category: "Accessories",
+                                total: "1548"
+                            }
+                        ]
+                    };
+                    database.ref('dashboard').set(defaultData);
+                }
+            });
+        }
+        
+        function handleUserSignedOut() {
+            console.log("User signed out");
+            
+            // Show login modal
+            document.getElementById('loginModal').style.display = 'flex';
+            
+            // Hide dashboard
+            document.getElementById('dashboardContainer').style.display = 'none';
+        }
+        
+        // Login functionality
+        document.getElementById('loginBtn').addEventListener('click', function() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const loginError = document.getElementById('loginError');
+            
+            if (!email || !password) {
+                loginError.textContent = "Please enter both email and password.";
+                loginError.style.display = 'block';
+                return;
+            }
+            
+            // Show loading state
+            this.disabled = true;
+            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in...';
+            
+            auth.signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    // Signed in successfully
+                    loginError.style.display = 'none';
+                })
+                .catch((error) => {
+                    // Handle errors
+                    console.error("Login error:", error);
+                    loginError.textContent = "Invalid email or password. Please try again.";
+                    loginError.style.display = 'block';
+                    
+                    // Reset button
+                    this.disabled = false;
+                    this.textContent = "Sign In";
+                });
+        });
+        
+        // Logout functionality
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            auth.signOut()
+                .then(() => {
+                    showNotification('Successfully logged out', 'success');
+                })
+                .catch((error) => {
+                    console.error("Logout error:", error);
+                    showNotification('Error logging out', 'error');
+                });
+        });
+        
+        // Allow pressing Enter to login
+        document.getElementById('loginPassword').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('loginBtn').click();
+            }
+        });
+        
+        // Notification function
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 15px 25px;
+                border-radius: 8px;
+                color: white;
+                font-weight: 600;
+                z-index: 10001;
+                background: ${type === 'success' ? 'rgba(76, 175, 80, 0.9)' : 'rgba(244, 67, 54, 0.9)'};
+                backdrop-filter: blur(10px);
+                border: 1px solid ${type === 'success' ? 'rgba(76, 175, 80, 0.3)' : 'rgba(244, 67, 54, 0.3)'};
+                box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+                animation: slideInRight 0.3s ease;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOutRight 0.3s ease forwards';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+        
+        // Add slide animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInRight {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            
+            @keyframes slideOutRight {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
