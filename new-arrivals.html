@@ -1361,7 +1361,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
-    <script>
+        <script>
         // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyCOb4BqfiN3vt1Y13UTEpA_boCqNRH6rrQ",
@@ -1378,9 +1378,13 @@
         const database = firebase.database();
         const auth = firebase.auth();
         
+        // Global variable to store current products
+        let currentProducts = [];
+        
         // Initialize particles
         function initParticles() {
             const particlesContainer = document.getElementById('particles');
+            particlesContainer.innerHTML = ''; // Clear existing particles
             const particleCount = 25;
             
             for (let i = 0; i < particleCount; i++) {
@@ -1500,59 +1504,61 @@
                 'Home': 'rgba(100, 255, 218, 0.8)',
                 'Electronics': 'rgba(157, 101, 201, 0.8)',
                 'Fitness': 'rgba(230, 199, 138, 0.8)',
-                'Accessories': 'rgba(129, 200, 190, 0.8)'
+                'Accessories': 'rgba(129, 200, 190, 0.8)',
+                'Handbags': 'rgba(74, 144, 226, 0.8)'
             };
             return colors[category] || 'rgba(136, 146, 176, 0.8)';
         }
         
         // Show product details modal
         function showProductDetails(productIndex) {
-            const product = window.currentProducts?.[productIndex - 1];
-            if (!product) return;
+            const product = currentProducts[productIndex - 1];
+            if (!product) {
+                console.error("Product not found at index:", productIndex - 1);
+                return;
+            }
             
             const modalContent = document.getElementById('modalContent');
             modalContent.innerHTML = `
                 <div style="padding: 30px;">
-                    <div style="display: flex; gap: 30px; margin-bottom: 30px;">
-                        <div style="flex: 1;">
-                            <div style="width: 100%; height: 300px; border-radius: 12px; overflow: hidden; background: rgba(255, 255, 255, 0.05);">
-                                <img src="${product.image}" alt="${product.name}" style="width: 100%; height: 100%; object-fit: cover;">
-                            </div>
+                    <div style="display: flex; gap: 30px; margin-bottom: 30px; flex-direction: column;">
+                        <div style="width: 100%; height: 300px; border-radius: 12px; overflow: hidden; background: rgba(255, 255, 255, 0.05);">
+                            <img src="${product.image}" alt="${product.name}" style="width: 100%; height: 100%; object-fit: cover;">
                         </div>
-                        <div style="flex: 1;">
+                        <div>
                             <div style="margin-bottom: 20px;">
                                 <span style="display: inline-block; padding: 6px 15px; background: rgba(157, 101, 201, 0.1); color: #9d65c9; font-size: 14px; font-weight: 600; border-radius: 20px; margin-bottom: 15px;">
-                                    ${product.category}
+                                    ${product.category || 'Category'}
                                 </span>
                                 <div style="display: inline-block; padding: 6px 15px; background: var(--gradient-2); color: var(--dark-blue); font-size: 14px; font-weight: 700; border-radius: 20px; margin-left: 10px;">
                                     <i class="fas fa-bolt"></i> NEW ARRIVAL
                                 </div>
                             </div>
                             <h2 style="font-size: 28px; font-weight: 700; color: var(--text-primary); margin-bottom: 15px;">
-                                ${product.name}
+                                ${product.name || 'Product Name'}
                             </h2>
                             <div style="font-size: 32px; font-weight: 700; color: var(--accent-blue); margin-bottom: 20px;">
-                                Ksh ${product.price}
+                                Ksh ${product.price || '0'}
                             </div>
                             <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 30px;">
-                                ${product.description}
+                                ${product.description || 'No description available.'}
                             </p>
                             
                             <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 30px;">
                                 <div style="background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 8px; text-align: center;">
-                                    <div style="font-size: 20px; font-weight: 700; color: var(--text-primary);">${product.stock}</div>
+                                    <div style="font-size: 20px; font-weight: 700; color: var(--text-primary);">${product.stock || '0'}</div>
                                     <div style="font-size: 12px; color: var(--text-secondary);">In Stock</div>
                                 </div>
                                 <div style="background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 8px; text-align: center;">
-                                    <div style="font-size: 20px; font-weight: 700; color: var(--text-primary);">${product.rating}</div>
+                                    <div style="font-size: 20px; font-weight: 700; color: var(--text-primary);">${product.rating || 'New'}</div>
                                     <div style="font-size: 12px; color: var(--text-secondary);">Rating</div>
                                 </div>
                                 <div style="background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 8px; text-align: center;">
-                                    <div style="font-size: 20px; font-weight: 700; color: var(--text-primary);">${product.sold}</div>
+                                    <div style="font-size: 20px; font-weight: 700; color: var(--text-primary);">${product.sold || '0'}</div>
                                     <div style="font-size: 12px; color: var(--text-secondary);">Units Sold</div>
                                 </div>
                                 <div style="background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 8px; text-align: center;">
-                                    <div style="font-size: 20px; font-weight: 700; color: var(--text-primary);">${product.reviews}</div>
+                                    <div style="font-size: 20px; font-weight: 700; color: var(--text-primary);">${product.reviews || '0'}</div>
                                     <div style="font-size: 12px; color: var(--text-secondary);">Reviews</div>
                                 </div>
                             </div>
@@ -1564,7 +1570,7 @@
                                         <div style="font-size: 14px; color: var(--text-secondary);">Ready for immediate delivery</div>
                                     </div>
                                     <div style="font-size: 24px; font-weight: 700; color: var(--accent-blue);">
-                                        Ksh ${product.total}
+                                        Ksh ${parseInt(product.total) || (parseInt(product.price) || 0) * (parseInt(product.sold) || 0)}
                                     </div>
                                 </div>
                             </div>
@@ -1588,9 +1594,68 @@
             }
         });
         
+        // Default products data
+        const defaultProducts = [
+            {
+                id: 1,
+                name: "Summer Dress",
+                category: "Fashion",
+                price: "79",
+                image: "https://images.unsplash.com/photo-1496747611176-843222e1e57c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+                sold: "0",
+                total: "0",
+                description: "Light and flowy summer dress with floral pattern. Perfect for warm weather and special occasions.",
+                stock: "25",
+                rating: "New",
+                reviews: "0"
+            },
+            {
+                id: 2,
+                name: "Decorative Pillow",
+                category: "Home",
+                price: "45",
+                image: "https://images.unsplash.com/photo-1505843490537-8de44d869c18?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+                sold: "0",
+                total: "0",
+                description: "Soft and luxurious decorative pillow with intricate embroidery. Adds a touch of elegance to any room.",
+                stock: "40",
+                rating: "New",
+                reviews: "0"
+            },
+            {
+                id: 3,
+                name: "Wireless Earbuds",
+                category: "Electronics",
+                price: "199",
+                image: "https://images.unsplash.com/photo-1590658165737-15a047b8b5e1?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                sold: "0",
+                total: "0",
+                description: "High-quality wireless earbuds with noise cancellation and 24-hour battery life. Perfect for music and calls.",
+                stock: "30",
+                rating: "New",
+                reviews: "0"
+            },
+            {
+                id: 4,
+                name: "Yoga Mat",
+                category: "Fitness",
+                price: "65",
+                image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                sold: "0",
+                total: "0",
+                description: "Non-slip yoga mat with extra cushioning for comfort. Perfect for yoga, pilates, and floor exercises.",
+                stock: "35",
+                rating: "New",
+                reviews: "0"
+            }
+        ];
+        
         // Update product cards
         function updateProductCards(products) {
-            window.currentProducts = products;
+            // Store products globally for modal access
+            currentProducts = products;
+            
+            console.log("Updating product cards with:", products);
             
             // Update each product card
             products.forEach((product, index) => {
@@ -1598,45 +1663,114 @@
                 if (cardNum > 4) return;
                 
                 // Update product details
-                document.getElementById(`newProductName${cardNum}`).textContent = product.name;
-                document.getElementById(`newProductCategory${cardNum}`).textContent = product.category;
-                document.getElementById(`newProductPrice${cardNum}`).textContent = `Ksh ${product.price}`;
-                document.getElementById(`newProductStock${cardNum}`).textContent = product.stock;
+                const nameElement = document.getElementById(`newProductName${cardNum}`);
+                const categoryElement = document.getElementById(`newProductCategory${cardNum}`);
+                const priceElement = document.getElementById(`newProductPrice${cardNum}`);
+                const stockElement = document.getElementById(`newProductStock${cardNum}`);
+                const imageElement = document.getElementById(`newProductImage${cardNum}`);
                 
-                // Update image
-                const imgElement = document.getElementById(`newProductImage${cardNum}`);
-                imgElement.src = product.image;
+                if (nameElement) nameElement.textContent = product.name || 'Product Name';
+                if (categoryElement) categoryElement.textContent = product.category || 'Category';
+                if (priceElement) priceElement.textContent = `Ksh ${product.price || '0'}`;
+                if (stockElement) stockElement.textContent = product.stock || '0';
+                if (imageElement) imageElement.src = product.image || 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80';
             });
             
             // Update summary stats
             const totalProducts = products.length;
-            const totalStock = products.reduce((sum, product) => sum + parseInt(product.stock || 0), 0);
-            const uniqueCategories = new Set(products.map(p => p.category));
-            const avgStockPerProduct = Math.round(totalStock / totalProducts);
+            const totalStock = products.reduce((sum, product) => sum + (parseInt(product.stock) || 0), 0);
+            const uniqueCategories = [...new Set(products.map(p => p.category).filter(Boolean))];
+            const avgStockPerProduct = totalProducts > 0 ? Math.round(totalStock / totalProducts) : 0;
             
             // Calculate price range
-            const prices = products.map(p => parseInt(p.price) || 0);
-            const minPrice = Math.min(...prices);
-            const maxPrice = Math.max(...prices);
+            const prices = products.map(p => parseInt(p.price) || 0).filter(p => p > 0);
+            const minPrice = prices.length > 0 ? Math.min(...prices) : 0;
+            const maxPrice = prices.length > 0 ? Math.max(...prices) : 0;
             
-            document.getElementById('totalNewProducts').textContent = totalProducts;
-            document.getElementById('totalStock').textContent = totalStock;
-            document.getElementById('categoriesCount').textContent = uniqueCategories.size;
-            document.getElementById('avgStockPerProduct').textContent = avgStockPerProduct;
-            document.getElementById('priceRange').textContent = `Ksh ${minPrice}-${maxPrice}`;
-            document.getElementById('stockCoverage').textContent = '100%';
-            document.getElementById('franchiseAvailability').textContent = '8';
+            // Update UI elements
+            const totalProductsElement = document.getElementById('totalNewProducts');
+            const totalStockElement = document.getElementById('totalStock');
+            const categoriesCountElement = document.getElementById('categoriesCount');
+            const avgStockElement = document.getElementById('avgStockPerProduct');
+            const priceRangeElement = document.getElementById('priceRange');
+            
+            if (totalProductsElement) totalProductsElement.textContent = totalProducts;
+            if (totalStockElement) totalStockElement.textContent = totalStock;
+            if (categoriesCountElement) categoriesCountElement.textContent = uniqueCategories.length;
+            if (avgStockElement) avgStockElement.textContent = avgStockPerProduct;
+            if (priceRangeElement) priceRangeElement.textContent = `Ksh ${minPrice}-${maxPrice}`;
+            
+            console.log("Summary stats updated:", {
+                totalProducts,
+                totalStock,
+                categoriesCount: uniqueCategories.length,
+                avgStockPerProduct,
+                priceRange: `Ksh ${minPrice}-${maxPrice}`
+            });
         }
         
-        // Update dashboard with data from Firebase
-        function updateDashboard(data) {
-            console.log("Updating new arrivals dashboard with:", data);
+        // Fetch data from Firebase with retry logic
+        function fetchDataFromFirebase() {
+            console.log("Fetching data from Firebase...");
             
-            // Update product cards
-            updateProductCards(data.newArrivals);
+            database.ref('dashboard').once('value')
+                .then((snapshot) => {
+                    const data = snapshot.val();
+                    console.log("Firebase data received:", data);
+                    
+                    if (data) {
+                        // Try to get newArrivals data
+                        let products = data.newArrivals;
+                        
+                        if (!products && data.bestSellingProducts) {
+                            console.log("Using bestSellingProducts as fallback");
+                            products = data.bestSellingProducts;
+                        }
+                        
+                        if (products && Array.isArray(products) && products.length > 0) {
+                            console.log("Found products:", products);
+                            updateProductCards(products);
+                            updateCategoryChart(products);
+                        } else {
+                            console.log("No valid product data found, using default");
+                            updateProductCards(defaultProducts);
+                            updateCategoryChart(defaultProducts);
+                        }
+                    } else {
+                        console.log("No data in Firebase, using default");
+                        updateProductCards(defaultProducts);
+                        updateCategoryChart(defaultProducts);
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error fetching data from Firebase:", error);
+                    console.log("Using default data due to error");
+                    updateProductCards(defaultProducts);
+                    updateCategoryChart(defaultProducts);
+                });
+        }
+        
+        // Set up real-time listener for Firebase data
+        function setupFirebaseListener() {
+            console.log("Setting up Firebase real-time listener...");
             
-            // Update charts
-            updateCategoryChart(data.newArrivals);
+            database.ref('dashboard').on('value', (snapshot) => {
+                const data = snapshot.val();
+                console.log("Firebase real-time update:", data);
+                
+                if (data) {
+                    let products = data.newArrivals || data.bestSellingProducts;
+                    
+                    if (products && Array.isArray(products) && products.length > 0) {
+                        updateProductCards(products);
+                        updateCategoryChart(products);
+                    } else {
+                        console.log("No valid product data in real-time update");
+                    }
+                }
+            }, (error) => {
+                console.error("Firebase listener error:", error);
+            });
         }
         
         // Authentication state observer
@@ -1658,78 +1792,26 @@
             document.getElementById('dashboardContainer').style.display = 'block';
             
             // Update user info
-            document.getElementById('userEmail').textContent = user.email;
-            document.getElementById('userAvatar').textContent = user.email.charAt(0).toUpperCase();
+            const userEmailElement = document.getElementById('userEmail');
+            const userAvatarElement = document.getElementById('userAvatar');
+            
+            if (userEmailElement) userEmailElement.textContent = user.email;
+            if (userAvatarElement) userAvatarElement.textContent = user.email.charAt(0).toUpperCase();
             
             // Initialize particles
             initParticles();
             
-            // Listen for real-time data updates
-            database.ref('dashboard').on('value', (snapshot) => {
-                const data = snapshot.val();
-                if (data) {
-                    updateDashboard(data);
-                } else {
-                    // Initialize with default data if no data exists
-                    const defaultData = {
-                        newArrivals: [
-                            {
-                                id: 1,
-                                name: "Summer Dress",
-                                category: "Fashion",
-                                price: "79",
-                                image: "https://images.unsplash.com/photo-1496747611176-843222e1e57c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
-                                sold: "0",
-                                total: "0",
-                                description: "Light and flowy summer dress with floral pattern. Perfect for warm weather and special occasions. Made from breathable cotton blend with elegant embroidery details.",
-                                stock: "25",
-                                rating: "New",
-                                reviews: "0"
-                            },
-                            {
-                                id: 2,
-                                name: "Decorative Pillow",
-                                category: "Home",
-                                price: "45",
-                                image: "https://images.unsplash.com/photo-1505843490537-8de44d869c18?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
-                                sold: "0",
-                                total: "0",
-                                description: "Soft and luxurious decorative pillow with intricate embroidery. Adds a touch of elegance to any room. Features premium velvet fabric with silk thread detailing.",
-                                stock: "40",
-                                rating: "New",
-                                reviews: "0"
-                            },
-                            {
-                                id: 3,
-                                name: "Wireless Earbuds",
-                                category: "Electronics",
-                                price: "199",
-                                image: "https://images.unsplash.com/photo-1590658165737-15a047b8b5e1?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-                                sold: "0",
-                                total: "0",
-                                description: "High-quality wireless earbuds with noise cancellation and 24-hour battery life. Perfect for music and calls. Features IPX7 waterproof rating and touch controls.",
-                                stock: "30",
-                                rating: "New",
-                                reviews: "0"
-                            },
-                            {
-                                id: 4,
-                                name: "Yoga Mat",
-                                category: "Fitness",
-                                price: "65",
-                                image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-                                sold: "0",
-                                total: "0",
-                                description: "Non-slip yoga mat with extra cushioning for comfort. Perfect for yoga, pilates, and floor exercises. Made from eco-friendly TPE material with alignment markers.",
-                                stock: "35",
-                                rating: "New",
-                                reviews: "0"
-                            }
-                        ]
-                    };
-                    database.ref('dashboard').set(defaultData);
-                }
-            });
+            // Set up Firebase listener and fetch initial data
+            setupFirebaseListener();
+            fetchDataFromFirebase();
+            
+            // Add pulse animation to new arrival badges
+            setTimeout(() => {
+                const badges = document.querySelectorAll('.new-arrival-badge');
+                badges.forEach(badge => {
+                    badge.classList.add('pulse');
+                });
+            }, 1000);
         }
         
         function handleUserSignedOut() {
@@ -1832,6 +1914,23 @@
             }
         `;
         document.head.appendChild(style);
+        
+        // Initialize the page
+        console.log("New Arrivals page initialized");
+        
+        // Set up view details buttons
+        document.addEventListener('DOMContentLoaded', function() {
+            // This ensures buttons work after page loads
+            setTimeout(() => {
+                const buttons = document.querySelectorAll('.view-details');
+                buttons.forEach((button, index) => {
+                    button.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        showProductDetails(index + 1);
+                    });
+                });
+            }, 1000);
+        });
     </script>
 </body>
 </html>
