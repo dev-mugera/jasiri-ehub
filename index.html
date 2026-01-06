@@ -1960,7 +1960,7 @@
                         <i class="fas fa-cube"></i> Jasiri E-Hub
                     </div>
                     <div class="footer-info">
-                        <div>© 2024 DSOG Business Solutions. All rights reserved.</div>
+                        <div>© <span id="year"></span> DSOG Business Solutions. All rights reserved.</div>
                         <div class="footer-version">
                             Version 2.1 • Enterprise Edition • Secure Connection • Offline Capable
                         </div>
@@ -2646,6 +2646,8 @@
                 navigator.sendBeacon('/api/sync-last-minute');
             }
         });
+        
+        document.getElementById("year").textContent = new Date().getFullYear();
     </script>
 </body>
 </html>
