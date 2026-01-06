@@ -1221,6 +1221,9 @@
         .footer-link:hover {
             color: var(--light-pink);
         }
+        .efs-icon {
+        background: linear-gradient(135deg, #36d1dc, #5b86e5);
+    }
 
         /* Loading Spinner */
         .loading-spinner {
@@ -1743,6 +1746,10 @@
                     <i class="fas fa-money-bill-wave"></i>
                     <span>Finance Hub</span>
                 </a>
+                <a href="efs-workspace.html" class="nav-item">
+                    <i class="fas fa-truck"></i>
+                    <span>Fleet Hub</span>
+                </a>
                 <a href="kazinni-workspace.html" class="nav-item">
                     <i class="fas fa-briefcase"></i>
                     <span>Kazinni Space</span></a>
@@ -1868,6 +1875,16 @@
                             <div class="app-description">Accounting, financial reporting, and budget management</div>
                             <span class="app-badge-card">Active</span>
                             <div class="app-status">Financial Management</div>
+                        </div>
+                        <!-- EFS App -->
+                        <div class="app-card" onclick="window.location.href='efs-workspace.html'">
+                            <div class="app-icon efs-icon">
+                                <i class="fas fa-truck"></i>
+                            </div>
+                            <div class="app-name">Fleet Hub</div>
+                            <div class="app-description">Logistics, courier, shipping & fleet management operations</div>
+                            <span class="app-badge-card">Active</span>
+                            <div class="app-status" id="efsStatus">12 active vehicles</div>
                         </div>
                         <div class="app-card" onclick="window.location.href='kazinni-workspace.html'">
                             <div class="app-icon" style="background: linear-gradient(135deg, #9c27b0, #673ab7);">
@@ -2250,6 +2267,9 @@
                 updateConnectionStatus(false);
                 loadFromLocalStorage();
             });
+                if (data.fleet?.activeVehicles) {
+        document.getElementById('efsStatus').textContent = `${data.fleet.activeVehicles} active vehicles`;
+    }
         }
 
         // Update Dashboard Statistics
@@ -2269,6 +2289,13 @@
                     title: 'Products Sold',
                     value: data.metrics?.productsSold || 0,
                     trend: 'This week',
+                    trendClass: 'trend-up'
+                },
+                {
+                    icon: 'fas fa-truck',
+                    title: 'Active Vehicles',
+                    value: data.fleet?.activeVehicles || 12,
+                    trend: 'On duty',
                     trendClass: 'trend-up'
                 },
                 {
@@ -2322,6 +2349,11 @@
                     icon: 'fas fa-chart-line',
                     description: `Weekly sales: ${formatCurrency(data.metrics?.weeklySales || 0)}`,
                     module: 'EMH'
+                },
+                {
+                    icon: 'fas fa-truck',
+                    description: `${data.fleet?.deliveriesToday || 8} deliveries today`,
+                    module: 'EFS'
                 },
                 {
                     icon: 'fas fa-box',
