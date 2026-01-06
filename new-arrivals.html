@@ -1448,7 +1448,7 @@
                     <i class="fas fa-chart-line"></i>
                     <span>Sales Dashboard</span>
                 </a>
-                <a href="best-sellers.html" class="nav-item">
+                <a href="best-seller.html" class="nav-item">
                     <i class="fas fa-crown"></i>
                     <span>Best Sellers</span>
                 </a>
@@ -1678,7 +1678,7 @@
                         <i class="fas fa-bolt"></i> DSOG New Arrivals
                     </div>
                     <div class="footer-info">
-                        <div>© 2024 DSOG Business Solutions. All rights reserved.</div>
+                        <div>© <span id="year"></span> DSOG Enmterprise</div>
                         <div class="footer-version">
                             Version 2.1 • Fresh Products Hub • Secure Connection • Real-time Data
                         </div>
@@ -2257,6 +2257,8 @@
                 }
             });
         });
+        
+      document.getElementById("year").textContent = new Date().getFullYear();
     </script>
 </body>
 </html>
