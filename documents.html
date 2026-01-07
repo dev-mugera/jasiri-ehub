@@ -22,7 +22,6 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <style>
         :root {
@@ -42,8 +41,6 @@
             --content-max-width: 1300px;
             --online-color: #4ade80;
             --offline-color: #f87171;
-            --success-green: #4CAF50;
-            --warning-orange: #ff9800;
             --document-primary: #38761d;
             --document-primary-dark: #2a5d15;
             --document-primary-light: #47ac4b;
@@ -516,17 +513,6 @@
             font-weight: 500;
         }
 
-        .notification-badge {
-            margin-left: auto;
-            background: var(--light-pink);
-            color: white;
-            font-size: 9px;
-            padding: 2px 5px;
-            border-radius: 8px;
-            min-width: 16px;
-            text-align: center;
-        }
-
         /* Main Content */
         .main-content {
             margin-left: var(--sidebar-width);
@@ -539,7 +525,7 @@
             justify-content: center;
         }
 
-        /* Content Container - Perfectly Centered */
+        /* Content Container */
         .content-container {
             max-width: var(--content-max-width);
             width: 100%;
@@ -628,7 +614,7 @@
             letter-spacing: 0.5px;
         }
 
-        /* Document Portal Specific Styles */
+        /* Document Portal Container */
         .document-portal-container {
             background: var(--card-bg);
             border-radius: var(--border-radius);
@@ -638,6 +624,7 @@
             display: flex;
             flex-direction: column;
             height: calc(100vh - 280px);
+            min-height: 600px;
         }
 
         .document-toolbar {
@@ -648,6 +635,8 @@
             align-items: center;
             background: rgba(10, 25, 47, 0.5);
             backdrop-filter: blur(8px);
+            flex-wrap: wrap;
+            gap: 12px;
         }
 
         .breadcrumbs {
@@ -738,30 +727,422 @@
             font-size: 11px;
         }
 
-        .drive-iframe-container {
+        /* Documents Grid */
+        .documents-grid {
             flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+            align-content: start;
+        }
+
+        .document-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            transition: var(--transition);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
             position: relative;
             overflow: hidden;
         }
 
-        .drive-iframe {
+        .document-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(86, 156, 43, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .document-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: rgba(86, 156, 43, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            font-size: 24px;
+            color: var(--document-primary-light);
+        }
+
+        .document-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            word-break: break-word;
+            width: 100%;
+        }
+
+        .document-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            width: 100%;
+        }
+
+        .document-size {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .document-date {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .document-type {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            font-size: 10px;
+            color: var(--text-secondary);
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        /* Documents List View */
+        .documents-list {
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .list-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .list-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(86, 156, 43, 0.3);
+            transform: translateX(3px);
+        }
+
+        .list-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: rgba(86, 156, 43, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 18px;
+            color: var(--document-primary-light);
+            flex-shrink: 0;
+        }
+
+        .list-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .list-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .list-info {
+            display: flex;
+            gap: 15px;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .list-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 6px;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--medium-blue);
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(23, 42, 69, 0.95);
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 18px;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .modal-close:hover {
+            color: var(--light-pink);
+            background: rgba(255, 107, 139, 0.1);
+        }
+
+        .modal-body {
+            padding: 0;
+            height: calc(90vh - 80px);
+        }
+
+        .document-viewer {
             width: 100%;
             height: 100%;
             border: none;
             background: white;
         }
 
-        .iframe-overlay {
-            position: absolute;
+        /* Upload Modal */
+        .upload-container {
+            padding: 30px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .upload-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .upload-header i {
+            font-size: 48px;
+            color: var(--document-primary-light);
+            margin-bottom: 15px;
+        }
+
+        .upload-header h2 {
+            font-size: 24px;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+
+        .upload-header p {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .upload-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group select {
+            padding: 12px 14px;
+            border-radius: 7px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            font-size: 13px;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--document-primary-light);
+            box-shadow: 0 0 0 2px rgba(86, 156, 43, 0.15);
+        }
+
+        .file-drop-area {
+            border: 2px dashed rgba(86, 156, 43, 0.3);
+            border-radius: 7px;
+            padding: 40px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            background: rgba(86, 156, 43, 0.05);
+        }
+
+        .file-drop-area:hover {
+            border-color: var(--document-primary-light);
+            background: rgba(86, 156, 43, 0.1);
+        }
+
+        .file-drop-area i {
+            font-size: 36px;
+            color: var(--document-primary-light);
+            margin-bottom: 15px;
+        }
+
+        .file-drop-area p {
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+
+        .file-drop-area span {
+            color: var(--document-primary-light);
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .file-info {
+            display: none;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            background: rgba(86, 156, 43, 0.1);
+            border-radius: 7px;
+            margin-top: 10px;
+        }
+
+        .file-info i {
+            color: var(--document-primary-light);
+        }
+
+        .file-details {
+            flex: 1;
+        }
+
+        .file-name {
+            font-size: 13px;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+
+        .file-size {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .remove-file {
+            background: none;
+            border: none;
+            color: var(--light-pink);
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .remove-file:hover {
+            background: rgba(255, 107, 139, 0.1);
+        }
+
+        .upload-btn {
+            background: linear-gradient(135deg, var(--document-primary), var(--document-primary-light));
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 7px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .upload-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(86, 156, 43, 0.25);
+        }
+
+        .upload-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(23, 42, 69, 0.7);
+            background: rgba(0, 0, 0, 0.8);
             display: none;
             justify-content: center;
             align-items: center;
-            z-index: 10;
+            z-index: 1001;
             backdrop-filter: blur(5px);
         }
 
@@ -771,135 +1152,43 @@
         }
 
         .loading-spinner i {
-            font-size: 32px;
-            margin-bottom: 12px;
+            font-size: 48px;
+            margin-bottom: 20px;
             animation: spin 1.5s linear infinite;
         }
 
         .loading-spinner p {
-            font-size: 14px;
+            font-size: 16px;
             color: var(--text-secondary);
         }
 
-        .access-control {
-            padding: 30px;
-            text-align: center;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        .access-icon {
-            font-size: 48px;
-            color: var(--light-pink);
-            margin-bottom: 20px;
-        }
-
-        .access-control h2 {
-            font-size: 24px;
-            color: var(--text-primary);
-            margin-bottom: 12px;
-        }
-
-        .access-control p {
-            color: var(--text-secondary);
-            margin-bottom: 24px;
-            line-height: 1.6;
-        }
-
-        .access-btn {
-            background: linear-gradient(135deg, var(--light-pink), #ff7d9b);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 7px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .access-btn:hover {
-            background: linear-gradient(135deg, #ff7d9b, var(--light-pink));
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(255, 107, 139, 0.25);
-        }
-
-        /* Document Stats */
-        .document-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 18px;
-            margin-bottom: 28px;
-        }
-
-        .stat-card {
-            background: var(--card-bg);
-            border-radius: var(--border-radius);
-            padding: 20px 18px;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            transition: var(--transition);
-            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stat-card:hover {
-            border-color: rgba(86, 156, 43, 0.3);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-        }
-
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(135deg, var(--document-primary), var(--document-primary-light));
-        }
-
-        .stat-header {
+        /* Empty State */
+        .empty-state {
             display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 14px;
-        }
-
-        .stat-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            background: rgba(86, 156, 43, 0.12);
-            display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-size: 16px;
-            color: var(--document-primary-light);
-        }
-
-        .stat-title {
-            font-size: 12px;
+            padding: 60px 30px;
+            text-align: center;
             color: var(--text-secondary);
-            font-weight: 600;
-            letter-spacing: 0.3px;
         }
 
-        .stat-value {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 4px;
+        .empty-state i {
+            font-size: 60px;
+            margin-bottom: 20px;
+            color: var(--text-secondary);
+            opacity: 0.5;
+        }
+
+        .empty-state h3 {
+            font-size: 20px;
             color: var(--text-primary);
-            line-height: 1.2;
+            margin-bottom: 10px;
         }
 
-        .stat-subtext {
-            font-size: 11px;
-            color: var(--text-secondary);
-            margin-top: 4px;
+        .empty-state p {
+            max-width: 400px;
+            line-height: 1.6;
         }
 
         /* Footer */
@@ -959,8 +1248,8 @@
                 width: calc(100% - 220px);
             }
             
-            .document-stats {
-                grid-template-columns: repeat(2, 1fr);
+            .documents-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
             }
         }
 
@@ -1012,6 +1301,10 @@
             .view-options {
                 align-self: flex-end;
             }
+            
+            .document-actions {
+                align-self: flex-end;
+            }
         }
 
         @media (max-width: 768px) {
@@ -1031,11 +1324,6 @@
                 gap: 24px;
             }
             
-            .document-stats {
-                grid-template-columns: 1fr;
-                gap: 14px;
-            }
-            
             .welcome-text h1 {
                 font-size: 24px;
             }
@@ -1050,6 +1338,16 @@
             
             .current-time {
                 font-size: 22px;
+            }
+            
+            .documents-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                padding: 16px;
+                gap: 16px;
+            }
+            
+            .document-item {
+                padding: 16px;
             }
             
             .footer {
@@ -1096,6 +1394,21 @@
             
             .logout-btn span {
                 display: none;
+            }
+            
+            .documents-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                gap: 12px;
+            }
+            
+            .document-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+            
+            .document-name {
+                font-size: 13px;
             }
             
             .view-options {
@@ -1155,7 +1468,6 @@
                 width: 100%;
             }
             
-            .stat-card,
             .document-portal-container {
                 border: 1px solid #ddd;
             }
@@ -1185,10 +1497,18 @@
         <span>Online</span>
     </div>
 
-    <!-- Sync Status -->
+    <!-- Syncing Indicator -->
     <div class="sync-status" id="syncStatus">
         <i class="fas fa-sync-alt"></i>
         <span>Syncing data...</span>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <i class="fas fa-spinner"></i>
+            <p>Processing...</p>
+        </div>
     </div>
 
     <!-- Login Container -->
@@ -1290,7 +1610,7 @@
             
             <div class="nav-section">
                 <div class="nav-title">Document Categories</div>
-                <a href="#" class="nav-item" data-folder="financial">
+                <a href="#" class="nav-item active" data-folder="financial">
                     <i class="fas fa-file-invoice-dollar"></i>
                     <span>Financial Documents</span>
                 </a>
@@ -1310,15 +1630,15 @@
             
             <div class="nav-section">
                 <div class="nav-title">Document Actions</div>
-                <a href="#" class="nav-item" id="uploadDoc">
+                <a href="#" class="nav-item" id="uploadDocBtn">
                     <i class="fas fa-upload"></i>
                     <span>Upload Document</span>
                 </a>
-                <a href="#" class="nav-item" id="createFolder">
+                <a href="#" class="nav-item" id="createFolderBtn">
                     <i class="fas fa-folder-plus"></i>
                     <span>Create Folder</span>
                 </a>
-                <a href="#" class="nav-item" id="shareDoc">
+                <a href="#" class="nav-item" id="shareDocBtn">
                     <i class="fas fa-share-alt"></i>
                     <span>Share Document</span>
                 </a>
@@ -1354,68 +1674,21 @@
                     </div>
                 </section>
 
-                <!-- Document Stats -->
-                <div class="document-stats">
-                    <div class="stat-card">
-                        <div class="stat-header">
-                            <div class="stat-icon">
-                                <i class="fas fa-folder"></i>
-                            </div>
-                            <div class="stat-title">Total Folders</div>
-                        </div>
-                        <div class="stat-value" id="totalFolders">12</div>
-                        <div class="stat-subtext">+2 new this month</div>
-                    </div>
-                    
-                    <div class="stat-card">
-                        <div class="stat-header">
-                            <div class="stat-icon">
-                                <i class="fas fa-file"></i>
-                            </div>
-                            <div class="stat-title">Total Documents</div>
-                        </div>
-                        <div class="stat-value" id="totalDocuments">187</div>
-                        <div class="stat-subtext">+15 new this week</div>
-                    </div>
-                    
-                    <div class="stat-card">
-                        <div class="stat-header">
-                            <div class="stat-icon">
-                                <i class="fas fa-hdd"></i>
-                            </div>
-                            <div class="stat-title">Storage Used</div>
-                        </div>
-                        <div class="stat-value" id="storageUsed">4.2 GB</div>
-                        <div class="stat-subtext">65% of total capacity</div>
-                    </div>
-                    
-                    <div class="stat-card">
-                        <div class="stat-header">
-                            <div class="stat-icon">
-                                <i class="fas fa-users"></i>
-                            </div>
-                            <div class="stat-title">Shared Users</div>
-                        </div>
-                        <div class="stat-value" id="sharedUsers">8</div>
-                        <div class="stat-subtext">Active collaborators</div>
-                    </div>
-                </div>
-
                 <!-- Document Portal -->
                 <div class="document-portal-container">
                     <div class="document-toolbar">
                         <div class="breadcrumbs">
                             <span class="breadcrumb">Fusion Stores</span>
                             <span class="breadcrumb-separator">/</span>
-                            <span class="breadcrumb active">Financial Documents</span>
+                            <span class="breadcrumb active" id="currentFolderName">Financial Documents</span>
                         </div>
                         
                         <div class="view-options">
-                            <button class="view-btn active" data-view="grid" id="gridView">
+                            <button class="view-btn active" id="gridView">
                                 <i class="fas fa-th-large"></i>
                                 <span>Grid</span>
                             </button>
-                            <button class="view-btn" data-view="list" id="listView">
+                            <button class="view-btn" id="listView">
                                 <i class="fas fa-list"></i>
                                 <span>List</span>
                             </button>
@@ -1437,36 +1710,14 @@
                         </div>
                     </div>
                     
-                    <div class="drive-iframe-container">
-                        <div class="iframe-overlay" id="iframeOverlay">
-                            <div class="loading-spinner">
-                                <i class="fas fa-spinner"></i>
-                                <p>Loading document portal...</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Access Control Message (shown initially) -->
-                        <div class="access-control" id="accessControl">
-                            <div class="access-icon">
-                                <i class="fas fa-lock"></i>
-                            </div>
-                            <h2>Secure Document Access</h2>
-                            <p>Your documents are protected with enterprise-grade security. Please authenticate to access the financial documents portal.</p>
-                            <button class="access-btn" id="accessBtn">
-                                <i class="fas fa-unlock"></i>
-                                <span>Access Documents</span>
-                            </button>
-                        </div>
-                        
-                        <!-- Google Drive Iframe (hidden initially) -->
-                        <iframe 
-                            src="" 
-                            class="drive-iframe"
-                            id="driveViewer"
-                            sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
-                            allow="fullscreen"
-                            style="display: none;">
-                        </iframe>
+                    <!-- Grid View -->
+                    <div class="documents-grid" id="documentsGrid">
+                        <!-- Documents will be dynamically loaded here -->
+                    </div>
+                    
+                    <!-- List View -->
+                    <div class="documents-list" id="documentsList">
+                        <!-- Documents will be dynamically loaded here -->
                     </div>
                 </div>
 
@@ -1486,10 +1737,98 @@
         </main>
     </div>
 
+    <!-- Document Viewer Modal -->
+    <div class="modal" id="documentModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <i class="fas fa-file"></i>
+                    <span id="modalDocumentName">Document</span>
+                </div>
+                <button class="modal-close" id="modalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <iframe class="document-viewer" id="documentViewer" frameborder="0"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upload Modal -->
+    <div class="modal" id="uploadModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <i class="fas fa-upload"></i>
+                    <span>Upload Document</span>
+                </div>
+                <button class="modal-close" id="uploadModalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="upload-container">
+                    <div class="upload-header">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <h2>Upload to <span id="uploadFolderName">Financial Documents</span></h2>
+                        <p>Select a file to upload to the current folder</p>
+                    </div>
+                    
+                    <form class="upload-form" id="uploadForm">
+                        <div class="form-group">
+                            <label for="documentName">Document Name</label>
+                            <input type="text" id="documentName" placeholder="Enter document name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="documentType">Document Type</label>
+                            <select id="documentType" required>
+                                <option value="">Select type</option>
+                                <option value="pdf">PDF Document</option>
+                                <option value="excel">Excel Spreadsheet</option>
+                                <option value="word">Word Document</option>
+                                <option value="image">Image</option>
+                                <option value="presentation">Presentation</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Upload File</label>
+                            <div class="file-drop-area" id="fileDropArea">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Drag & drop your file here or click to browse</p>
+                                <span>Maximum file size: 100MB</span>
+                                <input type="file" id="fileInput" hidden accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.jpg,.jpeg,.png,.txt">
+                            </div>
+                            <div class="file-info" id="fileInfo">
+                                <i class="fas fa-file"></i>
+                                <div class="file-details">
+                                    <div class="file-name" id="fileName">No file selected</div>
+                                    <div class="file-size" id="fileSize">0 KB</div>
+                                </div>
+                                <button type="button" class="remove-file" id="removeFile">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="upload-btn" id="submitUpload">
+                            <i class="fas fa-upload"></i>
+                            <span>Upload Document</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
 
     <script>
         // Firebase Configuration
@@ -1507,11 +1846,54 @@
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
         const auth = firebase.auth();
+        const storage = firebase.storage();
 
         // Variables
         let isOnline = navigator.onLine;
         let currentUser = null;
-        let currentFolder = "1FJ3T_E3-pUXt3tIy3NbxeXoa2w2bB86b"; // Default financial documents folder
+        let currentFolder = "financial";
+        let selectedFile = null;
+        let documentsData = [];
+
+        // Document folder mappings
+        const folderData = {
+            financial: {
+                name: "Financial Documents",
+                icon: "file-invoice-dollar",
+                documents: [
+                    { id: 1, name: "Q3 Financial Report 2024", type: "pdf", size: "4.2 MB", date: "2024-06-10", url: "https://drive.google.com/file/d/1FJ3T_E3-pUXt3tIy3NbxeXoa2w2bB86b/preview" },
+                    { id: 2, name: "Annual Budget 2024", type: "excel", size: "2.8 MB", date: "2024-05-22", url: "https://docs.google.com/spreadsheets/d/1/preview" },
+                    { id: 3, name: "Expense Tracker", type: "excel", size: "1.5 MB", date: "2024-06-14", url: "https://docs.google.com/spreadsheets/d/2/preview" },
+                    { id: 4, name: "Tax Documents", type: "pdf", size: "3.7 MB", date: "2024-04-30", url: "https://drive.google.com/file/d/3/preview" },
+                    { id: 5, name: "Invoice Template", type: "word", size: "890 KB", date: "2024-06-01", url: "https://docs.google.com/document/d/1/preview" },
+                    { id: 6, name: "Financial Policy", type: "pdf", size: "2.1 MB", date: "2024-03-15", url: "https://drive.google.com/file/d/4/preview" }
+                ]
+            },
+            reports: {
+                name: "Sales Reports",
+                icon: "chart-bar",
+                documents: [
+                    { id: 7, name: "Weekly Sales Report", type: "excel", size: "1.2 MB", date: "2024-06-14", url: "https://docs.google.com/spreadsheets/d/3/preview" },
+                    { id: 8, name: "Monthly Performance", type: "pdf", size: "3.1 MB", date: "2024-06-05", url: "https://drive.google.com/file/d/5/preview" }
+                ]
+            },
+            compliance: {
+                name: "Compliance",
+                icon: "clipboard-check",
+                documents: [
+                    { id: 9, name: "Regulatory Compliance", type: "pdf", size: "5.3 MB", date: "2024-05-30", url: "https://drive.google.com/file/d/6/preview" },
+                    { id: 10, name: "Audit Report 2024", type: "pdf", size: "4.8 MB", date: "2024-04-25", url: "https://drive.google.com/file/d/7/preview" }
+                ]
+            },
+            operations: {
+                name: "Operations",
+                icon: "cogs",
+                documents: [
+                    { id: 11, name: "Operations Manual", type: "word", size: "3.2 MB", date: "2024-06-12", url: "https://docs.google.com/document/d/2/preview" },
+                    { id: 12, name: "Process Flowcharts", type: "image", size: "2.4 MB", date: "2024-05-18", url: "https://drive.google.com/file/d/8/preview" }
+                ]
+            }
+        };
 
         // DOM Elements
         const loginContainer = document.getElementById('loginContainer');
@@ -1533,22 +1915,36 @@
         const syncStatus = document.getElementById('syncStatus');
         const connectionStatusText = document.getElementById('connectionStatusText');
         const rememberMe = document.getElementById('rememberMe');
-        const accessControl = document.getElementById('accessControl');
-        const accessBtn = document.getElementById('accessBtn');
-        const driveViewer = document.getElementById('driveViewer');
-        const iframeOverlay = document.getElementById('iframeOverlay');
-        const refreshBtn = document.getElementById('refreshBtn');
+        const accessLevel = document.getElementById('accessLevel');
+        const documentsGrid = document.getElementById('documentsGrid');
+        const documentsList = document.getElementById('documentsList');
+        const currentFolderName = document.getElementById('currentFolderName');
+        const uploadFolderName = document.getElementById('uploadFolderName');
         const gridView = document.getElementById('gridView');
         const listView = document.getElementById('listView');
-        const accessLevel = document.getElementById('accessLevel');
-
-        // Document folder mappings
-        const folderIds = {
-            financial: "1FJ3T_E3-pUXt3tIy3NbxeXoa2w2bB86b",
-            reports: "1Iu4k9LmN7oP8q9R0sT1uV2wX3yZ4a5b6",
-            compliance: "2Ab3c4D5e6F7g8H9i0J1k2L3m4N5o6P7",
-            operations: "3Qr4s5T6u7V8w9X0y1Z2a3B4c5D6e7F8"
-        };
+        const refreshBtn = document.getElementById('refreshBtn');
+        const uploadBtn = document.getElementById('uploadBtn');
+        const newFolderBtn = document.getElementById('newFolderBtn');
+        const uploadDocBtn = document.getElementById('uploadDocBtn');
+        const createFolderBtn = document.getElementById('createFolderBtn');
+        const shareDocBtn = document.getElementById('shareDocBtn');
+        const documentModal = document.getElementById('documentModal');
+        const documentViewer = document.getElementById('documentViewer');
+        const modalDocumentName = document.getElementById('modalDocumentName');
+        const modalClose = document.getElementById('modalClose');
+        const uploadModal = document.getElementById('uploadModal');
+        const uploadModalClose = document.getElementById('uploadModalClose');
+        const uploadForm = document.getElementById('uploadForm');
+        const documentName = document.getElementById('documentName');
+        const documentType = document.getElementById('documentType');
+        const fileDropArea = document.getElementById('fileDropArea');
+        const fileInput = document.getElementById('fileInput');
+        const fileInfo = document.getElementById('fileInfo');
+        const fileName = document.getElementById('fileName');
+        const fileSize = document.getElementById('fileSize');
+        const removeFile = document.getElementById('removeFile');
+        const submitUpload = document.getElementById('submitUpload');
+        const loadingOverlay = document.getElementById('loadingOverlay');
 
         // Check Authentication State
         auth.onAuthStateChanged((user) => {
@@ -1571,7 +1967,7 @@
             updateDateTime();
             setInterval(updateDateTime, 1000);
             
-            loadDocumentStats();
+            loadDocuments();
             initializeSidebar();
             initializeConnectionMonitoring();
             
@@ -1586,10 +1982,6 @@
             loginEmail.value = '';
             loginPassword.value = '';
             loginError.style.display = 'none';
-            
-            // Hide document portal
-            accessControl.style.display = 'block';
-            driveViewer.style.display = 'none';
         }
 
         // Login Functionality
@@ -1699,52 +2091,230 @@
             currentTime.textContent = now.toLocaleTimeString('en-US', timeOptions);
         }
 
-        // Access Documents Button
-        accessBtn.addEventListener('click', function() {
-            accessControl.style.display = 'none';
-            driveViewer.style.display = 'block';
+        // Load Documents
+        function loadDocuments() {
+            const folder = folderData[currentFolder];
+            if (!folder) return;
             
-            // Show loading overlay
-            iframeOverlay.style.display = 'flex';
+            currentFolderName.textContent = folder.name;
+            uploadFolderName.textContent = folder.name;
+            documentsData = folder.documents;
             
-            // Load the Google Drive iframe
-            loadDriveIframe(currentFolder, 'grid');
-            
-            setTimeout(() => {
-                iframeOverlay.style.display = 'none';
-            }, 2000);
-        });
-
-        // Load Google Drive Iframe
-        function loadDriveIframe(folderId, view = 'grid') {
-            const driveUrl = `https://drive.google.com/embeddedfolderview?id=${folderId}#${view}`;
-            driveViewer.src = driveUrl;
+            renderGridView();
+            renderListView();
         }
 
-        // Refresh Button
-        refreshBtn.addEventListener('click', function() {
-            iframeOverlay.style.display = 'flex';
+        // Render Grid View
+        function renderGridView() {
+            if (documentsData.length === 0) {
+                documentsGrid.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-folder-open"></i>
+                        <h3>No documents found</h3>
+                        <p>This folder is empty. Upload documents to get started.</p>
+                    </div>
+                `;
+                return;
+            }
             
-            setTimeout(() => {
-                driveViewer.src = driveViewer.src;
-                iframeOverlay.style.display = 'none';
-                showSyncStatus('synced');
-            }, 1000);
+            let html = '';
+            documentsData.forEach(doc => {
+                const icon = getDocumentIcon(doc.type);
+                const formattedDate = formatDate(doc.date);
+                
+                html += `
+                    <div class="document-item" data-id="${doc.id}">
+                        <div class="document-icon">
+                            <i class="fas fa-${icon}"></i>
+                        </div>
+                        <div class="document-name">${doc.name}</div>
+                        <div class="document-info">
+                            <div class="document-size">${doc.size}</div>
+                            <div class="document-date">${formattedDate}</div>
+                        </div>
+                        <div class="document-type">${doc.type.toUpperCase()}</div>
+                    </div>
+                `;
+            });
             
-            showSyncStatus('syncing');
+            documentsGrid.innerHTML = html;
+            
+            // Add click event to documents
+            document.querySelectorAll('.document-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const docId = parseInt(this.dataset.id);
+                    const doc = documentsData.find(d => d.id === docId);
+                    if (doc) {
+                        openDocument(doc);
+                    }
+                });
+            });
+        }
+
+        // Render List View
+        function renderListView() {
+            if (documentsData.length === 0) {
+                documentsList.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-folder-open"></i>
+                        <h3>No documents found</h3>
+                        <p>This folder is empty. Upload documents to get started.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '';
+            documentsData.forEach(doc => {
+                const icon = getDocumentIcon(doc.type);
+                const formattedDate = formatDate(doc.date);
+                
+                html += `
+                    <div class="list-item" data-id="${doc.id}">
+                        <div class="list-icon">
+                            <i class="fas fa-${icon}"></i>
+                        </div>
+                        <div class="list-details">
+                            <div class="list-name">${doc.name}</div>
+                            <div class="list-info">
+                                <span>${doc.size}</span>
+                                <span>${formattedDate}</span>
+                            </div>
+                        </div>
+                        <div class="list-actions">
+                            <button class="action-btn preview-btn" data-id="${doc.id}">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="action-btn download-btn" data-id="${doc.id}">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            documentsList.innerHTML = html;
+            
+            // Add click events
+            document.querySelectorAll('.list-item').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    if (!e.target.closest('.action-btn')) {
+                        const docId = parseInt(this.dataset.id);
+                        const doc = documentsData.find(d => d.id === docId);
+                        if (doc) {
+                            openDocument(doc);
+                        }
+                    }
+                });
+            });
+            
+            // Add click events for action buttons
+            document.querySelectorAll('.preview-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const docId = parseInt(this.dataset.id);
+                    const doc = documentsData.find(d => d.id === docId);
+                    if (doc) {
+                        openDocument(doc);
+                    }
+                });
+            });
+            
+            document.querySelectorAll('.download-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const docId = parseInt(this.dataset.id);
+                    const doc = documentsData.find(d => d.id === docId);
+                    if (doc) {
+                        downloadDocument(doc);
+                    }
+                });
+            });
+        }
+
+        // Get Document Icon
+        function getDocumentIcon(type) {
+            switch(type) {
+                case 'pdf': return 'file-pdf';
+                case 'excel': return 'file-excel';
+                case 'word': return 'file-word';
+                case 'image': return 'file-image';
+                case 'presentation': return 'file-powerpoint';
+                default: return 'file';
+            }
+        }
+
+        // Format Date
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        }
+
+        // Open Document
+        function openDocument(doc) {
+            modalDocumentName.textContent = doc.name;
+            documentViewer.src = doc.url;
+            documentModal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Download Document
+        function downloadDocument(doc) {
+            // In a real implementation, this would trigger actual download
+            // For now, we'll simulate with an alert
+            alert(`Downloading ${doc.name}...\n\nIn a real implementation, this would download the file.`);
+        }
+
+        // Close Modal
+        modalClose.addEventListener('click', function() {
+            documentModal.style.display = 'none';
+            documentViewer.src = '';
+            document.body.style.overflow = 'auto';
+        });
+
+        uploadModalClose.addEventListener('click', function() {
+            uploadModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            resetUploadForm();
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(e) {
+            if (e.target === documentModal) {
+                documentModal.style.display = 'none';
+                documentViewer.src = '';
+                document.body.style.overflow = 'auto';
+            }
+            if (e.target === uploadModal) {
+                uploadModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+                resetUploadForm();
+            }
         });
 
         // View Mode Toggle
         gridView.addEventListener('click', function() {
             gridView.classList.add('active');
             listView.classList.remove('active');
-            loadDriveIframe(currentFolder, 'grid');
+            documentsGrid.style.display = 'grid';
+            documentsList.style.display = 'none';
         });
 
         listView.addEventListener('click', function() {
-            listView.classList.remove('active');
-            gridView.classList.add('active');
-            loadDriveIframe(currentFolder, 'list');
+            listView.classList.add('active');
+            gridView.classList.remove('active');
+            documentsGrid.style.display = 'none';
+            documentsList.style.display = 'flex';
+        });
+
+        // Refresh Button
+        refreshBtn.addEventListener('click', function() {
+            showSyncStatus('syncing');
+            loadDocuments();
+            
+            setTimeout(() => {
+                showSyncStatus('synced');
+            }, 1000);
         });
 
         // Document Category Navigation
@@ -1756,49 +2326,207 @@
                 document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
                 this.classList.add('active');
                 
-                // Get folder ID
-                const folderType = this.dataset.folder;
-                currentFolder = folderIds[folderType] || folderIds.financial;
+                // Update current folder
+                currentFolder = this.dataset.folder;
                 
-                // Update breadcrumb
-                document.querySelector('.breadcrumb.active').textContent = 
-                    this.querySelector('span').textContent;
+                // Load documents for this folder
+                loadDocuments();
                 
-                // Show loading and load new folder
-                iframeOverlay.style.display = 'flex';
-                loadDriveIframe(currentFolder, gridView.classList.contains('active') ? 'grid' : 'list');
-                
-                setTimeout(() => {
-                    iframeOverlay.style.display = 'none';
-                }, 2000);
+                // Close sidebar on mobile
+                if (window.innerWidth <= 992) {
+                    sidebar.classList.remove('active');
+                }
             });
         });
 
-        // Load Document Stats
-        function loadDocumentStats() {
-            // Load from Firebase or use defaults
-            database.ref('documentStats').on('value', (snapshot) => {
-                const data = snapshot.val();
-                if (data) {
-                    updateDocumentStats(data);
-                } else {
-                    // Use default stats
-                    updateDocumentStats({
-                        folders: 12,
-                        documents: 187,
-                        storage: "4.2 GB",
-                        users: 8
-                    });
-                }
-            });
+        // Upload Button
+        uploadBtn.addEventListener('click', function() {
+            uploadModal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        });
+
+        uploadDocBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            uploadModal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        });
+
+        // File Upload Handling
+        fileDropArea.addEventListener('click', function() {
+            fileInput.click();
+        });
+
+        fileDropArea.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            this.style.borderColor = 'var(--document-primary-light)';
+            this.style.background = 'rgba(86, 156, 43, 0.15)';
+        });
+
+        fileDropArea.addEventListener('dragleave', function() {
+            this.style.borderColor = 'rgba(86, 156, 43, 0.3)';
+            this.style.background = 'rgba(86, 156, 43, 0.05)';
+        });
+
+        fileDropArea.addEventListener('drop', function(e) {
+            e.preventDefault();
+            this.style.borderColor = 'rgba(86, 156, 43, 0.3)';
+            this.style.background = 'rgba(86, 156, 43, 0.05)';
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFileSelect(files[0]);
+            }
+        });
+
+        fileInput.addEventListener('change', function(e) {
+            if (this.files.length > 0) {
+                handleFileSelect(this.files[0]);
+            }
+        });
+
+        removeFile.addEventListener('click', function() {
+            selectedFile = null;
+            fileInput.value = '';
+            fileInfo.style.display = 'none';
+            fileName.textContent = 'No file selected';
+            fileSize.textContent = '0 KB';
+        });
+
+        function handleFileSelect(file) {
+            if (file.size > 100 * 1024 * 1024) { // 100MB limit
+                alert('File size exceeds 100MB limit. Please select a smaller file.');
+                return;
+            }
+            
+            selectedFile = file;
+            fileName.textContent = file.name;
+            fileSize.textContent = formatFileSize(file.size);
+            fileInfo.style.display = 'flex';
+            
+            // Auto-fill document name if empty
+            if (!documentName.value.trim()) {
+                const nameWithoutExt = file.name.replace(/\.[^/.]+$/, "");
+                documentName.value = nameWithoutExt;
+            }
         }
 
-        function updateDocumentStats(data) {
-            document.getElementById('totalFolders').textContent = data.folders;
-            document.getElementById('totalDocuments').textContent = data.documents;
-            document.getElementById('storageUsed').textContent = data.storage;
-            document.getElementById('sharedUsers').textContent = data.users;
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
         }
+
+        // Upload Form Submission
+        uploadForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            if (!selectedFile) {
+                alert('Please select a file to upload.');
+                return;
+            }
+            
+            if (!documentName.value.trim()) {
+                alert('Please enter a document name.');
+                return;
+            }
+            
+            if (!documentType.value) {
+                alert('Please select a document type.');
+                return;
+            }
+            
+            // Show loading overlay
+            loadingOverlay.style.display = 'flex';
+            submitUpload.disabled = true;
+            
+            try {
+                // In a real implementation, you would upload to Google Drive API
+                // For this demo, we'll simulate the upload and save to Firebase
+                
+                // Create a reference to the file location
+                const fileRef = storage.ref(`documents/${currentFolder}/${selectedFile.name}`);
+                
+                // Upload the file
+                const snapshot = await fileRef.put(selectedFile);
+                
+                // Get the download URL
+                const downloadURL = await snapshot.ref.getDownloadURL();
+                
+                // Save document metadata to Firebase
+                const newDoc = {
+                    name: documentName.value.trim(),
+                    type: documentType.value,
+                    size: formatFileSize(selectedFile.size),
+                    date: new Date().toISOString().split('T')[0],
+                    url: downloadURL,
+                    uploadedBy: currentUser.email,
+                    uploadedAt: new Date().toISOString(),
+                    folder: currentFolder
+                };
+                
+                // Save to Firebase database
+                const docRef = database.ref('documents').push();
+                await docRef.set(newDoc);
+                
+                // Simulate success
+                setTimeout(() => {
+                    loadingOverlay.style.display = 'none';
+                    submitUpload.disabled = false;
+                    
+                    // Show success message
+                    alert('Document uploaded successfully!');
+                    
+                    // Close modal and reset form
+                    uploadModal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                    resetUploadForm();
+                    
+                    // Refresh documents list
+                    loadDocuments();
+                    
+                    // Show sync status
+                    showSyncStatus('synced');
+                    
+                }, 2000);
+                
+            } catch (error) {
+                console.error('Upload error:', error);
+                loadingOverlay.style.display = 'none';
+                submitUpload.disabled = false;
+                alert('Error uploading document. Please try again.');
+            }
+        });
+
+        function resetUploadForm() {
+            uploadForm.reset();
+            selectedFile = null;
+            fileInput.value = '';
+            fileInfo.style.display = 'none';
+            fileName.textContent = 'No file selected';
+            fileSize.textContent = '0 KB';
+        }
+
+        // Create Folder Button
+        newFolderBtn.addEventListener('click', function() {
+            const folderName = prompt('Enter folder name:');
+            if (folderName && folderName.trim()) {
+                // In a real implementation, create folder in Google Drive
+                alert(`Folder "${folderName}" created successfully!\n\nIn a real implementation, this would create a folder in Google Drive.`);
+            }
+        });
+
+        createFolderBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            newFolderBtn.click();
+        });
+
+        // Share Document Button
+        shareDocBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Share functionality coming soon!\n\nThis would allow you to share documents with team members.');
+        });
 
         // Initialize Sidebar
         function initializeSidebar() {
@@ -1812,23 +2540,6 @@
                         sidebar.classList.remove('active');
                     }
                 }
-            });
-            
-            document.querySelectorAll('.nav-item').forEach(item => {
-                item.addEventListener('click', function(e) {
-                    if (this.getAttribute('href') === '#') {
-                        e.preventDefault();
-                    }
-                    
-                    if (!this.classList.contains('active')) {
-                        document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
-                        this.classList.add('active');
-                    }
-                    
-                    if (window.innerWidth <= 992) {
-                        sidebar.classList.remove('active');
-                    }
-                });
             });
             
             window.addEventListener('resize', function() {
@@ -1879,7 +2590,6 @@
             
             setTimeout(() => {
                 showSyncStatus('synced');
-                loadDocumentStats();
             }, 1500);
         }
 
@@ -1901,30 +2611,6 @@
                 syncStatus.style.display = 'none';
             }, 3000);
         }
-
-        // Document Action Buttons
-        document.getElementById('uploadDoc').addEventListener('click', function(e) {
-            e.preventDefault();
-            alert('Upload document feature coming soon!');
-        });
-
-        document.getElementById('createFolder').addEventListener('click', function(e) {
-            e.preventDefault();
-            alert('Create folder feature coming soon!');
-        });
-
-        document.getElementById('shareDoc').addEventListener('click', function(e) {
-            e.preventDefault();
-            alert('Share document feature coming soon!');
-        });
-
-        document.getElementById('newFolderBtn').addEventListener('click', function() {
-            alert('Create new folder feature coming soon!');
-        });
-
-        document.getElementById('uploadBtn').addEventListener('click', function() {
-            alert('Upload document feature coming soon!');
-        });
 
         // Initialize on load
         document.addEventListener('DOMContentLoaded', () => {
