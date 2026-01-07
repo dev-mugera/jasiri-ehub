@@ -1,0 +1,1944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.95">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="application-name" content="DSOG Document Portal">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="DSOG Document Portal">
+    <meta name="description" content="Secure Document Management System for DSOG">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#0a192f">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="theme-color" content="#0a192f">
+    
+    <!-- Title -->
+    <title>Jasiri E-Hub | Document Portal</title>
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        :root {
+            /* Professional DSOG Theme */
+            --dark-blue: #0a192f;
+            --medium-blue: #172a45;
+            --light-pink: #ff6b8b;
+            --accent-gold: #e6c78a;
+            --soft-teal: #81c8be;
+            --text-primary: #f0e6ef;
+            --text-secondary: #b8b8d1;
+            --card-bg: rgba(23, 42, 69, 0.85);
+            --sidebar-width: 240px;
+            --topbar-height: 60px;
+            --border-radius: 10px;
+            --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --content-max-width: 1300px;
+            --online-color: #4ade80;
+            --offline-color: #f87171;
+            --success-green: #4CAF50;
+            --warning-orange: #ff9800;
+            --document-primary: #38761d;
+            --document-primary-dark: #2a5d15;
+            --document-primary-light: #47ac4b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        html {
+            font-size: 14px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--dark-blue);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.5;
+        }
+
+        .background-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 107, 139, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(129, 200, 190, 0.03) 0%, transparent 20%);
+            z-index: -1;
+        }
+
+        /* Connection Status */
+        .connection-status {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 5px 10px;
+            border-radius: 16px;
+            font-size: 11px;
+            font-weight: 600;
+            z-index: 10001;
+            display: none;
+            align-items: center;
+            gap: 5px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .connection-status.online {
+            background: rgba(74, 222, 128, 0.15);
+            color: var(--online-color);
+            border: 1px solid rgba(74, 222, 128, 0.25);
+        }
+        
+        .connection-status.offline {
+            background: rgba(248, 113, 113, 0.15);
+            color: var(--offline-color);
+            border: 1px solid rgba(248, 113, 113, 0.25);
+        }
+        
+        .connection-status i {
+            font-size: 9px;
+        }
+
+        /* Syncing Indicator */
+        .sync-status {
+            position: fixed;
+            bottom: 70px;
+            right: 15px;
+            background: rgba(23, 42, 69, 0.9);
+            border-radius: var(--border-radius);
+            padding: 10px 14px;
+            font-size: 12px;
+            display: none;
+            align-items: center;
+            gap: 8px;
+            z-index: 10000;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(10px);
+        }
+        
+        .sync-status.syncing {
+            color: var(--accent-gold);
+        }
+        
+        .sync-status.synced {
+            color: var(--soft-teal);
+        }
+        
+        .sync-status i {
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Login Container */
+        .login-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--dark-blue);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            padding: 20px;
+        }
+
+        .login-box {
+            background: var(--medium-blue);
+            padding: 36px 32px;
+            border-radius: var(--border-radius);
+            width: 100%;
+            max-width: 380px;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.3s ease-out;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-logo {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .login-logo-icon {
+            font-size: 40px;
+            color: var(--accent-gold);
+            margin-bottom: 14px;
+        }
+
+        .login-logo h1 {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+            letter-spacing: 0.3px;
+        }
+
+        .login-logo p {
+            color: var(--text-secondary);
+            font-size: 12px;
+            letter-spacing: 0.8px;
+            margin-bottom: 4px;
+        }
+
+        .login-form .input-group {
+            margin-bottom: 18px;
+        }
+
+        .login-form label {
+            display: block;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
+        .login-form input {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 7px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            font-size: 13px;
+            transition: var(--transition);
+        }
+
+        .login-form input:focus {
+            outline: none;
+            border-color: var(--light-pink);
+            box-shadow: 0 0 0 2px rgba(255, 107, 139, 0.15);
+            background: rgba(255, 255, 255, 0.07);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, var(--light-pink), #ff7d9b);
+            color: white;
+            border: none;
+            border-radius: 7px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 6px;
+            letter-spacing: 0.3px;
+        }
+
+        .login-btn:hover {
+            background: linear-gradient(135deg, #ff7d9b, var(--light-pink));
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(255, 107, 139, 0.25);
+        }
+
+        .login-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .login-error {
+            color: #ff6b6b;
+            font-size: 11px;
+            text-align: center;
+            margin-top: 10px;
+            display: none;
+            padding: 8px;
+            background: rgba(255, 107, 107, 0.08);
+            border-radius: 5px;
+            border: 1px solid rgba(255, 107, 107, 0.15);
+        }
+
+        /* Login Options */
+        .login-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+            font-size: 12px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+
+        .remember-me input {
+            width: auto;
+            margin: 0;
+        }
+
+        /* Main App Container */
+        .app-container {
+            display: none;
+            min-height: 100vh;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--topbar-height);
+            background: rgba(23, 42, 69, 0.98);
+            backdrop-filter: blur(15px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            width: 100%;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .menu-toggle {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 17px;
+            cursor: pointer;
+            padding: 7px;
+            border-radius: 5px;
+            transition: var(--transition);
+            display: none;
+        }
+
+        .menu-toggle:hover {
+            color: var(--light-pink);
+            background: rgba(255, 107, 139, 0.1);
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-logo-icon {
+            font-size: 18px;
+            color: var(--light-pink);
+        }
+
+        .brand-text {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .brand-subtitle {
+            font-size: 9px;
+            color: var(--text-secondary);
+            margin-top: 1px;
+            letter-spacing: 0.3px;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            border-radius: 7px;
+            cursor: pointer;
+            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .user-profile:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--light-pink), var(--accent-gold));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-name {
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .user-role {
+            font-size: 10px;
+            color: var(--text-secondary);
+            letter-spacing: 0.2px;
+        }
+
+        .logout-btn {
+            background: rgba(255, 107, 139, 0.1);
+            color: var(--light-pink);
+            border: 1px solid rgba(255, 107, 139, 0.2);
+            padding: 6px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 600;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 107, 139, 0.15);
+            border-color: var(--light-pink);
+            transform: translateY(-1px);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: var(--topbar-height);
+            left: 0;
+            width: var(--sidebar-width);
+            height: calc(100vh - var(--topbar-height));
+            background: rgba(23, 42, 69, 0.98);
+            backdrop-filter: blur(15px);
+            border-right: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 24px 0;
+            overflow-y: auto;
+            transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 999;
+        }
+
+        .nav-section {
+            padding: 0 18px;
+            margin-bottom: 24px;
+        }
+
+        .nav-title {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            padding-left: 6px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 7px;
+            margin-bottom: 3px;
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 107, 139, 0.1);
+            color: var(--text-primary);
+            border-color: rgba(255, 107, 139, 0.15);
+        }
+
+        .nav-item.active {
+            background: rgba(86, 156, 43, 0.12);
+            color: var(--document-primary-light);
+            border-color: rgba(86, 156, 43, 0.25);
+        }
+
+        .nav-item i {
+            font-size: 15px;
+            width: 18px;
+            text-align: center;
+        }
+
+        .nav-item span {
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .notification-badge {
+            margin-left: auto;
+            background: var(--light-pink);
+            color: white;
+            font-size: 9px;
+            padding: 2px 5px;
+            border-radius: 8px;
+            min-width: 16px;
+            text-align: center;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            margin-top: var(--topbar-height);
+            padding: 28px;
+            min-height: calc(100vh - var(--topbar-height));
+            transition: margin-left 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Content Container - Perfectly Centered */
+        .content-container {
+            max-width: var(--content-max-width);
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        /* Welcome Section */
+        .welcome-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 26px;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .welcome-text {
+            flex: 1;
+            min-width: 260px;
+        }
+
+        .welcome-text h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            line-height: 1.2;
+        }
+
+        .welcome-text p {
+            color: var(--text-secondary);
+            font-size: 13px;
+            max-width: 550px;
+            line-height: 1.5;
+        }
+
+        .welcome-meta {
+            margin-top: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .welcome-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .welcome-meta-item i {
+            font-size: 11px;
+        }
+
+        .current-datetime {
+            background: rgba(10, 25, 47, 0.5);
+            padding: 18px 24px;
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            min-width: 180px;
+            text-align: center;
+            backdrop-filter: blur(8px);
+        }
+
+        .current-date {
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--text-secondary);
+            letter-spacing: 0.3px;
+        }
+
+        .current-time {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent-gold);
+            font-family: 'Segoe UI', system-ui;
+            letter-spacing: 0.5px;
+        }
+
+        /* Document Portal Specific Styles */
+        .document-portal-container {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 280px);
+        }
+
+        .document-toolbar {
+            padding: 16px 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 25, 47, 0.5);
+            backdrop-filter: blur(8px);
+        }
+
+        .breadcrumbs {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .breadcrumb {
+            color: var(--text-secondary);
+            transition: var(--transition);
+        }
+
+        .breadcrumb:hover {
+            color: var(--text-primary);
+        }
+
+        .breadcrumb.active {
+            color: var(--document-primary-light);
+            font-weight: 600;
+        }
+
+        .breadcrumb-separator {
+            color: var(--text-secondary);
+            font-size: 10px;
+        }
+
+        .view-options {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .view-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: var(--text-secondary);
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+        }
+
+        .view-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .view-btn.active {
+            background: var(--document-primary);
+            color: white;
+            border-color: var(--document-primary);
+        }
+
+        .document-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .portal-btn {
+            background: rgba(86, 156, 43, 0.15);
+            color: var(--document-primary-light);
+            border: 1px solid rgba(86, 156, 43, 0.25);
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .portal-btn:hover {
+            background: rgba(86, 156, 43, 0.25);
+            border-color: var(--document-primary-light);
+            transform: translateY(-1px);
+        }
+
+        .portal-btn i {
+            font-size: 11px;
+        }
+
+        .drive-iframe-container {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .drive-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: white;
+        }
+
+        .iframe-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(23, 42, 69, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            backdrop-filter: blur(5px);
+        }
+
+        .loading-spinner {
+            text-align: center;
+            color: var(--accent-gold);
+        }
+
+        .loading-spinner i {
+            font-size: 32px;
+            margin-bottom: 12px;
+            animation: spin 1.5s linear infinite;
+        }
+
+        .loading-spinner p {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .access-control {
+            padding: 30px;
+            text-align: center;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .access-icon {
+            font-size: 48px;
+            color: var(--light-pink);
+            margin-bottom: 20px;
+        }
+
+        .access-control h2 {
+            font-size: 24px;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+
+        .access-control p {
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+
+        .access-btn {
+            background: linear-gradient(135deg, var(--light-pink), #ff7d9b);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 7px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .access-btn:hover {
+            background: linear-gradient(135deg, #ff7d9b, var(--light-pink));
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 107, 139, 0.25);
+        }
+
+        /* Document Stats */
+        .document-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 20px 18px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            transition: var(--transition);
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card:hover {
+            border-color: rgba(86, 156, 43, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, var(--document-primary), var(--document-primary-light));
+        }
+
+        .stat-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(86, 156, 43, 0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: var(--document-primary-light);
+        }
+
+        .stat-title {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
+
+        .stat-subtext {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 40px;
+            padding: 28px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 12px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: var(--text-primary);
+            font-weight: 700;
+            justify-content: center;
+        }
+
+        .footer-logo i {
+            color: var(--light-pink);
+        }
+
+        .footer-info {
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .footer-version {
+            margin-top: 6px;
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .content-container {
+                max-width: 100%;
+                padding: 0 16px;
+            }
+            
+            .sidebar {
+                width: 220px;
+            }
+            
+            .main-content {
+                margin-left: 220px;
+                padding: 24px;
+                width: calc(100% - 220px);
+            }
+            
+            .document-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            .sidebar {
+                transform: translateX(-100%);
+                width: 260px;
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+                box-shadow: 6px 0 30px rgba(0, 0, 0, 0.3);
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 24px 20px;
+                width: 100%;
+            }
+            
+            .content-container {
+                padding: 0;
+            }
+            
+            .welcome-section {
+                flex-direction: column;
+                gap: 16px;
+            }
+            
+            .current-datetime {
+                width: 100%;
+                text-align: left;
+            }
+            
+            .nav-right {
+                gap: 10px;
+            }
+            
+            .document-toolbar {
+                flex-direction: column;
+                gap: 12px;
+                align-items: flex-start;
+            }
+            
+            .view-options {
+                align-self: flex-end;
+            }
+        }
+
+        @media (max-width: 768px) {
+            html {
+                font-size: 13px;
+            }
+            
+            .top-nav {
+                padding: 0 16px;
+            }
+            
+            .main-content {
+                padding: 20px 16px;
+            }
+            
+            .content-container {
+                gap: 24px;
+            }
+            
+            .document-stats {
+                grid-template-columns: 1fr;
+                gap: 14px;
+            }
+            
+            .welcome-text h1 {
+                font-size: 24px;
+            }
+            
+            .welcome-text p {
+                font-size: 12px;
+            }
+            
+            .current-datetime {
+                padding: 14px 18px;
+            }
+            
+            .current-time {
+                font-size: 22px;
+            }
+            
+            .footer {
+                padding: 24px 0;
+            }
+            
+            .connection-status {
+                top: 65px;
+                right: 12px;
+                font-size: 10px;
+                padding: 4px 8px;
+            }
+            
+            .nav-right {
+                gap: 8px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .login-box {
+                padding: 28px 24px;
+                margin: 12px;
+            }
+            
+            .welcome-section {
+                padding: 18px;
+            }
+            
+            .current-datetime {
+                padding: 14px;
+            }
+            
+            .top-nav {
+                padding: 0 12px;
+            }
+            
+            .user-info {
+                display: none;
+            }
+            
+            .user-profile {
+                padding: 5px 8px;
+            }
+            
+            .logout-btn span {
+                display: none;
+            }
+            
+            .view-options {
+                flex-wrap: wrap;
+            }
+            
+            .document-actions {
+                flex-wrap: wrap;
+            }
+            
+            .portal-btn {
+                padding: 6px 12px;
+                font-size: 11px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .brand-text {
+                font-size: 15px;
+            }
+            
+            .nav-right {
+                gap: 6px;
+            }
+            
+            .logout-btn {
+                padding: 5px 8px;
+            }
+            
+            .login-logo h1 {
+                font-size: 24px;
+            }
+            
+            .login-logo-icon {
+                font-size: 32px;
+            }
+            
+            .welcome-text h1 {
+                font-size: 22px;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .login-container,
+            .top-nav,
+            .sidebar,
+            .connection-status,
+            .sync-status,
+            .footer {
+                display: none !important;
+            }
+            
+            .main-content {
+                margin: 0;
+                padding: 20px;
+                width: 100%;
+            }
+            
+            .stat-card,
+            .document-portal-container {
+                border: 1px solid #ddd;
+            }
+            
+            body {
+                background: white !important;
+                color: black !important;
+            }
+        }
+
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-pattern"></div>
+
+    <!-- Connection Status -->
+    <div class="connection-status" id="connectionStatus">
+        <i class="fas fa-circle"></i>
+        <span>Online</span>
+    </div>
+
+    <!-- Sync Status -->
+    <div class="sync-status" id="syncStatus">
+        <i class="fas fa-sync-alt"></i>
+        <span>Syncing data...</span>
+    </div>
+
+    <!-- Login Container -->
+    <div class="login-container" id="loginContainer">
+        <div class="login-box">
+            <div class="login-logo">
+                <div class="login-logo-icon">
+                    <i class="fas fa-folder-tree"></i>
+                </div>
+                <h1>DSOG Document Portal</h1>
+                <p>SECURE DOCUMENT MANAGEMENT SYSTEM</p>
+                <div style="margin-top: 14px; font-size: 11px; color: var(--text-secondary); font-weight: 500;">
+                    Fusion Stores - Financial Documents
+                </div>
+                <div style="margin-top: 6px; font-size: 10px; color: var(--text-secondary);">
+                    <i class="fas fa-lock"></i> Secure Enterprise Version 2.1
+                </div>
+            </div>
+            
+            <form class="login-form" id="loginForm">
+                <div class="input-group">
+                    <label for="loginEmail">Email Address</label>
+                    <input type="email" id="loginEmail" placeholder="admin@fusionstores.com" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                </div>
+                
+                <div class="login-options">
+                    <label class="remember-me">
+                        <input type="checkbox" id="rememberMe">
+                        <span>Remember me</span>
+                    </label>
+                </div>
+                
+                <button type="button" class="login-btn" id="loginBtn">
+                    <i class="fas fa-sign-in-alt"></i> Sign In
+                </button>
+                
+                <div class="login-error" id="loginError">
+                    Invalid credentials. Please try again.
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main App Container -->
+    <div class="app-container" id="appContainer">
+        <!-- Top Navigation -->
+        <nav class="top-nav">
+            <div class="nav-left">
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="brand-logo">
+                    <div class="brand-logo-icon">
+                        <i class="fas fa-folder-tree"></i>
+                    </div>
+                    <div>
+                        <div class="brand-text">Document Portal</div>
+                        <div class="brand-subtitle">Fusion Stores</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="nav-right">
+                <div class="user-profile" id="userProfile">
+                    <div class="user-avatar" id="userAvatar">AD</div>
+                    <div class="user-info">
+                        <div class="user-name" id="userName">Admin</div>
+                        <div class="user-role" id="userRole">Document Manager</div>
+                    </div>
+                </div>
+                <button class="logout-btn" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="nav-section">
+                <div class="nav-title">Navigation</div>
+                <a href="index.html" class="nav-item">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Back to Hub</span>
+                </a>
+                <a href="#" class="nav-item active">
+                    <i class="fas fa-folder-tree"></i>
+                    <span>Document Portal</span>
+                </a>
+                <a href="emh-workspace.html" class="nav-item">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Management Hub</span>
+                </a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-title">Document Categories</div>
+                <a href="#" class="nav-item" data-folder="financial">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                    <span>Financial Documents</span>
+                </a>
+                <a href="#" class="nav-item" data-folder="reports">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Sales Reports</span>
+                </a>
+                <a href="#" class="nav-item" data-folder="compliance">
+                    <i class="fas fa-clipboard-check"></i>
+                    <span>Compliance</span>
+                </a>
+                <a href="#" class="nav-item" data-folder="operations">
+                    <i class="fas fa-cogs"></i>
+                    <span>Operations</span>
+                </a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-title">Document Actions</div>
+                <a href="#" class="nav-item" id="uploadDoc">
+                    <i class="fas fa-upload"></i>
+                    <span>Upload Document</span>
+                </a>
+                <a href="#" class="nav-item" id="createFolder">
+                    <i class="fas fa-folder-plus"></i>
+                    <span>Create Folder</span>
+                </a>
+                <a href="#" class="nav-item" id="shareDoc">
+                    <i class="fas fa-share-alt"></i>
+                    <span>Share Document</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content" id="mainContent">
+            <div class="content-container">
+                <!-- Welcome Section -->
+                <section class="welcome-section">
+                    <div class="welcome-text">
+                        <h1 id="greetingText">Fusion Stores Document Portal</h1>
+                        <p>Secure document management system for Fusion Stores financial documents. Access, manage, and share your important documents with enterprise-grade security.</p>
+                        <div class="welcome-meta">
+                            <div class="welcome-meta-item">
+                                <i class="fas fa-database"></i>
+                                <span id="connectionStatusText">Connected</span>
+                            </div>
+                            <div class="welcome-meta-item">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>256-bit Encryption</span>
+                            </div>
+                            <div class="welcome-meta-item">
+                                <i class="fas fa-user-check"></i>
+                                <span id="accessLevel">Admin Access</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="current-datetime">
+                        <div class="current-date" id="currentDate">Friday, June 14, 2024</div>
+                        <div class="current-time" id="currentTime">10:30 AM</div>
+                    </div>
+                </section>
+
+                <!-- Document Stats -->
+                <div class="document-stats">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon">
+                                <i class="fas fa-folder"></i>
+                            </div>
+                            <div class="stat-title">Total Folders</div>
+                        </div>
+                        <div class="stat-value" id="totalFolders">12</div>
+                        <div class="stat-subtext">+2 new this month</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon">
+                                <i class="fas fa-file"></i>
+                            </div>
+                            <div class="stat-title">Total Documents</div>
+                        </div>
+                        <div class="stat-value" id="totalDocuments">187</div>
+                        <div class="stat-subtext">+15 new this week</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon">
+                                <i class="fas fa-hdd"></i>
+                            </div>
+                            <div class="stat-title">Storage Used</div>
+                        </div>
+                        <div class="stat-value" id="storageUsed">4.2 GB</div>
+                        <div class="stat-subtext">65% of total capacity</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-title">Shared Users</div>
+                        </div>
+                        <div class="stat-value" id="sharedUsers">8</div>
+                        <div class="stat-subtext">Active collaborators</div>
+                    </div>
+                </div>
+
+                <!-- Document Portal -->
+                <div class="document-portal-container">
+                    <div class="document-toolbar">
+                        <div class="breadcrumbs">
+                            <span class="breadcrumb">Fusion Stores</span>
+                            <span class="breadcrumb-separator">/</span>
+                            <span class="breadcrumb active">Financial Documents</span>
+                        </div>
+                        
+                        <div class="view-options">
+                            <button class="view-btn active" data-view="grid" id="gridView">
+                                <i class="fas fa-th-large"></i>
+                                <span>Grid</span>
+                            </button>
+                            <button class="view-btn" data-view="list" id="listView">
+                                <i class="fas fa-list"></i>
+                                <span>List</span>
+                            </button>
+                        </div>
+                        
+                        <div class="document-actions">
+                            <button class="portal-btn" id="refreshBtn">
+                                <i class="fas fa-sync-alt"></i>
+                                <span>Refresh</span>
+                            </button>
+                            <button class="portal-btn" id="newFolderBtn">
+                                <i class="fas fa-folder-plus"></i>
+                                <span>New Folder</span>
+                            </button>
+                            <button class="portal-btn" id="uploadBtn">
+                                <i class="fas fa-upload"></i>
+                                <span>Upload</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="drive-iframe-container">
+                        <div class="iframe-overlay" id="iframeOverlay">
+                            <div class="loading-spinner">
+                                <i class="fas fa-spinner"></i>
+                                <p>Loading document portal...</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Access Control Message (shown initially) -->
+                        <div class="access-control" id="accessControl">
+                            <div class="access-icon">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                            <h2>Secure Document Access</h2>
+                            <p>Your documents are protected with enterprise-grade security. Please authenticate to access the financial documents portal.</p>
+                            <button class="access-btn" id="accessBtn">
+                                <i class="fas fa-unlock"></i>
+                                <span>Access Documents</span>
+                            </button>
+                        </div>
+                        
+                        <!-- Google Drive Iframe (hidden initially) -->
+                        <iframe 
+                            src="" 
+                            class="drive-iframe"
+                            id="driveViewer"
+                            sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+                            allow="fullscreen"
+                            style="display: none;">
+                        </iframe>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <footer class="footer">
+                    <div class="footer-logo">
+                        <i class="fas fa-folder-tree"></i> Fusion Stores Document Portal
+                    </div>
+                    <div class="footer-info">
+                        <div>© <span id="year"></span> DSOG Enterprise. All rights reserved.</div>
+                        <div class="footer-version">
+                            Version 2.1 • Enterprise Edition • 256-bit Encryption • Secure Connection
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </main>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
+    <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCOb4BqfiN3vt1Y13UTEpA_boCqNRH6rrQ",
+            authDomain: "dsog-stores-dashboard.firebaseapp.com",
+            databaseURL: "https://dsog-stores-dashboard-default-rtdb.firebaseio.com",
+            projectId: "dsog-stores-dashboard",
+            storageBucket: "dsog-stores-dashboard.firebasestorage.app",
+            messagingSenderId: "1085972125142",
+            appId: "1:1085972125142:web:9abea9ee0dd792a052c077"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        const auth = firebase.auth();
+
+        // Variables
+        let isOnline = navigator.onLine;
+        let currentUser = null;
+        let currentFolder = "1FJ3T_E3-pUXt3tIy3NbxeXoa2w2bB86b"; // Default financial documents folder
+
+        // DOM Elements
+        const loginContainer = document.getElementById('loginContainer');
+        const appContainer = document.getElementById('appContainer');
+        const loginBtn = document.getElementById('loginBtn');
+        const loginEmail = document.getElementById('loginEmail');
+        const loginPassword = document.getElementById('loginPassword');
+        const loginError = document.getElementById('loginError');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const userAvatar = document.getElementById('userAvatar');
+        const userName = document.getElementById('userName');
+        const userRole = document.getElementById('userRole');
+        const greetingText = document.getElementById('greetingText');
+        const currentDate = document.getElementById('currentDate');
+        const currentTime = document.getElementById('currentTime');
+        const connectionStatus = document.getElementById('connectionStatus');
+        const syncStatus = document.getElementById('syncStatus');
+        const connectionStatusText = document.getElementById('connectionStatusText');
+        const rememberMe = document.getElementById('rememberMe');
+        const accessControl = document.getElementById('accessControl');
+        const accessBtn = document.getElementById('accessBtn');
+        const driveViewer = document.getElementById('driveViewer');
+        const iframeOverlay = document.getElementById('iframeOverlay');
+        const refreshBtn = document.getElementById('refreshBtn');
+        const gridView = document.getElementById('gridView');
+        const listView = document.getElementById('listView');
+        const accessLevel = document.getElementById('accessLevel');
+
+        // Document folder mappings
+        const folderIds = {
+            financial: "1FJ3T_E3-pUXt3tIy3NbxeXoa2w2bB86b",
+            reports: "1Iu4k9LmN7oP8q9R0sT1uV2wX3yZ4a5b6",
+            compliance: "2Ab3c4D5e6F7g8H9i0J1k2L3m4N5o6P7",
+            operations: "3Qr4s5T6u7V8w9X0y1Z2a3B4c5D6e7F8"
+        };
+
+        // Check Authentication State
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                currentUser = user;
+                handleUserSignedIn(user);
+            } else {
+                handleUserSignedOut();
+            }
+        });
+
+        function handleUserSignedIn(user) {
+            console.log("User signed in:", user.email);
+            
+            loginContainer.style.display = 'none';
+            appContainer.style.display = 'flex';
+            
+            updateUserInfo(user);
+            updateGreeting();
+            updateDateTime();
+            setInterval(updateDateTime, 1000);
+            
+            loadDocumentStats();
+            initializeSidebar();
+            initializeConnectionMonitoring();
+            
+            // Check user access level
+            checkAccessLevel(user);
+        }
+
+        function handleUserSignedOut() {
+            loginContainer.style.display = 'flex';
+            appContainer.style.display = 'none';
+            
+            loginEmail.value = '';
+            loginPassword.value = '';
+            loginError.style.display = 'none';
+            
+            // Hide document portal
+            accessControl.style.display = 'block';
+            driveViewer.style.display = 'none';
+        }
+
+        // Login Functionality
+        loginBtn.addEventListener('click', function() {
+            const email = loginEmail.value.trim();
+            const password = loginPassword.value.trim();
+            
+            if (!email || !password) {
+                showLoginError("Please enter both email and password");
+                return;
+            }
+            
+            this.disabled = true;
+            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in...';
+            
+            auth.signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    if (rememberMe.checked) {
+                        localStorage.setItem('rememberedEmail', email);
+                    } else {
+                        localStorage.removeItem('rememberedEmail');
+                    }
+                })
+                .catch((error) => {
+                    console.error("Login error:", error);
+                    showLoginError("Invalid email or password");
+                    
+                    loginBtn.disabled = false;
+                    loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In';
+                });
+        });
+
+        // Check for remembered email
+        window.addEventListener('DOMContentLoaded', () => {
+            const rememberedEmail = localStorage.getItem('rememberedEmail');
+            if (rememberedEmail) {
+                loginEmail.value = rememberedEmail;
+                rememberMe.checked = true;
+            }
+        });
+
+        loginPassword.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                loginBtn.click();
+            }
+        });
+
+        function showLoginError(message) {
+            loginError.textContent = message;
+            loginError.style.display = 'block';
+            setTimeout(() => {
+                loginError.style.display = 'none';
+            }, 5000);
+        }
+
+        // Logout Functionality
+        logoutBtn.addEventListener('click', function() {
+            auth.signOut()
+                .catch(console.error);
+        });
+
+        // Update User Information
+        function updateUserInfo(user) {
+            const displayName = user.displayName || user.email.split('@')[0];
+            const initials = displayName.split(' ').map(n => n[0]).join('').toUpperCase();
+            
+            userAvatar.textContent = initials;
+            userName.textContent = displayName;
+            
+            // Set role based on email domain
+            if (user.email.includes('admin') || user.email.includes('manager')) {
+                userRole.textContent = 'Document Manager';
+            } else {
+                userRole.textContent = 'Document Viewer';
+            }
+        }
+
+        // Check Access Level
+        function checkAccessLevel(user) {
+            if (user.email.includes('admin') || user.email.includes('manager') || user.email.includes('finance')) {
+                accessLevel.textContent = 'Full Access';
+            } else {
+                accessLevel.textContent = 'View Only';
+            }
+        }
+
+        // Update Greeting Based on Time
+        function updateGreeting() {
+            const hour = new Date().getHours();
+            let greeting;
+            
+            if (hour < 12) greeting = "Good Morning";
+            else if (hour < 18) greeting = "Good Afternoon";
+            else greeting = "Good Evening";
+            
+            greetingText.textContent = `${greeting}, ${userName.textContent}`;
+        }
+
+        // Update Date and Time
+        function updateDateTime() {
+            const now = new Date();
+            
+            const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            currentDate.textContent = now.toLocaleDateString('en-US', dateOptions);
+            
+            const timeOptions = { hour: '2-digit', minute: '2-digit', hour12: true };
+            currentTime.textContent = now.toLocaleTimeString('en-US', timeOptions);
+        }
+
+        // Access Documents Button
+        accessBtn.addEventListener('click', function() {
+            accessControl.style.display = 'none';
+            driveViewer.style.display = 'block';
+            
+            // Show loading overlay
+            iframeOverlay.style.display = 'flex';
+            
+            // Load the Google Drive iframe
+            loadDriveIframe(currentFolder, 'grid');
+            
+            setTimeout(() => {
+                iframeOverlay.style.display = 'none';
+            }, 2000);
+        });
+
+        // Load Google Drive Iframe
+        function loadDriveIframe(folderId, view = 'grid') {
+            const driveUrl = `https://drive.google.com/embeddedfolderview?id=${folderId}#${view}`;
+            driveViewer.src = driveUrl;
+        }
+
+        // Refresh Button
+        refreshBtn.addEventListener('click', function() {
+            iframeOverlay.style.display = 'flex';
+            
+            setTimeout(() => {
+                driveViewer.src = driveViewer.src;
+                iframeOverlay.style.display = 'none';
+                showSyncStatus('synced');
+            }, 1000);
+            
+            showSyncStatus('syncing');
+        });
+
+        // View Mode Toggle
+        gridView.addEventListener('click', function() {
+            gridView.classList.add('active');
+            listView.classList.remove('active');
+            loadDriveIframe(currentFolder, 'grid');
+        });
+
+        listView.addEventListener('click', function() {
+            listView.classList.remove('active');
+            gridView.classList.add('active');
+            loadDriveIframe(currentFolder, 'list');
+        });
+
+        // Document Category Navigation
+        document.querySelectorAll('[data-folder]').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Update active state
+                document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Get folder ID
+                const folderType = this.dataset.folder;
+                currentFolder = folderIds[folderType] || folderIds.financial;
+                
+                // Update breadcrumb
+                document.querySelector('.breadcrumb.active').textContent = 
+                    this.querySelector('span').textContent;
+                
+                // Show loading and load new folder
+                iframeOverlay.style.display = 'flex';
+                loadDriveIframe(currentFolder, gridView.classList.contains('active') ? 'grid' : 'list');
+                
+                setTimeout(() => {
+                    iframeOverlay.style.display = 'none';
+                }, 2000);
+            });
+        });
+
+        // Load Document Stats
+        function loadDocumentStats() {
+            // Load from Firebase or use defaults
+            database.ref('documentStats').on('value', (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    updateDocumentStats(data);
+                } else {
+                    // Use default stats
+                    updateDocumentStats({
+                        folders: 12,
+                        documents: 187,
+                        storage: "4.2 GB",
+                        users: 8
+                    });
+                }
+            });
+        }
+
+        function updateDocumentStats(data) {
+            document.getElementById('totalFolders').textContent = data.folders;
+            document.getElementById('totalDocuments').textContent = data.documents;
+            document.getElementById('storageUsed').textContent = data.storage;
+            document.getElementById('sharedUsers').textContent = data.users;
+        }
+
+        // Initialize Sidebar
+        function initializeSidebar() {
+            menuToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('active');
+            });
+            
+            document.addEventListener('click', function(event) {
+                if (window.innerWidth <= 992) {
+                    if (!sidebar.contains(event.target) && !menuToggle.contains(event.target)) {
+                        sidebar.classList.remove('active');
+                    }
+                }
+            });
+            
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    if (this.getAttribute('href') === '#') {
+                        e.preventDefault();
+                    }
+                    
+                    if (!this.classList.contains('active')) {
+                        document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+                        this.classList.add('active');
+                    }
+                    
+                    if (window.innerWidth <= 992) {
+                        sidebar.classList.remove('active');
+                    }
+                });
+            });
+            
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 992) {
+                    sidebar.classList.remove('active');
+                }
+            });
+        }
+
+        // Initialize Connection Monitoring
+        function initializeConnectionMonitoring() {
+            window.addEventListener('online', updateOnlineStatus);
+            window.addEventListener('offline', updateOnlineStatus);
+            updateOnlineStatus();
+        }
+
+        function updateOnlineStatus() {
+            isOnline = navigator.onLine;
+            
+            if (isOnline) {
+                connectionStatus.innerHTML = '<i class="fas fa-circle"></i><span>Online</span>';
+                connectionStatus.className = 'connection-status online';
+                connectionStatusText.textContent = 'Connected';
+                
+                if (auth.currentUser) {
+                    syncData();
+                }
+            } else {
+                connectionStatus.innerHTML = '<i class="fas fa-circle"></i><span>Offline</span>';
+                connectionStatus.className = 'connection-status offline';
+                connectionStatusText.textContent = 'Offline';
+            }
+            
+            connectionStatus.style.display = 'flex';
+            setTimeout(() => {
+                connectionStatus.style.display = 'none';
+            }, 3000);
+        }
+
+        // Sync Data
+        function syncData() {
+            if (!isOnline) {
+                showSyncStatus('offline');
+                return;
+            }
+            
+            showSyncStatus('syncing');
+            
+            setTimeout(() => {
+                showSyncStatus('synced');
+                loadDocumentStats();
+            }, 1500);
+        }
+
+        // Show Sync Status
+        function showSyncStatus(status) {
+            if (status === 'syncing') {
+                syncStatus.innerHTML = '<i class="fas fa-sync-alt"></i><span>Syncing data...</span>';
+                syncStatus.className = 'sync-status syncing';
+            } else if (status === 'synced') {
+                syncStatus.innerHTML = '<i class="fas fa-check-circle"></i><span>Data synced</span>';
+                syncStatus.className = 'sync-status synced';
+            } else if (status === 'offline') {
+                syncStatus.innerHTML = '<i class="fas fa-wifi-slash"></i><span>Cannot sync - Offline</span>';
+                syncStatus.className = 'sync-status offline';
+            }
+            
+            syncStatus.style.display = 'flex';
+            setTimeout(() => {
+                syncStatus.style.display = 'none';
+            }, 3000);
+        }
+
+        // Document Action Buttons
+        document.getElementById('uploadDoc').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Upload document feature coming soon!');
+        });
+
+        document.getElementById('createFolder').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Create folder feature coming soon!');
+        });
+
+        document.getElementById('shareDoc').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Share document feature coming soon!');
+        });
+
+        document.getElementById('newFolderBtn').addEventListener('click', function() {
+            alert('Create new folder feature coming soon!');
+        });
+
+        document.getElementById('uploadBtn').addEventListener('click', function() {
+            alert('Upload document feature coming soon!');
+        });
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check if user was previously logged in
+            auth.onAuthStateChanged((user) => {
+                if (!user) {
+                    // Show login by default
+                    handleUserSignedOut();
+                }
+            });
+            
+            // Set current year in footer
+            document.getElementById("year").textContent = new Date().getFullYear();
+        });
+    </script>
+</body>
+</html>
