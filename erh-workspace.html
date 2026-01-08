@@ -62,8 +62,6 @@
             overflow-x: hidden;
             line-height: 1.5;
             height: 100vh;
-            display: flex;
-            flex-direction: column;
         }
 
         .background-pattern {
@@ -209,12 +207,9 @@
         /* Workspace Container */
         .app-container {
             display: none;
-            min-height: 100vh;
-            width: 100%;
-            max-width: 100vw;
-            overflow-x: hidden;
-            flex: 1;
             height: 100vh;
+            width: 100%;
+            overflow: hidden;
         }
 
         /* Top Navigation - Matching main page */
@@ -233,7 +228,6 @@
             z-index: 1000;
             border-bottom: 1px solid rgba(255, 255, 255, 0.12);
             width: 100%;
-            flex-shrink: 0;
         }
 
         .nav-left {
@@ -369,7 +363,6 @@
             overflow-y: auto;
             transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 999;
-            flex-shrink: 0;
         }
 
         .nav-section {
@@ -455,23 +448,24 @@
             text-align: center;
         }
 
-        /* Main Content - Optimized for Sheets */
+        /* Main Content */
         .main-content {
             margin-left: var(--sidebar-width);
             margin-top: var(--topbar-height);
-            padding: 24px;
             height: calc(100vh - var(--topbar-height));
-            transition: margin-left 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             width: calc(100% - var(--sidebar-width));
+            transition: margin-left 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             flex-direction: column;
-            flex: 1;
-            overflow-y: auto;
+            overflow: hidden;
         }
 
-        /* Tools Section - Restored */
+        /* Tools Section */
         .tools-section {
-            margin-bottom: 24px;
+            padding: 24px;
+            flex: 1;
+            overflow-y: auto;
+            display: block;
         }
 
         .tools-header {
@@ -499,7 +493,6 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 20px;
-            margin-bottom: 30px;
         }
 
         .tool-card {
@@ -573,25 +566,24 @@
             font-weight: 700;
             letter-spacing: 0.3px;
             border: 1px solid rgba(100, 255, 218, 0.25);
-            margin-bottom: 12px;
         }
 
-        /* Sheets Modal Container - Restored original design */
+        /* Sheets Container - Fixed height issue */
         .sheets-container {
-            background: var(--card-bg);
-            border-radius: var(--border-radius);
-            padding: 0;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            overflow: hidden;
-            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
-            flex: 1;
-            display: flex;
+            position: fixed;
+            top: var(--topbar-height);
+            left: var(--sidebar-width);
+            right: 0;
+            bottom: 0;
+            background: var(--dark-blue);
+            z-index: 998;
+            display: none;
             flex-direction: column;
-            min-height: 600px;
+            transition: left 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .sheets-header {
-            background: rgba(10, 25, 47, 0.5);
+            background: var(--card-bg);
             padding: 16px 24px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.12);
             display: flex;
@@ -599,6 +591,7 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 15px;
+            flex-shrink: 0;
         }
 
         .sheets-title {
@@ -646,7 +639,7 @@
             border-color: rgba(100, 255, 218, 0.2);
         }
 
-        /* Iframe Container - Restored rounded corners */
+        /* Iframe Container - Fixed to take full remaining space */
         .iframe-container {
             flex: 1;
             position: relative;
@@ -654,17 +647,15 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            border-radius: 0 0 var(--border-radius) var(--border-radius);
         }
 
-        /* Fullscreen iframe */
+        /* Iframe itself - Full height */
         #iframe {
             flex: 1;
             width: 100%;
             height: 100%;
             border: none;
             display: block;
-            border-radius: 0 0 var(--border-radius) var(--border-radius);
         }
 
         /* Sheet Loader */
@@ -716,16 +707,16 @@
             max-width: 80%;
         }
 
-        /* Footer - Restored original design */
+        /* Footer - Only shown on tools page */
         .footer {
-            margin-top: 30px;
-            padding: 24px 0;
+            padding: 24px;
             border-top: 1px solid rgba(255, 255, 255, 0.12);
             text-align: center;
             color: var(--text-secondary);
             font-size: 12px;
             width: 100%;
-            flex-shrink: 0;
+            background: var(--dark-blue);
+            display: block;
         }
 
         .footer-logo {
@@ -795,6 +786,10 @@
                 width: calc(100% - 240px);
             }
             
+            .sheets-container {
+                left: 240px;
+            }
+            
             .tools-grid {
                 grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             }
@@ -820,14 +815,14 @@
                 width: 100%;
             }
             
+            .sheets-container {
+                left: 0;
+            }
+            
             .tools-header {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 15px;
-            }
-            
-            .tools-controls {
-                align-self: flex-end;
             }
             
             .nav-right {
@@ -844,7 +839,7 @@
                 padding: 0 16px;
             }
             
-            .main-content {
+            .tools-section {
                 padding: 20px;
             }
             
@@ -889,7 +884,7 @@
             }
 
             .footer {
-                padding: 20px 0;
+                padding: 20px;
             }
         }
 
@@ -955,32 +950,6 @@
                 width: 40px;
                 height: 40px;
                 font-size: 18px;
-            }
-        }
-
-        /* Print Styles */
-        @media print {
-            .top-nav,
-            .sidebar,
-            .current-sheet-info,
-            .sheet-loader,
-            .footer {
-                display: none !important;
-            }
-            
-            .main-content {
-                margin: 0;
-                padding: 20px;
-                width: 100%;
-            }
-            
-            .sheets-container {
-                border: 1px solid #ddd;
-            }
-            
-            body {
-                background: white !important;
-                color: black !important;
             }
         }
 
@@ -1133,18 +1102,28 @@
                     <h2 class="tools-title">
                         <i class="fas fa-tools"></i> Tools
                     </h2>
-                    <div class="tools-controls" id="toolsControls">
-                        <!-- Tools controls will be populated dynamically -->
-                    </div>
                 </div>
                 
                 <div class="tools-grid" id="toolsGrid">
                     <!-- Tools will be populated dynamically -->
                 </div>
+
+                <!-- Footer - Only shown on tools page -->
+                <footer class="footer">
+                    <div class="footer-logo">
+                        <i class="fas fa-cube"></i> Jasiri E-Hub • Enterprise Resource Hub
+                    </div>
+                    <div class="footer-info">
+                        <div>© <span id="year"></span> DSOG Business Solutions. All rights reserved.</div>
+                        <div class="footer-version">
+                            Version 2.1 • Secure Connection • Offline Capable
+                        </div>
+                    </div>
+                </footer>
             </section>
 
-            <!-- Sheets Modal Container -->
-            <section class="sheets-container" id="sheetsContainer" style="display: none;">
+            <!-- Sheets Container - Full screen overlay -->
+            <div class="sheets-container" id="sheetsContainer">
                 <div class="sheets-header">
                     <div class="sheets-title">
                         <i class="fas fa-file-excel"></i>
@@ -1182,27 +1161,13 @@
                     <!-- Iframe -->
                     <iframe id="iframe" loading="lazy" title="ERH Workspace Content" allowfullscreen></iframe>
                 </div>
-            </section>
-
-            <!-- Footer -->
-            <footer class="footer">
-                <div class="footer-logo">
-                    <i class="fas fa-cube"></i> Jasiri E-Hub • Enterprise Resource Hub
-                </div>
-                <div class="footer-info">
-                    <div>© <span id="year"></span> DSOG Business Solutions. All rights reserved.</div>
-                    <div class="footer-version">
-                        Version 2.1 • Secure Connection • Offline Capable
-                    </div>
-                </div>
-            </footer>
+            </div>
         </main>
     </div>
 
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
     <script>
         // Firebase Configuration - Same as main page
@@ -1219,16 +1184,11 @@
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
-        const database = firebase.database();
 
         // Global Variables
-        let isOnline = navigator.onLine;
-        let lastSyncTime = new Date();
         let currentSheetName = '';
-        let currentSheetUrl = '';
         let currentSheetId = '';
-        let currentViewMode = 'view'; // 'edit' or 'view'
-        let currentSection = 'portfolio-overview';
+        let currentViewMode = 'view';
 
         // DOM Elements
         const loadingSpinner = document.getElementById('loadingSpinner');
@@ -1255,9 +1215,8 @@
         const toolsSection = document.getElementById('toolsSection');
         const sheetsContainer = document.getElementById('sheetsContainer');
         const toolsGrid = document.getElementById('toolsGrid');
-        const toolsControls = document.getElementById('toolsControls');
 
-        // Module Data - Tools for each section
+        // Module Data
         const moduleData = {
             "portfolio-overview": {
                 title: "Product Portfolio Overview",
@@ -1322,20 +1281,6 @@
                         description: "Schedule and plan product collections",
                         icon: "fas fa-calendar-alt",
                         sheetUrl: "https://docs.google.com/spreadsheets/d/1YevHH6wm09YHjUC-m1EYwkYe0mueYSs_L3vI8UZQ5T0/edit",
-                        badge: "Active"
-                    },
-                    { 
-                        name: "Season Planning", 
-                        description: "Plan products by season and trend",
-                        icon: "fas fa-leaf",
-                        sheetUrl: "https://docs.google.com/spreadsheets/d/1IGa6E_QRCe2V3WUr-vnzFsgem1dTwXbgISTudltk-xw/edit",
-                        badge: "Active"
-                    },
-                    { 
-                        name: "Collection Budget", 
-                        description: "Budget planning for collections",
-                        icon: "fas fa-coins",
-                        sheetUrl: "https://docs.google.com/spreadsheets/d/1n_84d7oW-MwLBpkx61jweWrdNrwJqQM-q-t_jdaGs58/edit",
                         badge: "Active"
                     }
                 ]
@@ -1404,110 +1349,6 @@
                         badge: "Active"
                     }
                 ]
-            },
-            "sales-quotations": {
-                title: "Sales Quotations",
-                description: "Create and manage sales quotations",
-                tools: [
-                    { 
-                        name: "Customer Quote Creation", 
-                        description: "Create and manage customer quotations",
-                        icon: "fas fa-file-invoice-dollar",
-                        sheetUrl: "https://docs.google.com/spreadsheets/d/1CUSTOMER_QUOTE_SHEET_ID/edit",
-                        badge: "Active"
-                    }
-                ]
-            },
-            "customer-feedback": {
-                title: "Customer Feedback",
-                description: "Analyze customer feedback and reviews",
-                tools: [
-                    { 
-                        name: "Feedback Analysis", 
-                        description: "Analyze customer feedback data",
-                        icon: "fas fa-comments",
-                        sheetUrl: "https://docs.google.com/spreadsheets/d/1La2sdTYqS4U0qFACIBG3NzaXmyIHllO5pyY6qQalX08/edit",
-                        badge: "Active"
-                    }
-                ]
-            },
-            "supplier-management": {
-                title: "Supplier Management",
-                description: "Manage supplier relationships and performance",
-                tools: [
-                    { 
-                        name: "Supplier Directory", 
-                        description: "Directory of all suppliers",
-                        icon: "fas fa-address-book",
-                        sheetUrl: "https://docs.google.com/spreadsheets/d/1hwJfrYlQQ70gtwDVaNMC80SXE7Vuw-UqZdhELYsnMFU/edit",
-                        badge: "Active"
-                    }
-                ]
-            },
-            "purchase-orders": {
-                title: "Purchase Orders",
-                description: "Create and track purchase orders",
-                tools: [
-                    { 
-                        name: "PO Creation", 
-                        description: "Create and manage purchase orders",
-                        icon: "fas fa-clipboard-list",
-                        sheetUrl: "https://docs.google.com/spreadsheets/d/1hWkEjiJaQ6U1yaltAHIzab2bZpEUvOPxSSu9s2ZlfH8/edit",
-                        badge: "Active"
-                    }
-                ]
-            },
-            "sourcing": {
-                title: "Sourcing & RFQs",
-                description: "Manage RFQs and supplier quotations",
-                tools: [
-                    { 
-                        name: "RFQ Management", 
-                        description: "Manage Request for Quotations",
-                        icon: "fas fa-file-contract",
-                        sheetUrl: "https://docs.google.com/spreadsheets/d/1QqogZOO6xrtWUUP-n2TiR4xfH7lNEdmpm2I7t0l5rjI/edit",
-                        badge: "Active"
-                    }
-                ]
-            },
-            "inventory-control": {
-                title: "Inventory Control",
-                description: "Manage stock levels and inventory valuation",
-                tools: [
-                    { 
-                        name: "Stock Levels", 
-                        description: "Track inventory stock levels",
-                        icon: "fas fa-boxes",
-                        sheetUrl: "https://docs.google.com/spreadsheets/d/1ptdoE4iNqxsU8-qb1GT4DchFToDSGcrY_gLfIGHpU64/edit",
-                        badge: "Active"
-                    }
-                ]
-            },
-            "stock-movements": {
-                title: "Stock Movements",
-                description: "Track receipts, issues, and transfers",
-                tools: [
-                    { 
-                        name: "Receipts", 
-                        description: "Track inventory receipts",
-                        icon: "fas fa-shipping-fast",
-                        sheetUrl: "https://docs.google.com/spreadsheets/d/1p_JH72IMirO7YULPCQqYPRVLe3y6QhNpXdBN6wM1vaU/edit",
-                        badge: "Active"
-                    }
-                ]
-            },
-            "warehouse": {
-                title: "Warehouse Management",
-                description: "Manage warehouse locations and operations",
-                tools: [
-                    { 
-                        name: "Location Management", 
-                        description: "Manage warehouse locations and layout",
-                        icon: "fas fa-map-marker-alt",
-                        sheetUrl: "https://docs.google.com/spreadsheets/d/1iIScOavt3DHV-_kj1PrHeI13ihqrsFiSc3ez86QLWL0/edit",
-                        badge: "Active"
-                    }
-                ]
             }
         };
 
@@ -1536,7 +1377,7 @@
             console.log("User signed in:", user.email);
             hideLoading();
             accessDenied.style.display = 'none';
-            appContainer.style.display = 'flex';
+            appContainer.style.display = 'block';
             
             // Update user info
             updateUserInfo(user);
@@ -1588,6 +1429,12 @@
             // Menu toggle
             menuToggle.addEventListener('click', function() {
                 sidebar.classList.toggle('active');
+                // Also adjust sheets container position
+                if (sidebar.classList.contains('active')) {
+                    sheetsContainer.style.left = '260px';
+                } else {
+                    sheetsContainer.style.left = '0';
+                }
             });
 
             // Close sidebar when clicking outside on mobile
@@ -1595,6 +1442,7 @@
                 if (window.innerWidth <= 992) {
                     if (!sidebar.contains(event.target) && !menuToggle.contains(event.target)) {
                         sidebar.classList.remove('active');
+                        sheetsContainer.style.left = '0';
                     }
                 }
             });
@@ -1626,11 +1474,12 @@
                     // Close sidebar on mobile
                     if (window.innerWidth <= 992) {
                         sidebar.classList.remove('active');
+                        sheetsContainer.style.left = '0';
                     }
                 });
             });
 
-            // Home button - goes back to main dashboard without logging out
+            // Home button
             homeButton.addEventListener('click', function(e) {
                 e.preventDefault();
                 window.location.href = 'index.html';
@@ -1672,6 +1521,9 @@
             window.addEventListener('resize', function() {
                 if (window.innerWidth > 992) {
                     sidebar.classList.remove('active');
+                    sheetsContainer.style.left = '280px';
+                } else {
+                    sheetsContainer.style.left = '0';
                 }
             });
 
@@ -1703,9 +1555,6 @@
 
             // Fullscreen change events
             document.addEventListener('fullscreenchange', handleFullscreenChange);
-            document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
-            document.addEventListener('mozfullscreenchange', handleFullscreenChange);
-            document.addEventListener('MSFullscreenChange', handleFullscreenChange);
         }
 
         // Set view mode
@@ -1784,6 +1633,7 @@
         function closeSheet() {
             sheetsContainer.style.display = 'none';
             toolsSection.style.display = 'block';
+            iframe.src = '';
         }
 
         // Get sheet URL with proper mode
@@ -1799,17 +1649,12 @@
 
         // Update online status
         function updateOnlineStatus() {
-            isOnline = navigator.onLine;
+            const isOnline = navigator.onLine;
             
             if (isOnline) {
                 connectionStatus.innerHTML = '<i class="fas fa-circle"></i><span>Online</span>';
                 connectionStatus.className = 'connection-status online';
                 connectionStatus.style.display = 'flex';
-                
-                // Sync data when coming online
-                if (auth.currentUser) {
-                    syncData();
-                }
             } else {
                 connectionStatus.innerHTML = '<i class="fas fa-circle"></i><span>Offline</span>';
                 connectionStatus.className = 'connection-status offline';
@@ -1819,14 +1664,6 @@
             setTimeout(() => {
                 connectionStatus.style.display = 'none';
             }, 3000);
-        }
-
-        // Sync data
-        function syncData() {
-            if (!isOnline) return;
-            
-            // Update last sync time
-            lastSyncTime = new Date();
         }
 
         // Load initial section
@@ -1841,7 +1678,6 @@
 
         // Load section
         function loadSection(section) {
-            currentSection = section;
             const data = moduleData[section];
             if (!data) return;
             
@@ -1882,15 +1718,11 @@
                 
                 toolsGrid.appendChild(toolCard);
             });
-            
-            // Show tools section
-            toolsSection.style.display = 'block';
         }
 
         // Open sheet
         function openSheet(sheetUrl, sheetName, sectionTitle) {
             currentSheetName = sheetName || 'Sheet';
-            currentSheetUrl = sheetUrl;
             currentSheetId = extractSheetId(sheetUrl);
             
             if (!currentSheetId) {
@@ -1902,8 +1734,19 @@
             currentSheetTitle.textContent = `${sectionTitle} - ${currentSheetName}`;
             
             // Show sheets container and hide tools
-            sheetsContainer.style.display = 'block';
+            sheetsContainer.style.display = 'flex';
             toolsSection.style.display = 'none';
+            
+            // Adjust sheets container position based on sidebar
+            if (window.innerWidth > 992) {
+                if (sidebar.classList.contains('active')) {
+                    sheetsContainer.style.left = '260px';
+                } else {
+                    sheetsContainer.style.left = '280px';
+                }
+            } else {
+                sheetsContainer.style.left = '0';
+            }
             
             // Load sheet
             loadCurrentSheet();
