@@ -83,7 +83,7 @@
             100% { background-position: 0% 0%; }
         }
 
-        /* Loading Spinner - Replaced with loader from main page */
+        /* Loading Spinner */
         .loading-spinner {
             position: fixed;
             top: 0;
@@ -125,7 +125,7 @@
             font-weight: 600;
         }
 
-        /* Connection Status - Same as main page */
+        /* Connection Status */
         .connection-status {
             position: fixed;
             top: 10px;
@@ -212,7 +212,7 @@
             overflow: hidden;
         }
 
-        /* Top Navigation - Matching main page */
+        /* Top Navigation */
         .top-nav {
             position: fixed;
             top: 0;
@@ -576,7 +576,7 @@
             border: 1px solid rgba(100, 255, 218, 0.25);
         }
 
-        /* Sheets Container - RESTORED PADDING AND ROUNDED CORNERS */
+        /* Sheets Container */
         .sheets-container {
             position: fixed;
             top: var(--topbar-height);
@@ -591,7 +591,7 @@
             padding: 24px;
         }
 
-        /* Sheets Card - Added back rounded corners */
+        /* Sheets Card */
         .sheets-card {
             background: var(--card-bg);
             border-radius: var(--border-radius);
@@ -660,7 +660,7 @@
             border-color: rgba(100, 255, 218, 0.2);
         }
 
-        /* Iframe Container - RESTORED ROUNDED BOTTOM CORNERS */
+        /* Iframe Container */
         .iframe-container {
             flex: 1;
             position: relative;
@@ -671,7 +671,7 @@
             border-radius: 0 0 var(--border-radius) var(--border-radius);
         }
 
-        /* Iframe itself - Full height */
+        /* Iframe itself */
         #iframe {
             flex: 1;
             width: 100%;
@@ -730,7 +730,7 @@
             max-width: 80%;
         }
 
-        /* Footer - RESTORED VISIBILITY AND STYLING */
+        /* Footer */
         .footer {
             margin-top: auto;
             padding: 24px 0 0 0;
@@ -1064,6 +1064,7 @@
                 </div>
             </div>
             
+            <!-- Product Portfolio Section -->
             <div class="nav-section active">
                 <div class="nav-section-title">
                     <i class="fas fa-project-diagram"></i>
@@ -1076,6 +1077,7 @@
                 </ul>
             </div>
 
+            <!-- Design & Development Section -->
             <div class="nav-section">
                 <div class="nav-section-title">
                     <i class="fas fa-pencil-ruler"></i>
@@ -1088,6 +1090,7 @@
                 </ul>
             </div>
 
+            <!-- Marketing & Sales Section -->
             <div class="nav-section">
                 <div class="nav-section-title">
                     <i class="fas fa-chart-line"></i>
@@ -1101,6 +1104,7 @@
                 </ul>
             </div>
             
+            <!-- Procurement Section -->
             <div class="nav-section">
                 <div class="nav-section-title">
                     <i class="fas fa-shopping-cart"></i>
@@ -1113,6 +1117,7 @@
                 </ul>
             </div>
             
+            <!-- Inventory Management Section -->
             <div class="nav-section">
                 <div class="nav-section-title">
                     <i class="fas fa-warehouse"></i>
@@ -1122,6 +1127,45 @@
                     <li><a href="#" class="nav-link" data-section="inventory-control">Inventory Control</a></li>
                     <li><a href="#" class="nav-link" data-section="stock-movements">Stock Movements</a></li>
                     <li><a href="#" class="nav-link" data-section="warehouse">Warehouse Management</a></li>
+                </ul>
+            </div>
+            
+            <!-- Production Section -->
+            <div class="nav-section">
+                <div class="nav-section-title">
+                    <i class="fas fa-industry"></i>
+                    <span>Production</span>
+                </div>
+                <ul class="nav-submenu">
+                    <li><a href="#" class="nav-link" data-section="production-planning">Production Planning</a></li>
+                    <li><a href="#" class="nav-link" data-section="bill-of-materials">Bill of Materials</a></li>
+                    <li><a href="#" class="nav-link" data-section="work-orders">Work Orders</a></li>
+                </ul>
+            </div>
+            
+            <!-- Logistics Section -->
+            <div class="nav-section">
+                <div class="nav-section-title">
+                    <i class="fas fa-truck"></i>
+                    <span>Logistics</span>
+                </div>
+                <ul class="nav-submenu">
+                    <li><a href="#" class="nav-link" data-section="transportation">Transportation</a></li>
+                    <li><a href="#" class="nav-link" data-section="distribution">Distribution</a></li>
+                    <li><a href="#" class="nav-link" data-section="shipment-tracking">Shipment Tracking</a></li>
+                </ul>
+            </div>
+            
+            <!-- Analytics Section -->
+            <div class="nav-section">
+                <div class="nav-section-title">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Analytics</span>
+                </div>
+                <ul class="nav-submenu">
+                    <li><a href="#" class="nav-link" data-section="supply-chain-analytics">Supply Chain Analytics</a></li>
+                    <li><a href="#" class="nav-link" data-section="kpi-dashboard">KPI Dashboard</a></li>
+                    <li><a href="#" class="nav-link" data-section="cost-analysis">Cost Analysis</a></li>
                 </ul>
             </div>
         </aside>
@@ -1142,7 +1186,7 @@
                         <!-- Tools will be populated dynamically -->
                     </div>
 
-                    <!-- Footer - Visible on tools page -->
+                    <!-- Footer -->
                     <footer class="footer">
                         <div class="footer-logo">
                             <i class="fas fa-cube"></i> Jasiri E-Hub • Enterprise Resource Hub
@@ -1157,9 +1201,9 @@
                 </section>
             </div>
 
-            <!-- Sheets Container - Full screen overlay with padding -->
+            <!-- Sheets Container -->
             <div class="sheets-container" id="sheetsContainer">
-                <!-- Sheets Card with rounded corners -->
+                <!-- Sheets Card -->
                 <div class="sheets-card">
                     <div class="sheets-header">
                         <div class="sheets-title">
@@ -1208,7 +1252,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 
     <script>
-        // Firebase Configuration - Same as main page
+        // Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyCOb4BqfiN3vt1Y13UTEpA_boCqNRH6rrQ",
             authDomain: "dsog-stores-dashboard.firebaseapp.com",
@@ -1320,6 +1364,20 @@
                         icon: "fas fa-calendar-alt",
                         sheetUrl: "https://docs.google.com/spreadsheets/d/1YevHH6wm09YHjUC-m1EYwkYe0mueYSs_L3vI8UZQ5T0/edit",
                         badge: "Active"
+                    },
+                    { 
+                        name: "Season Planning", 
+                        description: "Plan products by season and trend",
+                        icon: "fas fa-leaf",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1IGa6E_QRCe2V3WUr-vnzFsgem1dTwXbgISTudltk-xw/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Collection Budget", 
+                        description: "Budget planning for collections",
+                        icon: "fas fa-coins",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1n_84d7oW-MwLBpkx61jweWrdNrwJqQM-q-t_jdaGs58/edit",
+                        badge: "Active"
                     }
                 ]
             },
@@ -1332,6 +1390,20 @@
                         description: "Master repository for design briefs",
                         icon: "fas fa-pencil-ruler",
                         sheetUrl: "https://docs.google.com/spreadsheets/d/11-fzXzAaJ2qm9B5HlrouDGQK9HftvjBlbejbSWmLPdQ/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Creative Direction", 
+                        description: "Creative direction and design concepts",
+                        icon: "fas fa-palette",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1i5AEEsKuHGpESRZt7mXR7Ggxf8wQouNA_1PEFX04KQw/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Design Specifications", 
+                        description: "Detailed design specifications and requirements",
+                        icon: "fas fa-file-alt",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/17J5_Arfys1vePofSfP1O0jfZYu9adA3AF4ZGTJrbeng/edit",
                         badge: "Active"
                     }
                 ]
@@ -1346,6 +1418,20 @@
                         icon: "fas fa-cube",
                         sheetUrl: "https://docs.google.com/spreadsheets/d/1OoH6hoxvrm_WtHvs9V8d89fIKaaeNXxdsWNkGKT7k8k/edit",
                         badge: "Active"
+                    },
+                    { 
+                        name: "Prototype Feedback", 
+                        description: "Collect and analyze prototype feedback",
+                        icon: "fas fa-comment-dots",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1PCjHqHcgQyzYbQ3zOTXoY9SaNWQEZ1-NyUpNhPevfCI/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Prototype Costs", 
+                        description: "Track prototype development costs",
+                        icon: "fas fa-dollar-sign",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1CrtPjexy7Ga-MkjuuX7IWBqeFS4dr14DaSrrgxGwzVY/edit",
+                        badge: "Active"
                     }
                 ]
             },
@@ -1358,6 +1444,20 @@
                         description: "Track sample production and status",
                         icon: "fas fa-box-open",
                         sheetUrl: "https://docs.google.com/spreadsheets/d/1eTKkMvQlMzkq1usiR1RgcpGtkz7qniEFqfpZWWc8SdQ/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Sample Feedback", 
+                        description: "Sample evaluation and feedback collection",
+                        icon: "fas fa-clipboard-check",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1_VBJG6FOllBozLBEt8WZqSP9gKETc0obFjSrlsV2E5Y/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Sample Approval", 
+                        description: "Sample approval workflow and tracking",
+                        icon: "fas fa-check-circle",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1XiDZgwANhPo8tjX8LUktt1hg6ZNY5cvrxvDr4Q0V3j4/edit",
                         badge: "Active"
                     }
                 ]
@@ -1372,6 +1472,20 @@
                         icon: "fas fa-bullhorn",
                         sheetUrl: "https://docs.google.com/spreadsheets/d/1RWkCSdEbrnD0Ric1dI1Mepg6utYy-4wpwFnEEuF90uQ/edit",
                         badge: "Active"
+                    },
+                    { 
+                        name: "Product Positioning", 
+                        description: "Product positioning and market analysis",
+                        icon: "fas fa-bullseye",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1TxqDcANNwvnWwduy8areApEeA7spAUFsa06lamw9SDc/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Marketing Calendar", 
+                        description: "Marketing campaign calendar and scheduling",
+                        icon: "fas fa-calendar",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/15GORcqJ5RLuD6p2emAtDaV5S7HAEWvopVJapE7zbiDc/edit",
+                        badge: "Active"
                     }
                 ]
             },
@@ -1381,7 +1495,24 @@
                 tools: [
                     { 
                         name: "Sales Dashboard", 
-                        sheetUrl: "https://docs.google.com/spreadsheets/d/1Ir2Vgy3jMXq-pP3GKpRV9SCdnvUwgyMYEiCScQn2V3Y/edit" 
+                        description: "Sales performance dashboard and metrics",
+                        icon: "fas fa-chart-pie",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1Ir2Vgy3jMXq-pP3GKpRV9SCdnvUwgyMYEiCScQn2V3Y/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Product Performance", 
+                        description: "Individual product performance analysis",
+                        icon: "fas fa-chart-bar",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1ab8E3SM54_r0T37L6j4WbYSTx-OYOUixD3GegopjxLg/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Sales Forecasting", 
+                        description: "Sales forecasting and predictions",
+                        icon: "fas fa-chart-line",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1OdQu1hPCDMjV8QM2p6dHCiHhWGb5u1xG9jdxk9OZMIU/edit",
+                        badge: "Active"
                     }
                 ]
             },
@@ -1391,7 +1522,24 @@
                 tools: [
                     { 
                         name: "Customer Quote Creation", 
-                        sheetUrl: "https://docs.google.com/spreadsheets/d/1CUSTOMER_QUOTE_SHEET_ID/edit" 
+                        description: "Create and manage customer quotations",
+                        icon: "fas fa-file-invoice-dollar",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1CUSTOMER_QUOTE_SHEET_ID/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Quote Templates", 
+                        description: "Sales quotation templates",
+                        icon: "fas fa-file-contract",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1QUOTE_TEMPLATE_SHEET_ID/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Quote Tracking", 
+                        description: "Track quotation status and follow-ups",
+                        icon: "fas fa-tasks",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1QUOTE_TRACKING_SHEET_ID/edit",
+                        badge: "Active"
                     }
                 ]
             },
@@ -1401,7 +1549,24 @@
                 tools: [
                     { 
                         name: "Feedback Analysis", 
-                        sheetUrl: "https://docs.google.com/spreadsheets/d/1La2sdTYqS4U0qFACIBG3NzaXmyIHllO5pyY6qQalX08/edit" 
+                        description: "Analyze customer feedback data",
+                        icon: "fas fa-comments",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1La2sdTYqS4U0qFACIBG3NzaXmyIHllO5pyY6qQalX08/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Customer Reviews", 
+                        description: "Customer review management and analysis",
+                        icon: "fas fa-star",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1QYXhBryLpDHh8brKASIIyYIBSaXxqcOqL-epqO2Feeo/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Product Improvements", 
+                        description: "Product improvement tracking from feedback",
+                        icon: "fas fa-tools",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/12OMRNRj-YFLUl0SIIrkbtywYaG-_MSXfaT3ASc3Umq8/edit",
+                        badge: "Active"
                     }
                 ]
             },
@@ -1411,7 +1576,24 @@
                 tools: [
                     { 
                         name: "Supplier Directory", 
-                        sheetUrl: "https://docs.google.com/spreadsheets/d/1hwJfrYlQQ70gtwDVaNMC80SXE7Vuw-UqZdhELYsnMFU/edit" 
+                        description: "Directory of all suppliers",
+                        icon: "fas fa-address-book",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1hwJfrYlQQ70gtwDVaNMC80SXE7Vuw-UqZdhELYsnMFU/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Supplier Performance", 
+                        description: "Supplier performance evaluation",
+                        icon: "fas fa-chart-line",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1Ui__Cbx7lU0QPvZAJDGMhC0HGEZ-Uh3vWnuSzO7vBME/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Contracts & Agreements", 
+                        description: "Supplier contracts and agreements",
+                        icon: "fas fa-file-signature",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1aaNPvAXvk36UQOSzbo3rwUtCbRlnONRq1MIbdKJlWBk/edit",
+                        badge: "Active"
                     }
                 ]
             },
@@ -1421,7 +1603,24 @@
                 tools: [
                     { 
                         name: "PO Creation", 
-                        sheetUrl: "https://docs.google.com/spreadsheets/d/1hWkEjiJaQ6U1yaltAHIzab2bZpEUvOPxSSu9s2ZlfH8/edit" 
+                        description: "Create and manage purchase orders",
+                        icon: "fas fa-clipboard-list",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1hWkEjiJaQ6U1yaltAHIzab2bZpEUvOPxSSu9s2ZlfH8/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "PO Tracking", 
+                        description: "Track purchase order status",
+                        icon: "fas fa-truck-loading",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1WqNs6XSQztM56Jk6YTWAE7vUoYvlsUTxI199HiyALRo/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "PO Approval", 
+                        description: "Purchase order approval workflow",
+                        icon: "fas fa-check-double",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1o-HqMkT637UNCL0OKzwWSXoYMjMVwif9GnLKMFUfBac/edit",
+                        badge: "Active"
                     }
                 ]
             },
@@ -1431,7 +1630,24 @@
                 tools: [
                     { 
                         name: "RFQ Management", 
-                        sheetUrl: "https://docs.google.com/spreadsheets/d/1QqogZOO6xrtWUUP-n2TiR4xfH7lNEdmpm2I7t0l5rjI/edit" 
+                        description: "Manage Request for Quotations",
+                        icon: "fas fa-file-contract",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1QqogZOO6xrtWUUP-n2TiR4xfH7lNEdmpm2I7t0l5rjI/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Bid Comparison", 
+                        description: "Compare supplier bids and proposals",
+                        icon: "fas fa-balance-scale",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/19sGxaJk1qHuCk3RNrh4QbcY4X5jCW1trvhVrdUbsPc0/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Vendor Selection", 
+                        description: "Vendor selection and evaluation",
+                        icon: "fas fa-user-check",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1R-B6Q2KmS7czqXd4fi6SzfHk_Bzmv_Sn7lTrNxgAE3I/edit",
+                        badge: "Active"
                     }
                 ]
             },
@@ -1441,7 +1657,24 @@
                 tools: [
                     { 
                         name: "Stock Levels", 
-                        sheetUrl: "https://docs.google.com/spreadsheets/d/1ptdoE4iNqxsU8-qb1GT4DchFToDSGcrY_gLfIGHpU64/edit" 
+                        description: "Track inventory stock levels",
+                        icon: "fas fa-boxes",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1ptdoE4iNqxsU8-qb1GT4DchFToDSGcrY_gLfIGHpU64/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Inventory Valuation", 
+                        description: "Inventory valuation and costing",
+                        icon: "fas fa-calculator",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1lyzJZce3BrtHcU36Di6Z_OTbiekSRrQBtZpvG2Mss48/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Stock Alerts", 
+                        description: "Stock level alerts and notifications",
+                        icon: "fas fa-bell",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1cNWxzotLFnpdq7udhlQcXQA2ngOeGMQE2C5aHSyNMbg/edit",
+                        badge: "Active"
                     }
                 ]
             },
@@ -1451,7 +1684,24 @@
                 tools: [
                     { 
                         name: "Receipts", 
-                        sheetUrl: "https://docs.google.com/spreadsheets/d/1p_JH72IMirO7YULPCQqYPRVLe3y6QhNpXdBN6wM1vaU/edit" 
+                        description: "Track inventory receipts",
+                        icon: "fas fa-shipping-fast",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1p_JH72IMirO7YULPCQqYPRVLe3y6QhNpXdBN6wM1vaU/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Issues", 
+                        description: "Inventory issues and dispatches",
+                        icon: "fas fa-dolly",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1d9J7tuVN5S75xTZXzW0YwinLz-vx8fadmKrCweUt0fQ/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Transfers", 
+                        description: "Inter-warehouse transfers",
+                        icon: "fas fa-exchange-alt",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1rPOPVlS4NiW9gUXWux87fugVzWP3BSkpkhhHnNkzxDw/edit",
+                        badge: "Active"
                     }
                 ]
             },
@@ -1461,355 +1711,511 @@
                 tools: [
                     { 
                         name: "Location Management", 
-                        sheetUrl: "https://docs.google.com/spreadsheets/d/1iIScOavt3DHV-_kj1PrHeI13ihqrsFiSc3ez86QLWL0/edit" 
+                        description: "Manage warehouse locations and layout",
+                        icon: "fas fa-map-marker-alt",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1iIScOavt3DHV-_kj1PrHeI13ihqrsFiSc3ez86QLWL0/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Bin Management", 
+                        description: "Warehouse bin and slot management",
+                        icon: "fas fa-box",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1aBK9PseMEGmUKvo4ddU8RRFMiTyOqMlPsoBNmI_v_Dw/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Picking Strategy", 
+                        description: "Order picking strategies and optimization",
+                        icon: "fas fa-hand-paper",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1WHNNx1pV4bpQ8moXKUfD-Gec30H4OXxWwmvaV8DCvPc/edit",
+                        badge: "Active"
+                    }
+                ]
+            },
+            "production-planning": {
+                title: "Production Planning",
+                description: "Plan and schedule production activities",
+                tools: [
+                    { 
+                        name: "Production Schedule", 
+                        description: "Production scheduling and planning",
+                        icon: "fas fa-calendar",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1JCoywp2Xl5moDFh8R6fAS6vVqbpGo6vbjVfsWLUfiS0/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Capacity Planning", 
+                        description: "Production capacity planning",
+                        icon: "fas fa-industry",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1eV7d017f47s7z7cpXPOD7vYBXRbaprokE4LzYtGBpG0/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Production Tracking", 
+                        description: "Track production progress and status",
+                        icon: "fas fa-tachometer-alt",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1ww6lA_c0gm2U3pJzCE1A2KmdJnRGBIapwNGr8aOF9rk/edit",
+                        badge: "Active"
+                    }
+                ]
+            },
+            "bill-of-materials": {
+                title: "Bill of Materials",
+                description: "Manage product materials and components",
+                tools: [
+                    { 
+                        name: "BOM Management", 
+                        description: "Bill of materials management",
+                        icon: "fas fa-list-alt",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1Q3mvUG--QcP3soNePZfOLLpG0QxH7DxpggKFIAotvQg/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "BOM Costing", 
+                        description: "BOM costing and analysis",
+                        icon: "fas fa-calculator",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1mCLHg-TevxL9_YMqCOwesb70yOXEss-1lAyFdT-UEcE/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "BOM Versioning", 
+                        description: "BOM version control and history",
+                        icon: "fas fa-code-branch",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1EZ3qVIQEpkYW6ma6-TH_pdMebTsbXNhY0Mxf2ZcBShY/edit",
+                        badge: "Active"
+                    }
+                ]
+            },
+            "work-orders": {
+                title: "Work Orders",
+                description: "Create and manage production work orders",
+                tools: [
+                    { 
+                        name: "Work Order Creation", 
+                        description: "Create and issue work orders",
+                        icon: "fas fa-clipboard-list",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1_rE50ge2koWL7LH4qL_fVoxiFaAJzZuAJaTsWhLWobI/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Work Order Tracking", 
+                        description: "Track work order progress",
+                        icon: "fas fa-tasks",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/12eT6sFcgbsx0xj6uuHMu_5gUYDOPjpz20NSI4NM4KHY/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Work Order Costs", 
+                        description: "Work order costing and analysis",
+                        icon: "fas fa-dollar-sign",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/18QblOcA5idUfOdcFXYkq0xnOcZmuT4WS7o6Wl0VakfM/edit",
+                        badge: "Active"
+                    }
+                ]
+            },
+            "transportation": {
+                title: "Transportation",
+                description: "Manage transportation and carrier operations",
+                tools: [
+                    { 
+                        name: "Carrier Management", 
+                        description: "Carrier selection and management",
+                        icon: "fas fa-truck",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1KphtIOl8932GJXonSLbuJeG5VRgF43xTN3MNYamQRE4/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Route Planning", 
+                        description: "Transportation route planning",
+                        icon: "fas fa-route",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1uuadkicYfd7Jv_f4OZF_40QRZxOGvaDup3R8-1RxTAY/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Freight Costing", 
+                        description: "Freight costing and optimization",
+                        icon: "fas fa-shipping-fast",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1fepSBUDTrSXSnwVSDFx--eOJeQbRj7LtGKEmu0sKoO0/edit",
+                        badge: "Active"
+                    }
+                ]
+            },
+            "distribution": {
+                title: "Distribution",
+                description: "Manage distribution networks and centers",
+                tools: [
+                    { 
+                        name: "Distribution Centers", 
+                        description: "Distribution center management",
+                        icon: "fas fa-warehouse",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1MVqyQ2rrzwQWn-548SN_8AWUjmrW4ghq-UIsm05MvRs/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Delivery Scheduling", 
+                        description: "Delivery scheduling and planning",
+                        icon: "fas fa-calendar-check",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/14i_vLZFFI0yrlMAALXN_0_KAaW_AhKHG6FBoGISVkFw/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Returns Management", 
+                        description: "Returns and reverse logistics",
+                        icon: "fas fa-undo",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1Ly31Ugoa5jI9p1DVMP8zVQpQR7x28urbfiAm2e9Vgs8/edit",
+                        badge: "Active"
+                    }
+                ]
+            },
+            "shipment-tracking": {
+                title: "Shipment Tracking",
+                description: "Track shipments and delivery status",
+                tools: [
+                    { 
+                        name: "Shipment Tracker", 
+                        description: "Real-time shipment tracking",
+                        icon: "fas fa-map-marked-alt",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1351dA3hFT6EhtnJ9BEn1HzYzPMRmAep0dDU6nVLfrv4/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Customs Documentation", 
+                        description: "Customs and documentation management",
+                        icon: "fas fa-passport",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1RoxYorrGJT05GKg2Mht857KtuSnzy04Khgnh5z0a2K8/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Proof of Delivery", 
+                        description: "Proof of delivery tracking",
+                        icon: "fas fa-receipt",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1I8CHZ6PmJrLYS_TMJ7KAHjhqwwvoqqY4Kj10THLJ3rM/edit",
+                        badge: "Active"
+                    }
+                ]
+            },
+            "supply-chain-analytics": {
+                title: "Supply Chain Analytics",
+                description: "Supply chain performance analytics",
+                tools: [
+                    { 
+                        name: "Lead Time Analysis", 
+                        description: "Supply chain lead time analysis",
+                        icon: "fas fa-clock",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1IzzKJ1hNnd56dnmDTX2SJE_PZM-K1E4uowwqKGfTdOs/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Inventory Turnover", 
+                        description: "Inventory turnover analysis",
+                        icon: "fas fa-sync-alt",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1wwSvnKoxzFAECdDyKettJjD5HYhL3YXUyv535JEZHx4/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Supplier Performance", 
+                        description: "Supplier performance analytics",
+                        icon: "fas fa-chart-line",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1ojZ4SYX0G9f_WNVWWibZaPrQ3fQyAnmCLlVECdQFCxA/edit",
+                        badge: "Active"
+                    }
+                ]
+            },
+            "kpi-dashboard": {
+                title: "KPI Dashboard",
+                description: "Key Performance Indicators dashboard",
+                tools: [
+                    { 
+                        name: "SCOR Model KPIs", 
+                        description: "SCOR model key performance indicators",
+                        icon: "fas fa-chart-bar",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1SuQrJOiF2XQGpJlkGarclDVbIO_JMfKBY4xbaG29O4M/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Operational KPIs", 
+                        description: "Operational performance indicators",
+                        icon: "fas fa-tachometer-alt",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1HPIT7h8Ag7oNcJLGnHr5uI4NRqYVl1HZbieLnTjsZzE/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Financial KPIs", 
+                        description: "Financial performance indicators",
+                        icon: "fas fa-dollar-sign",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1e5taaF2tVBitqxlSdYOUJGiDxmFinsAS3Q1KNivVQZo/edit",
+                        badge: "Active"
+                    }
+                ]
+            },
+            "cost-analysis": {
+                title: "Cost Analysis",
+                description: "Cost analysis and optimization",
+                tools: [
+                    { 
+                        name: "Total Cost Analysis", 
+                        description: "Total cost of ownership analysis",
+                        icon: "fas fa-calculator",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1l19WADHA0J9Iqz4qV2Hp_wAUFcuRpO-GNRob_4exWZs/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Cost Breakdown", 
+                        description: "Detailed cost breakdown analysis",
+                        icon: "fas fa-chart-pie",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1B_B-njDP-mRaLIaPRVZ3AYtsRVqVlx5ypn_Z53nBx1o/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Cost Optimization", 
+                        description: "Cost optimization strategies",
+                        icon: "fas fa-search-dollar",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/13ToZ_Rx965bHvr0xLK9d97SxoYrznjBA6u0B3QSphC0/edit",
+                        badge: "Active"
                     }
                 ]
             }
-        }; 
+        };
 
-        // Initialize application
-        function initApp() {
-            showLoading();
-            
-            // Check authentication state
-            auth.onAuthStateChanged((user) => {
-                if (user) {
-                    handleUserSignedIn(user);
-                } else {
-                    handleUserSignedOut();
-                }
-            });
+        // Authentication State Observer
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                handleUserSignedIn(user);
+            } else {
+                handleUserSignedOut();
+            }
+        });
 
-            // Set up event listeners
-            setupEventListeners();
-            
-            // Update year in footer
-            document.getElementById("year").textContent = new Date().getFullYear();
-        }
-
-        // Handle user signed in
         function handleUserSignedIn(user) {
-            console.log("User signed in:", user.email);
-            hideLoading();
+            loadingSpinner.style.display = 'none';
             accessDenied.style.display = 'none';
             appContainer.style.display = 'block';
             
             // Update user info
             updateUserInfo(user);
             
-            // Initialize workspace
-            initWorkspace();
+            // Initialize the application
+            initApp();
             
-            // Update connection status
-            updateOnlineStatus();
+            // Load default section
+            loadSection('portfolio-overview');
         }
 
-        // Handle user signed out
         function handleUserSignedOut() {
-            console.log("User signed out");
-            hideLoading();
+            loadingSpinner.style.display = 'none';
             appContainer.style.display = 'none';
             accessDenied.style.display = 'flex';
-            
-            // Redirect to login after 2 seconds
-            setTimeout(() => {
-                window.location.href = 'index.html';
-            }, 2000);
         }
 
-        // Update user information
         function updateUserInfo(user) {
             const displayName = user.displayName || user.email.split('@')[0];
-            const initials = displayName.split(' ').map(n => n[0]).join('').toUpperCase();
+            const firstName = displayName.split(' ')[0];
+            const lastName = displayName.split(' ')[1] || '';
             
-            userAvatar.textContent = initials;
+            userAvatar.textContent = (firstName[0] + (lastName[0] || '')).toUpperCase();
             userName.textContent = displayName;
-            userRole.textContent = user.email.includes('admin') ? 'Administrator' : 'User';
+            userRole.textContent = 'Administrator';
         }
 
-        // Initialize workspace
-        function initWorkspace() {
-            // Set up sidebar navigation
-            setupSidebarNavigation();
+        // Application Initialization
+        function initApp() {
+            // Set current year in footer
+            document.getElementById('year').textContent = new Date().getFullYear();
             
-            // Set up iframe events
+            // Setup event listeners
+            setupEventListeners();
+            
+            // Setup iframe events
             setupIframeEvents();
             
-            // Load initial section
-            loadInitialSection();
+            // Setup navigation
+            setupNavigation();
+            
+            // Setup sheet controls
+            setupSheetControls();
         }
 
-        // Set up sidebar navigation
-        function setupSidebarNavigation() {
+        function setupEventListeners() {
             // Menu toggle
-            menuToggle.addEventListener('click', function() {
+            menuToggle.addEventListener('click', () => {
                 sidebar.classList.toggle('active');
-                // Also adjust sheets container position
-                if (sidebar.classList.contains('active')) {
-                    sheetsContainer.style.left = '260px';
-                } else {
-                    sheetsContainer.style.left = '280px';
-                }
             });
 
-            // Close sidebar when clicking outside on mobile
-            document.addEventListener('click', function(event) {
-                if (window.innerWidth <= 992) {
-                    if (!sidebar.contains(event.target) && !menuToggle.contains(event.target)) {
-                        sidebar.classList.remove('active');
-                        sheetsContainer.style.left = '0';
-                    }
-                }
-            });
-
-            // Nav section toggles
-            document.querySelectorAll('.nav-section-title').forEach(title => {
-                title.addEventListener('click', function() {
-                    const section = this.parentElement;
-                    document.querySelectorAll('.nav-section').forEach(s => {
-                        if (s !== section) s.classList.remove('active');
-                    });
-                    section.classList.toggle('active');
+            // Logout button
+            logoutBtn.addEventListener('click', () => {
+                auth.signOut().then(() => {
+                    window.location.href = 'index.html';
                 });
             });
 
-            // Nav link clicks
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', (e) => {
+                if (window.innerWidth <= 992 && 
+                    !sidebar.contains(e.target) && 
+                    !menuToggle.contains(e.target) && 
+                    sidebar.classList.contains('active')) {
+                    sidebar.classList.remove('active');
+                }
+            });
+
+            // Navigation section titles
+            document.querySelectorAll('.nav-section-title').forEach(title => {
+                title.addEventListener('click', (e) => {
+                    const section = e.currentTarget.parentElement;
+                    const isActive = section.classList.contains('active');
+                    
+                    // Close all other sections
+                    document.querySelectorAll('.nav-section').forEach(s => {
+                        s.classList.remove('active');
+                    });
+                    
+                    // Open clicked section if it wasn't already active
+                    if (!isActive) {
+                        section.classList.add('active');
+                    }
+                });
+            });
+
+            // Navigation links
             document.querySelectorAll('.nav-link').forEach(link => {
-                link.addEventListener('click', function(e) {
+                link.addEventListener('click', (e) => {
                     e.preventDefault();
                     
-                    // Update active state
-                    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-                    this.classList.add('active');
+                    // Remove active class from all links
+                    document.querySelectorAll('.nav-link').forEach(l => {
+                        l.classList.remove('active');
+                    });
                     
-                    // Load section
-                    const section = this.dataset.section;
+                    // Add active class to clicked link
+                    link.classList.add('active');
+                    
+                    // Load the section
+                    const section = link.dataset.section;
                     loadSection(section);
                     
                     // Close sidebar on mobile
                     if (window.innerWidth <= 992) {
                         sidebar.classList.remove('active');
-                        sheetsContainer.style.left = '0';
                     }
                 });
             });
 
-            // Home button
-            homeButton.addEventListener('click', function(e) {
-                e.preventDefault();
-                window.location.href = 'index.html';
+            // Connection status
+            window.addEventListener('online', () => {
+                connectionStatus.className = 'connection-status online';
+                connectionStatus.innerHTML = '<i class="fas fa-circle"></i> <span>Online</span>';
+                connectionStatus.style.display = 'flex';
+                
+                setTimeout(() => {
+                    connectionStatus.style.display = 'none';
+                }, 3000);
             });
 
-            // Logout button
-            logoutBtn.addEventListener('click', function() {
-                showLoading();
-                auth.signOut().catch(console.error);
+            window.addEventListener('offline', () => {
+                connectionStatus.className = 'connection-status offline';
+                connectionStatus.innerHTML = '<i class="fas fa-circle"></i> <span>Offline</span>';
+                connectionStatus.style.display = 'flex';
             });
         }
 
-        // Set up iframe events
         function setupIframeEvents() {
-            iframe.addEventListener('load', function() {
-                setTimeout(() => {
-                    sheetLoader.style.display = 'none';
-                    if (currentSheetName) {
-                        currentSheetInfo.textContent = currentSheetName;
-                        currentSheetInfo.style.display = 'block';
-                    }
-                }, 500);
+            iframe.addEventListener('load', () => {
+                sheetLoader.style.display = 'none';
+                currentSheetInfo.textContent = currentSheetName;
+                currentSheetInfo.style.display = 'block';
             });
-            
-            iframe.addEventListener('loadstart', function() {
+
+            iframe.addEventListener('loadstart', () => {
                 sheetLoader.style.display = 'flex';
                 currentSheetInfo.style.display = 'none';
             });
-            
-            iframe.addEventListener('error', function() {
+
+            iframe.addEventListener('error', () => {
                 sheetLoader.style.display = 'none';
                 currentSheetInfo.style.display = 'none';
-                showPlaceholderContent("Error loading sheet");
+                
+                // Show error message
+                sheetLoaderText.textContent = 'Error loading sheet. Please try again.';
+                setTimeout(() => {
+                    sheetLoaderText.textContent = 'Loading sheet...';
+                }, 3000);
             });
         }
 
-        // Set up event listeners
-        function setupEventListeners() {
-            window.addEventListener('resize', function() {
-                if (window.innerWidth > 992) {
-                    sidebar.classList.remove('active');
-                    sheetsContainer.style.left = '280px';
-                } else {
-                    sheetsContainer.style.left = '0';
-                }
-            });
-
-            // View mode buttons
-            editModeBtn.addEventListener('click', function() {
+        function setupSheetControls() {
+            // View/Edit mode toggle
+            editModeBtn.addEventListener('click', () => {
                 setViewMode('edit');
             });
 
-            viewModeBtn.addEventListener('click', function() {
+            viewModeBtn.addEventListener('click', () => {
                 setViewMode('view');
             });
 
             // Fullscreen button
-            fullscreenBtn.addEventListener('click', toggleFullscreen);
-
-            // Refresh button
-            refreshSheetBtn.addEventListener('click', function() {
-                if (currentSheetId) {
-                    reloadCurrentSheet();
+            fullscreenBtn.addEventListener('click', () => {
+                const iframeContainer = iframe.parentElement;
+                
+                if (!document.fullscreenElement) {
+                    iframeContainer.requestFullscreen().catch(err => {
+                        console.log(`Error attempting to enable fullscreen: ${err.message}`);
+                    });
+                } else {
+                    document.exitFullscreen();
                 }
             });
 
-            // Close sheet button
-            closeSheetBtn.addEventListener('click', closeSheet);
-
-            // Online/offline detection
-            window.addEventListener('online', updateOnlineStatus);
-            window.addEventListener('offline', updateOnlineStatus);
-
-            // Fullscreen change events
-            document.addEventListener('fullscreenchange', handleFullscreenChange);
-        }
-
-        // Set view mode
-        function setViewMode(mode) {
-            currentViewMode = mode;
-            
-            // Update button states
-            editModeBtn.classList.toggle('active', mode === 'edit');
-            viewModeBtn.classList.toggle('active', mode === 'view');
-            
-            // Update sheet URL with proper mode
-            if (currentSheetId) {
-                reloadCurrentSheet();
-            }
-        }
-
-        // Toggle fullscreen
-        function toggleFullscreen() {
-            const iframeContainer = document.querySelector('.iframe-container');
-            
-            if (!document.fullscreenElement) {
-                if (iframeContainer.requestFullscreen) {
-                    iframeContainer.requestFullscreen();
-                } else if (iframeContainer.webkitRequestFullscreen) {
-                    iframeContainer.webkitRequestFullscreen();
-                } else if (iframeContainer.mozRequestFullScreen) {
-                    iframeContainer.mozRequestFullScreen();
-                } else if (iframeContainer.msRequestFullscreen) {
-                    iframeContainer.msRequestFullscreen();
+            // Refresh button
+            refreshSheetBtn.addEventListener('click', () => {
+                if (currentSheetId) {
+                    loadSheet(currentSheetId, currentSheetName);
                 }
-            } else {
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
-                } else if (document.webkitExitFullscreen) {
-                    document.webkitExitFullscreen();
-                } else if (document.mozCancelFullScreen) {
-                    document.mozCancelFullScreen();
-                } else if (document.msExitFullscreen) {
-                    document.msExitFullscreen();
+            });
+
+            // Close button
+            closeSheetBtn.addEventListener('click', () => {
+                sheetsContainer.style.display = 'none';
+                toolsSection.style.display = 'block';
+                iframe.src = '';
+            });
+
+            // Fullscreen change event
+            document.addEventListener('fullscreenchange', () => {
+                if (document.fullscreenElement) {
+                    fullscreenBtn.innerHTML = '<i class="fas fa-compress"></i> Exit Fullscreen';
+                } else {
+                    fullscreenBtn.innerHTML = '<i class="fas fa-expand"></i> Fullscreen';
                 }
-            }
+            });
         }
 
-        // Handle fullscreen change
-        function handleFullscreenChange() {
-            const isFullscreen = document.fullscreenElement || 
-                               document.webkitFullscreenElement || 
-                               document.mozFullScreenElement || 
-                               document.msFullscreenElement;
-            
-            if (isFullscreen) {
-                // Hide some controls in fullscreen
-                document.querySelector('.sheets-header').style.display = 'none';
-            } else {
-                // Show controls when exiting fullscreen
-                document.querySelector('.sheets-header').style.display = 'flex';
-            }
+        function setupNavigation() {
+            // Home button
+            homeButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.location.href = 'index.html';
+            });
+
+            // Workspace button
+            document.getElementById('workspaceButton').addEventListener('click', (e) => {
+                e.preventDefault();
+                // Already on workspace page
+            });
         }
 
-        // Reload current sheet
-        function reloadCurrentSheet() {
-            if (!currentSheetId) return;
-            
-            sheetLoader.style.display = 'flex';
-            sheetLoaderText.textContent = `Loading ${currentSheetName}...`;
-            
-            const url = getSheetUrl(currentSheetId, currentViewMode);
-            iframe.src = '';
-            
-            setTimeout(() => {
-                iframe.src = url;
-            }, 100);
-        }
+        function loadSection(sectionId) {
+            const sectionData = moduleData[sectionId];
+            if (!sectionData) return;
 
-        // Close sheet and show tools
-        function closeSheet() {
-            sheetsContainer.style.display = 'none';
-            toolsSection.style.display = 'block';
-            iframe.src = '';
-        }
-
-        // Get sheet URL with proper mode
-        function getSheetUrl(sheetId, mode = 'view') {
-            const baseUrl = `https://docs.google.com/spreadsheets/d/${sheetId}`;
-            
-            if (mode === 'edit') {
-                return `${baseUrl}/edit?usp=sharing`;
-            } else {
-                return `${baseUrl}/preview`;
-            }
-        }
-
-        // Update online status
-        function updateOnlineStatus() {
-            const isOnline = navigator.onLine;
-            
-            if (isOnline) {
-                connectionStatus.innerHTML = '<i class="fas fa-circle"></i><span>Online</span>';
-                connectionStatus.className = 'connection-status online';
-                connectionStatus.style.display = 'flex';
-            } else {
-                connectionStatus.innerHTML = '<i class="fas fa-circle"></i><span>Offline</span>';
-                connectionStatus.className = 'connection-status offline';
-                connectionStatus.style.display = 'flex';
-            }
-            
-            setTimeout(() => {
-                connectionStatus.style.display = 'none';
-            }, 3000);
-        }
-
-        // Load initial section
-        function loadInitialSection() {
-            const activeLink = document.querySelector('.nav-link.active');
-            if (activeLink) {
-                loadSection(activeLink.dataset.section);
-            } else {
-                loadSection('portfolio-overview');
-            }
-        }
-
-        // Load section
-        function loadSection(section) {
-            const data = moduleData[section];
-            if (!data) return;
-            
-            // Close any open sheet
-            closeSheet();
-            
-            // Update tools section
-            updateToolsSection(data);
-        }
-
-        // Update tools section
-        function updateToolsSection(data) {
-            // Clear existing tools
+            // Clear tools grid
             toolsGrid.innerHTML = '';
-            
-            // Add tools to grid
-            data.tools.forEach(tool => {
+
+            // Set section title
+            const toolsTitle = document.querySelector('.tools-title');
+            toolsTitle.innerHTML = `<i class="fas fa-tools"></i> ${sectionData.title}`;
+
+            // Create tool cards
+            sectionData.tools.forEach(tool => {
                 const toolCard = document.createElement('div');
                 toolCard.className = 'tool-card';
                 toolCard.innerHTML = `
@@ -1819,148 +2225,102 @@
                         </div>
                         <div class="tool-info">
                             <h3>${tool.name}</h3>
-                            <p>${data.title}</p>
+                            <p><span class="tool-badge">${tool.badge}</span></p>
                         </div>
                     </div>
                     <div class="tool-description">${tool.description}</div>
-                    <span class="tool-badge">${tool.badge}</span>
                 `;
-                
-                // Add click event to open sheet
+
+                // Add click event to load sheet
                 toolCard.addEventListener('click', () => {
-                    openSheet(tool.sheetUrl, tool.name, data.title);
+                    openSheet(tool.sheetUrl, tool.name, sectionData.title);
                 });
-                
+
                 toolsGrid.appendChild(toolCard);
             });
         }
 
-        // Open sheet
         function openSheet(sheetUrl, sheetName, sectionTitle) {
-            currentSheetName = sheetName || 'Sheet';
-            currentSheetId = extractSheetId(sheetUrl);
+            // Switch to sheets view
+            toolsSection.style.display = 'none';
+            sheetsContainer.style.display = 'flex';
             
-            if (!currentSheetId) {
-                showPlaceholderContent("Invalid Google Sheet URL");
+            // Update title
+            currentSheetTitle.textContent = `${sectionTitle} - ${sheetName}`;
+            
+            // Load the sheet
+            loadSheet(sheetUrl, sheetName);
+        }
+
+        function loadSheet(sheetUrl, sheetName) {
+            currentSheetName = sheetName;
+            
+            // Extract sheet ID from URL
+            const sheetId = extractSheetId(sheetUrl);
+            if (!sheetId) {
+                showSheetError('Invalid sheet URL');
                 return;
             }
             
-            // Update sheet title
-            currentSheetTitle.textContent = `${sectionTitle} - ${currentSheetName}`;
+            currentSheetId = sheetId;
             
-            // Show sheets container and hide tools
-            sheetsContainer.style.display = 'flex';
-            toolsSection.style.display = 'none';
-            
-            // Adjust sheets container position based on sidebar
-            if (window.innerWidth > 992) {
-                if (sidebar.classList.contains('active')) {
-                    sheetsContainer.style.left = '260px';
-                } else {
-                    sheetsContainer.style.left = '280px';
-                }
-            } else {
-                sheetsContainer.style.left = '0';
-            }
-            
-            // Load sheet
-            loadCurrentSheet();
-        }
-
-        // Load current sheet
-        function loadCurrentSheet() {
-            if (!currentSheetId) return;
-            
-            // Show sheet loader
-            sheetLoaderText.textContent = `Loading ${currentSheetName}...`;
+            // Show loader
             sheetLoader.style.display = 'flex';
-            currentSheetInfo.style.display = 'none';
+            sheetLoaderText.textContent = `Loading ${sheetName}...`;
             
-            // Load sheet with current view mode
-            const url = getSheetUrl(currentSheetId, currentViewMode);
-            iframe.src = '';
+            // Build URL based on view mode
+            const mode = currentViewMode === 'edit' ? 'edit' : 'preview';
+            const sheetUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/${mode}?usp=sharing&rm=minimal`;
             
-            setTimeout(() => {
-                iframe.src = url;
-            }, 100);
+            // Load iframe
+            iframe.src = sheetUrl;
         }
 
-        // Extract sheet ID from URL
         function extractSheetId(url) {
             try {
                 const match = url.match(/\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/);
                 return match ? match[1] : null;
             } catch (e) {
-                console.error("Error extracting sheet ID:", e);
+                console.error('Error extracting sheet ID:', e);
                 return null;
             }
         }
 
-        // Show placeholder content
-        function showPlaceholderContent(message) {
-            sheetLoader.style.display = 'none';
-            currentSheetInfo.style.display = 'none';
+        function setViewMode(mode) {
+            currentViewMode = mode;
             
-            iframe.srcdoc = `
-                <!DOCTYPE html>
-                <html>
-                <head>
-                    <style>
-                        body {
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                            height: 100%;
-                            font-family: 'Inter', sans-serif;
-                            color: #666;
-                            background: #f9f9f9;
-                        }
-                        .content {
-                            text-align: center;
-                            padding: 30px;
-                            max-width: 500px;
-                        }
-                        i {
-                            font-size: 3rem;
-                            color: #ddd;
-                            margin-bottom: 20px;
-                        }
-                        h2 {
-                            color: #444;
-                            margin: 0 0 15px 0;
-                            font-size: 24px;
-                            font-weight: 600;
-                        }
-                        p {
-                            margin: 5px 0;
-                            line-height: 1.5;
-                            font-size: 14px;
-                        }
-                    </style>
-                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-                </head>
-                <body>
-                    <div class="content">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        <h2>Content Not Available</h2>
-                        <p>${message}</p>
-                    </div>
-                </body>
-                </html>
-            `;
+            // Update button states
+            editModeBtn.classList.toggle('active', mode === 'edit');
+            viewModeBtn.classList.toggle('active', mode === 'view');
+            
+            // Reload sheet if one is currently loaded
+            if (currentSheetId) {
+                loadSheet(currentSheetId, currentSheetName);
+            }
         }
 
-        // Show/hide loading spinner
-        function showLoading() {
-            loadingSpinner.style.display = 'flex';
+        function showSheetError(message) {
+            sheetLoader.style.display = 'flex';
+            sheetLoaderText.textContent = message;
+            
+            // Hide loader after 3 seconds
+            setTimeout(() => {
+                sheetLoader.style.display = 'none';
+            }, 3000);
         }
 
-        function hideLoading() {
-            loadingSpinner.style.display = 'none';
+        // Check initial connection status
+        if (navigator.onLine) {
+            connectionStatus.className = 'connection-status online';
+            connectionStatus.innerHTML = '<i class="fas fa-circle"></i> <span>Online</span>';
+        } else {
+            connectionStatus.className = 'connection-status offline';
+            connectionStatus.innerHTML = '<i class="fas fa-circle"></i> <span>Offline</span>';
+            connectionStatus.style.display = 'flex';
         }
 
-        // Initialize the app when DOM is loaded
-        document.addEventListener('DOMContentLoaded', initApp);
+        // Show loading spinner initially
+        loadingSpinner.style.display = 'flex';
     </script>
 </body>
 </html>
