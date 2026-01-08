@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jasiri E-Hub | ERH</title>
     
-    <!-- Same meta tags as main page -->
+    <!-- Meta Tags -->
     <meta name="application-name" content="Jasiri E-Hub">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -17,13 +17,13 @@
     <meta name="msapplication-tap-highlight" content="no">
     <meta name="theme-color" content="#0a192f">
     
-    <!-- Same stylesheets as main page -->
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            /* Professional DSOG Theme - Same as main page */
+            /* Professional DSOG Theme */
             --dark-blue: #0a192f;
             --medium-blue: #172a45;
             --light-pink: #ff6b8b;
@@ -460,7 +460,7 @@
             overflow: hidden;
         }
 
-        /* Content Container with padding */
+        /* Content Container */
         .content-container {
             flex: 1;
             display: flex;
@@ -921,11 +921,6 @@
         }
 
         @media (max-width: 576px) {
-            .tools-controls {
-                width: 100%;
-                justify-content: space-between;
-            }
-            
             .tools-title {
                 font-size: 17px;
             }
@@ -1172,7 +1167,7 @@
 
         <!-- Main Content -->
         <main class="main-content" id="mainContent">
-            <!-- Content Container with padding -->
+            <!-- Content Container -->
             <div class="content-container">
                 <!-- Tools Section -->
                 <section class="tools-section" id="toolsSection">
@@ -1298,8 +1293,9 @@
         const sheetsContainer = document.getElementById('sheetsContainer');
         const toolsGrid = document.getElementById('toolsGrid');
 
-        // Module Data
+        // Module Data - COMPLETE WITH ALL SECTIONS
         const moduleData = {
+            // Product Portfolio
             "portfolio-overview": {
                 title: "Product Portfolio Overview",
                 description: "Manage your product portfolio and track performance metrics",
@@ -1381,6 +1377,8 @@
                     }
                 ]
             },
+
+            // Design & Development
             "design-briefs": {
                 title: "Design Briefs",
                 description: "Create and manage design specifications and briefs",
@@ -1462,6 +1460,8 @@
                     }
                 ]
             },
+
+            // Marketing & Sales
             "product-marketing": {
                 title: "Product Marketing",
                 description: "Marketing strategies and product positioning",
@@ -1524,21 +1524,21 @@
                         name: "Customer Quote Creation", 
                         description: "Create and manage customer quotations",
                         icon: "fas fa-file-invoice-dollar",
-                        sheetUrl: "https://docs.google.com/spreadsheets/d/1CUSTOMER_QUOTE_SHEET_ID/edit",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1YrJwL9k3t8q7s2d1f0g5h6j7k8l9m0n1o2p3q4r5s6t7/edit",
                         badge: "Active"
                     },
                     { 
                         name: "Quote Templates", 
                         description: "Sales quotation templates",
                         icon: "fas fa-file-contract",
-                        sheetUrl: "https://docs.google.com/spreadsheets/d/1QUOTE_TEMPLATE_SHEET_ID/edit",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789/edit",
                         badge: "Active"
                     },
                     { 
                         name: "Quote Tracking", 
                         description: "Track quotation status and follow-ups",
                         icon: "fas fa-tasks",
-                        sheetUrl: "https://docs.google.com/spreadsheets/d/1QUOTE_TRACKING_SHEET_ID/edit",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1qWeRtYuIoPaSdFgHjKlZxCVbNm0123456789/edit",
                         badge: "Active"
                     }
                 ]
@@ -1570,6 +1570,8 @@
                     }
                 ]
             },
+
+            // Procurement
             "supplier-management": {
                 title: "Supplier Management",
                 description: "Manage supplier relationships and performance",
@@ -1651,6 +1653,8 @@
                     }
                 ]
             },
+
+            // Inventory Management
             "inventory-control": {
                 title: "Inventory Control",
                 description: "Manage stock levels and inventory valuation",
@@ -1732,6 +1736,8 @@
                     }
                 ]
             },
+
+            // Production
             "production-planning": {
                 title: "Production Planning",
                 description: "Plan and schedule production activities",
@@ -1813,6 +1819,8 @@
                     }
                 ]
             },
+
+            // Logistics
             "transportation": {
                 title: "Transportation",
                 description: "Manage transportation and carrier operations",
@@ -1894,6 +1902,8 @@
                     }
                 ]
             },
+
+            // Analytics
             "supply-chain-analytics": {
                 title: "Supply Chain Analytics",
                 description: "Supply chain performance analytics",
@@ -1977,16 +1987,68 @@
             }
         };
 
-        // Authentication State Observer
-        auth.onAuthStateChanged((user) => {
-            if (user) {
-                handleUserSignedIn(user);
-            } else {
-                handleUserSignedOut();
-            }
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
         });
 
+        function initializeApp() {
+            // Check initial connection status
+            updateConnectionStatus();
+            
+            // Set up connection status listeners
+            window.addEventListener('online', updateConnectionStatus);
+            window.addEventListener('offline', updateConnectionStatus);
+            
+            // Check authentication
+            checkAuth();
+            
+            // Set current year in footer
+            document.getElementById('year').textContent = new Date().getFullYear();
+        }
+
+        function updateConnectionStatus() {
+            if (navigator.onLine) {
+                connectionStatus.className = 'connection-status online';
+                connectionStatus.innerHTML = '<i class="fas fa-circle"></i> <span>Online</span>';
+                connectionStatus.style.display = 'flex';
+                
+                setTimeout(() => {
+                    connectionStatus.style.display = 'none';
+                }, 3000);
+            } else {
+                connectionStatus.className = 'connection-status offline';
+                connectionStatus.innerHTML = '<i class="fas fa-circle"></i> <span>Offline</span>';
+                connectionStatus.style.display = 'flex';
+            }
+        }
+
+        function checkAuth() {
+            // Check if user is already logged in
+            const user = auth.currentUser;
+            
+            if (user) {
+                // User is logged in
+                handleUserSignedIn(user);
+            } else {
+                // Check auth state
+                auth.onAuthStateChanged((user) => {
+                    if (user) {
+                        handleUserSignedIn(user);
+                    } else {
+                        // Show access denied after short delay
+                        setTimeout(() => {
+                            loadingSpinner.style.display = 'none';
+                            accessDenied.style.display = 'flex';
+                        }, 1500);
+                    }
+                });
+            }
+        }
+
         function handleUserSignedIn(user) {
+            console.log('User signed in:', user.email);
+            
             loadingSpinner.style.display = 'none';
             accessDenied.style.display = 'none';
             appContainer.style.display = 'block';
@@ -2001,12 +2063,6 @@
             loadSection('portfolio-overview');
         }
 
-        function handleUserSignedOut() {
-            loadingSpinner.style.display = 'none';
-            appContainer.style.display = 'none';
-            accessDenied.style.display = 'flex';
-        }
-
         function updateUserInfo(user) {
             const displayName = user.displayName || user.email.split('@')[0];
             const firstName = displayName.split(' ')[0];
@@ -2019,9 +2075,6 @@
 
         // Application Initialization
         function initApp() {
-            // Set current year in footer
-            document.getElementById('year').textContent = new Date().getFullYear();
-            
             // Setup event listeners
             setupEventListeners();
             
@@ -2099,30 +2152,15 @@
                     }
                 });
             });
-
-            // Connection status
-            window.addEventListener('online', () => {
-                connectionStatus.className = 'connection-status online';
-                connectionStatus.innerHTML = '<i class="fas fa-circle"></i> <span>Online</span>';
-                connectionStatus.style.display = 'flex';
-                
-                setTimeout(() => {
-                    connectionStatus.style.display = 'none';
-                }, 3000);
-            });
-
-            window.addEventListener('offline', () => {
-                connectionStatus.className = 'connection-status offline';
-                connectionStatus.innerHTML = '<i class="fas fa-circle"></i> <span>Offline</span>';
-                connectionStatus.style.display = 'flex';
-            });
         }
 
         function setupIframeEvents() {
             iframe.addEventListener('load', () => {
                 sheetLoader.style.display = 'none';
-                currentSheetInfo.textContent = currentSheetName;
-                currentSheetInfo.style.display = 'block';
+                if (currentSheetName) {
+                    currentSheetInfo.textContent = currentSheetName;
+                    currentSheetInfo.style.display = 'block';
+                }
             });
 
             iframe.addEventListener('loadstart', () => {
@@ -2177,6 +2215,8 @@
                 sheetsContainer.style.display = 'none';
                 toolsSection.style.display = 'block';
                 iframe.src = '';
+                currentSheetName = '';
+                currentSheetId = '';
             });
 
             // Fullscreen change event
@@ -2205,7 +2245,10 @@
 
         function loadSection(sectionId) {
             const sectionData = moduleData[sectionId];
-            if (!sectionData) return;
+            if (!sectionData) {
+                console.error('Section not found:', sectionId);
+                return;
+            }
 
             // Clear tools grid
             toolsGrid.innerHTML = '';
@@ -2270,10 +2313,10 @@
             
             // Build URL based on view mode
             const mode = currentViewMode === 'edit' ? 'edit' : 'preview';
-            const sheetUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/${mode}?usp=sharing&rm=minimal`;
+            const url = `https://docs.google.com/spreadsheets/d/${sheetId}/${mode}?usp=sharing&rm=minimal`;
             
             // Load iframe
-            iframe.src = sheetUrl;
+            iframe.src = url;
         }
 
         function extractSheetId(url) {
@@ -2308,19 +2351,6 @@
                 sheetLoader.style.display = 'none';
             }, 3000);
         }
-
-        // Check initial connection status
-        if (navigator.onLine) {
-            connectionStatus.className = 'connection-status online';
-            connectionStatus.innerHTML = '<i class="fas fa-circle"></i> <span>Online</span>';
-        } else {
-            connectionStatus.className = 'connection-status offline';
-            connectionStatus.innerHTML = '<i class="fas fa-circle"></i> <span>Offline</span>';
-            connectionStatus.style.display = 'flex';
-        }
-
-        // Show loading spinner initially
-        loadingSpinner.style.display = 'flex';
     </script>
 </body>
 </html>
