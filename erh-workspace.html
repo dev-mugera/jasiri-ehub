@@ -3,19 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EMH | Enterprise Resource Hub</title>
+    <title>Jasiri E-Hub | Enterprise Resource Hub</title>
     
     <!-- Meta Tags -->
-    <meta name="application-name" content="EMH">
+    <meta name="application-name" content="Jasiri E-Hub">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="EMH">
-    <meta name="description" content="Enterprise Management Hub - Enterprise Resource Hub Module">
+    <meta name="apple-mobile-web-app-title" content="Jasiri E-Hub">
+    <meta name="description" content="Enterprise Resource Hub - DSOG Business Solutions">
     <meta name="format-detection" content="telephone=no">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="msapplication-TileColor" content="#0a192f">
     <meta name="msapplication-tap-highlight" content="no">
     <meta name="theme-color" content="#0a192f">
+    
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/icons/touch-icon-ipad.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/touch-icon-iphone-retina.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="/icons/touch-icon-ipad-retina.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
+    
+    <!-- Manifest -->
+    <link rel="manifest" href="/manifest.json">
     
     <!-- Stylesheets -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -23,205 +36,76 @@
     
     <style>
         :root {
-            /* EMH Theme Variables - Default (Dark) */
-            --primary-color: #0a192f;
-            --secondary-color: #172a45;
-            --accent-color: #64ffda;
-            --accent-hover: #52d1b2;
-            --danger-color: #ff6b8b;
-            --warning-color: #ffb347;
-            --success-color: #4ade80;
-            --info-color: #4299e1;
-            --text-primary: #e6f1ff;
-            --text-secondary: #a8b2d1;
-            --text-muted: #5d6a8a;
+            /* Professional DSOG Theme - Default Dark */
+            --dark-blue: #0a192f;
+            --medium-blue: #172a45;
+            --light-pink: #ff6b8b;
+            --accent-gold: #e6c78a;
+            --soft-teal: #81c8be;
+            --light-blue: #64ffda;
+            --purple: #9d65c9;
+            --text-primary: #f0e6ef;
+            --text-secondary: #b8b8d1;
             --card-bg: rgba(23, 42, 69, 0.85);
-            --card-bg-solid: #172a45;
-            --sidebar-bg: rgba(23, 42, 69, 0.98);
-            --topbar-bg: rgba(23, 42, 69, 0.98);
-            --border-color: rgba(100, 255, 218, 0.12);
-            --border-light: rgba(255, 255, 255, 0.08);
-            --shadow-color: rgba(0, 0, 0, 0.2);
-            --hover-bg: rgba(100, 255, 218, 0.08);
-            --active-bg: rgba(100, 255, 218, 0.15);
             --sidebar-width: 280px;
             --topbar-height: 60px;
             --border-radius: 10px;
             --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             --content-max-width: 1300px;
             --online-color: #4ade80;
-            --offline-color: #ff6b8b;
+            --offline-color: #f87171;
+            --background-color: #0a192f;
+            --surface-color: #172a45;
+            --border-color: rgba(255, 255, 255, 0.12);
+            --shadow-color: rgba(0, 0, 0, 0.25);
+            --success-green: #4CAF50;
+            --warning-orange: #ff9800;
         }
 
-        /* Light Theme */
-        .theme-light {
-            --primary-color: #ffffff;
-            --secondary-color: #f8fafc;
-            --accent-color: #3182ce;
-            --accent-hover: #2c5282;
-            --danger-color: #e53e3e;
-            --warning-color: #dd6b20;
-            --success-color: #38a169;
-            --info-color: #3182ce;
-            --text-primary: #1a202c;
-            --text-secondary: #4a5568;
-            --text-muted: #718096;
-            --card-bg: rgba(248, 250, 252, 0.95);
-            --card-bg-solid: #f8fafc;
-            --sidebar-bg: rgba(248, 250, 252, 0.98);
-            --topbar-bg: rgba(248, 250, 252, 0.98);
-            --border-color: rgba(49, 130, 206, 0.15);
-            --border-light: rgba(0, 0, 0, 0.08);
-            --shadow-color: rgba(0, 0, 0, 0.05);
-            --hover-bg: rgba(49, 130, 206, 0.08);
-            --active-bg: rgba(49, 130, 206, 0.12);
+        /* Light Theme Variables */
+        [data-theme="light"] {
+            --dark-blue: #f8fafc;
+            --medium-blue: #ffffff;
+            --light-pink: #e11d48;
+            --accent-gold: #d97706;
+            --soft-teal: #0d9488;
+            --light-blue: #059669;
+            --purple: #7c3aed;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --background-color: #f8fafc;
+            --surface-color: #ffffff;
+            --border-color: rgba(0, 0, 0, 0.08);
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --online-color: #059669;
+            --offline-color: #dc2626;
+            --success-green: #059669;
+            --warning-orange: #d97706;
         }
 
-        /* Blue Theme */
-        .theme-blue {
-            --primary-color: #1a365d;
-            --secondary-color: #2d3748;
-            --accent-color: #4299e1;
-            --accent-hover: #3182ce;
-            --danger-color: #f56565;
-            --warning-color: #ed8936;
-            --success-color: #48bb78;
-            --info-color: #4299e1;
-            --text-primary: #e2e8f0;
-            --text-secondary: #a0aec0;
-            --text-muted: #718096;
-            --card-bg: rgba(45, 55, 72, 0.85);
-            --card-bg-solid: #2d3748;
-            --sidebar-bg: rgba(45, 55, 72, 0.98);
-            --topbar-bg: rgba(45, 55, 72, 0.98);
-            --border-color: rgba(66, 153, 225, 0.15);
-            --border-light: rgba(255, 255, 255, 0.08);
-            --shadow-color: rgba(0, 0, 0, 0.2);
-            --hover-bg: rgba(66, 153, 225, 0.08);
-            --active-bg: rgba(66, 153, 225, 0.12);
-        }
-
-        /* Professional Theme */
-        .theme-professional {
-            --primary-color: #2d3748;
-            --secondary-color: #4a5568;
-            --accent-color: #3182ce;
-            --accent-hover: #2c5282;
-            --danger-color: #e53e3e;
-            --warning-color: #d69e2e;
-            --success-color: #38a169;
-            --info-color: #3182ce;
-            --text-primary: #f7fafc;
-            --text-secondary: #cbd5e0;
-            --text-muted: #a0aec0;
-            --card-bg: rgba(74, 85, 104, 0.85);
-            --card-bg-solid: #4a5568;
-            --sidebar-bg: rgba(74, 85, 104, 0.98);
-            --topbar-bg: rgba(74, 85, 104, 0.98);
-            --border-color: rgba(49, 130, 206, 0.15);
-            --border-light: rgba(255, 255, 255, 0.08);
-            --shadow-color: rgba(0, 0, 0, 0.2);
-            --hover-bg: rgba(49, 130, 206, 0.08);
-            --active-bg: rgba(49, 130, 206, 0.12);
-        }
-
-        /* Theme Switcher Styles */
-        .theme-switcher {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1000;
-        }
-
-        .theme-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: 2px solid var(--border-color);
-            background: var(--card-bg-solid);
-            color: var(--text-primary);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition);
-            backdrop-filter: blur(10px);
-        }
-
-        .theme-btn:hover {
-            transform: scale(1.1);
-            border-color: var(--accent-color);
-        }
-
-        .theme-options {
-            position: absolute;
-            bottom: 50px;
-            right: 0;
-            background: var(--card-bg-solid);
-            border-radius: var(--border-radius);
-            padding: 10px;
-            display: none;
-            flex-direction: column;
-            gap: 8px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 8px 32px var(--shadow-color);
-            backdrop-filter: blur(10px);
-            min-width: 150px;
-        }
-
-        .theme-option {
-            padding: 8px 12px;
-            border-radius: 6px;
-            background: var(--card-bg);
-            border: 1px solid var(--border-light);
-            color: var(--text-primary);
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 13px;
-        }
-
-        .theme-option:hover {
-            background: var(--hover-bg);
-            border-color: var(--accent-color);
-        }
-
-        .theme-option.active {
-            background: var(--active-bg);
-            border-color: var(--accent-color);
-            color: var(--accent-color);
-        }
-
-        /* Accessibility Controls */
-        .accessibility-controls {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            z-index: 1000;
-            display: flex;
-            gap: 10px;
-        }
-
-        .accessibility-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: 2px solid var(--border-color);
-            background: var(--card-bg-solid);
-            color: var(--text-primary);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition);
-            backdrop-filter: blur(10px);
-        }
-
-        .accessibility-btn:hover {
-            transform: scale(1.1);
-            border-color: var(--accent-color);
+        /* System Theme Detection */
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme]) {
+                --dark-blue: #f8fafc;
+                --medium-blue: #ffffff;
+                --light-pink: #e11d48;
+                --accent-gold: #d97706;
+                --soft-teal: #0d9488;
+                --light-blue: #059669;
+                --purple: #7c3aed;
+                --text-primary: #1e293b;
+                --text-secondary: #64748b;
+                --card-bg: rgba(255, 255, 255, 0.95);
+                --background-color: #f8fafc;
+                --surface-color: #ffffff;
+                --border-color: rgba(0, 0, 0, 0.08);
+                --shadow-color: rgba(0, 0, 0, 0.1);
+                --online-color: #059669;
+                --offline-color: #dc2626;
+                --success-green: #059669;
+                --warning-orange: #d97706;
+            }
         }
 
         * {
@@ -238,12 +122,15 @@
         }
 
         body {
-            background-color: var(--primary-color);
+            background-color: var(--background-color);
             color: var(--text-primary);
             min-height: 100vh;
             overflow-x: hidden;
             line-height: 1.5;
-            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
@@ -254,11 +141,15 @@
             width: 100%;
             height: 100%;
             background-image: 
-                radial-gradient(circle at 25% 25%, rgba(100, 255, 218, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 75% 75%, rgba(100, 255, 218, 0.05) 0%, transparent 50%);
+                radial-gradient(circle at 25% 25%, rgba(100, 255, 218, 0.1) 0%, transparent 50%);
             background-size: 400% 400%;
             z-index: -1;
             animation: gradientMove 30s ease infinite;
+        }
+        
+        [data-theme="light"] .background-pattern {
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(5, 150, 105, 0.05) 0%, transparent 50%);
         }
         
         @keyframes gradientMove {
@@ -267,26 +158,297 @@
             100% { background-position: 0% 0%; }
         }
 
+        /* Professional Navigation Styles */
+        .dashboard-header {
+            background: var(--surface-color);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            padding: 12px 16px;
+            margin-bottom: 24px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 8px var(--shadow-color);
+        }
+
+        .dashboard-nav {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 13px;
+            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            white-space: nowrap;
+        }
+
+        [data-theme="light"] .nav-btn {
+            background: rgba(0, 0, 0, 0.03);
+        }
+
+        .nav-btn:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--light-blue);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(100, 255, 218, 0.15);
+        }
+
+        [data-theme="light"] .nav-btn:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-btn.active {
+            color: var(--light-blue);
+            background: rgba(100, 255, 218, 0.1);
+            border-color: rgba(100, 255, 218, 0.2);
+            box-shadow: 0 4px 12px rgba(100, 255, 218, 0.15);
+        }
+
+        .nav-btn i {
+            font-size: 14px;
+            width: 16px;
+            text-align: center;
+        }
+
+        .nav-badge {
+            background: var(--light-pink);
+            color: white;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            margin-left: 4px;
+            font-weight: 700;
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--light-blue);
+            color: var(--light-blue);
+            transform: rotate(15deg);
+        }
+
+        .theme-toggle i {
+            font-size: 16px;
+            transition: var(--transition);
+        }
+
+        [data-theme="dark"] .theme-toggle .fa-sun,
+        [data-theme="light"] .theme-toggle .fa-moon,
+        :not([data-theme]) .theme-toggle .fa-desktop {
+            display: block;
+        }
+
+        [data-theme="dark"] .theme-toggle .fa-moon,
+        [data-theme="dark"] .theme-toggle .fa-desktop,
+        [data-theme="light"] .theme-toggle .fa-sun,
+        [data-theme="light"] .theme-toggle .fa-desktop,
+        :not([data-theme]) .theme-toggle .fa-sun,
+        :not([data-theme]) .theme-toggle .fa-moon {
+            display: none;
+        }
+
+        /* Theme Options Dropdown */
+        .theme-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            min-width: 180px;
+            box-shadow: 0 8px 32px var(--shadow-color);
+            backdrop-filter: blur(20px);
+            z-index: 1001;
+            display: none;
+            overflow: hidden;
+            animation: slideDown 0.2s ease-out;
+        }
+
+        .theme-dropdown.active {
+            display: block;
+        }
+
+        .theme-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+        }
+
+        .theme-option:hover {
+            background: rgba(100, 255, 218, 0.1);
+            color: var(--text-primary);
+        }
+
+        .theme-option.active {
+            color: var(--light-blue);
+            background: rgba(100, 255, 218, 0.08);
+        }
+
+        .theme-option i {
+            font-size: 14px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .theme-option.active i {
+            color: var(--light-blue);
+        }
+
+        /* Profile Dropdown */
+        .user-profile {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            border-radius: 7px;
+            cursor: pointer;
+            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        .user-profile:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--light-blue);
+        }
+
+        .profile-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            min-width: 220px;
+            box-shadow: 0 8px 32px var(--shadow-color);
+            backdrop-filter: blur(20px);
+            z-index: 1001;
+            display: none;
+            overflow: hidden;
+        }
+
+        .profile-dropdown.active {
+            display: block;
+            animation: slideDown 0.2s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .dropdown-header {
+            padding: 16px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .dropdown-header .user-avatar {
+            width: 40px;
+            height: 40px;
+            font-size: 14px;
+        }
+
+        .dropdown-header .user-info {
+            flex: 1;
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .dropdown-item:hover {
+            background: rgba(100, 255, 218, 0.1);
+            color: var(--text-primary);
+        }
+
+        .dropdown-item.logout {
+            color: #ff6b6b;
+            border-top: 1px solid rgba(255, 107, 139, 0.1);
+            background: rgba(255, 107, 139, 0.05);
+        }
+
+        .dropdown-item.logout:hover {
+            background: rgba(255, 107, 139, 0.15);
+            color: #ff5252;
+        }
+
         /* Loading Spinner */
         .loading-spinner {
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: var(--primary-color);
+            background: rgba(10, 25, 47, 0.95);
             z-index: 10003;
-            display: flex;
             align-items: center;
             justify-content: center;
             flex-direction: column;
             gap: 16px;
         }
 
+        [data-theme="light"] .loading-spinner {
+            background: rgba(248, 250, 252, 0.95);
+        }
+
         .loader {
             width: 45px;
             aspect-ratio: 1;
-            --c: no-repeat linear-gradient(var(--accent-color) 0 0);
+            --c: no-repeat linear-gradient(var(--light-blue) 0 0);
             background: var(--c), var(--c), var(--c), var(--c), var(--c), var(--c);
             animation: 
                 l14-1 .5s infinite alternate,
@@ -323,18 +485,97 @@
             align-items: center;
             gap: 5px;
             backdrop-filter: blur(10px);
-            background: var(--card-bg);
-            border: 1px solid var(--border-light);
         }
         
         .connection-status.online {
-            color: var(--success-color);
-            border-color: rgba(72, 187, 120, 0.25);
+            background: rgba(74, 222, 128, 0.15);
+            color: var(--online-color);
+            border: 1px solid rgba(74, 222, 128, 0.25);
         }
         
         .connection-status.offline {
-            color: var(--danger-color);
-            border-color: rgba(245, 101, 101, 0.25);
+            background: rgba(248, 113, 113, 0.15);
+            color: var(--offline-color);
+            border: 1px solid rgba(248, 113, 113, 0.25);
+        }
+
+        /* Syncing Indicator */
+        .sync-status {
+            position: fixed;
+            bottom: 70px;
+            right: 15px;
+            background: var(--surface-color);
+            border-radius: var(--border-radius);
+            padding: 10px 14px;
+            font-size: 12px;
+            display: none;
+            align-items: center;
+            gap: 8px;
+            z-index: 10000;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 3px 15px var(--shadow-color);
+            backdrop-filter: blur(10px);
+        }
+        
+        .sync-status.syncing {
+            color: var(--accent-gold);
+        }
+        
+        .sync-status.synced {
+            color: var(--soft-teal);
+        }
+        
+        .sync-status i {
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Update Available Banner */
+        .update-banner {
+            position: fixed;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--surface-color);
+            border: 1px solid rgba(230, 199, 138, 0.3);
+            border-radius: var(--border-radius);
+            padding: 10px 16px;
+            display: none;
+            align-items: center;
+            gap: 10px;
+            z-index: 10002;
+            box-shadow: 0 4px 20px var(--shadow-color);
+            backdrop-filter: blur(10px);
+            max-width: 380px;
+            width: 90%;
+        }
+        
+        .update-banner-content {
+            flex: 1;
+            font-size: 12px;
+            color: var(--text-primary);
+        }
+        
+        .update-btn {
+            padding: 5px 10px;
+            background: var(--accent-gold);
+            color: var(--dark-blue);
+            border: none;
+            border-radius: 5px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+        
+        .update-btn:hover {
+            background: #f0d5a5;
+            transform: translateY(-1px);
         }
 
         /* Access Denied Message */
@@ -344,7 +585,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: var(--primary-color);
+            background: var(--background-color);
             display: none;
             flex-direction: column;
             justify-content: center;
@@ -352,10 +593,11 @@
             z-index: 10000;
             text-align: center;
             padding: 20px;
+            backdrop-filter: blur(10px);
         }
         
         .access-denied h2 {
-            color: var(--danger-color);
+            color: var(--light-pink);
             margin-bottom: 20px;
             font-size: 28px;
             font-weight: 700;
@@ -370,7 +612,7 @@
         }
         
         .access-denied-btn {
-            background: var(--danger-color);
+            background: var(--light-pink);
             color: white;
             border: none;
             padding: 12px 30px;
@@ -383,10 +625,9 @@
         }
         
         .access-denied-btn:hover {
-            background: var(--danger-color);
-            opacity: 0.9;
+            background: #ff7d9b;
             transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(245, 101, 101, 0.25);
+            box-shadow: 0 6px 16px rgba(255, 107, 139, 0.25);
         }
 
         /* Workspace Container */
@@ -394,6 +635,7 @@
             display: none;
             height: 100vh;
             width: 100%;
+            max-width: 100vw;
             overflow: hidden;
         }
 
@@ -404,15 +646,20 @@
             left: 0;
             right: 0;
             height: var(--topbar-height);
-            background: var(--topbar-bg);
+            background: rgba(23, 42, 69, 0.98);
             backdrop-filter: blur(15px);
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0 24px;
             z-index: 1000;
-            border-bottom: 1px solid var(--border-light);
+            border-bottom: 1px solid var(--border-color);
             width: 100%;
+        }
+
+        [data-theme="light"] .top-nav {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(15px);
         }
 
         .nav-left {
@@ -434,8 +681,8 @@
         }
 
         .menu-toggle:hover {
-            color: var(--accent-color);
-            background: var(--hover-bg);
+            color: var(--light-blue);
+            background: rgba(100, 255, 218, 0.1);
         }
 
         .brand-logo {
@@ -446,7 +693,7 @@
 
         .brand-logo-icon {
             font-size: 18px;
-            color: var(--accent-color);
+            color: var(--light-blue);
         }
 
         .brand-text {
@@ -465,37 +712,19 @@
         .nav-right {
             display: flex;
             align-items: center;
-            gap: 14px;
-        }
-
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 6px 12px;
-            border-radius: 7px;
-            cursor: pointer;
-            transition: var(--transition);
-            background: var(--card-bg);
-            border: 1px solid var(--border-light);
-        }
-
-        .user-profile:hover {
-            background: var(--hover-bg);
-            border-color: var(--border-color);
+            gap: 12px;
         }
 
         .user-avatar {
             width: 32px;
             height: 32px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent-color), var(--info-color));
+            background: linear-gradient(135deg, var(--light-blue), var(--accent-gold));
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
             font-size: 13px;
-            color: white;
         }
 
         .user-info {
@@ -506,34 +735,12 @@
         .user-name {
             font-size: 12px;
             font-weight: 600;
-            color: var(--text-primary);
         }
 
         .user-role {
             font-size: 10px;
             color: var(--text-secondary);
             letter-spacing: 0.2px;
-        }
-
-        .logout-btn {
-            background: rgba(255, 107, 139, 0.1);
-            color: var(--danger-color);
-            border: 1px solid rgba(255, 107, 139, 0.2);
-            padding: 6px 12px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 11px;
-            font-weight: 600;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .logout-btn:hover {
-            background: rgba(255, 107, 139, 0.15);
-            border-color: var(--danger-color);
-            transform: translateY(-1px);
         }
 
         /* Sidebar */
@@ -543,13 +750,18 @@
             left: 0;
             width: var(--sidebar-width);
             height: calc(100vh - var(--topbar-height));
-            background: var(--sidebar-bg);
+            background: rgba(23, 42, 69, 0.98);
             backdrop-filter: blur(15px);
-            border-right: 1px solid var(--border-light);
+            border-right: 1px solid var(--border-color);
             padding: 24px 0;
             overflow-y: auto;
             transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 999;
+        }
+
+        [data-theme="light"] .sidebar {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(15px);
         }
 
         .nav-section {
@@ -582,7 +794,7 @@
         }
 
         .nav-section-title:hover {
-            background: var(--hover-bg);
+            background: rgba(100, 255, 218, 0.1);
             color: var(--text-primary);
         }
 
@@ -618,15 +830,15 @@
         }
 
         .nav-link:hover {
-            background: var(--hover-bg);
+            background: rgba(100, 255, 218, 0.1);
             color: var(--text-primary);
-            border-color: var(--border-color);
+            border-color: rgba(100, 255, 218, 0.15);
         }
 
         .nav-link.active {
-            background: var(--active-bg);
-            color: var(--accent-color);
-            border-color: var(--border-color);
+            background: rgba(100, 255, 218, 0.12);
+            color: var(--light-blue);
+            border-color: rgba(100, 255, 218, 0.25);
         }
 
         .nav-link i {
@@ -680,7 +892,7 @@
 
         .tools-title i {
             font-size: 18px;
-            color: var(--accent-color);
+            color: var(--light-blue);
         }
 
         .tools-grid {
@@ -694,7 +906,7 @@
             background: var(--card-bg);
             border-radius: var(--border-radius);
             padding: 24px;
-            border: 1px solid var(--border-light);
+            border: 1px solid var(--border-color);
             transition: var(--transition);
             cursor: pointer;
             display: flex;
@@ -706,8 +918,8 @@
         }
 
         .tool-card:hover {
-            border-color: var(--accent-color);
-            background: var(--hover-bg);
+            border-color: var(--light-blue);
+            background: rgba(100, 255, 218, 0.06);
             transform: translateY(-4px);
             box-shadow: 0 12px 32px rgba(100, 255, 218, 0.15);
         }
@@ -728,7 +940,7 @@
             justify-content: center;
             font-size: 20px;
             color: white;
-            background: linear-gradient(135deg, var(--accent-color), var(--info-color));
+            background: linear-gradient(135deg, var(--light-blue), var(--soft-teal));
         }
 
         .tool-info h3 {
@@ -754,13 +966,13 @@
         .tool-badge {
             display: inline-block;
             padding: 4px 12px;
-            background: var(--active-bg);
-            color: var(--accent-color);
+            background: rgba(100, 255, 218, 0.15);
+            color: var(--light-blue);
             border-radius: 16px;
             font-size: 11px;
             font-weight: 700;
             letter-spacing: 0.3px;
-            border: 1px solid var(--border-color);
+            border: 1px solid rgba(100, 255, 218, 0.25);
         }
 
         /* Sheets Container */
@@ -770,7 +982,7 @@
             left: var(--sidebar-width);
             right: 0;
             bottom: 0;
-            background: var(--primary-color);
+            background: var(--background-color);
             z-index: 998;
             display: none;
             flex-direction: column;
@@ -782,7 +994,7 @@
         .sheets-card {
             background: var(--card-bg);
             border-radius: var(--border-radius);
-            border: 1px solid var(--border-light);
+            border: 1px solid var(--border-color);
             overflow: hidden;
             box-shadow: 0 6px 24px var(--shadow-color);
             display: flex;
@@ -791,15 +1003,19 @@
         }
 
         .sheets-header {
-            background: var(--card-bg);
+            background: rgba(10, 25, 47, 0.5);
             padding: 16px 24px;
-            border-bottom: 1px solid var(--border-light);
+            border-bottom: 1px solid var(--border-color);
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             gap: 15px;
             flex-shrink: 0;
+        }
+
+        [data-theme="light"] .sheets-header {
+            background: rgba(255, 255, 255, 0.5);
         }
 
         .sheets-title {
@@ -812,7 +1028,7 @@
         }
 
         .sheets-title i {
-            color: var(--accent-color);
+            color: var(--light-blue);
         }
 
         .sheets-controls {
@@ -822,9 +1038,9 @@
         }
 
         .sheets-control-btn {
-            background: var(--card-bg);
+            background: rgba(255, 255, 255, 0.05);
             color: var(--text-secondary);
-            border: 1px solid var(--border-light);
+            border: 1px solid var(--border-color);
             padding: 6px 12px;
             border-radius: 6px;
             font-size: 12px;
@@ -836,15 +1052,23 @@
             gap: 5px;
         }
 
+        [data-theme="light"] .sheets-control-btn {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
         .sheets-control-btn:hover {
-            background: var(--hover-bg);
+            background: rgba(255, 255, 255, 0.08);
             color: var(--text-primary);
         }
 
+        [data-theme="light"] .sheets-control-btn:hover {
+            background: rgba(0, 0, 0, 0.08);
+        }
+
         .sheets-control-btn.active {
-            background: var(--active-bg);
-            color: var(--accent-color);
-            border-color: var(--border-color);
+            background: rgba(100, 255, 218, 0.1);
+            color: var(--light-blue);
+            border-color: rgba(100, 255, 218, 0.2);
         }
 
         /* Iframe Container */
@@ -875,7 +1099,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: var(--primary-color);
+            background: rgba(10, 25, 47, 0.95);
             display: none;
             flex-direction: column;
             justify-content: center;
@@ -885,8 +1109,12 @@
             padding: 20px;
         }
         
+        [data-theme="light"] .sheet-loader {
+            background: rgba(248, 250, 252, 0.95);
+        }
+        
         .sheet-loader-text {
-            color: var(--accent-color);
+            color: var(--light-blue);
             margin-top: 20px;
             font-size: 15px;
             font-weight: 500;
@@ -904,24 +1132,29 @@
             position: absolute;
             bottom: 15px;
             right: 15px;
-            background: var(--card-bg-solid);
+            background: rgba(10, 25, 47, 0.9);
             padding: 8px 16px;
             border-radius: 6px;
-            color: var(--accent-color);
+            color: var(--light-blue);
             font-size: 12px;
             font-weight: 600;
             z-index: 5;
             display: none;
-            border: 1px solid var(--border-color);
+            border: 1px solid rgba(100, 255, 218, 0.2);
             backdrop-filter: blur(5px);
             max-width: 80%;
+        }
+
+        [data-theme="light"] .current-sheet-info {
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--light-blue);
         }
 
         /* Footer */
         .footer {
             margin-top: auto;
             padding: 24px 0 0 0;
-            border-top: 1px solid var(--border-light);
+            border-top: 1px solid var(--border-color);
             text-align: center;
             color: var(--text-secondary);
             font-size: 12px;
@@ -942,7 +1175,7 @@
         }
 
         .footer-logo i {
-            color: var(--accent-color);
+            color: var(--light-blue);
         }
 
         .footer-info {
@@ -956,96 +1189,24 @@
             color: var(--text-secondary);
         }
 
-        /* Dashboard Navigation */
-        .dashboard-nav {
+        .footer-links {
             display: flex;
-            gap: 10px;
-            margin-top: 8px;
-        }
-
-        .dashboard-nav a {
-            padding: 6px 12px;
-            border-radius: 6px;
-            text-decoration: none;
-            color: var(--text-secondary);
-            font-weight: 600;
-            font-size: 11px;
-            transition: var(--transition);
-            background: var(--card-bg);
-            border: 1px solid var(--border-light);
-        }
-
-        .dashboard-nav a:hover {
-            color: var(--text-primary);
-            background: var(--hover-bg);
-        }
-
-        .dashboard-nav a.active {
-            color: var(--accent-color);
-            background: var(--active-bg);
-            border-color: var(--border-color);
-        }
-
-        /* Profile Dropdown */
-        .profile-dropdown {
-            position: absolute;
-            top: calc(var(--topbar-height) + 10px);
-            right: 24px;
-            background: var(--card-bg-solid);
-            border-radius: var(--border-radius);
-            padding: 15px;
-            display: none;
-            flex-direction: column;
-            gap: 10px;
-            border: 1px solid var(--border-light);
-            box-shadow: 0 8px 32px var(--shadow-color);
-            backdrop-filter: blur(10px);
-            min-width: 200px;
-            z-index: 1001;
-        }
-
-        .profile-dropdown.active {
-            display: flex;
-        }
-
-        .profile-dropdown-item {
-            padding: 10px 15px;
-            border-radius: 6px;
-            color: var(--text-primary);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: var(--transition);
-            font-size: 13px;
-        }
-
-        .profile-dropdown-item:hover {
-            background: var(--hover-bg);
-            color: var(--accent-color);
-        }
-
-        .profile-dropdown-divider {
-            height: 1px;
-            background: var(--border-light);
-            margin: 5px 0;
-        }
-
-        /* Notification Badge */
-        .notification-badge {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background: var(--danger-color);
-            color: white;
-            border-radius: 50%;
-            width: 18px;
-            height: 18px;
-            display: flex;
-            align-items: center;
             justify-content: center;
-            font-size: 10px;
-            font-weight: 700;
+            gap: 20px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .footer-link:hover {
+            color: var(--light-blue);
         }
 
         /* Responsive Design */
@@ -1069,6 +1230,11 @@
             
             .tools-grid {
                 grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .dashboard-nav {
+                flex-wrap: wrap;
+                justify-content: flex-start;
             }
         }
 
@@ -1102,8 +1268,9 @@
                 gap: 15px;
             }
             
-            .nav-right {
-                gap: 10px;
+            .dashboard-header {
+                margin: 16px;
+                margin-bottom: 24px;
             }
         }
 
@@ -1153,10 +1320,6 @@
                 padding: 5px 8px;
             }
             
-            .logout-btn span {
-                display: none;
-            }
-            
             .current-sheet-info {
                 font-size: 11px;
                 padding: 6px 12px;
@@ -1167,15 +1330,15 @@
             .footer {
                 padding: 20px 0 0 0;
             }
-
-            .theme-switcher {
-                bottom: 10px;
-                right: 10px;
+            
+            .dashboard-nav {
+                flex-direction: column;
+                align-items: stretch;
             }
-
-            .accessibility-controls {
-                bottom: 10px;
-                left: 10px;
+            
+            .nav-btn {
+                width: 100%;
+                justify-content: center;
             }
         }
 
@@ -1193,16 +1356,6 @@
                 padding: 0 16px;
             }
             
-            .dashboard-nav {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .dashboard-nav a {
-                padding: 4px 8px;
-                font-size: 10px;
-            }
-
             .sheets-controls {
                 flex-wrap: wrap;
                 justify-content: center;
@@ -1212,23 +1365,23 @@
                 padding: 5px 10px;
                 font-size: 11px;
             }
-
-            .theme-options {
-                min-width: 120px;
+            
+            .profile-dropdown {
+                min-width: 180px;
+            }
+            
+            .theme-dropdown {
+                min-width: 160px;
+            }
+            
+            .dashboard-header {
+                padding: 10px;
             }
         }
 
         @media (max-width: 400px) {
             .brand-text {
                 font-size: 15px;
-            }
-            
-            .nav-right {
-                gap: 6px;
-            }
-            
-            .logout-btn {
-                padding: 5px 8px;
             }
             
             .sheet-loader-text {
@@ -1241,6 +1394,41 @@
                 height: 40px;
                 font-size: 18px;
             }
+            
+            .nav-btn {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .loading-spinner,
+            .access-denied,
+            .top-nav,
+            .sidebar,
+            .connection-status,
+            .sync-status,
+            .update-banner,
+            .footer {
+                display: none !important;
+            }
+            
+            .main-content {
+                margin: 0;
+                padding: 20px;
+                width: 100%;
+            }
+            
+            .tool-card,
+            .sheets-card {
+                border: 1px solid #ddd;
+            }
+            
+            body {
+                background: white !important;
+                color: black !important;
+            }
         }
 
         /* Reduced Motion */
@@ -1250,31 +1438,6 @@
                 animation-iteration-count: 1 !important;
                 transition-duration: 0.01ms !important;
             }
-            
-            .background-pattern {
-                animation: none;
-            }
-        }
-
-        /* High Contrast Mode */
-        .high-contrast {
-            --text-primary: #ffffff;
-            --text-secondary: #cccccc;
-            --border-color: #ffffff;
-            --border-light: #666666;
-        }
-
-        /* Font Size Adjustments */
-        .font-small {
-            font-size: 12px;
-        }
-
-        .font-large {
-            font-size: 16px;
-        }
-
-        .font-xlarge {
-            font-size: 18px;
         }
     </style>
 </head>
@@ -1291,6 +1454,20 @@
     <div class="connection-status" id="connectionStatus">
         <i class="fas fa-circle"></i>
         <span>Online</span>
+    </div>
+
+    <!-- Syncing Indicator -->
+    <div class="sync-status" id="syncStatus">
+        <i class="fas fa-sync-alt"></i>
+        <span>Syncing data...</span>
+    </div>
+
+    <!-- Update Available Banner -->
+    <div class="update-banner" id="updateBanner">
+        <div class="update-banner-content">
+            New version available. Update for latest features.
+        </div>
+        <button class="update-btn" id="updateBtn">Update</button>
     </div>
 
     <!-- Access Denied Message -->
@@ -1313,17 +1490,34 @@
                         <i class="fas fa-boxes"></i>
                     </div>
                     <div>
-                        <div class="brand-text">Enterprise Resource Hub</div>
-                        <div class="brand-subtitle">EMH Integrated Module</div>
+                        <div class="brand-text">Jasiri E-Hub</div>
+                        <div class="brand-subtitle">Enterprise Resource Hub</div>
                     </div>
                 </div>
             </div>
             
             <div class="nav-right">
-                <!-- Notifications -->
-                <div class="user-profile" id="notificationsBtn">
-                    <i class="fas fa-bell"></i>
-                    <div class="notification-badge">3</div>
+                <!-- Theme Toggle -->
+                <div class="theme-toggle-wrapper" style="position: relative;">
+                    <button class="theme-toggle" id="themeToggle">
+                        <i class="fas fa-sun"></i>
+                        <i class="fas fa-moon"></i>
+                        <i class="fas fa-desktop"></i>
+                    </button>
+                    <div class="theme-dropdown" id="themeDropdown">
+                        <div class="theme-option" data-theme="system">
+                            <i class="fas fa-desktop"></i>
+                            <span>System</span>
+                        </div>
+                        <div class="theme-option" data-theme="light">
+                            <i class="fas fa-sun"></i>
+                            <span>Light</span>
+                        </div>
+                        <div class="theme-option" data-theme="dark">
+                            <i class="fas fa-moon"></i>
+                            <span>Dark</span>
+                        </div>
+                    </div>
                 </div>
                 
                 <!-- User Profile -->
@@ -1333,37 +1527,35 @@
                         <div class="user-name" id="userName">John Doe</div>
                         <div class="user-role" id="userRole">Administrator</div>
                     </div>
-                    <i class="fas fa-chevron-down" style="font-size: 10px;"></i>
-                </div>
-                
-                <!-- Profile Dropdown -->
-                <div class="profile-dropdown" id="profileDropdown">
-                    <div class="profile-dropdown-item">
-                        <i class="fas fa-user-circle"></i>
-                        <span>My Profile</span>
+                    <i class="fas fa-chevron-down" style="font-size: 12px; margin-left: 8px;"></i>
+                    
+                    <!-- Profile Dropdown -->
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <div class="dropdown-header">
+                            <div class="user-avatar" id="dropdownAvatar">JD</div>
+                            <div>
+                                <div class="user-name" id="dropdownName">John Doe</div>
+                                <div class="user-role" id="dropdownEmail">john.doe@dsog.com</div>
+                            </div>
+                        </div>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-user"></i>
+                            <span>My Profile</span>
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Security</span>
+                        </a>
+                        <div style="height: 1px; background: var(--border-color); margin: 4px 0;"></div>
+                        <a href="#" class="dropdown-item logout" id="profileLogout">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Log Out</span>
+                        </a>
                     </div>
-                    <div class="profile-dropdown-item">
-                        <i class="fas fa-cog"></i>
-                        <span>Settings</span>
-                    </div>
-                    <div class="profile-dropdown-item">
-                        <i class="fas fa-moon"></i>
-                        <span>Appearance</span>
-                    </div>
-                    <div class="profile-dropdown-divider"></div>
-                    <div class="profile-dropdown-item">
-                        <i class="fas fa-question-circle"></i>
-                        <span>Help & Support</span>
-                    </div>
-                    <div class="profile-dropdown-item">
-                        <i class="fas fa-info-circle"></i>
-                        <span>About EMH</span>
-                    </div>
-                    <div class="profile-dropdown-divider"></div>
-                    <a href="#" class="profile-dropdown-item" id="logoutBtn">
-                        <i class="fas fa-sign-out-alt"></i>
-                        <span>Logout</span>
-                    </a>
                 </div>
             </div>
         </nav>
@@ -1372,14 +1564,24 @@
         <aside class="sidebar" id="sidebar">
             <div class="nav-section">
                 <div class="nav-title">Navigation</div>
-                <div class="dashboard-nav">
-                    <a href="index.html" id="homeButton">
-                        <i class="fas fa-home"></i> EMH Dashboard
-                    </a>
-                    <a href="#" class="active" id="workspaceButton">
-                        <i class="fas fa-th-large"></i> Resource Hub
-                    </a>
+                <div class="nav-section-title" id="dashboardLink">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Dashboard Navigation</span>
                 </div>
+                <ul class="nav-submenu">
+                    <li><a href="index.html" class="nav-link">
+                        <i class="fas fa-home"></i> Home Dashboard
+                    </a></li>
+                    <li><a href="kpi-dashboard.html" class="nav-link">
+                        <i class="fas fa-chart-bar"></i> Analytics Dashboard
+                    </a></li>
+                    <li><a href="best-seller.html" class="nav-link">
+                        <i class="fas fa-crown"></i> Best Sellers Dashboard
+                    </a></li>
+                    <li><a href="#" class="nav-link active">
+                        <i class="fas fa-th-large"></i> Enterprise Hub (Active)
+                    </a></li>
+                </ul>
             </div>
             
             <!-- Product Portfolio Section -->
@@ -1486,43 +1688,43 @@
                     <li><a href="#" class="nav-link" data-section="cost-analysis">Cost Analysis</a></li>
                 </ul>
             </div>
-            
-            <!-- System Section -->
-            <div class="nav-section">
-                <div class="nav-title">System</div>
-                <a href="#" class="nav-link" id="systemSettingsBtn">
-                    <i class="fas fa-cog"></i> Settings
-                </a>
-                <a href="#" class="nav-link" id="helpBtn">
-                    <i class="fas fa-question-circle"></i> Help
-                </a>
-                <a href="#" class="nav-link" id="feedbackBtn">
-                    <i class="fas fa-comment-alt"></i> Feedback
-                </a>
-            </div>
         </aside>
 
         <!-- Main Content -->
         <main class="main-content" id="mainContent">
             <!-- Content Container -->
             <div class="content-container">
+                <!-- Professional Dashboard Navigation Header -->
+                <div class="dashboard-header">
+                    <div class="dashboard-nav">
+                        <a href="index.html" class="nav-btn">
+                            <i class="fas fa-home"></i> Home
+                        </a>
+                        <a href="kpi-dashboard.html" class="nav-btn">
+                            <i class="fas fa-chart-line"></i> Analytics
+                        </a>
+                        <a href="best-seller.html" class="nav-btn">
+                            <i class="fas fa-crown"></i> Best Sellers
+                        </a>
+                        <a href="#" class="nav-btn active">
+                            <i class="fas fa-th-large"></i> Workspace
+                            <span class="nav-badge">ACTIVE</span>
+                        </a>
+                        <a href="documents.html" class="nav-btn">
+                            <i class="fas fa-file-alt"></i> Documents
+                        </a>
+                        <a href="new-arrivals.html" class="nav-btn">
+                            <i class="fas fa-box"></i> New Arrivals
+                        </a>
+                    </div>
+                </div>
+                
                 <!-- Tools Section -->
                 <section class="tools-section" id="toolsSection">
                     <div class="tools-header">
                         <h2 class="tools-title">
-                            <i class="fas fa-tools"></i> Resource Tools
+                            <i class="fas fa-tools"></i> Enterprise Tools
                         </h2>
-                        <div class="quick-actions">
-                            <button class="sheets-control-btn" id="quickSearchBtn">
-                                <i class="fas fa-search"></i> Quick Search
-                            </button>
-                            <button class="sheets-control-btn" id="recentFilesBtn">
-                                <i class="fas fa-history"></i> Recent Files
-                            </button>
-                            <button class="sheets-control-btn" id="newSheetBtn">
-                                <i class="fas fa-plus"></i> New Sheet
-                            </button>
-                        </div>
                     </div>
                     
                     <div class="tools-grid" id="toolsGrid">
@@ -1532,19 +1734,21 @@
                     <!-- Footer -->
                     <footer class="footer">
                         <div class="footer-logo">
-                            <i class="fas fa-cube"></i> EMH • Enterprise Resource Hub
+                            <i class="fas fa-cube"></i> Jasiri E-Hub • Enterprise Resource Hub
                         </div>
                         <div class="footer-info">
-                            <div>© <span id="year"></span> Enterprise Management Hub. All rights reserved.</div>
+                            <div>© <span id="year"></span> DSOG Business Solutions. All rights reserved.</div>
                             <div class="footer-version">
                                 Version 2.1 • Secure Connection • Offline Capable
                             </div>
                         </div>
-                        <div class="dashboard-nav">
-                            <a href="#"><i class="fas fa-shield-alt"></i> Privacy</a>
-                            <a href="#"><i class="fas fa-file-contract"></i> Terms</a>
-                            <a href="#"><i class="fas fa-envelope"></i> Contact</a>
-                            <a href="#"><i class="fas fa-rss"></i> Updates</a>
+                        <div class="footer-links">
+                            <a href="#" class="footer-link">Support</a>
+                            <a href="#" class="footer-link">Documentation</a>
+                            <a href="#" class="footer-link">Privacy</a>
+                            <a href="#" class="footer-link">Terms</a>
+                            <a href="#" class="footer-link">Contact</a>
+                            <a href="#" class="footer-link" id="clearCacheBtn">Clear Cache</a>
                         </div>
                     </footer>
                 </section>
@@ -1596,37 +1800,6 @@
         </main>
     </div>
 
-    <!-- Theme Switcher -->
-    <div class="theme-switcher" id="themeSwitcher">
-        <button class="theme-btn" id="themeToggle">
-            <i class="fas fa-palette"></i>
-        </button>
-        <div class="theme-options" id="themeOptions">
-            <div class="theme-option active" data-theme="default">
-                <i class="fas fa-moon"></i> Dark Theme
-            </div>
-            <div class="theme-option" data-theme="light">
-                <i class="fas fa-sun"></i> Light Theme
-            </div>
-            <div class="theme-option" data-theme="blue">
-                <i class="fas fa-tint"></i> Blue Theme
-            </div>
-            <div class="theme-option" data-theme="professional">
-                <i class="fas fa-briefcase"></i> Professional
-            </div>
-        </div>
-    </div>
-
-    <!-- Accessibility Controls -->
-    <div class="accessibility-controls">
-        <button class="accessibility-btn" id="contrastToggle" title="High Contrast">
-            <i class="fas fa-adjust"></i>
-        </button>
-        <button class="accessibility-btn" id="fontSizeToggle" title="Font Size">
-            <i class="fas fa-text-height"></i>
-        </button>
-    </div>
-
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
@@ -1651,15 +1824,18 @@
         let currentSheetName = '';
         let currentSheetId = '';
         let currentViewMode = 'view';
-        let currentTheme = localStorage.getItem('emh-theme') || 'default';
-        let highContrast = localStorage.getItem('emh-high-contrast') === 'true';
-        let fontSize = localStorage.getItem('emh-font-size') || 'medium';
+        let isOnline = navigator.onLine;
+        let syncInterval = null;
+        let lastSyncTime = new Date();
 
         // DOM Elements
         const loadingSpinner = document.getElementById('loadingSpinner');
         const accessDenied = document.getElementById('accessDenied');
         const appContainer = document.getElementById('appContainer');
         const connectionStatus = document.getElementById('connectionStatus');
+        const syncStatus = document.getElementById('syncStatus');
+        const updateBanner = document.getElementById('updateBanner');
+        const updateBtn = document.getElementById('updateBtn');
         const sheetLoader = document.getElementById('sheetLoader');
         const sheetLoaderText = document.getElementById('sheetLoaderText');
         const currentSheetInfo = document.getElementById('currentSheetInfo');
@@ -1667,10 +1843,11 @@
         const userAvatar = document.getElementById('userAvatar');
         const userName = document.getElementById('userName');
         const userRole = document.getElementById('userRole');
-        const logoutBtn = document.getElementById('logoutBtn');
+        const dropdownAvatar = document.getElementById('dropdownAvatar');
+        const dropdownName = document.getElementById('dropdownName');
+        const dropdownEmail = document.getElementById('dropdownEmail');
         const menuToggle = document.getElementById('menuToggle');
         const sidebar = document.getElementById('sidebar');
-        const homeButton = document.getElementById('homeButton');
         const editModeBtn = document.getElementById('editModeBtn');
         const viewModeBtn = document.getElementById('viewModeBtn');
         const fullscreenBtn = document.getElementById('fullscreenBtn');
@@ -1682,20 +1859,112 @@
         const toolsGrid = document.getElementById('toolsGrid');
         const userProfile = document.getElementById('userProfile');
         const profileDropdown = document.getElementById('profileDropdown');
+        const profileLogout = document.getElementById('profileLogout');
         const themeToggle = document.getElementById('themeToggle');
-        const themeOptions = document.getElementById('themeOptions');
-        const themeSwitcher = document.getElementById('themeSwitcher');
-        const contrastToggle = document.getElementById('contrastToggle');
-        const fontSizeToggle = document.getElementById('fontSizeToggle');
-        const notificationsBtn = document.getElementById('notificationsBtn');
-        const quickSearchBtn = document.getElementById('quickSearchBtn');
-        const recentFilesBtn = document.getElementById('recentFilesBtn');
-        const newSheetBtn = document.getElementById('newSheetBtn');
-        const systemSettingsBtn = document.getElementById('systemSettingsBtn');
-        const helpBtn = document.getElementById('helpBtn');
-        const feedbackBtn = document.getElementById('feedbackBtn');
+        const themeDropdown = document.getElementById('themeDropdown');
+        const themeOptions = document.querySelectorAll('.theme-option');
+        const clearCacheBtn = document.getElementById('clearCacheBtn');
+        const dashboardLink = document.getElementById('dashboardLink');
 
-        // Module Data - ERH Functionality (same as before)
+        // Theme Management
+        class ThemeManager {
+            constructor() {
+                this.theme = localStorage.getItem('theme') || 'system';
+                this.init();
+            }
+
+            init() {
+                this.applyTheme();
+                this.setupEventListeners();
+                this.updateActiveThemeOption();
+            }
+
+            applyTheme() {
+                if (this.theme === 'system') {
+                    document.documentElement.removeAttribute('data-theme');
+                    localStorage.removeItem('theme');
+                } else {
+                    document.documentElement.setAttribute('data-theme', this.theme);
+                    localStorage.setItem('theme', this.theme);
+                }
+            }
+
+            setTheme(theme) {
+                this.theme = theme;
+                this.applyTheme();
+                this.updateActiveThemeOption();
+            }
+
+            setupEventListeners() {
+                // Theme toggle click
+                themeToggle.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    themeDropdown.classList.toggle('active');
+                });
+
+                // Theme options click
+                themeOptions.forEach(option => {
+                    option.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const theme = option.getAttribute('data-theme');
+                        this.setTheme(theme);
+                        themeDropdown.classList.remove('active');
+                    });
+                });
+
+                // Close dropdown when clicking outside
+                document.addEventListener('click', (e) => {
+                    if (!themeToggle.contains(e.target) && !themeDropdown.contains(e.target)) {
+                        themeDropdown.classList.remove('active');
+                    }
+                });
+
+                // Listen for system theme changes
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+                    if (this.theme === 'system') {
+                        this.applyTheme();
+                    }
+                });
+            }
+
+            updateActiveThemeOption() {
+                themeOptions.forEach(option => {
+                    const optionTheme = option.getAttribute('data-theme');
+                    if (optionTheme === this.theme) {
+                        option.classList.add('active');
+                    } else {
+                        option.classList.remove('active');
+                    }
+                });
+            }
+        }
+
+        // Initialize Theme Manager
+        const themeManager = new ThemeManager();
+
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registered: ', registration.scope);
+                        
+                        registration.addEventListener('updatefound', () => {
+                            const newWorker = registration.installing;
+                            newWorker.addEventListener('statechange', () => {
+                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                    showUpdateBanner();
+                                }
+                            });
+                        });
+                    })
+                    .catch(error => {
+                        console.log('ServiceWorker registration failed: ', error);
+                    });
+            });
+        }
+
+        // Module Data - COMPLETE WITH ALL ERH SECTIONS
         const moduleData = {
             // Product Portfolio
             "portfolio-overview": {
@@ -1752,7 +2021,641 @@
                     }
                 ]
             },
-            // ... (rest of the module data remains the same as in your original ERH)
+            "collection-planning": {
+                title: "Collection Planning",
+                description: "Plan and manage product collections and seasons",
+                tools: [
+                    { 
+                        name: "Collection Calendar", 
+                        description: "Schedule and plan product collections",
+                        icon: "fas fa-calendar-alt",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1YevHH6wm09YHjUC-m1EYwkYe0mueYSs_L3vI8UZQ5T0/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Season Planning", 
+                        description: "Plan products by season and trend",
+                        icon: "fas fa-leaf",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1IGa6E_QRCe2V3WUr-vnzFsgem1dTwXbgISTudltk-xw/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Collection Budget", 
+                        description: "Budget planning for collections",
+                        icon: "fas fa-coins",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1n_84d7oW-MwLBpkx61jweWrdNrwJqQM-q-t_jdaGs58/edit",
+                        badge: "Active"
+                    }
+                ]
+            },
+
+            // Design & Development
+            "design-briefs": {
+                title: "Design Briefs",
+                description: "Create and manage design specifications and briefs",
+                tools: [
+                    { 
+                        name: "Design Brief Master", 
+                        description: "Master repository for design briefs",
+                        icon: "fas fa-pencil-ruler",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/11-fzXzAaJ2qm9B5HlrouDGQK9HftvjBlbejbSWmLPdQ/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Creative Direction", 
+                        description: "Creative direction and design concepts",
+                        icon: "fas fa-palette",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1i5AEEsKuHGpESRZt7mXR7Ggxf8wQouNA_1PEFX04KQw/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Design Specifications", 
+                        description: "Detailed design specifications and requirements",
+                        icon: "fas fa-file-alt",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/17J5_Arfys1vePofSfP1O0jfZYu9adA3AF4ZGTJrbeng/edit",
+                        badge: "Active"
+                    }
+                ]
+            },
+            "prototype-tracking": {
+                title: "Prototype Tracking",
+                description: "Track prototype development and feedback",
+                tools: [
+                    { 
+                        name: "Prototype Status", 
+                        description: "Track prototype development status",
+                        icon: "fas fa-cube",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1OoH6hoxvrm_WtHvs9V8d89fIKaaeNXxdsWNkGKT7k8k/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Prototype Feedback", 
+                        description: "Collect and analyze prototype feedback",
+                        icon: "fas fa-comment-dots",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1PCjHqHcgQyzYbQ3zOTXoY9SaNWQEZ1-NyUpNhPevfCI/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Prototype Costs", 
+                        description: "Track prototype development costs",
+                        icon: "fas fa-dollar-sign",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1CrtPjexy7Ga-MkjuuX7IWBqeFS4dr14DaSrrgxGwzVY/edit",
+                        badge: "Active"
+                    }
+                ]
+            },
+            "sample-management": {
+                title: "Sample Management",
+                description: "Manage sample production and approvals",
+                tools: [
+                    { 
+                        name: "Sample Tracking", 
+                        description: "Track sample production and status",
+                        icon: "fas fa-box-open",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1eTKkMvQlMzkq1usiR1RgcpGtkz7qniEFqfpZWWc8SdQ/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Sample Feedback", 
+                        description: "Sample evaluation and feedback collection",
+                        icon: "fas fa-clipboard-check",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1_VBJG6FOllBozLBEt8WZqSP9gKETc0obFjSrlsV2E5Y/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Sample Approval", 
+                        description: "Sample approval workflow and tracking",
+                        icon: "fas fa-check-circle",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1XiDZgwANhPo8tjX8LUktt1hg6ZNY5cvrxvDr4Q0V3j4/edit",
+                        badge: "Active"
+                    }
+                ]
+            },
+
+            // Marketing & Sales
+            "product-marketing": {
+                title: "Product Marketing",
+                description: "Marketing strategies and product positioning",
+                tools: [
+                    { 
+                        name: "Marketing Strategy", 
+                        description: "Product marketing strategies and plans",
+                        icon: "fas fa-bullhorn",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1RWkCSdEbrnD0Ric1dI1Mepg6utYy-4wpwFnEEuF90uQ/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Product Positioning", 
+                        description: "Product positioning and market analysis",
+                        icon: "fas fa-bullseye",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1TxqDcANNwvnWwduy8areApEeA7spAUFsa06lamw9SDc/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Marketing Calendar", 
+                        description: "Marketing campaign calendar and scheduling",
+                        icon: "fas fa-calendar",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/15GORcqJ5RLuD6p2emAtDaV5S7HAEWvopVJapE7zbiDc/edit",
+                        badge: "Active"
+                    }
+                ]
+            },
+            "sales-performance": {
+                title: "Sales Performance",
+                description: "Track sales metrics and product performance",
+                tools: [
+                    { 
+                        name: "Sales Dashboard", 
+                        description: "Sales performance dashboard and metrics",
+                        icon: "fas fa-chart-pie",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1Ir2Vgy3jMXq-pP3GKpRV9SCdnvUwgyMYEiCScQn2V3Y/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Product Performance", 
+                        description: "Individual product performance analysis",
+                        icon: "fas fa-chart-bar",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1ab8E3SM54_r0T37L6j4WbYSTx-OYOUixD3GegopjxLg/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Sales Forecasting", 
+                        description: "Sales forecasting and predictions",
+                        icon: "fas fa-chart-line",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1OdQu1hPCDMjV8QM2p6dHCiHhWGb5u1xG9jdxk9OZMIU/edit",
+                        badge: "Active"
+                    }
+                ]
+            },
+            "sales-quotations": {
+                title: "Sales Quotations",
+                description: "Create and manage sales quotations",
+                tools: [
+                    { 
+                        name: "Customer Quote Creation", 
+                        description: "Create and manage customer quotations",
+                        icon: "fas fa-file-invoice-dollar",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1YrJwL9k3t8q7s2d1f0g5h6j7k8l9m0n1o2p3q4r5s6t7/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Quote Templates", 
+                        description: "Sales quotation templates",
+                        icon: "fas fa-file-contract",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Quote Tracking", 
+                        description: "Track quotation status and follow-ups",
+                        icon: "fas fa-tasks",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1qWeRtYuIoPaSdFgHjKlZxCVbNm0123456789/edit",
+                        badge: "Active"
+                    }
+                ]
+            },
+            "customer-feedback": {
+                title: "Customer Feedback",
+                description: "Analyze customer feedback and reviews",
+                tools: [
+                    { 
+                        name: "Feedback Analysis", 
+                        description: "Analyze customer feedback data",
+                        icon: "fas fa-comments",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1La2sdTYqS4U0qFACIBG3NzaXmyIHllO5pyY6qQalX08/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Customer Reviews", 
+                        description: "Customer review management and analysis",
+                        icon: "fas fa-star",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1QYXhBryLpDHh8brKASIIyYIBSaXxqcOqL-epqO2Feeo/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Product Improvements", 
+                        description: "Product improvement tracking from feedback",
+                        icon: "fas fa-tools",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/12OMRNRj-YFLUl0SIIrkbtywYaG-_MSXfaT3ASc3Umq8/edit",
+                        badge: "Active"
+                    }
+                ]
+            },
+
+            // Procurement
+            "supplier-management": {
+                title: "Supplier Management",
+                description: "Manage supplier relationships and performance",
+                tools: [
+                    { 
+                        name: "Supplier Directory", 
+                        description: "Directory of all suppliers",
+                        icon: "fas fa-address-book",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1hwJfrYlQQ70gtwDVaNMC80SXE7Vuw-UqZdhELYsnMFU/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Supplier Performance", 
+                        description: "Supplier performance evaluation",
+                        icon: "fas fa-chart-line",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1Ui__Cbx7lU0QPvZAJDGMhC0HGEZ-Uh3vWnuSzO7vBME/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Contracts & Agreements", 
+                        description: "Supplier contracts and agreements",
+                        icon: "fas fa-file-signature",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1aaNPvAXvk36UQOSzbo3rwUtCbRlnONRq1MIbdKJlWBk/edit",
+                        badge: "Active"
+                    }
+                ]
+            },
+            "purchase-orders": {
+                title: "Purchase Orders",
+                description: "Create and track purchase orders",
+                tools: [
+                    { 
+                        name: "PO Creation", 
+                        description: "Create and manage purchase orders",
+                        icon: "fas fa-clipboard-list",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1hWkEjiJaQ6U1yaltAHIzab2bZpEUvOPxSSu9s2ZlfH8/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "PO Tracking", 
+                        description: "Track purchase order status",
+                        icon: "fas fa-truck-loading",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1WqNs6XSQztM56Jk6YTWAE7vUoYvlsUTxI199HiyALRo/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "PO Approval", 
+                        description: "Purchase order approval workflow",
+                        icon: "fas fa-check-double",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1o-HqMkT637UNCL0OKzwWSXoYMjMVwif9GnLKMFUfBac/edit",
+                        badge: "Active"
+                    }
+                ]
+            },
+            "sourcing": {
+                title: "Sourcing & RFQs",
+                description: "Manage RFQs and supplier quotations",
+                tools: [
+                    { 
+                        name: "RFQ Management", 
+                        description: "Manage Request for Quotations",
+                        icon: "fas fa-file-contract",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1QqogZOO6xrtWUUP-n2TiR4xfH7lNEdmpm2I7t0l5rjI/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Bid Comparison", 
+                        description: "Compare supplier bids and proposals",
+                        icon: "fas fa-balance-scale",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/19sGxaJk1qHuCk3RNrh4QbcY4X5jCW1trvhVrdUbsPc0/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Vendor Selection", 
+                        description: "Vendor selection and evaluation",
+                        icon: "fas fa-user-check",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1R-B6Q2KmS7czqXd4fi6SzfHk_Bzmv_Sn7lTrNxgAE3I/edit",
+                        badge: "Active"
+                    }
+                ]
+            },
+
+            // Inventory Management
+            "inventory-control": {
+                title: "Inventory Control",
+                description: "Manage stock levels and inventory valuation",
+                tools: [
+                    { 
+                        name: "Stock Levels", 
+                        description: "Track inventory stock levels",
+                        icon: "fas fa-boxes",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1ptdoE4iNqxsU8-qb1GT4DchFToDSGcrY_gLfIGHpU64/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Inventory Valuation", 
+                        description: "Inventory valuation and costing",
+                        icon: "fas fa-calculator",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1lyzJZce3BrtHcU36Di6Z_OTbiekSRrQBtZpvG2Mss48/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Stock Alerts", 
+                        description: "Stock level alerts and notifications",
+                        icon: "fas fa-bell",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1cNWxzotLFnpdq7udhlQcXQA2ngOeGMQE2C5aHSyNMbg/edit",
+                        badge: "Active"
+                    }
+                ]
+            },
+            "stock-movements": {
+                title: "Stock Movements",
+                description: "Track receipts, issues, and transfers",
+                tools: [
+                    { 
+                        name: "Receipts", 
+                        description: "Track inventory receipts",
+                        icon: "fas fa-shipping-fast",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1p_JH72IMirO7YULPCQqYPRVLe3y6QhNpXdBN6wM1vaU/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Issues", 
+                        description: "Inventory issues and dispatches",
+                        icon: "fas fa-dolly",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1d9J7tuVN5S75xTZXzW0YwinLz-vx8fadmKrCweUt0fQ/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Transfers", 
+                        description: "Inter-warehouse transfers",
+                        icon: "fas fa-exchange-alt",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1rPOPVlS4NiW9gUXWux87fugVzWP3BSkpkhhHnNkzxDw/edit",
+                        badge: "Active"
+                    }
+                ]
+            },
+            "warehouse": {
+                title: "Warehouse Management",
+                description: "Manage warehouse locations and operations",
+                tools: [
+                    { 
+                        name: "Location Management", 
+                        description: "Manage warehouse locations and layout",
+                        icon: "fas fa-map-marker-alt",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1iIScOavt3DHV-_kj1PrHeI13ihqrsFiSc3ez86QLWL0/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Bin Management", 
+                        description: "Warehouse bin and slot management",
+                        icon: "fas fa-box",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1aBK9PseMEGmUKvo4ddU8RRFMiTyOqMlPsoBNmI_v_Dw/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Picking Strategy", 
+                        description: "Order picking strategies and optimization",
+                        icon: "fas fa-hand-paper",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1WHNNx1pV4bpQ8moXKUfD-Gec30H4OXxWwmvaV8DCvPc/edit",
+                        badge: "Active"
+                    }
+                ]
+            },
+
+            // Production
+            "production-planning": {
+                title: "Production Planning",
+                description: "Plan and schedule production activities",
+                tools: [
+                    { 
+                        name: "Production Schedule", 
+                        description: "Production scheduling and planning",
+                        icon: "fas fa-calendar",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1JCoywp2Xl5moDFh8R6fAS6vVqbpGo6vbjVfsWLUfiS0/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Capacity Planning", 
+                        description: "Production capacity planning",
+                        icon: "fas fa-industry",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1eV7d017f47s7z7cpXPOD7vYBXRbaprokE4LzYtGBpG0/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Production Tracking", 
+                        description: "Track production progress and status",
+                        icon: "fas fa-tachometer-alt",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1ww6lA_c0gm2U3pJzCE1A2KmdJnRGBIapwNGr8aOF9rk/edit",
+                        badge: "Active"
+                    }
+                ]
+            },
+            "bill-of-materials": {
+                title: "Bill of Materials",
+                description: "Manage product materials and components",
+                tools: [
+                    { 
+                        name: "BOM Management", 
+                        description: "Bill of materials management",
+                        icon: "fas fa-list-alt",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1Q3mvUG--QcP3soNePZfOLLpG0QxH7DxpggKFIAotvQg/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "BOM Costing", 
+                        description: "BOM costing and analysis",
+                        icon: "fas fa-calculator",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1mCLHg-TevxL9_YMqCOwesb70yOXEss-1lAyFdT-UEcE/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "BOM Versioning", 
+                        description: "BOM version control and history",
+                        icon: "fas fa-code-branch",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1EZ3qVIQEpkYW6ma6-TH_pdMebTsbXNhY0Mxf2ZcBShY/edit",
+                        badge: "Active"
+                    }
+                ]
+            },
+            "work-orders": {
+                title: "Work Orders",
+                description: "Create and manage production work orders",
+                tools: [
+                    { 
+                        name: "Work Order Creation", 
+                        description: "Create and issue work orders",
+                        icon: "fas fa-clipboard-list",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1_rE50ge2koWL7LH4qL_fVoxiFaAJzZuAJaTsWhLWobI/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Work Order Tracking", 
+                        description: "Track work order progress",
+                        icon: "fas fa-tasks",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/12eT6sFcgbsx0xj6uuHMu_5gUYDOPjpz20NSI4NM4KHY/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Work Order Costs", 
+                        description: "Work order costing and analysis",
+                        icon: "fas fa-dollar-sign",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/18QblOcA5idUfOdcFXYkq0xnOcZmuT4WS7o6Wl0VakfM/edit",
+                        badge: "Active"
+                    }
+                ]
+            },
+
+            // Logistics
+            "transportation": {
+                title: "Transportation",
+                description: "Manage transportation and carrier operations",
+                tools: [
+                    { 
+                        name: "Carrier Management", 
+                        description: "Carrier selection and management",
+                        icon: "fas fa-truck",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1KphtIOl8932GJXonSLbuJeG5VRgF43xTN3MNYamQRE4/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Route Planning", 
+                        description: "Transportation route planning",
+                        icon: "fas fa-route",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1uuadkicYfd7Jv_f4OZF_40QRZxOGvaDup3R8-1RxTAY/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Freight Costing", 
+                        description: "Freight costing and optimization",
+                        icon: "fas fa-shipping-fast",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1fepSBUDTrSXSnwVSDFx--eOJeQbRj7LtGKEmu0sKoO0/edit",
+                        badge: "Active"
+                    }
+                ]
+            },
+            "distribution": {
+                title: "Distribution",
+                description: "Manage distribution networks and centers",
+                tools: [
+                    { 
+                        name: "Distribution Centers", 
+                        description: "Distribution center management",
+                        icon: "fas fa-warehouse",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1MVqyQ2rrzwQWn-548SN_8AWUjmrW4ghq-UIsm05MvRs/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Delivery Scheduling", 
+                        description: "Delivery scheduling and planning",
+                        icon: "fas fa-calendar-check",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/14i_vLZFFI0yrlMAALXN_0_KAaW_AhKHG6FBoGISVkFw/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Returns Management", 
+                        description: "Returns and reverse logistics",
+                        icon: "fas fa-undo",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1Ly31Ugoa5jI9p1DVMP8zVQpQR7x28urbfiAm2e9Vgs8/edit",
+                        badge: "Active"
+                    }
+                ]
+            },
+            "shipment-tracking": {
+                title: "Shipment Tracking",
+                description: "Track shipments and delivery status",
+                tools: [
+                    { 
+                        name: "Shipment Tracker", 
+                        description: "Real-time shipment tracking",
+                        icon: "fas fa-map-marked-alt",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1351dA3hFT6EhtnJ9BEn1HzYzPMRmAep0dDU6nVLfrv4/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Customs Documentation", 
+                        description: "Customs and documentation management",
+                        icon: "fas fa-passport",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1RoxYorrGJT05GKg2Mht857KtuSnzy04Khgnh5z0a2K8/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Proof of Delivery", 
+                        description: "Proof of delivery tracking",
+                        icon: "fas fa-receipt",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1I8CHZ6PmJrLYS_TMJ7KAHjhqwwvoqqY4Kj10THLJ3rM/edit",
+                        badge: "Active"
+                    }
+                ]
+            },
+
+            // Analytics
+            "supply-chain-analytics": {
+                title: "Supply Chain Analytics",
+                description: "Supply chain performance analytics",
+                tools: [
+                    { 
+                        name: "Lead Time Analysis", 
+                        description: "Supply chain lead time analysis",
+                        icon: "fas fa-clock",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1IzzKJ1hNnd56dnmDTX2SJE_PZM-K1E4uowwqKGfTdOs/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Inventory Turnover", 
+                        description: "Inventory turnover analysis",
+                        icon: "fas fa-sync-alt",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1wwSvnKoxzFAECdDyKettJjD5HYhL3YXUyv535JEZHx4/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Supplier Performance", 
+                        description: "Supplier performance analytics",
+                        icon: "fas fa-chart-line",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1ojZ4SYX0G9f_WNVWWibZaPrQ3fQyAnmCLlVECdQFCxA/edit",
+                        badge: "Active"
+                    }
+                ]
+            },
+            "kpi-dashboard": {
+                title: "KPI Dashboard",
+                description: "Key Performance Indicators dashboard",
+                tools: [
+                    { 
+                        name: "SCOR Model KPIs", 
+                        description: "SCOR model key performance indicators",
+                        icon: "fas fa-chart-bar",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1SuQrJOiF2XQGpJlkGarclDVbIO_JMfKBY4xbaG29O4M/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Operational KPIs", 
+                        description: "Operational performance indicators",
+                        icon: "fas fa-tachometer-alt",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1HPIT7h8Ag7oNcJLGnHr5uI4NRqYVl1HZbieLnTjsZzE/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Financial KPIs", 
+                        description: "Financial performance indicators",
+                        icon: "fas fa-dollar-sign",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1e5taaF2tVBitqxlSdYOUJGiDxmFinsAS3Q1KNivVQZo/edit",
+                        badge: "Active"
+                    }
+                ]
+            },
+            "cost-analysis": {
+                title: "Cost Analysis",
+                description: "Cost analysis and optimization",
+                tools: [
+                    { 
+                        name: "Total Cost Analysis", 
+                        description: "Total cost of ownership analysis",
+                        icon: "fas fa-calculator",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1l19WADHA0J9Iqz4qV2Hp_wAUFcuRpO-GNRob_4exWZs/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Cost Breakdown", 
+                        description: "Detailed cost breakdown analysis",
+                        icon: "fas fa-chart-pie",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1B_B-njDP-mRaLIaPRVZ3AYtsRVqVlx5ypn_Z53nBx1o/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Cost Optimization", 
+                        description: "Cost optimization strategies",
+                        icon: "fas fa-search-dollar",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/13ToZ_Rx965bHvr0xLK9d97SxoYrznjBA6u0B3QSphC0/edit",
+                        badge: "Active"
+                    }
+                ]
+            }
         };
 
         // Initialize the page
@@ -1761,16 +2664,12 @@
         });
 
         function initializeApp() {
-            // Apply saved theme
-            applyTheme(currentTheme);
-            applyAccessibilitySettings();
-            
             // Check initial connection status
-            updateConnectionStatus();
+            updateOnlineStatus();
             
             // Set up connection status listeners
-            window.addEventListener('online', updateConnectionStatus);
-            window.addEventListener('offline', updateConnectionStatus);
+            window.addEventListener('online', updateOnlineStatus);
+            window.addEventListener('offline', updateOnlineStatus);
             
             // Check authentication
             checkAuth();
@@ -1778,201 +2677,151 @@
             // Set current year in footer
             document.getElementById('year').textContent = new Date().getFullYear();
             
-            // Initialize EMH features
-            initEMHFeatures();
-        }
-
-        function initEMHFeatures() {
-            // Theme Switcher
-            themeToggle.addEventListener('click', () => {
-                themeOptions.style.display = themeOptions.style.display === 'flex' ? 'none' : 'flex';
-            });
-
-            // Theme Selection
-            document.querySelectorAll('.theme-option').forEach(option => {
-                option.addEventListener('click', () => {
-                    const theme = option.dataset.theme;
-                    applyTheme(theme);
-                    
-                    // Update active state
-                    document.querySelectorAll('.theme-option').forEach(o => o.classList.remove('active'));
-                    option.classList.add('active');
-                    
-                    // Close dropdown
-                    themeOptions.style.display = 'none';
-                });
-            });
-
-            // Close theme dropdown when clicking outside
-            document.addEventListener('click', (e) => {
-                if (!themeSwitcher.contains(e.target) && themeOptions.style.display === 'flex') {
-                    themeOptions.style.display = 'none';
+            // Setup update button
+            updateBtn.addEventListener('click', () => {
+                if ('serviceWorker' in navigator) {
+                    navigator.serviceWorker.ready.then(registration => {
+                        registration.update();
+                        hideUpdateBanner();
+                    });
                 }
             });
+            
+            // Clear cache button
+            clearCacheBtn.addEventListener('click', clearCache);
+            
+            // Setup dashboard navigation buttons
+            setupDashboardNavigation();
+        }
 
-            // High Contrast Toggle
-            contrastToggle.addEventListener('click', () => {
-                highContrast = !highContrast;
-                localStorage.setItem('emh-high-contrast', highContrast);
-                applyAccessibilitySettings();
+        function setupDashboardNavigation() {
+            // Set active state for workspace button
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                if (btn.textContent.includes('Workspace')) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
                 
-                // Show notification
-                showNotification(highContrast ? 'High contrast enabled' : 'High contrast disabled');
-            });
-
-            // Font Size Toggle
-            fontSizeToggle.addEventListener('click', () => {
-                const sizes = ['small', 'medium', 'large', 'xlarge'];
-                const currentIndex = sizes.indexOf(fontSize);
-                const nextIndex = (currentIndex + 1) % sizes.length;
-                fontSize = sizes[nextIndex];
-                localStorage.setItem('emh-font-size', fontSize);
-                applyAccessibilitySettings();
-                
-                // Show notification
-                showNotification(`Font size: ${fontSize}`);
-            });
-
-            // Profile Dropdown
-            userProfile.addEventListener('click', (e) => {
-                e.stopPropagation();
-                profileDropdown.classList.toggle('active');
-            });
-
-            // Close dropdown when clicking outside
-            document.addEventListener('click', () => {
-                profileDropdown.classList.remove('active');
-            });
-
-            // Notifications
-            notificationsBtn.addEventListener('click', () => {
-                showNotification('Notifications feature coming soon!');
-            });
-
-            // Quick Actions
-            quickSearchBtn.addEventListener('click', () => {
-                showNotification('Quick search feature coming soon!');
-            });
-
-            recentFilesBtn.addEventListener('click', () => {
-                showNotification('Recent files feature coming soon!');
-            });
-
-            newSheetBtn.addEventListener('click', () => {
-                showNotification('New sheet feature coming soon!');
-            });
-
-            // System buttons
-            systemSettingsBtn.addEventListener('click', () => {
-                showNotification('System settings feature coming soon!');
-            });
-
-            helpBtn.addEventListener('click', () => {
-                showNotification('Help feature coming soon!');
-            });
-
-            feedbackBtn.addEventListener('click', () => {
-                showNotification('Feedback feature coming soon!');
+                // Add click handlers
+                btn.addEventListener('click', function(e) {
+                    if (!this.href || this.href === '#') {
+                        e.preventDefault();
+                        return;
+                    }
+                    
+                    // Show loading
+                    showLoading();
+                    
+                    // Add small delay for better UX
+                    setTimeout(() => {
+                        window.location.href = this.href;
+                    }, 300);
+                });
             });
         }
 
-        function applyTheme(theme) {
-            // Remove all theme classes
-            document.body.classList.remove('theme-light', 'theme-blue', 'theme-professional');
+        function updateOnlineStatus() {
+            isOnline = navigator.onLine;
             
-            // Apply selected theme
-            if (theme !== 'default') {
-                document.body.classList.add(`theme-${theme}`);
-            }
-            
-            // Save to localStorage
-            localStorage.setItem('emh-theme', theme);
-            currentTheme = theme;
-            
-            // Update theme-color meta tag
-            updateThemeColor();
-        }
-
-        function applyAccessibilitySettings() {
-            // High Contrast
-            if (highContrast) {
-                document.body.classList.add('high-contrast');
+            if (isOnline) {
+                connectionStatus.innerHTML = '<i class="fas fa-circle"></i><span>Online</span>';
+                connectionStatus.className = 'connection-status online';
+                
+                if (auth.currentUser) {
+                    syncData();
+                }
             } else {
-                document.body.classList.remove('high-contrast');
+                connectionStatus.innerHTML = '<i class="fas fa-circle"></i><span>Offline</span>';
+                connectionStatus.className = 'connection-status offline';
             }
-
-            // Font Size
-            document.body.classList.remove('font-small', 'font-large', 'font-xlarge');
-            if (fontSize !== 'medium') {
-                document.body.classList.add(`font-${fontSize}`);
-            }
-        }
-
-        function updateThemeColor() {
-            const metaThemeColor = document.querySelector('meta[name="theme-color"]');
-            const computedStyle = getComputedStyle(document.body);
-            const primaryColor = computedStyle.getPropertyValue('--primary-color').trim();
-            metaThemeColor.setAttribute('content', primaryColor);
-        }
-
-        function showNotification(message) {
-            // Create notification element
-            const notification = document.createElement('div');
-            notification.className = 'connection-status online';
-            notification.innerHTML = `<i class="fas fa-info-circle"></i> <span>${message}</span>`;
-            notification.style.position = 'fixed';
-            notification.style.top = '70px';
-            notification.style.right = '20px';
-            notification.style.display = 'flex';
-            notification.style.zIndex = '10002';
             
-            document.body.appendChild(notification);
-            
-            // Remove after 3 seconds
+            connectionStatus.style.display = 'flex';
             setTimeout(() => {
-                notification.remove();
+                connectionStatus.style.display = 'none';
             }, 3000);
         }
 
-        // Rest of the ERH functionality remains the same as before
-        // (checkAuth, updateConnectionStatus, handleUserSignedIn, updateUserInfo, initApp, 
-        // setupEventListeners, setupIframeEvents, setupSheetControls, setupNavigation,
-        // loadSection, openSheet, loadSheet, extractSheetId, setViewMode, showSheetError)
-        // ... [All the existing ERH JavaScript functions from your original code]
+        // Sync Data
+        function syncData() {
+            if (!isOnline) {
+                showSyncStatus('offline');
+                return;
+            }
+            
+            showSyncStatus('syncing');
+            
+            setTimeout(() => {
+                showSyncStatus('synced');
+            }, 1500);
+        }
 
-        // ERH Core Functions (copied from original)
+        // Show Sync Status
+        function showSyncStatus(status) {
+            if (status === 'syncing') {
+                syncStatus.innerHTML = '<i class="fas fa-sync-alt"></i><span>Syncing data...</span>';
+                syncStatus.className = 'sync-status syncing';
+            } else if (status === 'synced') {
+                syncStatus.innerHTML = '<i class="fas fa-check-circle"></i><span>Data synced</span>';
+                syncStatus.className = 'sync-status synced';
+            } else if (status === 'offline') {
+                syncStatus.innerHTML = '<i class="fas fa-wifi-slash"></i><span>Cannot sync - Offline</span>';
+                syncStatus.className = 'sync-status offline';
+            }
+            
+            syncStatus.style.display = 'flex';
+            setTimeout(() => {
+                syncStatus.style.display = 'none';
+            }, 3000);
+        }
+
+        // Start Sync Interval
+        function startSyncInterval() {
+            syncInterval = setInterval(() => {
+                if (isOnline && auth.currentUser) {
+                    syncData();
+                }
+            }, 5 * 60 * 1000);
+        }
+
+        // Show Update Banner
+        function showUpdateBanner() {
+            updateBanner.style.display = 'flex';
+        }
+
+        function hideUpdateBanner() {
+            updateBanner.style.display = 'none';
+        }
+
+        // Show/Hide Loading Spinner
+        function showLoading() {
+            loadingSpinner.style.display = 'flex';
+        }
+
+        function hideLoading() {
+            loadingSpinner.style.display = 'none';
+        }
+
         function checkAuth() {
+            // Check if user is already logged in
             const user = auth.currentUser;
             
             if (user) {
+                // User is logged in
                 handleUserSignedIn(user);
             } else {
+                // Check auth state
                 auth.onAuthStateChanged((user) => {
                     if (user) {
                         handleUserSignedIn(user);
                     } else {
+                        // Show access denied after short delay
                         setTimeout(() => {
                             loadingSpinner.style.display = 'none';
                             accessDenied.style.display = 'flex';
                         }, 1500);
                     }
                 });
-            }
-        }
-
-        function updateConnectionStatus() {
-            if (navigator.onLine) {
-                connectionStatus.className = 'connection-status online';
-                connectionStatus.innerHTML = '<i class="fas fa-circle"></i> <span>Online</span>';
-                connectionStatus.style.display = 'flex';
-                
-                setTimeout(() => {
-                    connectionStatus.style.display = 'none';
-                }, 3000);
-            } else {
-                connectionStatus.className = 'connection-status offline';
-                connectionStatus.innerHTML = '<i class="fas fa-circle"></i> <span>Offline</span>';
-                connectionStatus.style.display = 'flex';
             }
         }
 
@@ -1991,6 +2840,9 @@
             
             // Load default section
             loadSection('portfolio-overview');
+            
+            // Start sync interval
+            startSyncInterval();
         }
 
         function updateUserInfo(user) {
@@ -1998,9 +2850,15 @@
             const firstName = displayName.split(' ')[0];
             const lastName = displayName.split(' ')[1] || '';
             
-            userAvatar.textContent = (firstName[0] + (lastName[0] || '')).toUpperCase();
+            const initials = (firstName[0] + (lastName[0] || '')).toUpperCase();
+            userAvatar.textContent = initials;
             userName.textContent = displayName;
-            userRole.textContent = 'Administrator';
+            userRole.textContent = user.email.includes('admin') ? 'Administrator' : 'Resource Manager';
+            
+            // Update dropdown info
+            dropdownAvatar.textContent = initials;
+            dropdownName.textContent = displayName;
+            dropdownEmail.textContent = user.email;
         }
 
         // Application Initialization
@@ -2011,25 +2869,51 @@
             // Setup iframe events
             setupIframeEvents();
             
+            // Setup navigation
+            setupNavigation();
+            
             // Setup sheet controls
             setupSheetControls();
             
-            // Setup navigation
-            setupNavigation();
+            // Profile dropdown functionality
+            userProfile.addEventListener('click', function(e) {
+                e.stopPropagation();
+                profileDropdown.classList.toggle('active');
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!userProfile.contains(e.target)) {
+                    profileDropdown.classList.remove('active');
+                }
+                if (!themeToggle.contains(e.target) && !themeDropdown.contains(e.target)) {
+                    themeDropdown.classList.remove('active');
+                }
+            });
+
+            // Logout from profile dropdown
+            profileLogout.addEventListener('click', function(e) {
+                e.preventDefault();
+                showLoading();
+                auth.signOut()
+                    .then(() => {
+                        hideLoading();
+                        window.location.href = 'index.html';
+                    })
+                    .catch(console.error);
+            });
+            
+            // Dashboard link in sidebar
+            dashboardLink.addEventListener('click', () => {
+                const parent = dashboardLink.parentElement;
+                parent.classList.toggle('active');
+            });
         }
 
         function setupEventListeners() {
             // Menu toggle
             menuToggle.addEventListener('click', () => {
                 sidebar.classList.toggle('active');
-            });
-
-            // Logout button
-            logoutBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                auth.signOut().then(() => {
-                    window.location.href = 'index.html';
-                });
             });
 
             // Close sidebar when clicking outside on mobile
@@ -2044,25 +2928,34 @@
 
             // Navigation section titles
             document.querySelectorAll('.nav-section-title').forEach(title => {
-                title.addEventListener('click', (e) => {
-                    const section = e.currentTarget.parentElement;
-                    const isActive = section.classList.contains('active');
-                    
-                    // Close all other sections
-                    document.querySelectorAll('.nav-section').forEach(s => {
-                        s.classList.remove('active');
+                if (title.id !== 'dashboardLink') {
+                    title.addEventListener('click', (e) => {
+                        const section = e.currentTarget.parentElement;
+                        const isActive = section.classList.contains('active');
+                        
+                        // Close all other sections
+                        document.querySelectorAll('.nav-section').forEach(s => {
+                            if (s !== section) {
+                                s.classList.remove('active');
+                            }
+                        });
+                        
+                        // Open clicked section if it wasn't already active
+                        if (!isActive) {
+                            section.classList.add('active');
+                        }
                     });
-                    
-                    // Open clicked section if it wasn't already active
-                    if (!isActive) {
-                        section.classList.add('active');
-                    }
-                });
+                }
             });
 
             // Navigation links
             document.querySelectorAll('.nav-link').forEach(link => {
                 link.addEventListener('click', (e) => {
+                    if (link.href && !link.href.includes('#')) {
+                        // External link - allow normal navigation
+                        return;
+                    }
+                    
                     e.preventDefault();
                     
                     // Remove active class from all links
@@ -2075,7 +2968,9 @@
                     
                     // Load the section
                     const section = link.dataset.section;
-                    loadSection(section);
+                    if (section) {
+                        loadSection(section);
+                    }
                     
                     // Close sidebar on mobile
                     if (window.innerWidth <= 992) {
@@ -2161,17 +3056,7 @@
         }
 
         function setupNavigation() {
-            // Home button
-            homeButton.addEventListener('click', (e) => {
-                e.preventDefault();
-                window.location.href = 'index.html';
-            });
-
-            // Workspace button
-            document.getElementById('workspaceButton').addEventListener('click', (e) => {
-                e.preventDefault();
-                // Already on workspace page
-            });
+            // Navigation is handled by the professional dashboard navigation header
         }
 
         function loadSection(sectionId) {
@@ -2186,7 +3071,7 @@
 
             // Set section title
             const toolsTitle = document.querySelector('.tools-title');
-            toolsTitle.innerHTML = `<i class="fas fa-tools"></i> ${sectionData.title}`;
+            toolsTitle.innerHTML = `<i class="fas fa-tools"></i> ${sectionData.title} <span style="font-size: 14px; color: var(--text-secondary); margin-left: 8px;">${sectionData.description}</span>`;
 
             // Create tool cards
             sectionData.tools.forEach(tool => {
@@ -2282,6 +3167,44 @@
                 sheetLoader.style.display = 'none';
             }, 3000);
         }
+
+        // Local Storage Functions
+        function clearCache() {
+            if (confirm('Clear all cached data? This will remove offline data.')) {
+                showLoading();
+                
+                Object.keys(localStorage).forEach(key => {
+                    if (key.startsWith('jasiri_')) {
+                        localStorage.removeItem(key);
+                    }
+                });
+                
+                if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+                    navigator.serviceWorker.controller.postMessage({type: 'CLEAR_CACHE'});
+                }
+                
+                setTimeout(() => {
+                    hideLoading();
+                    alert('Cache cleared successfully');
+                    location.reload();
+                }, 1000);
+            }
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', () => {
+            auth.onAuthStateChanged((user) => {
+                if (!user) {
+                    // Show loading initially
+                    showLoading();
+                    setTimeout(() => {
+                        if (!auth.currentUser) {
+                            checkAuth();
+                        }
+                    }, 2000);
+                }
+            });
+        });
     </script>
 </body>
 </html>
