@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jasiri E-Hub | EMH</title>
+    <title>Jasiri E-Hub | Enterprise Sales Hub</title>
     
     <!-- Meta Tags -->
     <meta name="application-name" content="Jasiri E-Hub">
@@ -43,6 +43,7 @@
             --accent-gold: #e6c78a;
             --soft-teal: #81c8be;
             --light-blue: #64ffda;
+            --purple: #9d65c9;
             --text-primary: #f0e6ef;
             --text-secondary: #b8b8d1;
             --card-bg: rgba(23, 42, 69, 0.85);
@@ -69,6 +70,7 @@
             --accent-gold: #d97706;
             --soft-teal: #0d9488;
             --light-blue: #059669;
+            --purple: #7c3aed;
             --text-primary: #1e293b;
             --text-secondary: #64748b;
             --card-bg: rgba(255, 255, 255, 0.95);
@@ -91,6 +93,7 @@
                 --accent-gold: #d97706;
                 --soft-teal: #0d9488;
                 --light-blue: #059669;
+                --purple: #7c3aed;
                 --text-primary: #1e293b;
                 --text-secondary: #64748b;
                 --card-bg: rgba(255, 255, 255, 0.95);
@@ -155,6 +158,79 @@
             100% { background-position: 0% 0%; }
         }
 
+        /* Professional Navigation Styles */
+        .dashboard-header {
+            background: var(--surface-color);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            padding: 12px 16px;
+            margin-bottom: 24px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 8px var(--shadow-color);
+        }
+
+        .dashboard-nav {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 13px;
+            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            white-space: nowrap;
+        }
+
+        [data-theme="light"] .nav-btn {
+            background: rgba(0, 0, 0, 0.03);
+        }
+
+        .nav-btn:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--light-blue);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(100, 255, 218, 0.15);
+        }
+
+        [data-theme="light"] .nav-btn:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-btn.active {
+            color: var(--light-blue);
+            background: rgba(100, 255, 218, 0.1);
+            border-color: rgba(100, 255, 218, 0.2);
+            box-shadow: 0 4px 12px rgba(100, 255, 218, 0.15);
+        }
+
+        .nav-btn i {
+            font-size: 14px;
+            width: 16px;
+            text-align: center;
+        }
+
+        .nav-badge {
+            background: var(--light-pink);
+            color: white;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            margin-left: 4px;
+            font-weight: 700;
+        }
+
         /* Theme Toggle Button */
         .theme-toggle {
             background: rgba(255, 255, 255, 0.05);
@@ -195,7 +271,7 @@
         [data-theme="light"] .theme-toggle .fa-sun,
         [data-theme="light"] .theme-toggle .fa-desktop,
         :not([data-theme]) .theme-toggle .fa-sun,
-        :noɴ([data-theme]) .theme-toggle .fa-moon {
+        :not([data-theme]) .theme-toggle .fa-moon {
             display: none;
         }
 
@@ -1133,44 +1209,6 @@
             color: var(--light-blue);
         }
 
-        /* Dashboard Navigation */
-        .dashboard-nav {
-            display: flex;
-            gap: 10px;
-            margin-top: 8px;
-        }
-
-        .dashboard-nav a {
-            padding: 6px 12px;
-            border-radius: 6px;
-            text-decoration: none;
-            color: var(--text-secondary);
-            font-weight: 600;
-            font-size: 11px;
-            transition: var(--transition);
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-color);
-        }
-
-        [data-theme="light"] .dashboard-nav a {
-            background: rgba(0, 0, 0, 0.05);
-        }
-
-        .dashboard-nav a:hover {
-            color: var(--text-primary);
-            background: rgba(255, 255, 255, 0.08);
-        }
-
-        [data-theme="light"] .dashboard-nav a:hover {
-            background: rgba(0, 0, 0, 0.08);
-        }
-
-        .dashboard-nav a.active {
-            color: var(--light-blue);
-            background: rgba(100, 255, 218, 0.1);
-            border-color: rgba(100, 255, 218, 0.2);
-        }
-
         /* Responsive Design */
         @media (max-width: 1200px) {
             .sidebar {
@@ -1192,6 +1230,11 @@
             
             .tools-grid {
                 grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .dashboard-nav {
+                flex-wrap: wrap;
+                justify-content: flex-start;
             }
         }
 
@@ -1223,6 +1266,11 @@
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 15px;
+            }
+            
+            .dashboard-header {
+                margin: 16px;
+                margin-bottom: 24px;
             }
         }
 
@@ -1282,6 +1330,16 @@
             .footer {
                 padding: 20px 0 0 0;
             }
+            
+            .dashboard-nav {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .nav-btn {
+                width: 100%;
+                justify-content: center;
+            }
         }
 
         @media (max-width: 576px) {
@@ -1298,16 +1356,6 @@
                 padding: 0 16px;
             }
             
-            .dashboard-nav {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .dashboard-nav a {
-                padding: 4px 8px;
-                font-size: 10px;
-            }
-
             .sheets-controls {
                 flex-wrap: wrap;
                 justify-content: center;
@@ -1325,6 +1373,10 @@
             .theme-dropdown {
                 min-width: 160px;
             }
+            
+            .dashboard-header {
+                padding: 10px;
+            }
         }
 
         @media (max-width: 400px) {
@@ -1341,6 +1393,11 @@
                 width: 40px;
                 height: 40px;
                 font-size: 18px;
+            }
+            
+            .nav-btn {
+                padding: 8px 12px;
+                font-size: 12px;
             }
         }
 
@@ -1507,20 +1564,24 @@
         <aside class="sidebar" id="sidebar">
             <div class="nav-section">
                 <div class="nav-title">Navigation</div>
-                <div class="dashboard-nav">
-                    <a href="index.html" id="homeButton">
-                        <i class="fas fa-home"></i> Home
-                    </a>
-                    <a href="kpi-dashboard.html">
-                        <i class="fas fa-chart-line"></i> Analytics
-                    </a>
-                    <a href="best-seller.html">
-                        <i class="fas fa-crown"></i> Best Sellers
-                    </a>
-                    <a href="#" class="active" id="workspaceButton">
-                        <i class="fas fa-th-large"></i> Workspace
-                    </a>
+                <div class="nav-section-title" id="dashboardLink">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Dashboard Navigation</span>
                 </div>
+                <ul class="nav-submenu">
+                    <li><a href="index.html" class="nav-link">
+                        <i class="fas fa-home"></i> Home Dashboard
+                    </a></li>
+                    <li><a href="kpi-dashboard.html" class="nav-link">
+                        <i class="fas fa-chart-bar"></i> Analytics Dashboard
+                    </a></li>
+                    <li><a href="best-seller.html" class="nav-link">
+                        <i class="fas fa-crown"></i> Best Sellers Dashboard
+                    </a></li>
+                    <li><a href="#" class="nav-link active">
+                        <i class="fas fa-th-large"></i> Enterprise Hub (Active)
+                    </a></li>
+                </ul>
             </div>
             
             <!-- Sales Operations Section -->
@@ -1593,6 +1654,31 @@
         <main class="main-content" id="mainContent">
             <!-- Content Container -->
             <div class="content-container">
+                <!-- Professional Dashboard Navigation Header -->
+                <div class="dashboard-header">
+                    <div class="dashboard-nav">
+                        <a href="index.html" class="nav-btn">
+                            <i class="fas fa-home"></i> Home
+                        </a>
+                        <a href="kpi-dashboard.html" class="nav-btn">
+                            <i class="fas fa-chart-line"></i> Analytics
+                        </a>
+                        <a href="best-seller.html" class="nav-btn">
+                            <i class="fas fa-crown"></i> Best Sellers
+                        </a>
+                        <a href="#" class="nav-btn active">
+                            <i class="fas fa-th-large"></i> Workspace
+                            <span class="nav-badge">ACTIVE</span>
+                        </a>
+                        <a href="documents.html" class="nav-btn">
+                            <i class="fas fa-file-alt"></i> Documents
+                        </a>
+                        <a href="new-arrivals.html" class="nav-btn">
+                            <i class="fas fa-box"></i> New Arrivals
+                        </a>
+                    </div>
+                </div>
+                
                 <!-- Tools Section -->
                 <section class="tools-section" id="toolsSection">
                     <div class="tools-header">
@@ -1722,7 +1808,6 @@
         const dropdownEmail = document.getElementById('dropdownEmail');
         const menuToggle = document.getElementById('menuToggle');
         const sidebar = document.getElementById('sidebar');
-        const homeButton = document.getElementById('homeButton');
         const editModeBtn = document.getElementById('editModeBtn');
         const viewModeBtn = document.getElementById('viewModeBtn');
         const fullscreenBtn = document.getElementById('fullscreenBtn');
@@ -1739,6 +1824,7 @@
         const themeDropdown = document.getElementById('themeDropdown');
         const themeOptions = document.querySelectorAll('.theme-option');
         const clearCacheBtn = document.getElementById('clearCacheBtn');
+        const dashboardLink = document.getElementById('dashboardLink');
 
         // Theme Management
         class ThemeManager {
@@ -1838,8 +1924,9 @@
             });
         }
 
-        // Module Data - EMH Sections
+        // Complete Module Data with ALL sheets and sections
         const moduleData = {
+            // Sales Operations
             "point-of-sale": {
                 title: "Point of Sale",
                 description: "Manage point of sale operations and transactions",
@@ -1884,6 +1971,13 @@
                         icon: "fas fa-ban",
                         sheetUrl: "https://docs.google.com/spreadsheets/d/1KVnZUXasm0HqXrskp7cdTrFYiGzrZs07qSzbnV9DNIs/edit",
                         badge: "Active"
+                    },
+                    { 
+                        name: "Transaction Search", 
+                        description: "Search and filter transaction history",
+                        icon: "fas fa-search",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1eLQeQqKJGZqYKRlluZTHg__V_XvSqQxv2lH_sHkMg4E/edit?usp=sharing",
+                        badge: "Active"
                     }
                 ]
             },
@@ -1904,9 +1998,18 @@
                         icon: "fas fa-money-bill-wave",
                         sheetUrl: "https://docs.google.com/spreadsheets/d/1PxLHWjimhlC-s8pQ0-SWCE2Jkg3rxRmL3lubyfE-oNo/edit",
                         badge: "Active"
+                    },
+                    { 
+                        name: "Return Reasons", 
+                        description: "Analyze return reasons and patterns",
+                        icon: "fas fa-chart-pie",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1gGD8EF8ob4U_rV8TDGlvDuMdnT2ErdgjR476CqEA8Ws/edit",
+                        badge: "Active"
                     }
                 ]
             },
+
+            // Customer Management
             "customer-database": {
                 title: "Customer Database",
                 description: "Manage customer information and relationships",
@@ -1924,6 +2027,13 @@
                         icon: "fas fa-users",
                         sheetUrl: "https://docs.google.com/spreadsheets/d/1M1pHs_X8yg72RMmW6LHyz3Zb8qbJN5pteIaJg977Xbk/edit",
                         badge: "Active"
+                    },
+                    { 
+                        name: "Customer Activity", 
+                        description: "Track customer purchase history and activity",
+                        icon: "fas fa-chart-line",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1DdJfJtZyzCDVHvF-YjY9vBsCqPq4E8gIuSxXxYqj9Ao/edit?usp=sharing",
+                        badge: "Active"
                     }
                 ]
             },
@@ -1932,10 +2042,24 @@
                 description: "Create and manage customer invoices",
                 tools: [
                     { 
+                        name: "Create Invoice", 
+                        description: "Generate customer invoices",
+                        icon: "fas fa-file-invoice",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1zKjKjKzKjKzKjKzKjKzKjKzKjKzKjKzKjKzKjKz/edit?usp=sharing",
+                        badge: "Active"
+                    },
+                    { 
                         name: "Payment Tracking", 
                         description: "Track invoice payments and status",
                         icon: "fas fa-check-circle",
                         sheetUrl: "https://docs.google.com/spreadsheets/d/1Fhpzj-Dm5YFOIRUYSHVNWyImj0uMUaGdeB3dFIDAGMM/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Invoice Archive", 
+                        description: "Archive of past invoices and records",
+                        icon: "fas fa-archive",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1archive_invoice_sheet_id/edit?usp=sharing",
                         badge: "Active"
                     }
                 ]
@@ -1957,9 +2081,18 @@
                         icon: "fas fa-gift",
                         sheetUrl: "https://docs.google.com/spreadsheets/d/1QEdFp_wblY_eaH00RwOdcY-MUqg_On6R2bnIjPPwxaQ/edit",
                         badge: "Active"
+                    },
+                    { 
+                        name: "Rewards Catalog", 
+                        description: "Catalog of loyalty rewards and benefits",
+                        icon: "fas fa-star",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/148kODEe388XlQNU_-dNZcs_ensVYoGDmYsl-ApnCLx8/edit",
+                        badge: "Active"
                     }
                 ]
             },
+
+            // Product Information
             "product-catalog": {
                 title: "Product Catalog",
                 description: "Manage product information and catalog",
@@ -1969,6 +2102,20 @@
                         description: "Detailed product information database",
                         icon: "fas fa-box",
                         sheetUrl: "https://docs.google.com/spreadsheets/d/1TaYcki7lJ1kC4q8mfNly_d_e1a7PcYV8oHotLtom5R4/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Product Categories", 
+                        description: "Organize products into categories",
+                        icon: "fas fa-tags",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1product_categories_sheet_id/edit?usp=sharing",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Product Search", 
+                        description: "Advanced product search functionality",
+                        icon: "fas fa-search",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1product_search_sheet_id/edit?usp=sharing",
                         badge: "Active"
                     }
                 ]
@@ -1992,10 +2139,24 @@
                         badge: "Active"
                     },
                     { 
+                        name: "Price Lists", 
+                        description: "Manage product price lists",
+                        icon: "fas fa-tag",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1fSQO1ec_15eCwCNIH3BWVygdmL3nPBycExTTE5isjdM/edit",
+                        badge: "Active"
+                    },
+                    { 
                         name: "Price Updates", 
                         description: "Track and manage price updates",
                         icon: "fas fa-sync-alt",
                         sheetUrl: "https://docs.google.com/spreadsheets/d/177srRZ_v9oaomBg7Osn3ut9gdAHB_zFXlhgvcmRmhkk/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Competitive Pricing", 
+                        description: "Competitive pricing analysis",
+                        icon: "fas fa-chart-bar",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1competitive_pricing_sheet_id/edit?usp=sharing",
                         badge: "Active"
                     }
                 ]
@@ -2017,9 +2178,18 @@
                         icon: "fas fa-plus-circle",
                         sheetUrl: "https://docs.google.com/spreadsheets/d/1NxmD23P2Y4nwEWK7EdrFXkXayy_LA1b0jS8XmCOolRU/edit",
                         badge: "Active"
+                    },
+                    { 
+                        name: "Promotion Results", 
+                        description: "Track promotion performance and results",
+                        icon: "fas fa-chart-line",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1_dPOvSQo5ue7SxvuVz3BotcJaIYWQL0k9Aod3O6AruE/edit",
+                        badge: "Active"
                     }
                 ]
             },
+
+            // Inventory
             "stock-levels": {
                 title: "Stock Levels",
                 description: "Monitor and manage inventory stock levels",
@@ -2036,6 +2206,13 @@
                         description: "Low stock alerts and notifications",
                         icon: "fas fa-exclamation-triangle",
                         sheetUrl: "https://docs.google.com/spreadsheets/d/12sbaXzyvK3137rz2Tx5I4TSqhzLHxcKBlvKKutQ6kPc/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Inventory Valuation", 
+                        description: "Inventory valuation and costing",
+                        icon: "fas fa-calculator",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1BzyxkoCa6RMtNvs2-AToIVKImdMvAAYWfqtWNGvFpS0/edit",
                         badge: "Active"
                     }
                 ]
@@ -2057,6 +2234,13 @@
                         icon: "fas fa-truck",
                         sheetUrl: "https://docs.google.com/spreadsheets/d/1U4c9DVC6IdDvTgcTJSH28vAlRXTnEZY6fWrdv0DlMJI/edit",
                         badge: "Active"
+                    },
+                    { 
+                        name: "Receiving", 
+                        description: "Manage inventory receiving process",
+                        icon: "fas fa-dolly",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1OElvvz5BRRjKMIiYW1YtA7fQAHT-jDZVUjfvbL0qGg0/edit",
+                        badge: "Active"
                     }
                 ]
             },
@@ -2077,9 +2261,18 @@
                         icon: "fas fa-adjust",
                         sheetUrl: "https://docs.google.com/spreadsheets/d/1s8rVN0H6LvGLRrlyuTnnmLCRC_-TwVaBLxkg9AmVlRQ/edit",
                         badge: "Active"
+                    },
+                    { 
+                        name: "Inventory Accuracy", 
+                        description: "Track inventory accuracy and variance",
+                        icon: "fas fa-check-double",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1KqLNKcdvlIysFp9UOZo3WOQFv2gxs0i2E_T_jfE73oc/edit",
+                        badge: "Active"
                     }
                 ]
             },
+
+            // Sales Analytics
             "sales-reports": {
                 title: "Sales Reports",
                 description: "Generate sales reports and analytics",
@@ -2096,6 +2289,13 @@
                         description: "Product performance analysis",
                         icon: "fas fa-chart-bar",
                         sheetUrl: "https://docs.google.com/spreadsheets/d/1VPpOrg3dRF-991iyWTHYe8PG1SX677I3IJaH2j7oLnI/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Sales by Category", 
+                        description: "Sales analysis by product category",
+                        icon: "fas fa-chart-pie",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1YuQhNl-G9YCFc7S24RdPltCT0Z2CmicAjxvFNilaGOE/edit",
                         badge: "Active"
                     }
                 ]
@@ -2117,6 +2317,13 @@
                         icon: "fas fa-chart-line",
                         sheetUrl: "https://docs.google.com/spreadsheets/d/1dXdtHwgdaV7DDDtJQCuYe0MlOkEMKc1fxQbqxfsFGw4/edit",
                         badge: "Active"
+                    },
+                    { 
+                        name: "Average Transaction", 
+                        description: "Average transaction value analysis",
+                        icon: "fas fa-dollar-sign",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1Q9E_I-o3XloXCW5zuLZLoGzgDQos2MnhRFZZcnWIMIk/edit",
+                        badge: "Active"
                     }
                 ]
             },
@@ -2129,6 +2336,13 @@
                         description: "Historical sales comparison",
                         icon: "fas fa-history",
                         sheetUrl: "https://docs.google.com/spreadsheets/d/1txg8o17LPzagzhd3h-rHKdRgVPqXNacTJ_XkbZ_wpuY/edit",
+                        badge: "Active"
+                    },
+                    { 
+                        name: "Seasonal Trends", 
+                        description: "Seasonal sales trend analysis",
+                        icon: "fas fa-sun",
+                        sheetUrl: "https://docs.google.com/spreadsheets/d/1wSTZKGsks788uqo2CXF0bJRiyb-kTGCbHeXrJMhvqtE/edit",
                         badge: "Active"
                     },
                     { 
@@ -2173,6 +2387,36 @@
             
             // Clear cache button
             clearCacheBtn.addEventListener('click', clearCache);
+            
+            // Setup dashboard navigation buttons
+            setupDashboardNavigation();
+        }
+
+        function setupDashboardNavigation() {
+            // Set active state for workspace button
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                if (btn.textContent.includes('Workspace')) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+                
+                // Add click handlers
+                btn.addEventListener('click', function(e) {
+                    if (!this.href || this.href === '#') {
+                        e.preventDefault();
+                        return;
+                    }
+                    
+                    // Show loading
+                    showLoading();
+                    
+                    // Add small delay for better UX
+                    setTimeout(() => {
+                        window.location.href = this.href;
+                    }, 300);
+                });
+            });
         }
 
         function updateOnlineStatus() {
@@ -2340,6 +2584,9 @@
                 if (!userProfile.contains(e.target)) {
                     profileDropdown.classList.remove('active');
                 }
+                if (!themeToggle.contains(e.target) && !themeDropdown.contains(e.target)) {
+                    themeDropdown.classList.remove('active');
+                }
             });
 
             // Logout from profile dropdown
@@ -2349,8 +2596,15 @@
                 auth.signOut()
                     .then(() => {
                         hideLoading();
+                        window.location.href = 'index.html';
                     })
                     .catch(console.error);
+            });
+            
+            // Dashboard link in sidebar
+            dashboardLink.addEventListener('click', () => {
+                const parent = dashboardLink.parentElement;
+                parent.classList.toggle('active');
             });
         }
 
@@ -2372,25 +2626,34 @@
 
             // Navigation section titles
             document.querySelectorAll('.nav-section-title').forEach(title => {
-                title.addEventListener('click', (e) => {
-                    const section = e.currentTarget.parentElement;
-                    const isActive = section.classList.contains('active');
-                    
-                    // Close all other sections
-                    document.querySelectorAll('.nav-section').forEach(s => {
-                        s.classList.remove('active');
+                if (title.id !== 'dashboardLink') {
+                    title.addEventListener('click', (e) => {
+                        const section = e.currentTarget.parentElement;
+                        const isActive = section.classList.contains('active');
+                        
+                        // Close all other sections
+                        document.querySelectorAll('.nav-section').forEach(s => {
+                            if (s !== section) {
+                                s.classList.remove('active');
+                            }
+                        });
+                        
+                        // Open clicked section if it wasn't already active
+                        if (!isActive) {
+                            section.classList.add('active');
+                        }
                     });
-                    
-                    // Open clicked section if it wasn't already active
-                    if (!isActive) {
-                        section.classList.add('active');
-                    }
-                });
+                }
             });
 
             // Navigation links
             document.querySelectorAll('.nav-link').forEach(link => {
                 link.addEventListener('click', (e) => {
+                    if (link.href && !link.href.includes('#')) {
+                        // External link - allow normal navigation
+                        return;
+                    }
+                    
                     e.preventDefault();
                     
                     // Remove active class from all links
@@ -2403,7 +2666,9 @@
                     
                     // Load the section
                     const section = link.dataset.section;
-                    loadSection(section);
+                    if (section) {
+                        loadSection(section);
+                    }
                     
                     // Close sidebar on mobile
                     if (window.innerWidth <= 992) {
@@ -2489,11 +2754,7 @@
         }
 
         function setupNavigation() {
-            // Home button
-            homeButton.addEventListener('click', (e) => {
-                e.preventDefault();
-                window.location.href = 'index.html';
-            });
+            // Navigation is handled by the professional dashboard navigation header
         }
 
         function loadSection(sectionId) {
@@ -2508,7 +2769,7 @@
 
             // Set section title
             const toolsTitle = document.querySelector('.tools-title');
-            toolsTitle.innerHTML = `<i class="fas fa-tools"></i> ${sectionData.title}`;
+            toolsTitle.innerHTML = `<i class="fas fa-tools"></i> ${sectionData.title} <span style="font-size: 14px; color: var(--text-secondary); margin-left: 8px;">${sectionData.description}</span>`;
 
             // Create tool cards
             sectionData.tools.forEach(tool => {
