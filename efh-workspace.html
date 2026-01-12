@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jasiri E-Hub | EFH</title>
+    <title>Jasiri E-Hub | Enterprise Finance Hub</title>
     
     <!-- Meta Tags -->
     <meta name="application-name" content="Jasiri E-Hub">
@@ -16,6 +16,19 @@
     <meta name="msapplication-TileColor" content="#0a192f">
     <meta name="msapplication-tap-highlight" content="no">
     <meta name="theme-color" content="#0a192f">
+    
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/icons/touch-icon-ipad.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/touch-icon-iphone-retina.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="/icons/touch-icon-ipad-retina.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
+    
+    <!-- Manifest -->
+    <link rel="manifest" href="/manifest.json">
     
     <!-- Stylesheets -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -31,6 +44,7 @@
             --accent-gold: #e6c78a;
             --soft-teal: #81c8be;
             --light-blue: #64ffda;
+            --purple: #9d65c9;
             --text-primary: #f0e6ef;
             --text-secondary: #b8b8d1;
             --card-bg: rgba(23, 42, 69, 0.85);
@@ -41,8 +55,66 @@
             --content-max-width: 1300px;
             --online-color: #4ade80;
             --offline-color: #f87171;
+            --background-color: #0a192f;
+            --surface-color: #172a45;
+            --border-color: rgba(255, 255, 255, 0.12);
+            --shadow-color: rgba(0, 0, 0, 0.25);
             --finance-accent: #4CAF50;
             --finance-secondary: #2E7D32;
+            --success-green: #4CAF50;
+            --warning-orange: #ff9800;
+        }
+
+        /* Light Theme Variables */
+        [data-theme="light"] {
+            --dark-blue: #f8fafc;
+            --medium-blue: #ffffff;
+            --finance-green: #2E7D32;
+            --finance-light-green: #4CAF50;
+            --accent-gold: #d97706;
+            --soft-teal: #0d9488;
+            --light-blue: #059669;
+            --purple: #7c3aed;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --background-color: #f8fafc;
+            --surface-color: #ffffff;
+            --border-color: rgba(0, 0, 0, 0.08);
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --online-color: #059669;
+            --offline-color: #dc2626;
+            --finance-accent: #2E7D32;
+            --finance-secondary: #4CAF50;
+            --success-green: #059669;
+            --warning-orange: #d97706;
+        }
+
+        /* System Theme Detection */
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme]) {
+                --dark-blue: #f8fafc;
+                --medium-blue: #ffffff;
+                --finance-green: #2E7D32;
+                --finance-light-green: #4CAF50;
+                --accent-gold: #d97706;
+                --soft-teal: #0d9488;
+                --light-blue: #059669;
+                --purple: #7c3aed;
+                --text-primary: #1e293b;
+                --text-secondary: #64748b;
+                --card-bg: rgba(255, 255, 255, 0.95);
+                --background-color: #f8fafc;
+                --surface-color: #ffffff;
+                --border-color: rgba(0, 0, 0, 0.08);
+                --shadow-color: rgba(0, 0, 0, 0.1);
+                --online-color: #059669;
+                --offline-color: #dc2626;
+                --finance-accent: #2E7D32;
+                --finance-secondary: #4CAF50;
+                --success-green: #059669;
+                --warning-orange: #d97706;
+            }
         }
 
         * {
@@ -59,12 +131,16 @@
         }
 
         body {
-            background-color: var(--dark-blue);
+            background-color: var(--background-color);
             color: var(--text-primary);
             min-height: 100vh;
             overflow-x: hidden;
             line-height: 1.5;
-            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .background-pattern {
@@ -80,14 +156,287 @@
             animation: gradientMove 30s ease infinite;
         }
         
+        [data-theme="light"] .background-pattern {
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(46, 125, 50, 0.05) 0%, transparent 50%);
+        }
+        
         @keyframes gradientMove {
             0% { background-position: 0% 0%; }
             50% { background-position: 100% 100%; }
             100% { background-position: 0% 0%; }
         }
 
+        /* Professional Navigation Styles */
+        .dashboard-header {
+            background: var(--surface-color);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            padding: 12px 16px;
+            margin-bottom: 24px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 8px var(--shadow-color);
+        }
+
+        .dashboard-nav {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 13px;
+            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            white-space: nowrap;
+        }
+
+        [data-theme="light"] .nav-btn {
+            background: rgba(0, 0, 0, 0.03);
+        }
+
+        .nav-btn:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--finance-green);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.15);
+        }
+
+        [data-theme="light"] .nav-btn:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-btn.active {
+            color: var(--finance-green);
+            background: rgba(76, 175, 80, 0.1);
+            border-color: rgba(76, 175, 80, 0.2);
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.15);
+        }
+
+        .nav-btn i {
+            font-size: 14px;
+            width: 16px;
+            text-align: center;
+        }
+
+        .nav-badge {
+            background: var(--finance-green);
+            color: white;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            margin-left: 4px;
+            font-weight: 700;
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--finance-green);
+            color: var(--finance-green);
+            transform: rotate(15deg);
+        }
+
+        .theme-toggle i {
+            font-size: 16px;
+            transition: var(--transition);
+        }
+
+        [data-theme="dark"] .theme-toggle .fa-sun,
+        [data-theme="light"] .theme-toggle .fa-moon,
+        :not([data-theme]) .theme-toggle .fa-desktop {
+            display: block;
+        }
+
+        [data-theme="dark"] .theme-toggle .fa-moon,
+        [data-theme="dark"] .theme-toggle .fa-desktop,
+        [data-theme="light"] .theme-toggle .fa-sun,
+        [data-theme="light"] .theme-toggle .fa-desktop,
+        :not([data-theme]) .theme-toggle .fa-sun,
+        :not([data-theme]) .theme-toggle .fa-moon {
+            display: none;
+        }
+
+        /* Theme Options Dropdown */
+        .theme-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            min-width: 180px;
+            box-shadow: 0 8px 32px var(--shadow-color);
+            backdrop-filter: blur(20px);
+            z-index: 1001;
+            display: none;
+            overflow: hidden;
+            animation: slideDown 0.2s ease-out;
+        }
+
+        .theme-dropdown.active {
+            display: block;
+        }
+
+        .theme-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+        }
+
+        .theme-option:hover {
+            background: rgba(76, 175, 80, 0.1);
+            color: var(--text-primary);
+        }
+
+        .theme-option.active {
+            color: var(--finance-green);
+            background: rgba(76, 175, 80, 0.08);
+        }
+
+        .theme-option i {
+            font-size: 14px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .theme-option.active i {
+            color: var(--finance-green);
+        }
+
+        /* Profile Dropdown */
+        .user-profile {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            border-radius: 7px;
+            cursor: pointer;
+            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        .user-profile:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--finance-green);
+        }
+
+        .profile-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            min-width: 220px;
+            box-shadow: 0 8px 32px var(--shadow-color);
+            backdrop-filter: blur(20px);
+            z-index: 1001;
+            display: none;
+            overflow: hidden;
+        }
+
+        .profile-dropdown.active {
+            display: block;
+            animation: slideDown 0.2s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .dropdown-header {
+            padding: 16px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .dropdown-header .user-avatar {
+            width: 40px;
+            height: 40px;
+            font-size: 14px;
+        }
+
+        .dropdown-header .user-info {
+            flex: 1;
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .dropdown-item:hover {
+            background: rgba(76, 175, 80, 0.1);
+            color: var(--text-primary);
+        }
+
+        .dropdown-item.logout {
+            color: #ff6b6b;
+            border-top: 1px solid rgba(255, 107, 139, 0.1);
+            background: rgba(255, 107, 139, 0.05);
+        }
+
+        .dropdown-item.logout:hover {
+            background: rgba(255, 107, 139, 0.15);
+            color: #ff5252;
+        }
+
         /* Loading Spinner */
         .loading-spinner {
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
@@ -95,11 +444,14 @@
             height: 100%;
             background: rgba(10, 25, 47, 0.95);
             z-index: 10003;
-            display: flex;
             align-items: center;
             justify-content: center;
             flex-direction: column;
             gap: 16px;
+        }
+
+        [data-theme="light"] .loading-spinner {
+            background: rgba(248, 250, 252, 0.95);
         }
 
         .loader {
@@ -156,6 +508,85 @@
             border: 1px solid rgba(248, 113, 113, 0.25);
         }
 
+        /* Syncing Indicator */
+        .sync-status {
+            position: fixed;
+            bottom: 70px;
+            right: 15px;
+            background: var(--surface-color);
+            border-radius: var(--border-radius);
+            padding: 10px 14px;
+            font-size: 12px;
+            display: none;
+            align-items: center;
+            gap: 8px;
+            z-index: 10000;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 3px 15px var(--shadow-color);
+            backdrop-filter: blur(10px);
+        }
+        
+        .sync-status.syncing {
+            color: var(--accent-gold);
+        }
+        
+        .sync-status.synced {
+            color: var(--soft-teal);
+        }
+        
+        .sync-status i {
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Update Available Banner */
+        .update-banner {
+            position: fixed;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--surface-color);
+            border: 1px solid rgba(230, 199, 138, 0.3);
+            border-radius: var(--border-radius);
+            padding: 10px 16px;
+            display: none;
+            align-items: center;
+            gap: 10px;
+            z-index: 10002;
+            box-shadow: 0 4px 20px var(--shadow-color);
+            backdrop-filter: blur(10px);
+            max-width: 380px;
+            width: 90%;
+        }
+        
+        .update-banner-content {
+            flex: 1;
+            font-size: 12px;
+            color: var(--text-primary);
+        }
+        
+        .update-btn {
+            padding: 5px 10px;
+            background: var(--accent-gold);
+            color: var(--dark-blue);
+            border: none;
+            border-radius: 5px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+        
+        .update-btn:hover {
+            background: #f0d5a5;
+            transform: translateY(-1px);
+        }
+
         /* Access Denied Message */
         .access-denied {
             position: fixed;
@@ -163,7 +594,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(10, 25, 47, 0.95);
+            background: var(--background-color);
             display: none;
             flex-direction: column;
             justify-content: center;
@@ -171,6 +602,7 @@
             z-index: 10000;
             text-align: center;
             padding: 20px;
+            backdrop-filter: blur(10px);
         }
         
         .access-denied h2 {
@@ -212,6 +644,7 @@
             display: none;
             height: 100vh;
             width: 100%;
+            max-width: 100vw;
             overflow: hidden;
         }
 
@@ -229,8 +662,13 @@
             justify-content: space-between;
             padding: 0 24px;
             z-index: 1000;
-            border-bottom: 1px solid rgba(76, 175, 80, 0.2);
+            border-bottom: 1px solid var(--border-color);
             width: 100%;
+        }
+
+        [data-theme="light"] .top-nav {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(15px);
         }
 
         .nav-left {
@@ -283,24 +721,7 @@
         .nav-right {
             display: flex;
             align-items: center;
-            gap: 14px;
-        }
-
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 6px 12px;
-            border-radius: 7px;
-            cursor: pointer;
-            transition: var(--transition);
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .user-profile:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.12);
+            gap: 12px;
         }
 
         .user-avatar {
@@ -331,27 +752,6 @@
             letter-spacing: 0.2px;
         }
 
-        .logout-btn {
-            background: rgba(76, 175, 80, 0.1);
-            color: var(--finance-green);
-            border: 1px solid rgba(76, 175, 80, 0.2);
-            padding: 6px 12px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 11px;
-            font-weight: 600;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .logout-btn:hover {
-            background: rgba(76, 175, 80, 0.15);
-            border-color: var(--finance-green);
-            transform: translateY(-1px);
-        }
-
         /* Sidebar */
         .sidebar {
             position: fixed;
@@ -361,11 +761,16 @@
             height: calc(100vh - var(--topbar-height));
             background: rgba(23, 42, 69, 0.98);
             backdrop-filter: blur(15px);
-            border-right: 1px solid rgba(76, 175, 80, 0.2);
+            border-right: 1px solid var(--border-color);
             padding: 24px 0;
             overflow-y: auto;
             transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 999;
+        }
+
+        [data-theme="light"] .sidebar {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(15px);
         }
 
         .nav-section {
@@ -510,7 +915,7 @@
             background: var(--card-bg);
             border-radius: var(--border-radius);
             padding: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border: 1px solid var(--border-color);
             transition: var(--transition);
             cursor: pointer;
             display: flex;
@@ -518,7 +923,7 @@
             align-items: flex-start;
             text-align: left;
             height: 100%;
-            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 3px 15px var(--shadow-color);
         }
 
         .tool-card:hover {
@@ -586,7 +991,7 @@
             left: var(--sidebar-width);
             right: 0;
             bottom: 0;
-            background: var(--dark-blue);
+            background: var(--background-color);
             z-index: 998;
             display: none;
             flex-direction: column;
@@ -598,9 +1003,9 @@
         .sheets-card {
             background: var(--card-bg);
             border-radius: var(--border-radius);
-            border: 1px solid rgba(76, 175, 80, 0.2);
+            border: 1px solid var(--border-color);
             overflow: hidden;
-            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 6px 24px var(--shadow-color);
             display: flex;
             flex-direction: column;
             height: 100%;
@@ -609,13 +1014,17 @@
         .sheets-header {
             background: rgba(10, 25, 47, 0.5);
             padding: 16px 24px;
-            border-bottom: 1px solid rgba(76, 175, 80, 0.2);
+            border-bottom: 1px solid var(--border-color);
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             gap: 15px;
             flex-shrink: 0;
+        }
+
+        [data-theme="light"] .sheets-header {
+            background: rgba(255, 255, 255, 0.5);
         }
 
         .sheets-title {
@@ -640,7 +1049,7 @@
         .sheets-control-btn {
             background: rgba(255, 255, 255, 0.05);
             color: var(--text-secondary);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border-color);
             padding: 6px 12px;
             border-radius: 6px;
             font-size: 12px;
@@ -652,9 +1061,17 @@
             gap: 5px;
         }
 
+        [data-theme="light"] .sheets-control-btn {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
         .sheets-control-btn:hover {
             background: rgba(255, 255, 255, 0.08);
             color: var(--text-primary);
+        }
+
+        [data-theme="light"] .sheets-control-btn:hover {
+            background: rgba(0, 0, 0, 0.08);
         }
 
         .sheets-control-btn.active {
@@ -701,6 +1118,10 @@
             padding: 20px;
         }
         
+        [data-theme="light"] .sheet-loader {
+            background: rgba(248, 250, 252, 0.95);
+        }
+        
         .sheet-loader-text {
             color: var(--finance-green);
             margin-top: 20px;
@@ -733,11 +1154,16 @@
             max-width: 80%;
         }
 
+        [data-theme="light"] .current-sheet-info {
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--finance-green);
+        }
+
         /* Footer */
         .footer {
             margin-top: auto;
             padding: 24px 0 0 0;
-            border-top: 1px solid rgba(76, 175, 80, 0.2);
+            border-top: 1px solid var(--border-color);
             text-align: center;
             color: var(--text-secondary);
             font-size: 12px;
@@ -772,34 +1198,24 @@
             color: var(--text-secondary);
         }
 
-        /* Dashboard Navigation */
-        .dashboard-nav {
+        .footer-links {
             display: flex;
-            gap: 10px;
-            margin-top: 8px;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 16px;
+            flex-wrap: wrap;
         }
 
-        .dashboard-nav a {
-            padding: 6px 12px;
-            border-radius: 6px;
-            text-decoration: none;
+        .footer-link {
             color: var(--text-secondary);
-            font-weight: 600;
-            font-size: 11px;
-            transition: var(--transition);
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 12px;
+            font-weight: 500;
         }
 
-        .dashboard-nav a:hover {
-            color: var(--text-primary);
-            background: rgba(255, 255, 255, 0.08);
-        }
-
-        .dashboard-nav a.active {
+        .footer-link:hover {
             color: var(--finance-green);
-            background: rgba(76, 175, 80, 0.1);
-            border-color: rgba(76, 175, 80, 0.2);
         }
 
         /* Responsive Design */
@@ -824,6 +1240,11 @@
             .tools-grid {
                 grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             }
+            
+            .dashboard-nav {
+                flex-wrap: wrap;
+                justify-content: flex-start;
+            }
         }
 
         @media (max-width: 992px) {
@@ -838,7 +1259,7 @@
             
             .sidebar.active {
                 transform: translateX(0);
-                box-shadow: 6px 0 30px rgba(0, 0, 0, 0.3);
+                box-shadow: 6px 0 30px var(--shadow-color);
             }
             
             .main-content {
@@ -856,8 +1277,9 @@
                 gap: 15px;
             }
             
-            .nav-right {
-                gap: 10px;
+            .dashboard-header {
+                margin: 16px;
+                margin-bottom: 24px;
             }
         }
 
@@ -907,10 +1329,6 @@
                 padding: 5px 8px;
             }
             
-            .logout-btn span {
-                display: none;
-            }
-            
             .current-sheet-info {
                 font-size: 11px;
                 padding: 6px 12px;
@@ -920,6 +1338,16 @@
 
             .footer {
                 padding: 20px 0 0 0;
+            }
+            
+            .dashboard-nav {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .nav-btn {
+                width: 100%;
+                justify-content: center;
             }
         }
 
@@ -937,16 +1365,6 @@
                 padding: 0 16px;
             }
             
-            .dashboard-nav {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .dashboard-nav a {
-                padding: 4px 8px;
-                font-size: 10px;
-            }
-
             .sheets-controls {
                 flex-wrap: wrap;
                 justify-content: center;
@@ -956,19 +1374,23 @@
                 padding: 5px 10px;
                 font-size: 11px;
             }
+            
+            .profile-dropdown {
+                min-width: 180px;
+            }
+            
+            .theme-dropdown {
+                min-width: 160px;
+            }
+            
+            .dashboard-header {
+                padding: 10px;
+            }
         }
 
         @media (max-width: 400px) {
             .brand-text {
                 font-size: 15px;
-            }
-            
-            .nav-right {
-                gap: 6px;
-            }
-            
-            .logout-btn {
-                padding: 5px 8px;
             }
             
             .sheet-loader-text {
@@ -980,6 +1402,41 @@
                 width: 40px;
                 height: 40px;
                 font-size: 18px;
+            }
+            
+            .nav-btn {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .loading-spinner,
+            .access-denied,
+            .top-nav,
+            .sidebar,
+            .connection-status,
+            .sync-status,
+            .update-banner,
+            .footer {
+                display: none !important;
+            }
+            
+            .main-content {
+                margin: 0;
+                padding: 20px;
+                width: 100%;
+            }
+            
+            .tool-card,
+            .sheets-card {
+                border: 1px solid #ddd;
+            }
+            
+            body {
+                background: white !important;
+                color: black !important;
             }
         }
 
@@ -1008,6 +1465,20 @@
         <span>Online</span>
     </div>
 
+    <!-- Syncing Indicator -->
+    <div class="sync-status" id="syncStatus">
+        <i class="fas fa-sync-alt"></i>
+        <span>Syncing financial data...</span>
+    </div>
+
+    <!-- Update Available Banner -->
+    <div class="update-banner" id="updateBanner">
+        <div class="update-banner-content">
+            New financial tools available. Update for latest features.
+        </div>
+        <button class="update-btn" id="updateBtn">Update</button>
+    </div>
+
     <!-- Access Denied Message -->
     <div class="access-denied" id="accessDenied">
         <h2>🔒 Access Restricted</h2>
@@ -1028,23 +1499,73 @@
                         <i class="fas fa-chart-line"></i>
                     </div>
                     <div>
-                        <div class="brand-text">Enterprise Finance Hub</div>
-                        <div class="brand-subtitle">DSOG Financial Solutions</div>
+                        <div class="brand-text">Jasiri E-Hub</div>
+                        <div class="brand-subtitle">Enterprise Finance Hub</div>
                     </div>
                 </div>
             </div>
             
             <div class="nav-right">
+                <!-- Theme Toggle -->
+                <div class="theme-toggle-wrapper" style="position: relative;">
+                    <button class="theme-toggle" id="themeToggle">
+                        <i class="fas fa-sun"></i>
+                        <i class="fas fa-moon"></i>
+                        <i class="fas fa-desktop"></i>
+                    </button>
+                    <div class="theme-dropdown" id="themeDropdown">
+                        <div class="theme-option" data-theme="system">
+                            <i class="fas fa-desktop"></i>
+                            <span>System</span>
+                        </div>
+                        <div class="theme-option" data-theme="light">
+                            <i class="fas fa-sun"></i>
+                            <span>Light</span>
+                        </div>
+                        <div class="theme-option" data-theme="dark">
+                            <i class="fas fa-moon"></i>
+                            <span>Dark</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- User Profile -->
                 <div class="user-profile" id="userProfile">
                     <div class="user-avatar" id="userAvatar">CF</div>
                     <div class="user-info">
                         <div class="user-name" id="userName">Chief Financial</div>
                         <div class="user-role" id="userRole">Finance Manager</div>
                     </div>
+                    <i class="fas fa-chevron-down" style="font-size: 12px; margin-left: 8px;"></i>
+                    
+                    <!-- Profile Dropdown -->
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <div class="dropdown-header">
+                            <div class="user-avatar" id="dropdownAvatar">CF</div>
+                            <div>
+                                <div class="user-name" id="dropdownName">Chief Financial</div>
+                                <div class="user-role" id="dropdownEmail">finance@dsog.com</div>
+                            </div>
+                        </div>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-user"></i>
+                            <span>My Profile</span>
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Security</span>
+                        </a>
+                        <div style="height: 1px; background: var(--border-color); margin: 4px 0;"></div>
+                        <a href="#" class="dropdown-item logout" id="profileLogout">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Log Out</span>
+                        </a>
+                    </div>
                 </div>
-                <button class="logout-btn" id="logoutBtn">
-                    <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
-                </button>
             </div>
         </nav>
 
@@ -1052,14 +1573,27 @@
         <aside class="sidebar" id="sidebar">
             <div class="nav-section">
                 <div class="nav-title">Navigation</div>
-                <div class="dashboard-nav">
-                    <a href="index.html" id="homeButton">
-                        <i class="fas fa-home"></i> Home
-                    </a>
-                    <a href="#" class="active" id="workspaceButton">
-                        <i class="fas fa-th-large"></i> Workspace
-                    </a>
+                <div class="nav-section-title" id="dashboardLink">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Dashboard Navigation</span>
                 </div>
+                <ul class="nav-submenu">
+                    <li><a href="index.html" class="nav-link">
+                        <i class="fas fa-home"></i> Home Dashboard
+                    </a></li>
+                    <li><a href="kpi-dashboard.html" class="nav-link">
+                        <i class="fas fa-chart-bar"></i> Analytics Dashboard
+                    </a></li>
+                    <li><a href="best-seller.html" class="nav-link">
+                        <i class="fas fa-crown"></i> Best Sellers Dashboard
+                    </a></li>
+                    <li><a href="erh.html" class="nav-link">
+                        <i class="fas fa-boxes"></i> Resource Hub
+                    </a></li>
+                    <li><a href="#" class="nav-link active">
+                        <i class="fas fa-th-large"></i> Finance Hub (Active)
+                    </a></li>
+                </ul>
             </div>
             
             <!-- Accounting Section -->
@@ -1158,6 +1692,27 @@
         <main class="main-content" id="mainContent">
             <!-- Content Container -->
             <div class="content-container">
+                <!-- Professional Dashboard Navigation Header -->
+                <div class="dashboard-header">
+                    <div class="dashboard-nav">
+                        <a href="index.html" class="nav-btn">
+                            <i class="fas fa-home"></i> Home
+                        </a>
+                        <a href="kpi-dashboard.html" class="nav-btn">
+                            <i class="fas fa-chart-line"></i> Analytics
+                        </a>
+                        <a href="best-seller.html" class="nav-btn">
+                            <i class="fas fa-crown"></i> Best Sellers
+                        </a>
+                        <a href="erh.html" class="nav-btn">
+                            <i class="fas fa-boxes"></i> Resource Hub
+                        </a>
+                        <a href="#" class="nav-btn active">
+                            <i class="fas fa-chart-pie"></i> Finance Hub
+                        </a>
+                    </div>
+                </div>
+                
                 <!-- Tools Section -->
                 <section class="tools-section" id="toolsSection">
                     <div class="tools-header">
@@ -1180,6 +1735,14 @@
                             <div class="footer-version">
                                 Version 2.1 • Secure Connection • Offline Capable • Financial Grade Security
                             </div>
+                        </div>
+                        <div class="footer-links">
+                            <a href="#" class="footer-link">Support</a>
+                            <a href="#" class="footer-link">Documentation</a>
+                            <a href="#" class="footer-link">Privacy</a>
+                            <a href="#" class="footer-link">Terms</a>
+                            <a href="#" class="footer-link">Contact</a>
+                            <a href="#" class="footer-link" id="clearCacheBtn">Clear Cache</a>
                         </div>
                     </footer>
                 </section>
@@ -1255,12 +1818,18 @@
         let currentSheetName = '';
         let currentSheetId = '';
         let currentViewMode = 'view';
+        let isOnline = navigator.onLine;
+        let syncInterval = null;
+        let lastSyncTime = new Date();
 
         // DOM Elements
         const loadingSpinner = document.getElementById('loadingSpinner');
         const accessDenied = document.getElementById('accessDenied');
         const appContainer = document.getElementById('appContainer');
         const connectionStatus = document.getElementById('connectionStatus');
+        const syncStatus = document.getElementById('syncStatus');
+        const updateBanner = document.getElementById('updateBanner');
+        const updateBtn = document.getElementById('updateBtn');
         const sheetLoader = document.getElementById('sheetLoader');
         const sheetLoaderText = document.getElementById('sheetLoaderText');
         const currentSheetInfo = document.getElementById('currentSheetInfo');
@@ -1268,10 +1837,11 @@
         const userAvatar = document.getElementById('userAvatar');
         const userName = document.getElementById('userName');
         const userRole = document.getElementById('userRole');
-        const logoutBtn = document.getElementById('logoutBtn');
+        const dropdownAvatar = document.getElementById('dropdownAvatar');
+        const dropdownName = document.getElementById('dropdownName');
+        const dropdownEmail = document.getElementById('dropdownEmail');
         const menuToggle = document.getElementById('menuToggle');
         const sidebar = document.getElementById('sidebar');
-        const homeButton = document.getElementById('homeButton');
         const editModeBtn = document.getElementById('editModeBtn');
         const viewModeBtn = document.getElementById('viewModeBtn');
         const fullscreenBtn = document.getElementById('fullscreenBtn');
@@ -1281,8 +1851,114 @@
         const toolsSection = document.getElementById('toolsSection');
         const sheetsContainer = document.getElementById('sheetsContainer');
         const toolsGrid = document.getElementById('toolsGrid');
+        const userProfile = document.getElementById('userProfile');
+        const profileDropdown = document.getElementById('profileDropdown');
+        const profileLogout = document.getElementById('profileLogout');
+        const themeToggle = document.getElementById('themeToggle');
+        const themeDropdown = document.getElementById('themeDropdown');
+        const themeOptions = document.querySelectorAll('.theme-option');
+        const clearCacheBtn = document.getElementById('clearCacheBtn');
+        const dashboardLink = document.getElementById('dashboardLink');
 
-        // Module Data - Complete Financial Modules
+        // Theme Management
+        class ThemeManager {
+            constructor() {
+                this.theme = localStorage.getItem('theme') || 'system';
+                this.init();
+            }
+
+            init() {
+                this.applyTheme();
+                this.setupEventListeners();
+                this.updateActiveThemeOption();
+            }
+
+            applyTheme() {
+                if (this.theme === 'system') {
+                    document.documentElement.removeAttribute('data-theme');
+                    localStorage.removeItem('theme');
+                } else {
+                    document.documentElement.setAttribute('data-theme', this.theme);
+                    localStorage.setItem('theme', this.theme);
+                }
+            }
+
+            setTheme(theme) {
+                this.theme = theme;
+                this.applyTheme();
+                this.updateActiveThemeOption();
+            }
+
+            setupEventListeners() {
+                // Theme toggle click
+                themeToggle.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    themeDropdown.classList.toggle('active');
+                });
+
+                // Theme options click
+                themeOptions.forEach(option => {
+                    option.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const theme = option.getAttribute('data-theme');
+                        this.setTheme(theme);
+                        themeDropdown.classList.remove('active');
+                    });
+                });
+
+                // Close dropdown when clicking outside
+                document.addEventListener('click', (e) => {
+                    if (!themeToggle.contains(e.target) && !themeDropdown.contains(e.target)) {
+                        themeDropdown.classList.remove('active');
+                    }
+                });
+
+                // Listen for system theme changes
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+                    if (this.theme === 'system') {
+                        this.applyTheme();
+                    }
+                });
+            }
+
+            updateActiveThemeOption() {
+                themeOptions.forEach(option => {
+                    const optionTheme = option.getAttribute('data-theme');
+                    if (optionTheme === this.theme) {
+                        option.classList.add('active');
+                    } else {
+                        option.classList.remove('active');
+                    }
+                });
+            }
+        }
+
+        // Initialize Theme Manager
+        const themeManager = new ThemeManager();
+
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registered: ', registration.scope);
+                        
+                        registration.addEventListener('updatefound', () => {
+                            const newWorker = registration.installing;
+                            newWorker.addEventListener('statechange', () => {
+                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                    showUpdateBanner();
+                                }
+                            });
+                        });
+                    })
+                    .catch(error => {
+                        console.log('ServiceWorker registration failed: ', error);
+                    });
+            });
+        }
+
+        // Module Data - Complete Financial Modules (Retained from original EFH)
         const moduleData = {
             // Accounting
             "general-ledger": {
@@ -2167,33 +2843,141 @@
 
         function initializeApp() {
             // Check initial connection status
-            updateConnectionStatus();
+            updateOnlineStatus();
             
             // Set up connection status listeners
-            window.addEventListener('online', updateConnectionStatus);
-            window.addEventListener('offline', updateConnectionStatus);
+            window.addEventListener('online', updateOnlineStatus);
+            window.addEventListener('offline', updateOnlineStatus);
             
             // Check authentication
             checkAuth();
             
             // Set current year in footer
             document.getElementById('year').textContent = new Date().getFullYear();
+            
+            // Setup update button
+            updateBtn.addEventListener('click', () => {
+                if ('serviceWorker' in navigator) {
+                    navigator.serviceWorker.ready.then(registration => {
+                        registration.update();
+                        hideUpdateBanner();
+                    });
+                }
+            });
+            
+            // Clear cache button
+            clearCacheBtn.addEventListener('click', clearCache);
+            
+            // Setup dashboard navigation buttons
+            setupDashboardNavigation();
         }
 
-        function updateConnectionStatus() {
-            if (navigator.onLine) {
-                connectionStatus.className = 'connection-status online';
-                connectionStatus.innerHTML = '<i class="fas fa-circle"></i> <span>Online</span>';
-                connectionStatus.style.display = 'flex';
+        function setupDashboardNavigation() {
+            // Set active state for finance hub button
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                if (btn.textContent.includes('Finance Hub')) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
                 
-                setTimeout(() => {
-                    connectionStatus.style.display = 'none';
-                }, 3000);
+                // Add click handlers
+                btn.addEventListener('click', function(e) {
+                    if (!this.href || this.href === '#') {
+                        e.preventDefault();
+                        return;
+                    }
+                    
+                    // Show loading
+                    showLoading();
+                    
+                    // Add small delay for better UX
+                    setTimeout(() => {
+                        window.location.href = this.href;
+                    }, 300);
+                });
+            });
+        }
+
+        function updateOnlineStatus() {
+            isOnline = navigator.onLine;
+            
+            if (isOnline) {
+                connectionStatus.innerHTML = '<i class="fas fa-circle"></i><span>Online</span>';
+                connectionStatus.className = 'connection-status online';
+                
+                if (auth.currentUser) {
+                    syncData();
+                }
             } else {
+                connectionStatus.innerHTML = '<i class="fas fa-circle"></i><span>Offline</span>';
                 connectionStatus.className = 'connection-status offline';
-                connectionStatus.innerHTML = '<i class="fas fa-circle"></i> <span>Offline</span>';
-                connectionStatus.style.display = 'flex';
             }
+            
+            connectionStatus.style.display = 'flex';
+            setTimeout(() => {
+                connectionStatus.style.display = 'none';
+            }, 3000);
+        }
+
+        // Sync Data
+        function syncData() {
+            if (!isOnline) {
+                showSyncStatus('offline');
+                return;
+            }
+            
+            showSyncStatus('syncing');
+            
+            setTimeout(() => {
+                showSyncStatus('synced');
+            }, 1500);
+        }
+
+        // Show Sync Status
+        function showSyncStatus(status) {
+            if (status === 'syncing') {
+                syncStatus.innerHTML = '<i class="fas fa-sync-alt"></i><span>Syncing financial data...</span>';
+                syncStatus.className = 'sync-status syncing';
+            } else if (status === 'synced') {
+                syncStatus.innerHTML = '<i class="fas fa-check-circle"></i><span>Financial data synced</span>';
+                syncStatus.className = 'sync-status synced';
+            } else if (status === 'offline') {
+                syncStatus.innerHTML = '<i class="fas fa-wifi-slash"></i><span>Cannot sync - Offline</span>';
+                syncStatus.className = 'sync-status offline';
+            }
+            
+            syncStatus.style.display = 'flex';
+            setTimeout(() => {
+                syncStatus.style.display = 'none';
+            }, 3000);
+        }
+
+        // Start Sync Interval
+        function startSyncInterval() {
+            syncInterval = setInterval(() => {
+                if (isOnline && auth.currentUser) {
+                    syncData();
+                }
+            }, 5 * 60 * 1000);
+        }
+
+        // Show Update Banner
+        function showUpdateBanner() {
+            updateBanner.style.display = 'flex';
+        }
+
+        function hideUpdateBanner() {
+            updateBanner.style.display = 'none';
+        }
+
+        // Show/Hide Loading Spinner
+        function showLoading() {
+            loadingSpinner.style.display = 'flex';
+        }
+
+        function hideLoading() {
+            loadingSpinner.style.display = 'none';
         }
 
         function checkAuth() {
@@ -2234,6 +3018,9 @@
             
             // Load default section
             loadSection('general-ledger');
+            
+            // Start sync interval
+            startSyncInterval();
         }
 
         function updateUserInfo(user) {
@@ -2241,9 +3028,15 @@
             const firstName = displayName.split(' ')[0];
             const lastName = displayName.split(' ')[1] || '';
             
-            userAvatar.textContent = (firstName[0] + (lastName[0] || '')).toUpperCase();
+            const initials = (firstName[0] + (lastName[0] || '')).toUpperCase();
+            userAvatar.textContent = initials;
             userName.textContent = displayName;
-            userRole.textContent = 'Finance Manager';
+            userRole.textContent = user.email.includes('finance') ? 'Finance Manager' : 'Financial Analyst';
+            
+            // Update dropdown info
+            dropdownAvatar.textContent = initials;
+            dropdownName.textContent = displayName;
+            dropdownEmail.textContent = user.email;
         }
 
         // Application Initialization
@@ -2259,19 +3052,46 @@
             
             // Setup sheet controls
             setupSheetControls();
+            
+            // Profile dropdown functionality
+            userProfile.addEventListener('click', function(e) {
+                e.stopPropagation();
+                profileDropdown.classList.toggle('active');
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!userProfile.contains(e.target)) {
+                    profileDropdown.classList.remove('active');
+                }
+                if (!themeToggle.contains(e.target) && !themeDropdown.contains(e.target)) {
+                    themeDropdown.classList.remove('active');
+                }
+            });
+
+            // Logout from profile dropdown
+            profileLogout.addEventListener('click', function(e) {
+                e.preventDefault();
+                showLoading();
+                auth.signOut()
+                    .then(() => {
+                        hideLoading();
+                        window.location.href = 'index.html';
+                    })
+                    .catch(console.error);
+            });
+            
+            // Dashboard link in sidebar
+            dashboardLink.addEventListener('click', () => {
+                const parent = dashboardLink.parentElement;
+                parent.classList.toggle('active');
+            });
         }
 
         function setupEventListeners() {
             // Menu toggle
             menuToggle.addEventListener('click', () => {
                 sidebar.classList.toggle('active');
-            });
-
-            // Logout button
-            logoutBtn.addEventListener('click', () => {
-                auth.signOut().then(() => {
-                    window.location.href = 'index.html';
-                });
             });
 
             // Close sidebar when clicking outside on mobile
@@ -2286,25 +3106,34 @@
 
             // Navigation section titles
             document.querySelectorAll('.nav-section-title').forEach(title => {
-                title.addEventListener('click', (e) => {
-                    const section = e.currentTarget.parentElement;
-                    const isActive = section.classList.contains('active');
-                    
-                    // Close all other sections
-                    document.querySelectorAll('.nav-section').forEach(s => {
-                        s.classList.remove('active');
+                if (title.id !== 'dashboardLink') {
+                    title.addEventListener('click', (e) => {
+                        const section = e.currentTarget.parentElement;
+                        const isActive = section.classList.contains('active');
+                        
+                        // Close all other sections
+                        document.querySelectorAll('.nav-section').forEach(s => {
+                            if (s !== section) {
+                                s.classList.remove('active');
+                            }
+                        });
+                        
+                        // Open clicked section if it wasn't already active
+                        if (!isActive) {
+                            section.classList.add('active');
+                        }
                     });
-                    
-                    // Open clicked section if it wasn't already active
-                    if (!isActive) {
-                        section.classList.add('active');
-                    }
-                });
+                }
             });
 
             // Navigation links
             document.querySelectorAll('.nav-link').forEach(link => {
                 link.addEventListener('click', (e) => {
+                    if (link.href && !link.href.includes('#')) {
+                        // External link - allow normal navigation
+                        return;
+                    }
+                    
                     e.preventDefault();
                     
                     // Remove active class from all links
@@ -2317,7 +3146,9 @@
                     
                     // Load the section
                     const section = link.dataset.section;
-                    loadSection(section);
+                    if (section) {
+                        loadSection(section);
+                    }
                     
                     // Close sidebar on mobile
                     if (window.innerWidth <= 992) {
@@ -2403,17 +3234,7 @@
         }
 
         function setupNavigation() {
-            // Home button
-            homeButton.addEventListener('click', (e) => {
-                e.preventDefault();
-                window.location.href = 'index.html';
-            });
-
-            // Workspace button
-            document.getElementById('workspaceButton').addEventListener('click', (e) => {
-                e.preventDefault();
-                // Already on workspace page
-            });
+            // Navigation is handled by the professional dashboard navigation header
         }
 
         function loadSection(sectionId) {
@@ -2428,7 +3249,7 @@
 
             // Set section title
             const toolsTitle = document.querySelector('.tools-title');
-            toolsTitle.innerHTML = `<i class="fas fa-tools"></i> ${sectionData.title}`;
+            toolsTitle.innerHTML = `<i class="fas fa-tools"></i> ${sectionData.title} <span style="font-size: 14px; color: var(--text-secondary); margin-left: 8px;">${sectionData.description}</span>`;
 
             // Create tool cards
             sectionData.tools.forEach(tool => {
@@ -2524,6 +3345,44 @@
                 sheetLoader.style.display = 'none';
             }, 3000);
         }
+
+        // Local Storage Functions
+        function clearCache() {
+            if (confirm('Clear all cached financial data? This will remove offline data.')) {
+                showLoading();
+                
+                Object.keys(localStorage).forEach(key => {
+                    if (key.startsWith('jasiri_') || key.startsWith('finance_')) {
+                        localStorage.removeItem(key);
+                    }
+                });
+                
+                if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+                    navigator.serviceWorker.controller.postMessage({type: 'CLEAR_CACHE'});
+                }
+                
+                setTimeout(() => {
+                    hideLoading();
+                    alert('Cache cleared successfully');
+                    location.reload();
+                }, 1000);
+            }
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', () => {
+            auth.onAuthStateChanged((user) => {
+                if (!user) {
+                    // Show loading initially
+                    showLoading();
+                    setTimeout(() => {
+                        if (!auth.currentUser) {
+                            checkAuth();
+                        }
+                    }, 2000);
+                }
+            });
+        });
     </script>
 </body>
 </html>
