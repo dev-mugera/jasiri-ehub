@@ -17,13 +17,26 @@
     <meta name="msapplication-tap-highlight" content="no">
     <meta name="theme-color" content="#0a192f">
     
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/icons/touch-icon-ipad.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/touch-icon-iphone-retina.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="/icons/touch-icon-ipad-retina.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
+    
+    <!-- Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    
     <!-- Stylesheets -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            /* Professional DSOG Theme */
+            /* Professional DSOG Theme - Default Dark */
             --dark-blue: #0a192f;
             --medium-blue: #172a45;
             --light-pink: #ff6b8b;
@@ -40,6 +53,56 @@
             --content-max-width: 1300px;
             --online-color: #4ade80;
             --offline-color: #f87171;
+            --background-color: #0a192f;
+            --surface-color: #172a45;
+            --border-color: rgba(255, 255, 255, 0.12);
+            --shadow-color: rgba(0, 0, 0, 0.25);
+            --success-green: #4CAF50;
+            --warning-orange: #ff9800;
+        }
+
+        /* Light Theme Variables */
+        [data-theme="light"] {
+            --dark-blue: #f8fafc;
+            --medium-blue: #ffffff;
+            --light-pink: #e11d48;
+            --accent-gold: #d97706;
+            --soft-teal: #0d9488;
+            --light-blue: #059669;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --background-color: #f8fafc;
+            --surface-color: #ffffff;
+            --border-color: rgba(0, 0, 0, 0.08);
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --online-color: #059669;
+            --offline-color: #dc2626;
+            --success-green: #059669;
+            --warning-orange: #d97706;
+        }
+
+        /* System Theme Detection */
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme]) {
+                --dark-blue: #f8fafc;
+                --medium-blue: #ffffff;
+                --light-pink: #e11d48;
+                --accent-gold: #d97706;
+                --soft-teal: #0d9488;
+                --light-blue: #059669;
+                --text-primary: #1e293b;
+                --text-secondary: #64748b;
+                --card-bg: rgba(255, 255, 255, 0.95);
+                --background-color: #f8fafc;
+                --surface-color: #ffffff;
+                --border-color: rgba(0, 0, 0, 0.08);
+                --shadow-color: rgba(0, 0, 0, 0.1);
+                --online-color: #059669;
+                --offline-color: #dc2626;
+                --success-green: #059669;
+                --warning-orange: #d97706;
+            }
         }
 
         * {
@@ -56,12 +119,16 @@
         }
 
         body {
-            background-color: var(--dark-blue);
+            background-color: var(--background-color);
             color: var(--text-primary);
             min-height: 100vh;
             overflow-x: hidden;
             line-height: 1.5;
-            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .background-pattern {
@@ -77,14 +144,214 @@
             animation: gradientMove 30s ease infinite;
         }
         
+        [data-theme="light"] .background-pattern {
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(5, 150, 105, 0.05) 0%, transparent 50%);
+        }
+        
         @keyframes gradientMove {
             0% { background-position: 0% 0%; }
             50% { background-position: 100% 100%; }
             100% { background-position: 0% 0%; }
         }
 
+        /* Theme Toggle Button */
+        .theme-toggle {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--light-blue);
+            color: var(--light-blue);
+            transform: rotate(15deg);
+        }
+
+        .theme-toggle i {
+            font-size: 16px;
+            transition: var(--transition);
+        }
+
+        [data-theme="dark"] .theme-toggle .fa-sun,
+        [data-theme="light"] .theme-toggle .fa-moon,
+        :not([data-theme]) .theme-toggle .fa-desktop {
+            display: block;
+        }
+
+        [data-theme="dark"] .theme-toggle .fa-moon,
+        [data-theme="dark"] .theme-toggle .fa-desktop,
+        [data-theme="light"] .theme-toggle .fa-sun,
+        [data-theme="light"] .theme-toggle .fa-desktop,
+        :not([data-theme]) .theme-toggle .fa-sun,
+        :noɴ([data-theme]) .theme-toggle .fa-moon {
+            display: none;
+        }
+
+        /* Theme Options Dropdown */
+        .theme-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            min-width: 180px;
+            box-shadow: 0 8px 32px var(--shadow-color);
+            backdrop-filter: blur(20px);
+            z-index: 1001;
+            display: none;
+            overflow: hidden;
+            animation: slideDown 0.2s ease-out;
+        }
+
+        .theme-dropdown.active {
+            display: block;
+        }
+
+        .theme-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+        }
+
+        .theme-option:hover {
+            background: rgba(100, 255, 218, 0.1);
+            color: var(--text-primary);
+        }
+
+        .theme-option.active {
+            color: var(--light-blue);
+            background: rgba(100, 255, 218, 0.08);
+        }
+
+        .theme-option i {
+            font-size: 14px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .theme-option.active i {
+            color: var(--light-blue);
+        }
+
+        /* Profile Dropdown */
+        .user-profile {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            border-radius: 7px;
+            cursor: pointer;
+            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        .user-profile:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--light-blue);
+        }
+
+        .profile-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            min-width: 220px;
+            box-shadow: 0 8px 32px var(--shadow-color);
+            backdrop-filter: blur(20px);
+            z-index: 1001;
+            display: none;
+            overflow: hidden;
+        }
+
+        .profile-dropdown.active {
+            display: block;
+            animation: slideDown 0.2s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .dropdown-header {
+            padding: 16px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .dropdown-header .user-avatar {
+            width: 40px;
+            height: 40px;
+            font-size: 14px;
+        }
+
+        .dropdown-header .user-info {
+            flex: 1;
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .dropdown-item:hover {
+            background: rgba(100, 255, 218, 0.1);
+            color: var(--text-primary);
+        }
+
+        .dropdown-item.logout {
+            color: #ff6b6b;
+            border-top: 1px solid rgba(255, 107, 139, 0.1);
+            background: rgba(255, 107, 139, 0.05);
+        }
+
+        .dropdown-item.logout:hover {
+            background: rgba(255, 107, 139, 0.15);
+            color: #ff5252;
+        }
+
         /* Loading Spinner */
         .loading-spinner {
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
@@ -92,11 +359,14 @@
             height: 100%;
             background: rgba(10, 25, 47, 0.95);
             z-index: 10003;
-            display: flex;
             align-items: center;
             justify-content: center;
             flex-direction: column;
             gap: 16px;
+        }
+
+        [data-theme="light"] .loading-spinner {
+            background: rgba(248, 250, 252, 0.95);
         }
 
         .loader {
@@ -153,6 +423,85 @@
             border: 1px solid rgba(248, 113, 113, 0.25);
         }
 
+        /* Syncing Indicator */
+        .sync-status {
+            position: fixed;
+            bottom: 70px;
+            right: 15px;
+            background: var(--surface-color);
+            border-radius: var(--border-radius);
+            padding: 10px 14px;
+            font-size: 12px;
+            display: none;
+            align-items: center;
+            gap: 8px;
+            z-index: 10000;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 3px 15px var(--shadow-color);
+            backdrop-filter: blur(10px);
+        }
+        
+        .sync-status.syncing {
+            color: var(--accent-gold);
+        }
+        
+        .sync-status.synced {
+            color: var(--soft-teal);
+        }
+        
+        .sync-status i {
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Update Available Banner */
+        .update-banner {
+            position: fixed;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--surface-color);
+            border: 1px solid rgba(230, 199, 138, 0.3);
+            border-radius: var(--border-radius);
+            padding: 10px 16px;
+            display: none;
+            align-items: center;
+            gap: 10px;
+            z-index: 10002;
+            box-shadow: 0 4px 20px var(--shadow-color);
+            backdrop-filter: blur(10px);
+            max-width: 380px;
+            width: 90%;
+        }
+        
+        .update-banner-content {
+            flex: 1;
+            font-size: 12px;
+            color: var(--text-primary);
+        }
+        
+        .update-btn {
+            padding: 5px 10px;
+            background: var(--accent-gold);
+            color: var(--dark-blue);
+            border: none;
+            border-radius: 5px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+        
+        .update-btn:hover {
+            background: #f0d5a5;
+            transform: translateY(-1px);
+        }
+
         /* Access Denied Message */
         .access-denied {
             position: fixed;
@@ -160,7 +509,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(10, 25, 47, 0.95);
+            background: var(--background-color);
             display: none;
             flex-direction: column;
             justify-content: center;
@@ -168,6 +517,7 @@
             z-index: 10000;
             text-align: center;
             padding: 20px;
+            backdrop-filter: blur(10px);
         }
         
         .access-denied h2 {
@@ -209,6 +559,7 @@
             display: none;
             height: 100vh;
             width: 100%;
+            max-width: 100vw;
             overflow: hidden;
         }
 
@@ -226,8 +577,13 @@
             justify-content: space-between;
             padding: 0 24px;
             z-index: 1000;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            border-bottom: 1px solid var(--border-color);
             width: 100%;
+        }
+
+        [data-theme="light"] .top-nav {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(15px);
         }
 
         .nav-left {
@@ -249,8 +605,8 @@
         }
 
         .menu-toggle:hover {
-            color: var(--light-pink);
-            background: rgba(255, 107, 139, 0.1);
+            color: var(--light-blue);
+            background: rgba(100, 255, 218, 0.1);
         }
 
         .brand-logo {
@@ -280,24 +636,7 @@
         .nav-right {
             display: flex;
             align-items: center;
-            gap: 14px;
-        }
-
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 6px 12px;
-            border-radius: 7px;
-            cursor: pointer;
-            transition: var(--transition);
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .user-profile:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.12);
+            gap: 12px;
         }
 
         .user-avatar {
@@ -328,27 +667,6 @@
             letter-spacing: 0.2px;
         }
 
-        .logout-btn {
-            background: rgba(255, 107, 139, 0.1);
-            color: var(--light-pink);
-            border: 1px solid rgba(255, 107, 139, 0.2);
-            padding: 6px 12px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 11px;
-            font-weight: 600;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .logout-btn:hover {
-            background: rgba(255, 107, 139, 0.15);
-            border-color: var(--light-pink);
-            transform: translateY(-1px);
-        }
-
         /* Sidebar */
         .sidebar {
             position: fixed;
@@ -358,11 +676,16 @@
             height: calc(100vh - var(--topbar-height));
             background: rgba(23, 42, 69, 0.98);
             backdrop-filter: blur(15px);
-            border-right: 1px solid rgba(255, 255, 255, 0.12);
+            border-right: 1px solid var(--border-color);
             padding: 24px 0;
             overflow-y: auto;
             transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 999;
+        }
+
+        [data-theme="light"] .sidebar {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(15px);
         }
 
         .nav-section {
@@ -507,7 +830,7 @@
             background: var(--card-bg);
             border-radius: var(--border-radius);
             padding: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border: 1px solid var(--border-color);
             transition: var(--transition);
             cursor: pointer;
             display: flex;
@@ -515,7 +838,7 @@
             align-items: flex-start;
             text-align: left;
             height: 100%;
-            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 3px 15px var(--shadow-color);
         }
 
         .tool-card:hover {
@@ -541,7 +864,7 @@
             justify-content: center;
             font-size: 20px;
             color: white;
-            background: linear-gradient(135deg, #64ffda, #81c8be);
+            background: linear-gradient(135deg, var(--light-blue), var(--soft-teal));
         }
 
         .tool-info h3 {
@@ -583,7 +906,7 @@
             left: var(--sidebar-width);
             right: 0;
             bottom: 0;
-            background: var(--dark-blue);
+            background: var(--background-color);
             z-index: 998;
             display: none;
             flex-direction: column;
@@ -595,9 +918,9 @@
         .sheets-card {
             background: var(--card-bg);
             border-radius: var(--border-radius);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border: 1px solid var(--border-color);
             overflow: hidden;
-            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 6px 24px var(--shadow-color);
             display: flex;
             flex-direction: column;
             height: 100%;
@@ -606,13 +929,17 @@
         .sheets-header {
             background: rgba(10, 25, 47, 0.5);
             padding: 16px 24px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            border-bottom: 1px solid var(--border-color);
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             gap: 15px;
             flex-shrink: 0;
+        }
+
+        [data-theme="light"] .sheets-header {
+            background: rgba(255, 255, 255, 0.5);
         }
 
         .sheets-title {
@@ -637,7 +964,7 @@
         .sheets-control-btn {
             background: rgba(255, 255, 255, 0.05);
             color: var(--text-secondary);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border-color);
             padding: 6px 12px;
             border-radius: 6px;
             font-size: 12px;
@@ -649,9 +976,17 @@
             gap: 5px;
         }
 
+        [data-theme="light"] .sheets-control-btn {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
         .sheets-control-btn:hover {
             background: rgba(255, 255, 255, 0.08);
             color: var(--text-primary);
+        }
+
+        [data-theme="light"] .sheets-control-btn:hover {
+            background: rgba(0, 0, 0, 0.08);
         }
 
         .sheets-control-btn.active {
@@ -698,6 +1033,10 @@
             padding: 20px;
         }
         
+        [data-theme="light"] .sheet-loader {
+            background: rgba(248, 250, 252, 0.95);
+        }
+        
         .sheet-loader-text {
             color: var(--light-blue);
             margin-top: 20px;
@@ -730,11 +1069,16 @@
             max-width: 80%;
         }
 
+        [data-theme="light"] .current-sheet-info {
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--light-blue);
+        }
+
         /* Footer */
         .footer {
             margin-top: auto;
             padding: 24px 0 0 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            border-top: 1px solid var(--border-color);
             text-align: center;
             color: var(--text-secondary);
             font-size: 12px;
@@ -769,6 +1113,26 @@
             color: var(--text-secondary);
         }
 
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .footer-link:hover {
+            color: var(--light-blue);
+        }
+
         /* Dashboard Navigation */
         .dashboard-nav {
             display: flex;
@@ -785,12 +1149,20 @@
             font-size: 11px;
             transition: var(--transition);
             background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border-color);
+        }
+
+        [data-theme="light"] .dashboard-nav a {
+            background: rgba(0, 0, 0, 0.05);
         }
 
         .dashboard-nav a:hover {
             color: var(--text-primary);
             background: rgba(255, 255, 255, 0.08);
+        }
+
+        [data-theme="light"] .dashboard-nav a:hover {
+            background: rgba(0, 0, 0, 0.08);
         }
 
         .dashboard-nav a.active {
@@ -835,7 +1207,7 @@
             
             .sidebar.active {
                 transform: translateX(0);
-                box-shadow: 6px 0 30px rgba(0, 0, 0, 0.3);
+                box-shadow: 6px 0 30px var(--shadow-color);
             }
             
             .main-content {
@@ -851,10 +1223,6 @@
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 15px;
-            }
-            
-            .nav-right {
-                gap: 10px;
             }
         }
 
@@ -904,10 +1272,6 @@
                 padding: 5px 8px;
             }
             
-            .logout-btn span {
-                display: none;
-            }
-            
             .current-sheet-info {
                 font-size: 11px;
                 padding: 6px 12px;
@@ -953,19 +1317,19 @@
                 padding: 5px 10px;
                 font-size: 11px;
             }
+            
+            .profile-dropdown {
+                min-width: 180px;
+            }
+            
+            .theme-dropdown {
+                min-width: 160px;
+            }
         }
 
         @media (max-width: 400px) {
             .brand-text {
                 font-size: 15px;
-            }
-            
-            .nav-right {
-                gap: 6px;
-            }
-            
-            .logout-btn {
-                padding: 5px 8px;
             }
             
             .sheet-loader-text {
@@ -977,6 +1341,36 @@
                 width: 40px;
                 height: 40px;
                 font-size: 18px;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .loading-spinner,
+            .access-denied,
+            .top-nav,
+            .sidebar,
+            .connection-status,
+            .sync-status,
+            .update-banner,
+            .footer {
+                display: none !important;
+            }
+            
+            .main-content {
+                margin: 0;
+                padding: 20px;
+                width: 100%;
+            }
+            
+            .tool-card,
+            .sheets-card {
+                border: 1px solid #ddd;
+            }
+            
+            body {
+                background: white !important;
+                color: black !important;
             }
         }
 
@@ -1005,6 +1399,20 @@
         <span>Online</span>
     </div>
 
+    <!-- Syncing Indicator -->
+    <div class="sync-status" id="syncStatus">
+        <i class="fas fa-sync-alt"></i>
+        <span>Syncing data...</span>
+    </div>
+
+    <!-- Update Available Banner -->
+    <div class="update-banner" id="updateBanner">
+        <div class="update-banner-content">
+            New version available. Update for latest features.
+        </div>
+        <button class="update-btn" id="updateBtn">Update</button>
+    </div>
+
     <!-- Access Denied Message -->
     <div class="access-denied" id="accessDenied">
         <h2>🔒 Access Restricted</h2>
@@ -1025,23 +1433,73 @@
                         <i class="fas fa-cash-register"></i>
                     </div>
                     <div>
-                        <div class="brand-text">Enterprise Sales Hub</div>
-                        <div class="brand-subtitle">DSOG Business Solutions</div>
+                        <div class="brand-text">Jasiri E-Hub</div>
+                        <div class="brand-subtitle">Enterprise Sales Hub</div>
                     </div>
                 </div>
             </div>
             
             <div class="nav-right">
+                <!-- Theme Toggle -->
+                <div class="theme-toggle-wrapper" style="position: relative;">
+                    <button class="theme-toggle" id="themeToggle">
+                        <i class="fas fa-sun"></i>
+                        <i class="fas fa-moon"></i>
+                        <i class="fas fa-desktop"></i>
+                    </button>
+                    <div class="theme-dropdown" id="themeDropdown">
+                        <div class="theme-option" data-theme="system">
+                            <i class="fas fa-desktop"></i>
+                            <span>System</span>
+                        </div>
+                        <div class="theme-option" data-theme="light">
+                            <i class="fas fa-sun"></i>
+                            <span>Light</span>
+                        </div>
+                        <div class="theme-option" data-theme="dark">
+                            <i class="fas fa-moon"></i>
+                            <span>Dark</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- User Profile -->
                 <div class="user-profile" id="userProfile">
                     <div class="user-avatar" id="userAvatar">JD</div>
                     <div class="user-info">
                         <div class="user-name" id="userName">John Doe</div>
                         <div class="user-role" id="userRole">Store Manager</div>
                     </div>
+                    <i class="fas fa-chevron-down" style="font-size: 12px; margin-left: 8px;"></i>
+                    
+                    <!-- Profile Dropdown -->
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <div class="dropdown-header">
+                            <div class="user-avatar" id="dropdownAvatar">JD</div>
+                            <div>
+                                <div class="user-name" id="dropdownName">John Doe</div>
+                                <div class="user-role" id="dropdownEmail">john.doe@dsog.com</div>
+                            </div>
+                        </div>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-user"></i>
+                            <span>My Profile</span>
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Security</span>
+                        </a>
+                        <div style="height: 1px; background: var(--border-color); margin: 4px 0;"></div>
+                        <a href="#" class="dropdown-item logout" id="profileLogout">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Log Out</span>
+                        </a>
+                    </div>
                 </div>
-                <button class="logout-btn" id="logoutBtn">
-                    <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
-                </button>
             </div>
         </nav>
 
@@ -1052,6 +1510,12 @@
                 <div class="dashboard-nav">
                     <a href="index.html" id="homeButton">
                         <i class="fas fa-home"></i> Home
+                    </a>
+                    <a href="kpi-dashboard.html">
+                        <i class="fas fa-chart-line"></i> Analytics
+                    </a>
+                    <a href="best-seller.html">
+                        <i class="fas fa-crown"></i> Best Sellers
                     </a>
                     <a href="#" class="active" id="workspaceButton">
                         <i class="fas fa-th-large"></i> Workspace
@@ -1133,7 +1597,7 @@
                 <section class="tools-section" id="toolsSection">
                     <div class="tools-header">
                         <h2 class="tools-title">
-                            <i class="fas fa-tools"></i> Tools
+                            <i class="fas fa-tools"></i> Enterprise Tools
                         </h2>
                     </div>
                     
@@ -1151,6 +1615,14 @@
                             <div class="footer-version">
                                 Version 2.1 • Secure Connection • Offline Capable
                             </div>
+                        </div>
+                        <div class="footer-links">
+                            <a href="#" class="footer-link">Support</a>
+                            <a href="#" class="footer-link">Documentation</a>
+                            <a href="#" class="footer-link">Privacy</a>
+                            <a href="#" class="footer-link">Terms</a>
+                            <a href="#" class="footer-link">Contact</a>
+                            <a href="#" class="footer-link" id="clearCacheBtn">Clear Cache</a>
                         </div>
                     </footer>
                 </section>
@@ -1226,12 +1698,18 @@
         let currentSheetName = '';
         let currentSheetId = '';
         let currentViewMode = 'view';
+        let isOnline = navigator.onLine;
+        let syncInterval = null;
+        let lastSyncTime = new Date();
 
         // DOM Elements
         const loadingSpinner = document.getElementById('loadingSpinner');
         const accessDenied = document.getElementById('accessDenied');
         const appContainer = document.getElementById('appContainer');
         const connectionStatus = document.getElementById('connectionStatus');
+        const syncStatus = document.getElementById('syncStatus');
+        const updateBanner = document.getElementById('updateBanner');
+        const updateBtn = document.getElementById('updateBtn');
         const sheetLoader = document.getElementById('sheetLoader');
         const sheetLoaderText = document.getElementById('sheetLoaderText');
         const currentSheetInfo = document.getElementById('currentSheetInfo');
@@ -1239,7 +1717,9 @@
         const userAvatar = document.getElementById('userAvatar');
         const userName = document.getElementById('userName');
         const userRole = document.getElementById('userRole');
-        const logoutBtn = document.getElementById('logoutBtn');
+        const dropdownAvatar = document.getElementById('dropdownAvatar');
+        const dropdownName = document.getElementById('dropdownName');
+        const dropdownEmail = document.getElementById('dropdownEmail');
         const menuToggle = document.getElementById('menuToggle');
         const sidebar = document.getElementById('sidebar');
         const homeButton = document.getElementById('homeButton');
@@ -1252,10 +1732,114 @@
         const toolsSection = document.getElementById('toolsSection');
         const sheetsContainer = document.getElementById('sheetsContainer');
         const toolsGrid = document.getElementById('toolsGrid');
+        const userProfile = document.getElementById('userProfile');
+        const profileDropdown = document.getElementById('profileDropdown');
+        const profileLogout = document.getElementById('profileLogout');
+        const themeToggle = document.getElementById('themeToggle');
+        const themeDropdown = document.getElementById('themeDropdown');
+        const themeOptions = document.querySelectorAll('.theme-option');
+        const clearCacheBtn = document.getElementById('clearCacheBtn');
+
+        // Theme Management
+        class ThemeManager {
+            constructor() {
+                this.theme = localStorage.getItem('theme') || 'system';
+                this.init();
+            }
+
+            init() {
+                this.applyTheme();
+                this.setupEventListeners();
+                this.updateActiveThemeOption();
+            }
+
+            applyTheme() {
+                if (this.theme === 'system') {
+                    document.documentElement.removeAttribute('data-theme');
+                    localStorage.removeItem('theme');
+                } else {
+                    document.documentElement.setAttribute('data-theme', this.theme);
+                    localStorage.setItem('theme', this.theme);
+                }
+            }
+
+            setTheme(theme) {
+                this.theme = theme;
+                this.applyTheme();
+                this.updateActiveThemeOption();
+            }
+
+            setupEventListeners() {
+                // Theme toggle click
+                themeToggle.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    themeDropdown.classList.toggle('active');
+                });
+
+                // Theme options click
+                themeOptions.forEach(option => {
+                    option.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const theme = option.getAttribute('data-theme');
+                        this.setTheme(theme);
+                        themeDropdown.classList.remove('active');
+                    });
+                });
+
+                // Close dropdown when clicking outside
+                document.addEventListener('click', (e) => {
+                    if (!themeToggle.contains(e.target) && !themeDropdown.contains(e.target)) {
+                        themeDropdown.classList.remove('active');
+                    }
+                });
+
+                // Listen for system theme changes
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+                    if (this.theme === 'system') {
+                        this.applyTheme();
+                    }
+                });
+            }
+
+            updateActiveThemeOption() {
+                themeOptions.forEach(option => {
+                    const optionTheme = option.getAttribute('data-theme');
+                    if (optionTheme === this.theme) {
+                        option.classList.add('active');
+                    } else {
+                        option.classList.remove('active');
+                    }
+                });
+            }
+        }
+
+        // Initialize Theme Manager
+        const themeManager = new ThemeManager();
+
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registered: ', registration.scope);
+                        
+                        registration.addEventListener('updatefound', () => {
+                            const newWorker = registration.installing;
+                            newWorker.addEventListener('statechange', () => {
+                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                    showUpdateBanner();
+                                }
+                            });
+                        });
+                    })
+                    .catch(error => {
+                        console.log('ServiceWorker registration failed: ', error);
+                    });
+            });
+        }
 
         // Module Data - EMH Sections
         const moduleData = {
-            // Sales Operations
             "point-of-sale": {
                 title: "Point of Sale",
                 description: "Manage point of sale operations and transactions",
@@ -1300,13 +1884,6 @@
                         icon: "fas fa-ban",
                         sheetUrl: "https://docs.google.com/spreadsheets/d/1KVnZUXasm0HqXrskp7cdTrFYiGzrZs07qSzbnV9DNIs/edit",
                         badge: "Active"
-                    },
-                    { 
-                        name: "Transaction Search", 
-                        description: "Search and filter transaction history",
-                        icon: "fas fa-search",
-                        sheetUrl: "https://docs.google.com/spreadsheets/d/1TRANSACTION_SEARCH_SHEET_ID/edit",
-                        badge: "Active"
                     }
                 ]
             },
@@ -1327,18 +1904,9 @@
                         icon: "fas fa-money-bill-wave",
                         sheetUrl: "https://docs.google.com/spreadsheets/d/1PxLHWjimhlC-s8pQ0-SWCE2Jkg3rxRmL3lubyfE-oNo/edit",
                         badge: "Active"
-                    },
-                    { 
-                        name: "Return Reasons", 
-                        description: "Analyze return reasons and patterns",
-                        icon: "fas fa-chart-pie",
-                        sheetUrl: "https://docs.google.com/spreadsheets/d/1gGD8EF8ob4U_rV8TDGlvDuMdnT2ErdgjR476CqEA8Ws/edit",
-                        badge: "Active"
                     }
                 ]
             },
-
-            // Customer Management
             "customer-database": {
                 title: "Customer Database",
                 description: "Manage customer information and relationships",
@@ -1356,13 +1924,6 @@
                         icon: "fas fa-users",
                         sheetUrl: "https://docs.google.com/spreadsheets/d/1M1pHs_X8yg72RMmW6LHyz3Zb8qbJN5pteIaJg977Xbk/edit",
                         badge: "Active"
-                    },
-                    { 
-                        name: "Customer Activity", 
-                        description: "Track customer purchase history and activity",
-                        icon: "fas fa-chart-line",
-                        sheetUrl: "https://docs.google.com/spreadsheets/d/1CUSTOMER_ACTIVITY_SHEET_ID/edit",
-                        badge: "Active"
                     }
                 ]
             },
@@ -1371,24 +1932,10 @@
                 description: "Create and manage customer invoices",
                 tools: [
                     { 
-                        name: "Create Invoice", 
-                        description: "Generate customer invoices",
-                        icon: "fas fa-file-invoice",
-                        sheetUrl: "https://docs.google.com/spreadsheets/d/1INVOICE_CREATE_SHEET_ID/edit",
-                        badge: "Active"
-                    },
-                    { 
                         name: "Payment Tracking", 
                         description: "Track invoice payments and status",
                         icon: "fas fa-check-circle",
                         sheetUrl: "https://docs.google.com/spreadsheets/d/1Fhpzj-Dm5YFOIRUYSHVNWyImj0uMUaGdeB3dFIDAGMM/edit",
-                        badge: "Active"
-                    },
-                    { 
-                        name: "Invoice Archive", 
-                        description: "Archive of past invoices and records",
-                        icon: "fas fa-archive",
-                        sheetUrl: "https://docs.google.com/spreadsheets/d/1INVOICE_ARCHIVE_SHEET_ID/edit",
                         badge: "Active"
                     }
                 ]
@@ -1410,18 +1957,9 @@
                         icon: "fas fa-gift",
                         sheetUrl: "https://docs.google.com/spreadsheets/d/1QEdFp_wblY_eaH00RwOdcY-MUqg_On6R2bnIjPPwxaQ/edit",
                         badge: "Active"
-                    },
-                    { 
-                        name: "Rewards Catalog", 
-                        description: "Catalog of loyalty rewards and benefits",
-                        icon: "fas fa-star",
-                        sheetUrl: "https://docs.google.com/spreadsheets/d/148kODEe388XlQNU_-dNZcs_ensVYoGDmYsl-ApnCLx8/edit",
-                        badge: "Active"
                     }
                 ]
             },
-
-            // Product Information
             "product-catalog": {
                 title: "Product Catalog",
                 description: "Manage product information and catalog",
@@ -1431,20 +1969,6 @@
                         description: "Detailed product information database",
                         icon: "fas fa-box",
                         sheetUrl: "https://docs.google.com/spreadsheets/d/1TaYcki7lJ1kC4q8mfNly_d_e1a7PcYV8oHotLtom5R4/edit",
-                        badge: "Active"
-                    },
-                    { 
-                        name: "Product Categories", 
-                        description: "Organize products into categories",
-                        icon: "fas fa-tags",
-                        sheetUrl: "https://docs.google.com/spreadsheets/d/1PRODUCT_CATEGORIES_SHEET_ID/edit",
-                        badge: "Active"
-                    },
-                    { 
-                        name: "Product Search", 
-                        description: "Advanced product search functionality",
-                        icon: "fas fa-search",
-                        sheetUrl: "https://docs.google.com/spreadsheets/d/1PRODUCT_SEARCH_SHEET_ID/edit",
                         badge: "Active"
                     }
                 ]
@@ -1468,24 +1992,10 @@
                         badge: "Active"
                     },
                     { 
-                        name: "Price Lists", 
-                        description: "Manage product price lists",
-                        icon: "fas fa-tag",
-                        sheetUrl: "https://docs.google.com/spreadsheets/d/1fSQO1ec_15eCwCNIH3BWVygdmL3nPBycExTTE5isjdM/edit",
-                        badge: "Active"
-                    },
-                    { 
                         name: "Price Updates", 
                         description: "Track and manage price updates",
                         icon: "fas fa-sync-alt",
                         sheetUrl: "https://docs.google.com/spreadsheets/d/177srRZ_v9oaomBg7Osn3ut9gdAHB_zFXlhgvcmRmhkk/edit",
-                        badge: "Active"
-                    },
-                    { 
-                        name: "Competitive Pricing", 
-                        description: "Competitive pricing analysis",
-                        icon: "fas fa-chart-bar",
-                        sheetUrl: "https://docs.google.com/spreadsheets/d/1COMPETITIVE_PRICING_SHEET_ID/edit",
                         badge: "Active"
                     }
                 ]
@@ -1507,18 +2017,9 @@
                         icon: "fas fa-plus-circle",
                         sheetUrl: "https://docs.google.com/spreadsheets/d/1NxmD23P2Y4nwEWK7EdrFXkXayy_LA1b0jS8XmCOolRU/edit",
                         badge: "Active"
-                    },
-                    { 
-                        name: "Promotion Results", 
-                        description: "Track promotion performance and results",
-                        icon: "fas fa-chart-line",
-                        sheetUrl: "https://docs.google.com/spreadsheets/d/1_dPOvSQo5ue7SxvuVz3BotcJaIYWQL0k9Aod3O6AruE/edit",
-                        badge: "Active"
                     }
                 ]
             },
-
-            // Inventory
             "stock-levels": {
                 title: "Stock Levels",
                 description: "Monitor and manage inventory stock levels",
@@ -1535,13 +2036,6 @@
                         description: "Low stock alerts and notifications",
                         icon: "fas fa-exclamation-triangle",
                         sheetUrl: "https://docs.google.com/spreadsheets/d/12sbaXzyvK3137rz2Tx5I4TSqhzLHxcKBlvKKutQ6kPc/edit",
-                        badge: "Active"
-                    },
-                    { 
-                        name: "Inventory Valuation", 
-                        description: "Inventory valuation and costing",
-                        icon: "fas fa-calculator",
-                        sheetUrl: "https://docs.google.com/spreadsheets/d/1BzyxkoCa6RMtNvs2-AToIVKImdMvAAYWfqtWNGvFpS0/edit",
                         badge: "Active"
                     }
                 ]
@@ -1563,13 +2057,6 @@
                         icon: "fas fa-truck",
                         sheetUrl: "https://docs.google.com/spreadsheets/d/1U4c9DVC6IdDvTgcTJSH28vAlRXTnEZY6fWrdv0DlMJI/edit",
                         badge: "Active"
-                    },
-                    { 
-                        name: "Receiving", 
-                        description: "Manage inventory receiving process",
-                        icon: "fas fa-dolly",
-                        sheetUrl: "https://docs.google.com/spreadsheets/d/1OElvvz5BRRjKMIiYW1YtA7fQAHT-jDZVUjfvbL0qGg0/edit",
-                        badge: "Active"
                     }
                 ]
             },
@@ -1590,18 +2077,9 @@
                         icon: "fas fa-adjust",
                         sheetUrl: "https://docs.google.com/spreadsheets/d/1s8rVN0H6LvGLRrlyuTnnmLCRC_-TwVaBLxkg9AmVlRQ/edit",
                         badge: "Active"
-                    },
-                    { 
-                        name: "Inventory Accuracy", 
-                        description: "Track inventory accuracy and variance",
-                        icon: "fas fa-check-double",
-                        sheetUrl: "https://docs.google.com/spreadsheets/d/1KqLNKcdvlIysFp9UOZo3WOQFv2gxs0i2E_T_jfE73oc/edit",
-                        badge: "Active"
                     }
                 ]
             },
-
-            // Sales Analytics
             "sales-reports": {
                 title: "Sales Reports",
                 description: "Generate sales reports and analytics",
@@ -1618,13 +2096,6 @@
                         description: "Product performance analysis",
                         icon: "fas fa-chart-bar",
                         sheetUrl: "https://docs.google.com/spreadsheets/d/1VPpOrg3dRF-991iyWTHYe8PG1SX677I3IJaH2j7oLnI/edit",
-                        badge: "Active"
-                    },
-                    { 
-                        name: "Sales by Category", 
-                        description: "Sales analysis by product category",
-                        icon: "fas fa-chart-pie",
-                        sheetUrl: "https://docs.google.com/spreadsheets/d/1YuQhNl-G9YCFc7S24RdPltCT0Z2CmicAjxvFNilaGOE/edit",
                         badge: "Active"
                     }
                 ]
@@ -1646,13 +2117,6 @@
                         icon: "fas fa-chart-line",
                         sheetUrl: "https://docs.google.com/spreadsheets/d/1dXdtHwgdaV7DDDtJQCuYe0MlOkEMKc1fxQbqxfsFGw4/edit",
                         badge: "Active"
-                    },
-                    { 
-                        name: "Average Transaction", 
-                        description: "Average transaction value analysis",
-                        icon: "fas fa-dollar-sign",
-                        sheetUrl: "https://docs.google.com/spreadsheets/d/1Q9E_I-o3XloXCW5zuLZLoGzgDQos2MnhRFZZcnWIMIk/edit",
-                        badge: "Active"
                     }
                 ]
             },
@@ -1665,13 +2129,6 @@
                         description: "Historical sales comparison",
                         icon: "fas fa-history",
                         sheetUrl: "https://docs.google.com/spreadsheets/d/1txg8o17LPzagzhd3h-rHKdRgVPqXNacTJ_XkbZ_wpuY/edit",
-                        badge: "Active"
-                    },
-                    { 
-                        name: "Seasonal Trends", 
-                        description: "Seasonal sales trend analysis",
-                        icon: "fas fa-sun",
-                        sheetUrl: "https://docs.google.com/spreadsheets/d/1wSTZKGsks788uqo2CXF0bJRiyb-kTGCbHeXrJMhvqtE/edit",
                         badge: "Active"
                     },
                     { 
@@ -1692,33 +2149,111 @@
 
         function initializeApp() {
             // Check initial connection status
-            updateConnectionStatus();
+            updateOnlineStatus();
             
             // Set up connection status listeners
-            window.addEventListener('online', updateConnectionStatus);
-            window.addEventListener('offline', updateConnectionStatus);
+            window.addEventListener('online', updateOnlineStatus);
+            window.addEventListener('offline', updateOnlineStatus);
             
             // Check authentication
             checkAuth();
             
             // Set current year in footer
             document.getElementById('year').textContent = new Date().getFullYear();
+            
+            // Setup update button
+            updateBtn.addEventListener('click', () => {
+                if ('serviceWorker' in navigator) {
+                    navigator.serviceWorker.ready.then(registration => {
+                        registration.update();
+                        hideUpdateBanner();
+                    });
+                }
+            });
+            
+            // Clear cache button
+            clearCacheBtn.addEventListener('click', clearCache);
         }
 
-        function updateConnectionStatus() {
-            if (navigator.onLine) {
+        function updateOnlineStatus() {
+            isOnline = navigator.onLine;
+            
+            if (isOnline) {
+                connectionStatus.innerHTML = '<i class="fas fa-circle"></i><span>Online</span>';
                 connectionStatus.className = 'connection-status online';
-                connectionStatus.innerHTML = '<i class="fas fa-circle"></i> <span>Online</span>';
-                connectionStatus.style.display = 'flex';
                 
-                setTimeout(() => {
-                    connectionStatus.style.display = 'none';
-                }, 3000);
+                if (auth.currentUser) {
+                    syncData();
+                }
             } else {
+                connectionStatus.innerHTML = '<i class="fas fa-circle"></i><span>Offline</span>';
                 connectionStatus.className = 'connection-status offline';
-                connectionStatus.innerHTML = '<i class="fas fa-circle"></i> <span>Offline</span>';
-                connectionStatus.style.display = 'flex';
             }
+            
+            connectionStatus.style.display = 'flex';
+            setTimeout(() => {
+                connectionStatus.style.display = 'none';
+            }, 3000);
+        }
+
+        // Sync Data
+        function syncData() {
+            if (!isOnline) {
+                showSyncStatus('offline');
+                return;
+            }
+            
+            showSyncStatus('syncing');
+            
+            setTimeout(() => {
+                showSyncStatus('synced');
+            }, 1500);
+        }
+
+        // Show Sync Status
+        function showSyncStatus(status) {
+            if (status === 'syncing') {
+                syncStatus.innerHTML = '<i class="fas fa-sync-alt"></i><span>Syncing data...</span>';
+                syncStatus.className = 'sync-status syncing';
+            } else if (status === 'synced') {
+                syncStatus.innerHTML = '<i class="fas fa-check-circle"></i><span>Data synced</span>';
+                syncStatus.className = 'sync-status synced';
+            } else if (status === 'offline') {
+                syncStatus.innerHTML = '<i class="fas fa-wifi-slash"></i><span>Cannot sync - Offline</span>';
+                syncStatus.className = 'sync-status offline';
+            }
+            
+            syncStatus.style.display = 'flex';
+            setTimeout(() => {
+                syncStatus.style.display = 'none';
+            }, 3000);
+        }
+
+        // Start Sync Interval
+        function startSyncInterval() {
+            syncInterval = setInterval(() => {
+                if (isOnline && auth.currentUser) {
+                    syncData();
+                }
+            }, 5 * 60 * 1000);
+        }
+
+        // Show Update Banner
+        function showUpdateBanner() {
+            updateBanner.style.display = 'flex';
+        }
+
+        function hideUpdateBanner() {
+            updateBanner.style.display = 'none';
+        }
+
+        // Show/Hide Loading Spinner
+        function showLoading() {
+            loadingSpinner.style.display = 'flex';
+        }
+
+        function hideLoading() {
+            loadingSpinner.style.display = 'none';
         }
 
         function checkAuth() {
@@ -1759,6 +2294,9 @@
             
             // Load default section
             loadSection('point-of-sale');
+            
+            // Start sync interval
+            startSyncInterval();
         }
 
         function updateUserInfo(user) {
@@ -1766,9 +2304,15 @@
             const firstName = displayName.split(' ')[0];
             const lastName = displayName.split(' ')[1] || '';
             
-            userAvatar.textContent = (firstName[0] + (lastName[0] || '')).toUpperCase();
+            const initials = (firstName[0] + (lastName[0] || '')).toUpperCase();
+            userAvatar.textContent = initials;
             userName.textContent = displayName;
-            userRole.textContent = 'Store Manager';
+            userRole.textContent = user.email.includes('admin') ? 'Administrator' : 'Store Manager';
+            
+            // Update dropdown info
+            dropdownAvatar.textContent = initials;
+            dropdownName.textContent = displayName;
+            dropdownEmail.textContent = user.email;
         }
 
         // Application Initialization
@@ -1784,19 +2328,36 @@
             
             // Setup sheet controls
             setupSheetControls();
+            
+            // Profile dropdown functionality
+            userProfile.addEventListener('click', function(e) {
+                e.stopPropagation();
+                profileDropdown.classList.toggle('active');
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!userProfile.contains(e.target)) {
+                    profileDropdown.classList.remove('active');
+                }
+            });
+
+            // Logout from profile dropdown
+            profileLogout.addEventListener('click', function(e) {
+                e.preventDefault();
+                showLoading();
+                auth.signOut()
+                    .then(() => {
+                        hideLoading();
+                    })
+                    .catch(console.error);
+            });
         }
 
         function setupEventListeners() {
             // Menu toggle
             menuToggle.addEventListener('click', () => {
                 sidebar.classList.toggle('active');
-            });
-
-            // Logout button
-            logoutBtn.addEventListener('click', () => {
-                auth.signOut().then(() => {
-                    window.location.href = 'index.html';
-                });
             });
 
             // Close sidebar when clicking outside on mobile
@@ -1933,12 +2494,6 @@
                 e.preventDefault();
                 window.location.href = 'index.html';
             });
-
-            // Workspace button
-            document.getElementById('workspaceButton').addEventListener('click', (e) => {
-                e.preventDefault();
-                // Already on workspace page
-            });
         }
 
         function loadSection(sectionId) {
@@ -2049,6 +2604,44 @@
                 sheetLoader.style.display = 'none';
             }, 3000);
         }
+
+        // Local Storage Functions
+        function clearCache() {
+            if (confirm('Clear all cached data? This will remove offline data.')) {
+                showLoading();
+                
+                Object.keys(localStorage).forEach(key => {
+                    if (key.startsWith('jasiri_')) {
+                        localStorage.removeItem(key);
+                    }
+                });
+                
+                if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+                    navigator.serviceWorker.controller.postMessage({type: 'CLEAR_CACHE'});
+                }
+                
+                setTimeout(() => {
+                    hideLoading();
+                    alert('Cache cleared successfully');
+                    location.reload();
+                }, 1000);
+            }
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', () => {
+            auth.onAuthStateChanged((user) => {
+                if (!user) {
+                    // Show loading initially
+                    showLoading();
+                    setTimeout(() => {
+                        if (!auth.currentUser) {
+                            checkAuth();
+                        }
+                    }, 2000);
+                }
+            });
+        });
     </script>
 </body>
 </html>
