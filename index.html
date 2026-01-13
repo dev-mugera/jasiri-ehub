@@ -1148,7 +1148,7 @@
             justify-items: center;
         }
 
-        /* Enhanced App Cards */
+        /* Enhanced App Cards with Icon Animations */
         .app-card {
             background: linear-gradient(135deg, var(--card-bg), rgba(23, 42, 69, 0.7));
             border-radius: 16px;
@@ -1166,6 +1166,7 @@
             box-shadow: 0 4px 20px var(--shadow-color);
             position: relative;
             overflow: hidden;
+            --glow-size: 0px;
         }
 
         [data-theme="light"] .app-card {
@@ -1195,19 +1196,46 @@
             box-shadow: 0 12px 32px rgba(255, 107, 139, 0.15);
         }
 
-        .app-icon {
+        /* Enhanced App Icon Container with Advanced Animations */
+        .app-icon-container {
+            position: relative;
             width: 72px;
             height: 72px;
+            margin-bottom: 20px;
+            perspective: 1000px;
+        }
+
+        .app-icon {
+            width: 100%;
+            height: 100%;
             border-radius: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 30px;
             color: white;
-            margin-bottom: 20px;
             box-shadow: 0 8px 24px var(--shadow-color);
             position: relative;
             overflow: hidden;
+            transform-style: preserve-3d;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-origin: center;
+            will-change: transform;
+        }
+
+        /* Glow effect for icons */
+        .app-icon::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(45deg, 
+                rgba(255, 255, 255, 0.3),
+                rgba(255, 255, 255, 0.1),
+                transparent 70%);
+            border-radius: 20px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
         .app-icon::after {
@@ -1219,8 +1247,30 @@
             bottom: 0;
             background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0));
             border-radius: 18px;
+            z-index: 1;
         }
 
+        /* Floating Particles */
+        .app-icon-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            opacity: 0;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Icon Colors */
         .emh-icon {
             background: linear-gradient(135deg, #ff6b8b, #ff8ba7);
         }
@@ -1245,12 +1295,141 @@
             background: linear-gradient(135deg, #667eea, #764ba2);
         }
 
+        /* Hover Animations */
+        .app-card:hover .app-icon {
+            transform: translateY(-5px) scale(1.05) rotateY(15deg);
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.3),
+                0 0 30px var(--glow-color, rgba(255, 107, 139, 0.3));
+        }
+
+        .app-card:hover .app-icon::before {
+            opacity: 1;
+        }
+
+        /* Pulse Animation for Icons */
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 
+                    0 8px 24px var(--shadow-color),
+                    0 0 0 0 rgba(255, 107, 139, 0.3);
+            }
+            50% {
+                box-shadow: 
+                    0 8px 24px var(--shadow-color),
+                    0 0 20px 10px rgba(255, 107, 139, 0.3);
+            }
+        }
+
+        .app-icon.pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* Floating Animation */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                transform: translateY(-10px) scale(1.02);
+            }
+        }
+
+        .app-icon.float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Spin Animation */
+        @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .app-icon.spin {
+            animation: spin-slow 8s linear infinite;
+        }
+
+        /* Bounce Animation */
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        .app-icon.bounce {
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        /* Color Shift Animation */
+        @keyframes colorShift {
+            0% {
+                filter: hue-rotate(0deg);
+            }
+            50% {
+                filter: hue-rotate(180deg);
+            }
+            100% {
+                filter: hue-rotate(360deg);
+            }
+        }
+
+        .app-icon.color-shift {
+            animation: colorShift 4s linear infinite;
+        }
+
+        /* Custom Icon Styles with Images */
+        .app-icon img {
+            width: 42px;
+            height: 42px;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+            backface-visibility: hidden;
+        }
+
+        .app-card:hover .app-icon img {
+            transform: scale(1.15) rotateY(10deg);
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+        }
+
+        /* Specific Icon Glow Colors */
+        .app-card[data-app="emh"] {
+            --glow-color: rgba(255, 107, 139, 0.3);
+        }
+
+        .app-card[data-app="erh"] {
+            --glow-color: rgba(129, 200, 190, 0.3);
+        }
+
+        .app-card[data-app="efh"] {
+            --glow-color: rgba(230, 199, 138, 0.3);
+        }
+
+        .app-card[data-app="efs"] {
+            --glow-color: rgba(54, 209, 220, 0.3);
+        }
+
+        .app-card[data-app="talents"] {
+            --glow-color: rgba(156, 39, 176, 0.3);
+        }
+
+        /* App Name and Description */
         .app-name {
             font-size: 18px;
             font-weight: 700;
             margin-bottom: 8px;
             color: var(--text-primary);
             letter-spacing: 0.3px;
+            transition: transform 0.3s ease;
+        }
+
+        .app-card:hover .app-name {
+            transform: translateY(-2px);
+            color: var(--light-pink);
         }
 
         .app-description {
@@ -1259,6 +1438,11 @@
             margin-bottom: 18px;
             line-height: 1.5;
             min-height: 40px;
+            transition: transform 0.3s ease 0.1s;
+        }
+
+        .app-card:hover .app-description {
+            transform: translateY(-2px);
         }
 
         .app-badge-card {
@@ -1272,6 +1456,13 @@
             letter-spacing: 0.5px;
             border: 1px solid rgba(255, 107, 139, 0.3);
             backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .app-card:hover .app-badge-card {
+            transform: scale(1.05) translateY(-2px);
+            background: linear-gradient(135deg, rgba(255, 107, 139, 0.3), rgba(255, 107, 139, 0.2));
+            box-shadow: 0 4px 12px rgba(255, 107, 139, 0.2);
         }
 
         .app-status {
@@ -1279,6 +1470,11 @@
             color: var(--text-secondary);
             margin-top: 12px;
             font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .app-card:hover .app-status {
+            color: var(--soft-teal);
         }
 
         /* Activity Sections */
@@ -2170,61 +2366,8 @@
                         </button>
                     </div>
                     
-                    <div class="app-grid">
-                        <!-- ESH App -->
-                        <div class="app-card" onclick="window.location.href='emh-workspace.html'">
-                            <div class="app-icon emh-icon">
-                                <i class="fas fa-chart-bar"></i>
-                            </div>
-                            <div class="app-name">Sales Hub</div>
-                            <div class="app-description">Sales, operations & analytics with real-time insights</div>
-                            <span class="app-badge-card">Active</span>
-                            <div class="app-status" id="emhStatus">Live data streaming</div>
-                        </div>
-                        
-                        <!-- ERH App -->
-                        <div class="app-card" onclick="window.location.href='erh-workspace.html'">
-                            <div class="app-icon erh-icon">
-                                <i class="fas fa-users"></i>
-                            </div>
-                            <div class="app-name">Resource Hub</div>
-                            <div class="app-description">HR management, asset tracking, and project coordination</div>
-                            <span class="app-badge-card">Active</span>
-                            <div class="app-status">24 active employees</div>
-                        </div>
-                        
-                        <!-- EFH App -->
-                        <div class="app-card" onclick="window.location.href='efh-workspace.html'">
-                            <div class="app-icon efh-icon">
-                                <i class="fas fa-money-bill-wave"></i>
-                            </div>
-                            <div class="app-name">Finance Hub</div>
-                            <div class="app-description">Accounting, financial reporting, and budget management</div>
-                            <span class="app-badge-card">Active</span>
-                            <div class="app-status">Financial Management</div>
-                        </div>
-                        
-                        <!-- EFS App -->
-                        <div class="app-card" onclick="window.location.href='efs-workspace.html'">
-                            <div class="app-icon efs-icon">
-                                <i class="fas fa-truck"></i>
-                            </div>
-                            <div class="app-name">Fleet Hub</div>
-                            <div class="app-description">Logistics, courier, shipping & fleet management operations</div>
-                            <span class="app-badge-card">Active</span>
-                            <div class="app-status" id="efsStatus">12 active vehicles</div>
-                        </div>
-                        
-                        <!-- Talents App -->
-                        <div class="app-card" onclick="window.location.href='talents-workspace.html'">
-                            <div class="app-icon talents-icon">
-                                <i class="fas fa-briefcase"></i>
-                            </div>
-                            <div class="app-name">Talents Hub</div>
-                            <div class="app-description">Human resource and Learning and Development Space</div>
-                            <span class="app-badge-card">Active</span>
-                            <div class="app-status">Talent Management</div>
-                        </div>
+                    <div class="app-grid" id="appGrid">
+                        <!-- App cards will be generated dynamically -->
                     </div>
                 </section>
 
@@ -2322,6 +2465,82 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
 
     <script>
+        // App Icons Configuration with placeholder images
+        const appIcons = {
+            'emh': {
+                name: 'Sales Hub',
+                description: 'Sales, operations & analytics with real-time insights',
+                iconUrl: 'https://i.postimg.cc/3rFrpW8P/20260112-1839-Image-Generation-remix-01kesdpw6ce8s88amr0e92g276-removebg-preview-removebg-preview.png',
+                colorClass: 'emh-icon',
+                status: 'Live data streaming',
+                animation: 'float',
+                link: 'emh-workspace.html'
+            },
+            'erh': {
+                name: 'Resource Hub',
+                description: 'HR management, asset tracking, and project coordination',
+                iconUrl: 'https://i.postimg.cc/3rFrpW8P/20260112-1839-Image-Generation-remix-01kesdpw6ce8s88amr0e92g276-removebg-preview-removebg-preview.png',
+                colorClass: 'erh-icon',
+                status: '24 active employees',
+                animation: 'pulse',
+                link: 'erh-workspace.html'
+            },
+            'efh': {
+                name: 'Finance Hub',
+                description: 'Accounting, financial reporting, and budget management',
+                iconUrl: 'https://i.postimg.cc/3rFrpW8P/20260112-1839-Image-Generation-remix-01kesdpw6ce8s88amr0e92g276-removebg-preview-removebg-preview.png',
+                colorClass: 'efh-icon',
+                status: 'Financial Management',
+                animation: 'spin',
+                link: 'efh-workspace.html'
+            },
+            'efs': {
+                name: 'Fleet Hub',
+                description: 'Logistics, courier, shipping & fleet management operations',
+                iconUrl: 'https://i.postimg.cc/3rFrpW8P/20260112-1839-Image-Generation-remix-01kesdpw6ce8s88amr0e92g276-removebg-preview-removebg-preview.png',
+                colorClass: 'efs-icon',
+                status: '12 active vehicles',
+                animation: 'bounce',
+                link: 'efs-workspace.html'
+            },
+            'talents': {
+                name: 'Talents Hub',
+                description: 'Human resource and Learning and Development Space',
+                iconUrl: 'https://i.postimg.cc/3rFrpW8P/20260112-1839-Image-Generation-remix-01kesdpw6ce8s88amr0e92g276-removebg-preview-removebg-preview.png',
+                colorClass: 'talents-icon',
+                status: 'Talent Management',
+                animation: 'color-shift',
+                link: 'talents-workspace.html'
+            },
+            'backup': {
+                name: 'Backup',
+                description: 'Data backup, recovery and system maintenance',
+                iconUrl: 'https://i.postimg.cc/3rFrpW8P/20260112-1839-Image-Generation-remix-01kesdpw6ce8s88amr0e92g276-removebg-preview-removebg-preview.png',
+                colorClass: 'backup-icon',
+                status: 'Automatic backup enabled',
+                animation: 'float',
+                link: '#'
+            },
+            'admin': {
+                name: 'Admin Panel',
+                description: 'System administration and user management',
+                iconUrl: 'https://i.postimg.cc/3rFrpW8P/20260112-1839-Image-Generation-remix-01kesdpw6ce8s88amr0e92g276-removebg-preview-removebg-preview.png',
+                colorClass: 'efs-icon',
+                status: 'Administrator access',
+                animation: 'pulse',
+                link: 'admin.html'
+            },
+            'kpi': {
+                name: 'KPI Dashboard',
+                description: 'Key performance indicators and metrics',
+                iconUrl: 'https://i.postimg.cc/3rFrpW8P/20260112-1839-Image-Generation-remix-01kesdpw6ce8s88amr0e92g276-removebg-preview-removebg-preview.png',
+                colorClass: 'emh-icon',
+                status: 'Real-time metrics',
+                animation: 'spin',
+                link: 'kpi-dashboard.html'
+            }
+        };
+
         // Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyCOb4BqfiN3vt1Y13UTEpA_boCqNRH6rrQ",
@@ -2363,7 +2582,7 @@
         const currentTime = document.getElementById('currentTime');
         const statsGrid = document.getElementById('statsGrid');
         const activityList = document.getElementById('activityList');
-        const emhStatus = document.getElementById('emhStatus');
+        const appGrid = document.getElementById('appGrid');
         const connectionStatus = document.getElementById('connectionStatus');
         const syncStatus = document.getElementById('syncStatus');
         const updateBanner = document.getElementById('updateBanner');
@@ -2422,13 +2641,11 @@
             }
 
             setupEventListeners() {
-                // Theme toggle click
                 themeToggle.addEventListener('click', (e) => {
                     e.stopPropagation();
                     themeDropdown.classList.toggle('active');
                 });
 
-                // Theme options click
                 themeOptions.forEach(option => {
                     option.addEventListener('click', (e) => {
                         e.preventDefault();
@@ -2438,14 +2655,12 @@
                     });
                 });
 
-                // Close dropdown when clicking outside
                 document.addEventListener('click', (e) => {
                     if (!themeToggle.contains(e.target) && !themeDropdown.contains(e.target)) {
                         themeDropdown.classList.remove('active');
                     }
                 });
 
-                // Listen for system theme changes
                 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
                     if (this.theme === 'system') {
                         this.applyTheme();
@@ -2467,6 +2682,95 @@
 
         // Initialize Theme Manager
         const themeManager = new ThemeManager();
+
+        // Advanced Icon Animation Manager
+        class IconAnimationManager {
+            constructor() {
+                this.animations = new Map();
+                this.activeAnimations = new Set();
+            }
+
+            createParticles(iconElement, count = 8) {
+                const container = iconElement.parentElement;
+                if (!container.querySelector('.app-icon-particles')) {
+                    const particlesContainer = document.createElement('div');
+                    particlesContainer.className = 'app-icon-particles';
+                    container.appendChild(particlesContainer);
+                    
+                    for (let i = 0; i < count; i++) {
+                        const particle = document.createElement('div');
+                        particle.className = 'particle';
+                        particle.style.backgroundColor = getComputedStyle(iconElement).backgroundColor;
+                        particle.style.left = `${Math.random() * 100}%`;
+                        particle.style.top = `${Math.random() * 100}%`;
+                        particlesContainer.appendChild(particle);
+                    }
+                }
+            }
+
+            animateParticles(iconElement) {
+                const particles = iconElement.parentElement.querySelectorAll('.particle');
+                particles.forEach((particle, index) => {
+                    const duration = 1 + Math.random() * 0.5;
+                    const delay = index * 0.1;
+                    
+                    particle.animate([
+                        { 
+                            opacity: 0, 
+                            transform: 'translate(-50%, -50%) scale(0)' 
+                        },
+                        { 
+                            opacity: 0.8, 
+                            transform: 'translate(-50%, -50%) scale(1)' 
+                        },
+                        { 
+                            opacity: 0, 
+                            transform: 'translate(-50%, -50%) scale(0)' 
+                        }
+                    ], {
+                        duration: duration * 1000,
+                        delay: delay * 1000,
+                        easing: 'cubic-bezier(0.4, 0, 0.2, 1)'
+                    });
+                });
+            }
+
+            applyHoverEffect(appCard) {
+                const iconElement = appCard.querySelector('.app-icon');
+                const animationType = appCard.dataset.animation;
+                
+                // Add animation class
+                if (animationType) {
+                    iconElement.classList.add(animationType);
+                }
+                
+                // Create and animate particles
+                this.createParticles(iconElement);
+                this.animateParticles(iconElement);
+                
+                // Store reference for cleanup
+                this.animations.set(appCard, { iconElement, animationType });
+            }
+
+            removeHoverEffect(appCard) {
+                const animation = this.animations.get(appCard);
+                if (animation) {
+                    animation.iconElement.classList.remove(animation.animationType);
+                    this.animations.delete(appCard);
+                }
+            }
+
+            init() {
+                // Add event listeners to all app cards
+                document.querySelectorAll('.app-card').forEach(card => {
+                    card.addEventListener('mouseenter', () => this.applyHoverEffect(card));
+                    card.addEventListener('mouseleave', () => this.removeHoverEffect(card));
+                });
+            }
+        }
+
+        // Initialize Icon Animation Manager
+        const iconAnimationManager = new IconAnimationManager();
 
         // Service Worker Registration
         if ('serviceWorker' in navigator) {
@@ -2490,6 +2794,42 @@
             });
         }
 
+        // Generate App Cards
+        function generateAppCards() {
+            const appGrid = document.getElementById('appGrid');
+            if (!appGrid) return;
+
+            appGrid.innerHTML = '';
+            
+            const mainApps = ['emh', 'erh', 'efh', 'efs', 'talents'];
+            
+            mainApps.forEach(appKey => {
+                const app = appIcons[appKey];
+                const appCard = document.createElement('div');
+                appCard.className = 'app-card';
+                appCard.setAttribute('data-app', appKey);
+                appCard.setAttribute('data-animation', app.animation);
+                appCard.onclick = () => window.location.href = app.link;
+                
+                appCard.innerHTML = `
+                    <div class="app-icon-container">
+                        <div class="app-icon ${app.colorClass}">
+                            <img src="${app.iconUrl}" alt="${app.name} Icon" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDIiIGhlaWdodD0iNDIiIHZpZXdCb3g9IjAgMCA0MiA0MiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQyIiBoZWlnaHQ9IjQyIiByeD0iOCIgZmlsbD0idXJsKCNwYWludDBfbGluZWFyXzQxXzEwOSkiLz4KPGRlZnM+CjxsaW5lYXJHcmFkaWVudCBpZD0icGFpbnQwX2xpbmVhcl80MV8xMDkiIHgxPSIwIiB5MT0iMCIgeDI9IjQyIiB5Mj0iNDIiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KPHN0b3Agc3RvcC1jb2xvcj0iI2ZmNmI4YiIvPgo8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNlNmM3OGEiLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8L3N2Zz4K'" />
+                        </div>
+                    </div>
+                    <div class="app-name">${app.name}</div>
+                    <div class="app-description">${app.description}</div>
+                    <span class="app-badge-card">Active</span>
+                    <div class="app-status">${app.status}</div>
+                `;
+                
+                appGrid.appendChild(appCard);
+            });
+            
+            // Initialize animations after cards are created
+            setTimeout(() => iconAnimationManager.init(), 100);
+        }
+
         // Check Authentication State
         auth.onAuthStateChanged((user) => {
             if (user) {
@@ -2510,6 +2850,7 @@
             updateDateTime();
             setInterval(updateDateTime, 1000);
             
+            generateAppCards();
             loadDashboardData();
             initializeSidebar();
             initializePWAFeatures();
@@ -2594,7 +2935,6 @@
             profileDropdown.classList.toggle('active');
         });
 
-        // Close dropdown when clicking outside
         document.addEventListener('click', function(e) {
             if (!userProfile.contains(e.target)) {
                 profileDropdown.classList.remove('active');
@@ -2621,7 +2961,6 @@
             userName.textContent = displayName;
             userRole.textContent = user.email.includes('admin') ? 'Administrator' : 'User';
             
-            // Update dropdown info
             dropdownAvatar.textContent = initials;
             dropdownName.textContent = displayName;
             dropdownEmail.textContent = user.email;
@@ -2683,7 +3022,8 @@
                     updateActivityFeed(data);
                     updateConnectionStatus(true);
                     if (data.fleet?.activeVehicles) {
-                        document.getElementById('efsStatus').textContent = `${data.fleet.activeVehicles} active vehicles`;
+                        document.querySelector('.app-card[data-app="efs"] .app-status').textContent = 
+                            `${data.fleet.activeVehicles} active vehicles`;
                     }
                 }
             }, (error) => {
@@ -2753,10 +3093,6 @@
                 `;
                 statsGrid.appendChild(statCard);
             });
-            
-            if (data.metrics?.weeklySales) {
-                emhStatus.textContent = formatCurrency(data.metrics.weeklySales) + ' sales';
-            }
             
             saveToLocalStorage('dashboardStats', stats);
         }
@@ -3077,15 +3413,7 @@
 
         // Initialize on load
         document.addEventListener('DOMContentLoaded', () => {
-            auth.onAuthStateChanged((user) => {
-                if (user) {
-                    // Already handled by auth state change
-                } else {
-                    if (window.matchMedia('(display-mode: standalone)').matches) {
-                        console.log('Running in standalone PWA mode');
-                    }
-                }
-            });
+            document.getElementById("year").textContent = new Date().getFullYear();
         });
 
         // Handle beforeunload for data sync
@@ -3094,8 +3422,6 @@
                 navigator.sendBeacon('/api/sync-last-minute');
             }
         });
-        
-        document.getElementById("year").textContent = new Date().getFullYear();
     </script>
 </body>
 </html>
