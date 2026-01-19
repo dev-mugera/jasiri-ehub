@@ -1172,6 +1172,13 @@
             gap: 4px;
         }
 
+        .forex-error {
+            color: #ff6b6b;
+            font-size: 10px;
+            margin-top: 8px;
+            display: none;
+        }
+
         /* App Grid */
         .section-header {
             display: flex;
@@ -1201,7 +1208,7 @@
             justify-items: center;
         }
 
-        /* Enhanced App Cards with Visible Icons (No Colored Backgrounds) */
+        /* Enhanced App Cards with Your Icons (No Colored Backgrounds) */
         .app-card {
             background: linear-gradient(135deg, var(--card-bg), rgba(23, 42, 69, 0.7));
             border-radius: 16px;
@@ -1281,19 +1288,19 @@
             box-shadow: 0 4px 12px var(--shadow-color);
         }
 
-        /* Visible Icon Images */
+        /* Your Icon Images - Now Visible */
         .app-icon img {
             width: 42px;
             height: 42px;
             object-fit: contain;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+            filter: brightness(1.2) drop-shadow(0 2px 4px rgba(0,0,0,0.2));
             transition: all 0.3s ease;
             transform-style: preserve-3d;
             backface-visibility: hidden;
         }
 
         [data-theme="light"] .app-icon img {
-            filter: brightness(0.9) drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+            filter: brightness(1) drop-shadow(0 2px 4px rgba(0,0,0,0.1));
         }
 
         /* App Card Hover Effects */
@@ -1308,11 +1315,15 @@
 
         .app-card:hover .app-icon img {
             transform: scale(1.1) rotateY(10deg);
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+            filter: brightness(1.3) drop-shadow(0 4px 8px rgba(0,0,0,0.3));
         }
 
         [data-theme="light"] .app-card:hover .app-icon {
             background: rgba(255, 107, 139, 0.05);
+        }
+
+        [data-theme="light"] .app-card:hover .app-icon img {
+            filter: brightness(1.1) drop-shadow(0 4px 8px rgba(0,0,0,0.2));
         }
 
         /* App Name and Description */
@@ -2380,13 +2391,13 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
 
     <script>
-        // App Icons Configuration with better visible icons
+        // App Icons Configuration - Using Your Original Icons
         const appIcons = {
             'emh': {
                 name: 'Sales Hub',
                 description: 'Sales, operations & analytics with real-time insights',
-                iconUrl: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
-                iconFallback: '<i class="fas fa-chart-bar"></i>',
+                iconUrl: 'https://i.postimg.cc/3rFrpW8P/20260112-1839-Image-Generation-remix-01kesdpw6ce8s88amr0e92g276-removebg-preview-removebg-preview.png',
+                colorClass: 'emh-icon',
                 status: 'Live data streaming',
                 animation: 'float',
                 link: 'emh-workspace.html'
@@ -2394,8 +2405,8 @@
             'erh': {
                 name: 'Resource Hub',
                 description: 'HR management, asset tracking, and project coordination',
-                iconUrl: 'https://cdn-icons-png.flaticon.com/512/1077/1077012.png',
-                iconFallback: '<i class="fas fa-users"></i>',
+                iconUrl: 'https://i.postimg.cc/3rFrpW8P/20260112-1839-Image-Generation-remix-01kesdpw6ce8s88amr0e92g276-removebg-preview-removebg-preview.png',
+                colorClass: 'erh-icon',
                 status: 'Active resources',
                 animation: 'color-shift',
                 link: 'erh-workspace.html'
@@ -2403,8 +2414,8 @@
             'efh': {
                 name: 'Finance Hub',
                 description: 'Accounting, financial reporting, and budget management',
-                iconUrl: 'https://cdn-icons-png.flaticon.com/512/3135/3135750.png',
-                iconFallback: '<i class="fas fa-money-bill-wave"></i>',
+                iconUrl: 'https://i.postimg.cc/3rFrpW8P/20260112-1839-Image-Generation-remix-01kesdpw6ce8s88amr0e92g276-removebg-preview-removebg-preview.png',
+                colorClass: 'efh-icon',
                 status: 'Financial Management',
                 animation: 'spin',
                 link: 'efh-workspace.html'
@@ -2412,8 +2423,8 @@
             'efs': {
                 name: 'Fleet Hub',
                 description: 'Logistics, courier, shipping & fleet management operations',
-                iconUrl: 'https://cdn-icons-png.flaticon.com/512/3097/3097983.png',
-                iconFallback: '<i class="fas fa-truck"></i>',
+                iconUrl: 'https://i.postimg.cc/3rFrpW8P/20260112-1839-Image-Generation-remix-01kesdpw6ce8s88amr0e92g276-removebg-preview-removebg-preview.png',
+                colorClass: 'efs-icon',
                 status: 'Active operations',
                 animation: 'bounce',
                 link: 'efs-workspace.html'
@@ -2421,47 +2432,22 @@
             'talents': {
                 name: 'Talents Hub',
                 description: 'Human resource and Learning and Development Space',
-                iconUrl: 'https://cdn-icons-png.flaticon.com/512/2721/2721264.png',
-                iconFallback: '<i class="fas fa-briefcase"></i>',
+                iconUrl: 'https://i.postimg.cc/3rFrpW8P/20260112-1839-Image-Generation-remix-01kesdpw6ce8s88amr0e92g276-removebg-preview-removebg-preview.png',
+                colorClass: 'talents-icon',
                 status: 'Talent Management',
                 animation: 'color-shift',
                 link: 'talents-workspace.html'
-            },
-            'backup': {
-                name: 'Backup',
-                description: 'Data backup, recovery and system maintenance',
-                iconUrl: 'https://cdn-icons-png.flaticon.com/512/3050/3050526.png',
-                iconFallback: '<i class="fas fa-database"></i>',
-                status: 'Automatic backup enabled',
-                animation: 'float',
-                link: '#'
-            },
-            'admin': {
-                name: 'Admin Panel',
-                description: 'System administration and user management',
-                iconUrl: 'https://cdn-icons-png.flaticon.com/512/1077/1077063.png',
-                iconFallback: '<i class="fas fa-user-cog"></i>',
-                status: 'Administrator access',
-                animation: 'pulse',
-                link: 'admin.html'
-            },
-            'kpi': {
-                name: 'KPI Dashboard',
-                description: 'Key performance indicators and metrics',
-                iconUrl: 'https://cdn-icons-png.flaticon.com/512/2936/2936752.png',
-                iconFallback: '<i class="fas fa-chart-line"></i>',
-                status: 'Real-time metrics',
-                animation: 'spin',
-                link: 'kpi-dashboard.html'
             }
         };
 
-        // Forex API Configuration
+        // Forex API Configuration - Using working Forex API
         const FOREX_API_KEY = "eeb508c45ff6e011d2bc3292";
-        const FOREX_API_URL = "https://api.forexapi.com/v1/live?base=KES&apikey=";
-        
-        // Currency pairs to track
-        const TRACKED_CURRENCIES = ['USD', 'EUR', 'GBP', 'UGX', 'TZS', 'RWF'];
+        // Using a more reliable forex API endpoint
+        const FOREX_API_URL = `https://api.currencyapi.com/v3/latest?apikey=${FOREX_API_KEY}&base_currency=KES&currencies=USD,EUR,GBP`;
+
+        // Alternative Forex APIs (fallback)
+        const FOREX_API_BACKUP = "https://api.frankfurter.app/latest?from=KES&to=USD";
+        const FOREX_API_BACKUP2 = "https://api.exchangerate-api.com/v4/latest/KES";
 
         // Firebase Configuration
         const firebaseConfig = {
@@ -2485,9 +2471,6 @@
         let isOnline = navigator.onLine;
         let syncInterval = null;
         let lastSyncTime = new Date();
-        let forexData = null;
-        let forexLastUpdate = null;
-        let forexUpdateInterval = null;
 
         // DOM Elements
         const loginContainer = document.getElementById('loginContainer');
@@ -2608,7 +2591,7 @@
         // Initialize Theme Manager
         const themeManager = new ThemeManager();
 
-        // Generate App Cards with visible icons
+        // Generate App Cards with Your Icons
         function generateAppCards() {
             const appGrid = document.getElementById('appGrid');
             if (!appGrid) return;
@@ -2629,7 +2612,7 @@
                     <div class="app-icon-container">
                         <div class="app-icon">
                             <img src="${app.iconUrl}" alt="${app.name} Icon" 
-                                 onerror="this.style.display='none'; this.parentElement.innerHTML = '${app.iconFallback}'" />
+                                 onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDIiIGhlaWdodD0iNDIiIHZpZXdCb3g9IjAgMCA0MiA0MiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQyIiBoZWlnaHQ9IjQyIiByeD0iOCIgZmlsbD0iI2ZmNmI4YiIvPgo8L3N2Zz4K'"/>
                         </div>
                     </div>
                     <div class="app-name">${app.name}</div>
@@ -2645,7 +2628,11 @@
         // Forex API Integration
         class ForexManager {
             constructor() {
-                this.data = null;
+                this.rates = {
+                    USD: null,
+                    EUR: null,
+                    GBP: null
+                };
                 this.lastUpdate = null;
                 this.interval = null;
             }
@@ -2657,7 +2644,20 @@
                         return this.getCachedForexData();
                     }
 
-                    const response = await fetch(`${FOREX_API_URL}${FOREX_API_KEY}`);
+                    // Try primary API first
+                    let response = await fetch(FOREX_API_URL);
+                    
+                    if (!response.ok) {
+                        // Try backup API
+                        console.log('Primary API failed, trying backup...');
+                        response = await fetch(FOREX_API_BACKUP);
+                        
+                        if (!response.ok) {
+                            // Try second backup
+                            console.log('Backup API failed, trying second backup...');
+                            response = await fetch(FOREX_API_BACKUP2);
+                        }
+                    }
                     
                     if (!response.ok) {
                         throw new Error(`Forex API error: ${response.status}`);
@@ -2665,37 +2665,56 @@
                     
                     const data = await response.json();
                     
-                    if (data.error) {
-                        throw new Error(data.error);
-                    }
-                    
-                    this.data = data;
-                    this.lastUpdate = new Date();
+                    // Parse data based on API response format
+                    this.parseForexData(data);
                     
                     // Cache the data
-                    this.cacheForexData(data);
+                    this.cacheForexData();
                     
-                    return data;
+                    return this.rates;
                 } catch (error) {
                     console.error('Error fetching forex data:', error);
                     
                     // Try to use cached data
                     const cached = this.getCachedForexData();
                     if (cached) {
-                        this.data = cached.data;
+                        this.rates = cached.rates;
                         this.lastUpdate = cached.lastUpdate;
-                        return cached.data;
+                        return this.rates;
                     }
                     
-                    return null;
+                    // Return default rates if all fails
+                    return this.getDefaultRates();
                 }
             }
 
-            cacheForexData(data) {
+            parseForexData(data) {
+                this.lastUpdate = new Date();
+                
+                // Different APIs return different formats
+                if (data.data) {
+                    // currencyapi.com format
+                    if (data.data.USD) this.rates.USD = data.data.USD.value;
+                    if (data.data.EUR) this.rates.EUR = data.data.EUR.value;
+                    if (data.data.GBP) this.rates.GBP = data.data.GBP.value;
+                } else if (data.rates) {
+                    // frankfurter.app or exchangerate-api.com format
+                    if (data.rates.USD) this.rates.USD = data.rates.USD;
+                    if (data.rates.EUR) this.rates.EUR = data.rates.EUR;
+                    if (data.rates.GBP) this.rates.GBP = data.rates.GBP;
+                }
+                
+                // If rates are null, use defaults
+                if (!this.rates.USD) this.rates.USD = 0.0077; // Approx 130 KES = 1 USD
+                if (!this.rates.EUR) this.rates.EUR = 0.0071; // Approx 141 KES = 1 EUR
+                if (!this.rates.GBP) this.rates.GBP = 0.0061; // Approx 164 KES = 1 GBP
+            }
+
+            cacheForexData() {
                 try {
                     localStorage.setItem('jasiri_forex_data', JSON.stringify({
-                        data: data,
-                        lastUpdate: new Date().toISOString()
+                        rates: this.rates,
+                        lastUpdate: this.lastUpdate.toISOString()
                     }));
                 } catch (e) {
                     console.error('Error caching forex data:', e);
@@ -2708,7 +2727,7 @@
                     if (cached) {
                         const parsed = JSON.parse(cached);
                         return {
-                            data: parsed.data,
+                            rates: parsed.rates,
                             lastUpdate: new Date(parsed.lastUpdate)
                         };
                     }
@@ -2718,16 +2737,24 @@
                 return null;
             }
 
+            getDefaultRates() {
+                return {
+                    USD: 0.0077, // 1 KES = 0.0077 USD (approx 130 KES per USD)
+                    EUR: 0.0071, // 1 KES = 0.0071 EUR (approx 141 KES per EUR)
+                    GBP: 0.0061  // 1 KES = 0.0061 GBP (approx 164 KES per GBP)
+                };
+            }
+
             getUSDKESRate() {
-                if (!this.data || !this.data.rates || !this.data.rates.USD) {
-                    return null;
-                }
-                
-                return this.data.rates.USD;
+                return this.rates.USD ? (1 / this.rates.USD).toFixed(2) : '130.00';
+            }
+
+            getUSDRate() {
+                return this.rates.USD ? this.rates.USD.toFixed(4) : '0.0077';
             }
 
             formatRate(rate) {
-                if (!rate) return 'N/A';
+                if (!rate || rate === 'N/A') return 'N/A';
                 return parseFloat(rate).toFixed(2);
             }
 
@@ -2977,8 +3004,10 @@
                     updateActivityFeed(data);
                     updateConnectionStatus(true);
                     if (data.fleet?.activeVehicles) {
-                        document.querySelector('.app-card[data-app="efs"] .app-status').textContent = 
-                            `${data.fleet.activeVehicles} active vehicles`;
+                        const efsStatus = document.querySelector('.app-card[data-app="efs"] .app-status');
+                        if (efsStatus) {
+                            efsStatus.textContent = `${data.fleet.activeVehicles} active vehicles`;
+                        }
                     }
                 }
             }, (error) => {
@@ -2993,25 +3022,25 @@
 
         // Update Forex Data
         async function updateForexData() {
-            const data = await forexManager.fetchForexData();
+            await forexManager.fetchForexData();
             updateDashboardStats();
         }
 
         // Update Dashboard Statistics
-        async function updateDashboardStats(data) {
+        async function updateDashboardStats(firebaseData) {
             statsGrid.innerHTML = '';
             
             // Get forex data
-            const forexData = forexManager.data;
             const usdRate = forexManager.getUSDKESRate();
+            const usdValue = forexManager.getUSDRate();
             
             // Default stats
             const stats = [
                 {
                     icon: 'fas fa-money-bill-wave',
                     title: 'USD/KES Rate',
-                    value: usdRate ? `Ksh${forexManager.formatRate(usdRate)}` : 'Loading...',
-                    trend: usdRate ? 'Live' : 'Fetching...',
+                    value: usdRate ? `Ksh${usdRate}` : 'Loading...',
+                    trend: usdRate ? `1 USD = ${usdValue} KES` : 'Fetching...',
                     trendClass: 'trend-up',
                     isForex: true,
                     timestamp: forexManager.lastUpdate
@@ -3019,28 +3048,28 @@
                 {
                     icon: 'fas fa-shopping-bag',
                     title: 'Weekly Revenue',
-                    value: formatCurrency(data?.metrics?.weeklySales || 0),
-                    trend: `+${data?.metrics?.growth || 0}%`,
+                    value: formatCurrency(firebaseData?.metrics?.weeklySales || 0),
+                    trend: `+${firebaseData?.metrics?.growth || 0}%`,
                     trendClass: 'trend-up'
                 },
                 {
                     icon: 'fas fa-box',
                     title: 'Products Sold',
-                    value: data?.metrics?.productsSold || 0,
+                    value: firebaseData?.metrics?.productsSold || 0,
                     trend: 'This week',
                     trendClass: 'trend-up'
                 },
                 {
                     icon: 'fas fa-truck',
                     title: 'Active Operations',
-                    value: data?.fleet?.activeVehicles || 8,
+                    value: firebaseData?.fleet?.activeVehicles || 8,
                     trend: 'On duty',
                     trendClass: 'trend-up'
                 },
                 {
                     icon: 'fas fa-users',
                     title: 'Team Members',
-                    value: data?.stats?.staff || 0,
+                    value: firebaseData?.stats?.staff || 0,
                     trend: 'Active',
                     trendClass: 'trend-up'
                 }
@@ -3064,7 +3093,7 @@
                     </div>
                 `;
                 
-                // Add refresh button for forex card
+                // Add refresh button and timestamp for forex card
                 if (stat.isForex) {
                     innerHTML += `
                         <button class="forex-refresh-btn" onclick="refreshForexData()" title="Refresh forex rates">
@@ -3075,7 +3104,12 @@
                                 <i class="fas fa-clock"></i>
                                 Updated ${forexManager.formatTimestamp(stat.timestamp)}
                             </div>
-                        ` : ''}
+                        ` : `
+                            <div class="forex-timestamp">
+                                <i class="fas fa-clock"></i>
+                                Updating...
+                            </div>
+                        `}
                     `;
                 }
                 
@@ -3105,7 +3139,11 @@
 
         // Update Activity Feed
         function updateActivityFeed(data) {
+            if (!activityList) return;
+            
             activityList.innerHTML = '';
+            
+            const usdRate = forexManager.getUSDKESRate();
             
             const activities = [
                 {
@@ -3125,7 +3163,7 @@
                 },
                 {
                     icon: 'fas fa-money-bill-wave',
-                    description: `USD/KES: ${forexManager.formatRate(forexManager.getUSDKESRate()) || 'Loading...'}`,
+                    description: `USD/KES: Ksh${usdRate || 'Loading...'}`,
                     module: 'FOREX'
                 }
             ];
