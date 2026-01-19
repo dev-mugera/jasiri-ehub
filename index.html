@@ -1119,6 +1119,59 @@
             color: #ff6b6b;
         }
 
+        /* Forex Card Special Styling */
+        .forex-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .forex-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, 
+                rgba(255, 107, 139, 0.05), 
+                rgba(230, 199, 138, 0.05));
+            z-index: 0;
+        }
+
+        .forex-card .stat-icon {
+            background: rgba(230, 199, 138, 0.15);
+            color: var(--accent-gold);
+        }
+
+        .forex-refresh-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(230, 199, 138, 0.1);
+            border: 1px solid rgba(230, 199, 138, 0.2);
+            border-radius: 5px;
+            color: var(--accent-gold);
+            padding: 4px 8px;
+            font-size: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+            z-index: 2;
+        }
+
+        .forex-refresh-btn:hover {
+            background: rgba(230, 199, 138, 0.2);
+            transform: rotate(45deg);
+        }
+
+        .forex-timestamp {
+            font-size: 10px;
+            color: var(--text-secondary);
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
         /* App Grid */
         .section-header {
             display: flex;
@@ -1148,7 +1201,7 @@
             justify-items: center;
         }
 
-        /* Enhanced App Cards with Icon Animations */
+        /* Enhanced App Cards with Visible Icons (No Colored Backgrounds) */
         .app-card {
             background: linear-gradient(135deg, var(--card-bg), rgba(23, 42, 69, 0.7));
             border-radius: 16px;
@@ -1196,191 +1249,39 @@
             box-shadow: 0 12px 32px rgba(255, 107, 139, 0.15);
         }
 
-        /* Enhanced App Icon Container with Advanced Animations */
+        /* App Icon Container - Clean & Visible */
         .app-icon-container {
             position: relative;
             width: 72px;
             height: 72px;
             margin-bottom: 20px;
             perspective: 1000px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .app-icon {
-            width: 100%;
-            height: 100%;
+            width: 72px;
+            height: 72px;
             border-radius: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 30px;
-            color: white;
-            box-shadow: 0 8px 24px var(--shadow-color);
+            font-size: 32px;
+            color: var(--light-pink);
             position: relative;
             overflow: hidden;
             transform-style: preserve-3d;
             transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             transform-origin: center;
             will-change: transform;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 12px var(--shadow-color);
         }
 
-        /* Glow effect for icons */
-        .app-icon::before {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            background: linear-gradient(45deg, 
-                rgba(255, 255, 255, 0.3),
-                rgba(255, 255, 255, 0.1),
-                transparent 70%);
-            border-radius: 20px;
-            z-index: -1;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .app-icon::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0));
-            border-radius: 18px;
-            z-index: 1;
-        }
-
-        /* Floating Particles */
-        .app-icon-particles {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 2;
-        }
-
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            border-radius: 50%;
-            opacity: 0;
-            transform: translate(-50%, -50%);
-        }
-
-        /* Icon Colors */
-        .emh-icon {
-            background: linear-gradient(135deg, #ff6b8b, #ff8ba7);
-        }
-
-        .erh-icon {
-            background: linear-gradient(135deg, #81c8be, #9ad4cb);
-        }
-
-        .efh-icon {
-            background: linear-gradient(135deg, #e6c78a, #f0d5a5);
-        }
-
-        .efs-icon {
-            background: linear-gradient(135deg, #36d1dc, #5b86e5);
-        }
-
-        .talents-icon {
-            background: linear-gradient(135deg, #9c27b0, #673ab7);
-        }
-
-        .backup-icon {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-        }
-
-        /* Hover Animations */
-        .app-card:hover .app-icon {
-            transform: translateY(-5px) scale(1.05) rotateY(15deg);
-            box-shadow: 
-                0 15px 35px rgba(0, 0, 0, 0.3),
-                0 0 30px var(--glow-color, rgba(255, 107, 139, 0.3));
-        }
-
-        .app-card:hover .app-icon::before {
-            opacity: 1;
-        }
-
-        /* Pulse Animation for Icons */
-        @keyframes pulse {
-            0%, 100% {
-                box-shadow: 
-                    0 8px 24px var(--shadow-color),
-                    0 0 0 0 rgba(255, 107, 139, 0.3);
-            }
-            50% {
-                box-shadow: 
-                    0 8px 24px var(--shadow-color),
-                    0 0 20px 10px rgba(255, 107, 139, 0.3);
-            }
-        }
-
-        .app-icon.pulse {
-            animation: pulse 2s infinite;
-        }
-
-        /* Floating Animation */
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0) scale(1);
-            }
-            50% {
-                transform: translateY(-10px) scale(1.02);
-            }
-        }
-
-        .app-icon.float {
-            animation: float 3s ease-in-out infinite;
-        }
-
-        /* Spin Animation */
-        @keyframes spin-slow {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .app-icon.spin {
-            animation: spin-slow 8s linear infinite;
-        }
-
-        /* Bounce Animation */
-        @keyframes bounce {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-15px);
-            }
-        }
-
-        .app-icon.bounce {
-            animation: bounce 2s ease-in-out infinite;
-        }
-
-        /* Color Shift Animation */
-        @keyframes colorShift {
-            0% {
-                filter: hue-rotate(0deg);
-            }
-            50% {
-                filter: hue-rotate(180deg);
-            }
-            100% {
-                filter: hue-rotate(360deg);
-            }
-        }
-
-        .app-icon.color-shift {
-            animation: colorShift 4s linear infinite;
-        }
-
-        /* Custom Icon Styles with Images */
+        /* Visible Icon Images */
         .app-icon img {
             width: 42px;
             height: 42px;
@@ -1391,30 +1292,27 @@
             backface-visibility: hidden;
         }
 
+        [data-theme="light"] .app-icon img {
+            filter: brightness(0.9) drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+
+        /* App Card Hover Effects */
+        .app-card:hover .app-icon {
+            transform: translateY(-5px) scale(1.05) rotateY(15deg);
+            box-shadow: 
+                0 8px 24px var(--shadow-color),
+                0 0 20px rgba(255, 107, 139, 0.1);
+            border-color: rgba(255, 107, 139, 0.3);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
         .app-card:hover .app-icon img {
-            transform: scale(1.15) rotateY(10deg);
+            transform: scale(1.1) rotateY(10deg);
             filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
         }
 
-        /* Specific Icon Glow Colors */
-        .app-card[data-app="emh"] {
-            --glow-color: rgba(255, 107, 139, 0.3);
-        }
-
-        .app-card[data-app="erh"] {
-            --glow-color: rgba(129, 200, 190, 0.3);
-        }
-
-        .app-card[data-app="efh"] {
-            --glow-color: rgba(230, 199, 138, 0.3);
-        }
-
-        .app-card[data-app="efs"] {
-            --glow-color: rgba(54, 209, 220, 0.3);
-        }
-
-        .app-card[data-app="talents"] {
-            --glow-color: rgba(156, 39, 176, 0.3);
+        [data-theme="light"] .app-card:hover .app-icon {
+            background: rgba(255, 107, 139, 0.05);
         }
 
         /* App Name and Description */
@@ -1725,6 +1623,23 @@
             color: var(--text-primary);
             font-size: 14px;
             font-weight: 600;
+        }
+
+        /* Forex Loading Indicator */
+        .forex-loading {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            border-top-color: var(--accent-gold);
+            animation: spin 1s linear infinite;
+            margin-left: 5px;
+        }
+
+        [data-theme="light"] .forex-loading {
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            border-top-color: var(--accent-gold);
         }
 
         /* Responsive Design */
@@ -2350,9 +2265,9 @@
                     </div>
                 </section>
 
-                <!-- Business Stats -->
+                <!-- Business Stats with Forex -->
                 <div class="stats-grid" id="statsGrid">
-                    <!-- Stats populated from Firebase -->
+                    <!-- Stats populated from Firebase & Forex API -->
                 </div>
 
                 <!-- Enterprise Applications -->
@@ -2465,13 +2380,13 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
 
     <script>
-        // App Icons Configuration with placeholder images
+        // App Icons Configuration with better visible icons
         const appIcons = {
             'emh': {
                 name: 'Sales Hub',
                 description: 'Sales, operations & analytics with real-time insights',
-                iconUrl: 'https://i.postimg.cc/3rFrpW8P/20260112-1839-Image-Generation-remix-01kesdpw6ce8s88amr0e92g276-removebg-preview-removebg-preview.png',
-                colorClass: 'emh-icon',
+                iconUrl: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
+                iconFallback: '<i class="fas fa-chart-bar"></i>',
                 status: 'Live data streaming',
                 animation: 'float',
                 link: 'emh-workspace.html'
@@ -2479,8 +2394,8 @@
             'erh': {
                 name: 'Resource Hub',
                 description: 'HR management, asset tracking, and project coordination',
-                iconUrl: 'https://i.postimg.cc/3rFrpW8P/20260112-1839-Image-Generation-remix-01kesdpw6ce8s88amr0e92g276-removebg-preview-removebg-preview.png',
-                colorClass: 'erh-icon',
+                iconUrl: 'https://cdn-icons-png.flaticon.com/512/1077/1077012.png',
+                iconFallback: '<i class="fas fa-users"></i>',
                 status: 'Active resources',
                 animation: 'color-shift',
                 link: 'erh-workspace.html'
@@ -2488,8 +2403,8 @@
             'efh': {
                 name: 'Finance Hub',
                 description: 'Accounting, financial reporting, and budget management',
-                iconUrl: 'https://i.postimg.cc/3rFrpW8P/20260112-1839-Image-Generation-remix-01kesdpw6ce8s88amr0e92g276-removebg-preview-removebg-preview.png',
-                colorClass: 'efh-icon',
+                iconUrl: 'https://cdn-icons-png.flaticon.com/512/3135/3135750.png',
+                iconFallback: '<i class="fas fa-money-bill-wave"></i>',
                 status: 'Financial Management',
                 animation: 'spin',
                 link: 'efh-workspace.html'
@@ -2497,8 +2412,8 @@
             'efs': {
                 name: 'Fleet Hub',
                 description: 'Logistics, courier, shipping & fleet management operations',
-                iconUrl: 'https://i.postimg.cc/3rFrpW8P/20260112-1839-Image-Generation-remix-01kesdpw6ce8s88amr0e92g276-removebg-preview-removebg-preview.png',
-                colorClass: 'efs-icon',
+                iconUrl: 'https://cdn-icons-png.flaticon.com/512/3097/3097983.png',
+                iconFallback: '<i class="fas fa-truck"></i>',
                 status: 'Active operations',
                 animation: 'bounce',
                 link: 'efs-workspace.html'
@@ -2506,8 +2421,8 @@
             'talents': {
                 name: 'Talents Hub',
                 description: 'Human resource and Learning and Development Space',
-                iconUrl: 'https://i.postimg.cc/3rFrpW8P/20260112-1839-Image-Generation-remix-01kesdpw6ce8s88amr0e92g276-removebg-preview-removebg-preview.png',
-                colorClass: 'talents-icon',
+                iconUrl: 'https://cdn-icons-png.flaticon.com/512/2721/2721264.png',
+                iconFallback: '<i class="fas fa-briefcase"></i>',
                 status: 'Talent Management',
                 animation: 'color-shift',
                 link: 'talents-workspace.html'
@@ -2515,8 +2430,8 @@
             'backup': {
                 name: 'Backup',
                 description: 'Data backup, recovery and system maintenance',
-                iconUrl: 'https://i.postimg.cc/3rFrpW8P/20260112-1839-Image-Generation-remix-01kesdpw6ce8s88amr0e92g276-removebg-preview-removebg-preview.png',
-                colorClass: 'backup-icon',
+                iconUrl: 'https://cdn-icons-png.flaticon.com/512/3050/3050526.png',
+                iconFallback: '<i class="fas fa-database"></i>',
                 status: 'Automatic backup enabled',
                 animation: 'float',
                 link: '#'
@@ -2524,8 +2439,8 @@
             'admin': {
                 name: 'Admin Panel',
                 description: 'System administration and user management',
-                iconUrl: 'https://i.postimg.cc/3rFrpW8P/20260112-1839-Image-Generation-remix-01kesdpw6ce8s88amr0e92g276-removebg-preview-removebg-preview.png',
-                colorClass: 'efs-icon',
+                iconUrl: 'https://cdn-icons-png.flaticon.com/512/1077/1077063.png',
+                iconFallback: '<i class="fas fa-user-cog"></i>',
                 status: 'Administrator access',
                 animation: 'pulse',
                 link: 'admin.html'
@@ -2533,24 +2448,31 @@
             'kpi': {
                 name: 'KPI Dashboard',
                 description: 'Key performance indicators and metrics',
-                iconUrl: 'https://i.postimg.cc/3rFrpW8P/20260112-1839-Image-Generation-remix-01kesdpw6ce8s88amr0e92g276-removebg-preview-removebg-preview.png',
-                colorClass: 'emh-icon',
+                iconUrl: 'https://cdn-icons-png.flaticon.com/512/2936/2936752.png',
+                iconFallback: '<i class="fas fa-chart-line"></i>',
                 status: 'Real-time metrics',
                 animation: 'spin',
                 link: 'kpi-dashboard.html'
             }
         };
 
-        // Firebase Configuration - UPDATE WITH YOUR FIREBASE CONFIG
+        // Forex API Configuration
+        const FOREX_API_KEY = "eeb508c45ff6e011d2bc3292";
+        const FOREX_API_URL = "https://api.forexapi.com/v1/live?base=KES&apikey=";
+        
+        // Currency pairs to track
+        const TRACKED_CURRENCIES = ['USD', 'EUR', 'GBP', 'UGX', 'TZS', 'RWF'];
+
+        // Firebase Configuration
         const firebaseConfig = {
-        apiKey: "AIzaSyCOb4BqfiN3vt1Y13UTEpA_boCqNRH6rrQ",
-        authDomain: "dsog-stores-dashboard.firebaseapp.com",
-        databaseURL: "https://dsog-stores-dashboard-default-rtdb.firebaseio.com",
-        projectId: "dsog-stores-dashboard",
-        storageBucket: "dsog-stores-dashboard.firebasestorage.app",
-        messagingSenderId: "1085972125142",
-        appId: "1:1085972125142:web:9abea9ee0dd792a052c077"
-    };
+            apiKey: "AIzaSyCOb4BqfiN3vt1Y13UTEpA_boCqNRH6rrQ",
+            authDomain: "dsog-stores-dashboard.firebaseapp.com",
+            databaseURL: "https://dsog-stores-dashboard-default-rtdb.firebaseio.com",
+            projectId: "dsog-stores-dashboard",
+            storageBucket: "dsog-stores-dashboard.firebasestorage.app",
+            messagingSenderId: "1085972125142",
+            appId: "1:1085972125142:web:9abea9ee0dd792a052c077"
+        };
 
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
@@ -2563,6 +2485,9 @@
         let isOnline = navigator.onLine;
         let syncInterval = null;
         let lastSyncTime = new Date();
+        let forexData = null;
+        let forexLastUpdate = null;
+        let forexUpdateInterval = null;
 
         // DOM Elements
         const loginContainer = document.getElementById('loginContainer');
@@ -2683,118 +2608,7 @@
         // Initialize Theme Manager
         const themeManager = new ThemeManager();
 
-        // Advanced Icon Animation Manager
-        class IconAnimationManager {
-            constructor() {
-                this.animations = new Map();
-                this.activeAnimations = new Set();
-            }
-
-            createParticles(iconElement, count = 8) {
-                const container = iconElement.parentElement;
-                if (!container.querySelector('.app-icon-particles')) {
-                    const particlesContainer = document.createElement('div');
-                    particlesContainer.className = 'app-icon-particles';
-                    container.appendChild(particlesContainer);
-                    
-                    for (let i = 0; i < count; i++) {
-                        const particle = document.createElement('div');
-                        particle.className = 'particle';
-                        particle.style.backgroundColor = getComputedStyle(iconElement).backgroundColor;
-                        particle.style.left = `${Math.random() * 100}%`;
-                        particle.style.top = `${Math.random() * 100}%`;
-                        particlesContainer.appendChild(particle);
-                    }
-                }
-            }
-
-            animateParticles(iconElement) {
-                const particles = iconElement.parentElement.querySelectorAll('.particle');
-                particles.forEach((particle, index) => {
-                    const duration = 1 + Math.random() * 0.5;
-                    const delay = index * 0.1;
-                    
-                    particle.animate([
-                        { 
-                            opacity: 0, 
-                            transform: 'translate(-50%, -50%) scale(0)' 
-                        },
-                        { 
-                            opacity: 0.8, 
-                            transform: 'translate(-50%, -50%) scale(1)' 
-                        },
-                        { 
-                            opacity: 0, 
-                            transform: 'translate(-50%, -50%) scale(0)' 
-                        }
-                    ], {
-                        duration: duration * 1000,
-                        delay: delay * 1000,
-                        easing: 'cubic-bezier(0.4, 0, 0.2, 1)'
-                    });
-                });
-            }
-
-            applyHoverEffect(appCard) {
-                const iconElement = appCard.querySelector('.app-icon');
-                const animationType = appCard.dataset.animation;
-                
-                // Add animation class
-                if (animationType) {
-                    iconElement.classList.add(animationType);
-                }
-                
-                // Create and animate particles
-                this.createParticles(iconElement);
-                this.animateParticles(iconElement);
-                
-                // Store reference for cleanup
-                this.animations.set(appCard, { iconElement, animationType });
-            }
-
-            removeHoverEffect(appCard) {
-                const animation = this.animations.get(appCard);
-                if (animation) {
-                    animation.iconElement.classList.remove(animation.animationType);
-                    this.animations.delete(appCard);
-                }
-            }
-
-            init() {
-                // Add event listeners to all app cards
-                document.querySelectorAll('.app-card').forEach(card => {
-                    card.addEventListener('mouseenter', () => this.applyHoverEffect(card));
-                    card.addEventListener('mouseleave', () => this.removeHoverEffect(card));
-                });
-            }
-        }
-
-        // Initialize Icon Animation Manager
-        const iconAnimationManager = new IconAnimationManager();
-
-        // Service Worker Registration
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/service-worker.js')
-                    .then(registration => {
-                        console.log('ServiceWorker registered: ', registration.scope);
-                        
-                        registration.addEventListener('updatefound', () => {
-                            const newWorker = registration.installing;
-                            newWorker.addEventListener('statechange', () => {
-                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                                    showUpdateBanner();
-                                }
-                            });
-                        });
-                    })
-                    .catch(error => {
-                        console.log('ServiceWorker registration failed: ', error);
-                    });
-            });
-        }
-
-        // Generate App Cards
+        // Generate App Cards with visible icons
         function generateAppCards() {
             const appGrid = document.getElementById('appGrid');
             if (!appGrid) return;
@@ -2813,8 +2627,9 @@
                 
                 appCard.innerHTML = `
                     <div class="app-icon-container">
-                        <div class="app-icon ${app.colorClass}">
-                            <img src="${app.iconUrl}" alt="${app.name} Icon" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDIiIGhlaWdodD0iNDIiIHZpZXdCb3g9IjAgMCA0MiA0MiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQyIiBoZWlnaHQ9IjQyIiByeD0iOCIgZmlsbD0idXJsKCNwYWludDBfbGluZWFyXzQxXzEwOSkiLz4KPGRlZnM+CjxsaW5lYXJHcmFkaWVudCBpZD0icGFpbnQwX2xpbmVhcl80MV8xMDkiIHgxPSIwIiB5MT0iMCIgeDI9IjQyIiB5Mj0iNDIiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KPHN0b3Agc3RvcC1jb2xvcj0iI2ZmNmI4YiIvPgo8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNlNmM3OGEiLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8L3N2Zz4K'" />
+                        <div class="app-icon">
+                            <img src="${app.iconUrl}" alt="${app.name} Icon" 
+                                 onerror="this.style.display='none'; this.parentElement.innerHTML = '${app.iconFallback}'" />
                         </div>
                     </div>
                     <div class="app-name">${app.name}</div>
@@ -2825,10 +2640,143 @@
                 
                 appGrid.appendChild(appCard);
             });
-            
-            // Initialize animations after cards are created
-            setTimeout(() => iconAnimationManager.init(), 100);
         }
+
+        // Forex API Integration
+        class ForexManager {
+            constructor() {
+                this.data = null;
+                this.lastUpdate = null;
+                this.interval = null;
+            }
+
+            async fetchForexData() {
+                try {
+                    if (!isOnline) {
+                        console.log('Offline mode - using cached forex data');
+                        return this.getCachedForexData();
+                    }
+
+                    const response = await fetch(`${FOREX_API_URL}${FOREX_API_KEY}`);
+                    
+                    if (!response.ok) {
+                        throw new Error(`Forex API error: ${response.status}`);
+                    }
+                    
+                    const data = await response.json();
+                    
+                    if (data.error) {
+                        throw new Error(data.error);
+                    }
+                    
+                    this.data = data;
+                    this.lastUpdate = new Date();
+                    
+                    // Cache the data
+                    this.cacheForexData(data);
+                    
+                    return data;
+                } catch (error) {
+                    console.error('Error fetching forex data:', error);
+                    
+                    // Try to use cached data
+                    const cached = this.getCachedForexData();
+                    if (cached) {
+                        this.data = cached.data;
+                        this.lastUpdate = cached.lastUpdate;
+                        return cached.data;
+                    }
+                    
+                    return null;
+                }
+            }
+
+            cacheForexData(data) {
+                try {
+                    localStorage.setItem('jasiri_forex_data', JSON.stringify({
+                        data: data,
+                        lastUpdate: new Date().toISOString()
+                    }));
+                } catch (e) {
+                    console.error('Error caching forex data:', e);
+                }
+            }
+
+            getCachedForexData() {
+                try {
+                    const cached = localStorage.getItem('jasiri_forex_data');
+                    if (cached) {
+                        const parsed = JSON.parse(cached);
+                        return {
+                            data: parsed.data,
+                            lastUpdate: new Date(parsed.lastUpdate)
+                        };
+                    }
+                } catch (e) {
+                    console.error('Error reading cached forex data:', e);
+                }
+                return null;
+            }
+
+            getUSDKESRate() {
+                if (!this.data || !this.data.rates || !this.data.rates.USD) {
+                    return null;
+                }
+                
+                return this.data.rates.USD;
+            }
+
+            formatRate(rate) {
+                if (!rate) return 'N/A';
+                return parseFloat(rate).toFixed(2);
+            }
+
+            formatTimestamp(date) {
+                if (!date) return 'Never';
+                
+                const now = new Date();
+                const diff = Math.floor((now - date) / 1000);
+                
+                if (diff < 60) {
+                    return 'Just now';
+                } else if (diff < 3600) {
+                    return `${Math.floor(diff / 60)}m ago`;
+                } else if (diff < 86400) {
+                    return `${Math.floor(diff / 3600)}h ago`;
+                } else {
+                    return date.toLocaleTimeString('en-US', { 
+                        hour: '2-digit', 
+                        minute: '2-digit',
+                        hour12: true 
+                    });
+                }
+            }
+
+            startAutoRefresh(interval = 5 * 60 * 1000) {
+                if (this.interval) {
+                    clearInterval(this.interval);
+                }
+                
+                this.interval = setInterval(async () => {
+                    if (isOnline) {
+                        await this.fetchForexData();
+                        updateDashboardStats();
+                    }
+                }, interval);
+                
+                return this.interval;
+            }
+
+            stopAutoRefresh() {
+                if (this.interval) {
+                    clearInterval(this.interval);
+                    this.interval = null;
+                }
+            }
+        }
+
+        // Initialize Forex Manager
+        const forexManager = new ForexManager();
 
         // Check Authentication State
         auth.onAuthStateChanged((user) => {
@@ -2856,6 +2804,9 @@
             initializePWAFeatures();
             startSyncInterval();
             
+            // Start forex updates
+            forexManager.startAutoRefresh();
+            
             updateLastSyncTime();
         }
 
@@ -2871,6 +2822,9 @@
                 clearInterval(syncInterval);
                 syncInterval = null;
             }
+            
+            // Stop forex updates
+            forexManager.stopAutoRefresh();
         }
 
         // Login Functionality
@@ -3013,8 +2967,9 @@
             lastSyncTimeElement.textContent = timeText;
         }
 
-        // Load Dashboard Data from Firebase
-        function loadDashboardData() {
+        // Load Dashboard Data from Firebase and Forex
+        async function loadDashboardData() {
+            // Load Firebase data
             database.ref('dashboard').on('value', (snapshot) => {
                 const data = snapshot.val();
                 if (data) {
@@ -3031,54 +2986,71 @@
                 updateConnectionStatus(false);
                 loadFromLocalStorage();
             });
+            
+            // Load Forex data
+            await updateForexData();
+        }
+
+        // Update Forex Data
+        async function updateForexData() {
+            const data = await forexManager.fetchForexData();
+            updateDashboardStats();
         }
 
         // Update Dashboard Statistics
-        function updateDashboardStats(data) {
+        async function updateDashboardStats(data) {
             statsGrid.innerHTML = '';
             
+            // Get forex data
+            const forexData = forexManager.data;
+            const usdRate = forexManager.getUSDKESRate();
+            
+            // Default stats
             const stats = [
+                {
+                    icon: 'fas fa-money-bill-wave',
+                    title: 'USD/KES Rate',
+                    value: usdRate ? `Ksh${forexManager.formatRate(usdRate)}` : 'Loading...',
+                    trend: usdRate ? 'Live' : 'Fetching...',
+                    trendClass: 'trend-up',
+                    isForex: true,
+                    timestamp: forexManager.lastUpdate
+                },
                 {
                     icon: 'fas fa-shopping-bag',
                     title: 'Weekly Revenue',
-                    value: formatCurrency(data.metrics?.weeklySales || 0),
-                    trend: `+Ksh{data.metrics?.growth || 0}%`,
+                    value: formatCurrency(data?.metrics?.weeklySales || 0),
+                    trend: `+${data?.metrics?.growth || 0}%`,
                     trendClass: 'trend-up'
                 },
                 {
                     icon: 'fas fa-box',
                     title: 'Products Sold',
-                    value: data.metrics?.productsSold || 0,
+                    value: data?.metrics?.productsSold || 0,
                     trend: 'This week',
                     trendClass: 'trend-up'
                 },
                 {
                     icon: 'fas fa-truck',
                     title: 'Active Operations',
-                    value: data.fleet?.activeVehicles || 8,
+                    value: data?.fleet?.activeVehicles || 8,
                     trend: 'On duty',
-                    trendClass: 'trend-up'
-                },
-                {
-                    icon: 'fas fa-store',
-                    title: 'Active Projects',
-                    value: data.stats?.franchises || 0,
-                    trend: 'In progress',
                     trendClass: 'trend-up'
                 },
                 {
                     icon: 'fas fa-users',
                     title: 'Team Members',
-                    value: data.stats?.staff || 0,
+                    value: data?.stats?.staff || 0,
                     trend: 'Active',
                     trendClass: 'trend-up'
                 }
             ];
             
-            stats.forEach(stat => {
+            stats.forEach((stat, index) => {
                 const statCard = document.createElement('div');
-                statCard.className = 'stat-card';
-                statCard.innerHTML = `
+                statCard.className = `stat-card ${stat.isForex ? 'forex-card' : ''}`;
+                
+                let innerHTML = `
                     <div class="stat-header">
                         <div class="stat-icon">
                             <i class="${stat.icon}"></i>
@@ -3091,10 +3063,44 @@
                         ${stat.trend}
                     </div>
                 `;
+                
+                // Add refresh button for forex card
+                if (stat.isForex) {
+                    innerHTML += `
+                        <button class="forex-refresh-btn" onclick="refreshForexData()" title="Refresh forex rates">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                        ${stat.timestamp ? `
+                            <div class="forex-timestamp">
+                                <i class="fas fa-clock"></i>
+                                Updated ${forexManager.formatTimestamp(stat.timestamp)}
+                            </div>
+                        ` : ''}
+                    `;
+                }
+                
+                statCard.innerHTML = innerHTML;
                 statsGrid.appendChild(statCard);
             });
             
+            // Save to local storage for offline use
             saveToLocalStorage('dashboardStats', stats);
+        }
+
+        // Refresh forex data manually
+        async function refreshForexData() {
+            const refreshBtn = document.querySelector('.forex-refresh-btn');
+            if (refreshBtn) {
+                refreshBtn.innerHTML = '<div class="forex-loading"></div>';
+                refreshBtn.disabled = true;
+            }
+            
+            await updateForexData();
+            
+            if (refreshBtn) {
+                refreshBtn.innerHTML = '<i class="fas fa-sync-alt"></i>';
+                refreshBtn.disabled = false;
+            }
         }
 
         // Update Activity Feed
@@ -3104,7 +3110,7 @@
             const activities = [
                 {
                     icon: 'fas fa-chart-line',
-                    description: `Weekly revenue: Ksh{formatCurrency(data.metrics?.weeklySales || 0)}`,
+                    description: `Weekly revenue: ${formatCurrency(data.metrics?.weeklySales || 0)}`,
                     module: 'EMH'
                 },
                 {
@@ -3118,9 +3124,9 @@
                     module: 'EMH'
                 },
                 {
-                    icon: 'fas fa-truck',
-                    description: `${data.stats?.deliveries || 0} pending operations`,
-                    module: 'EMH'
+                    icon: 'fas fa-money-bill-wave',
+                    description: `USD/KES: ${forexManager.formatRate(forexManager.getUSDKESRate()) || 'Loading...'}`,
+                    module: 'FOREX'
                 }
             ];
             
@@ -3276,6 +3282,8 @@
                 
                 if (auth.currentUser) {
                     syncData();
+                    // Refresh forex data when coming back online
+                    updateForexData();
                 }
             } else {
                 connectionStatus.innerHTML = '<i class="fas fa-circle"></i><span>Offline</span>';
@@ -3390,7 +3398,7 @@
 
         // Clear Cache
         function clearCache() {
-            if (confirm('Clear all cached data? This will remove offline data.')) {
+            if (confirm('Clear all cached data? This will remove offline data including forex rates.')) {
                 showLoading();
                 
                 Object.keys(localStorage).forEach(key => {
@@ -3421,7 +3429,13 @@
             if (auth.currentUser && isOnline) {
                 navigator.sendBeacon('/api/sync-last-minute');
             }
+            
+            // Stop forex updates
+            forexManager.stopAutoRefresh();
         });
+
+        // Make refreshForexData globally accessible
+        window.refreshForexData = refreshForexData;
     </script>
 </body>
 </html>
