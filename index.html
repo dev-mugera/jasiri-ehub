@@ -60,6 +60,86 @@
             --shadow-color: rgba(0, 0, 0, 0.25);
         }
 
+        /* Professional Theme 1: Corporate Blue */
+        [data-theme="corporate-blue"] {
+            --dark-blue: #1a237e;
+            --medium-blue: #283593;
+            --light-pink: #2196f3;
+            --accent-gold: #ffc107;
+            --soft-teal: #4db6ac;
+            --text-primary: #e8eaf6;
+            --text-secondary: #9fa8da;
+            --card-bg: rgba(33, 33, 33, 0.85);
+            --background-color: #1a237e;
+            --surface-color: #283593;
+            --border-color: rgba(144, 202, 249, 0.12);
+            --shadow-color: rgba(0, 0, 0, 0.3);
+        }
+
+        /* Professional Theme 2: Modern Green */
+        [data-theme="modern-green"] {
+            --dark-blue: #0d3b2a;
+            --medium-blue: #1b5e3f;
+            --light-pink: #00c853;
+            --accent-gold: #ffd54f;
+            --soft-teal: #4db6ac;
+            --text-primary: #e8f5e9;
+            --text-secondary: #a5d6a7;
+            --card-bg: rgba(27, 94, 63, 0.85);
+            --background-color: #0d3b2a;
+            --surface-color: #1b5e3f;
+            --border-color: rgba(129, 199, 132, 0.15);
+            --shadow-color: rgba(0, 0, 0, 0.25);
+        }
+
+        /* Professional Theme 3: Professional Purple */
+        [data-theme="professional-purple"] {
+            --dark-blue: #311b92;
+            --medium-blue: #4527a0;
+            --light-pink: #ab47bc;
+            --accent-gold: #ffca28;
+            --soft-teal: #80deea;
+            --text-primary: #f3e5f5;
+            --text-secondary: #ce93d8;
+            --card-bg: rgba(69, 39, 160, 0.85);
+            --background-color: #311b92;
+            --surface-color: #4527a0;
+            --border-color: rgba(186, 104, 200, 0.15);
+            --shadow-color: rgba(0, 0, 0, 0.3);
+        }
+
+        /* Professional Theme 4: Minimalist Gray */
+        [data-theme="minimalist-gray"] {
+            --dark-blue: #263238;
+            --medium-blue: #37474f;
+            --light-pink: #607d8b;
+            --accent-gold: #ffb300;
+            --soft-teal: #80cbc4;
+            --text-primary: #eceff1;
+            --text-secondary: #b0bec5;
+            --card-bg: rgba(55, 71, 79, 0.85);
+            --background-color: #263238;
+            --surface-color: #37474f;
+            --border-color: rgba(176, 190, 197, 0.15);
+            --shadow-color: rgba(0, 0, 0, 0.25);
+        }
+
+        /* Professional Theme 5: Executive Amber */
+        [data-theme="executive-amber"] {
+            --dark-blue: #4e342e;
+            --medium-blue: #6d4c41;
+            --light-pink: #ff8f00;
+            --accent-gold: #ffca28;
+            --soft-teal: #4db6ac;
+            --text-primary: #fbe9e7;
+            --text-secondary: #d7ccc8;
+            --card-bg: rgba(109, 76, 65, 0.85);
+            --background-color: #4e342e;
+            --surface-color: #6d4c41;
+            --border-color: rgba(255, 183, 77, 0.15);
+            --shadow-color: rgba(0, 0, 0, 0.25);
+        }
+
         /* Light Theme Variables */
         [data-theme="light"] {
             --dark-blue: #f8fafc;
@@ -132,10 +212,15 @@
             transition: opacity 0.3s ease;
         }
 
-        [data-theme="light"] .background-pattern {
+        [data-theme="light"] .background-pattern,
+        [data-theme="corporate-blue"] .background-pattern,
+        [data-theme="modern-green"] .background-pattern,
+        [data-theme="professional-purple"] .background-pattern,
+        [data-theme="minimalist-gray"] .background-pattern,
+        [data-theme="executive-amber"] .background-pattern {
             background-image: 
-                radial-gradient(circle at 10% 20%, rgba(225, 29, 72, 0.03) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(13, 148, 136, 0.02) 0%, transparent 20%);
+                radial-gradient(circle at 10% 20%, rgba(var(--theme-light-rgb), 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(var(--theme-soft-rgb), 0.03) 0%, transparent 20%);
         }
 
         /* Theme Toggle Button */
@@ -169,6 +254,11 @@
 
         [data-theme="dark"] .theme-toggle .fa-sun,
         [data-theme="light"] .theme-toggle .fa-moon,
+        [data-theme="corporate-blue"] .theme-toggle .fa-building,
+        [data-theme="modern-green"] .theme-toggle .fa-leaf,
+        [data-theme="professional-purple"] .theme-toggle .fa-gem,
+        [data-theme="minimalist-gray"] .theme-toggle .fa-mountain,
+        [data-theme="executive-amber"] .theme-toggle .fa-crown,
         :not([data-theme]) .theme-toggle .fa-desktop {
             display: block;
         }
@@ -177,6 +267,21 @@
         [data-theme="dark"] .theme-toggle .fa-desktop,
         [data-theme="light"] .theme-toggle .fa-sun,
         [data-theme="light"] .theme-toggle .fa-desktop,
+        [data-theme="corporate-blue"] .theme-toggle .fa-sun,
+        [data-theme="corporate-blue"] .theme-toggle .fa-moon,
+        [data-theme="corporate-blue"] .theme-toggle .fa-desktop,
+        [data-theme="modern-green"] .theme-toggle .fa-sun,
+        [data-theme="modern-green"] .theme-toggle .fa-moon,
+        [data-theme="modern-green"] .theme-toggle .fa-desktop,
+        [data-theme="professional-purple"] .theme-toggle .fa-sun,
+        [data-theme="professional-purple"] .theme-toggle .fa-moon,
+        [data-theme="professional-purple"] .theme-toggle .fa-desktop,
+        [data-theme="minimalist-gray"] .theme-toggle .fa-sun,
+        [data-theme="minimalist-gray"] .theme-toggle .fa-moon,
+        [data-theme="minimalist-gray"] .theme-toggle .fa-desktop,
+        [data-theme="executive-amber"] .theme-toggle .fa-sun,
+        [data-theme="executive-amber"] .theme-toggle .fa-moon,
+        [data-theme="executive-amber"] .theme-toggle .fa-desktop,
         :not([data-theme]) .theme-toggle .fa-sun,
         :not([data-theme]) .theme-toggle .fa-moon {
             display: none;
@@ -191,7 +296,9 @@
             background: var(--surface-color);
             border: 1px solid var(--border-color);
             border-radius: var(--border-radius);
-            min-width: 180px;
+            min-width: 220px;
+            max-height: 400px;
+            overflow-y: auto;
             box-shadow: 0 8px 32px var(--shadow-color);
             backdrop-filter: blur(20px);
             z-index: 1001;
@@ -235,6 +342,21 @@
         .theme-option.active i {
             color: var(--light-pink);
         }
+
+        .theme-preview {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+        }
+
+        .theme-preview.default { background: linear-gradient(135deg, #0a192f 50%, #ff6b8b 50%); }
+        .theme-preview.light { background: linear-gradient(135deg, #f8fafc 50%, #e11d48 50%); }
+        .theme-preview.corporate-blue { background: linear-gradient(135deg, #1a237e 50%, #2196f3 50%); }
+        .theme-preview.modern-green { background: linear-gradient(135deg, #0d3b2a 50%, #00c853 50%); }
+        .theme-preview.professional-purple { background: linear-gradient(135deg, #311b92 50%, #ab47bc 50%); }
+        .theme-preview.minimalist-gray { background: linear-gradient(135deg, #263238 50%, #607d8b 50%); }
+        .theme-preview.executive-amber { background: linear-gradient(135deg, #4e342e 50%, #ff8f00 50%); }
 
         /* App Installation Banner */
         .install-banner {
@@ -732,8 +854,13 @@
             width: 100%;
         }
 
-        [data-theme="light"] .top-nav {
-            background: rgba(255, 255, 255, 0.98);
+        [data-theme="light"] .top-nav,
+        [data-theme="corporate-blue"] .top-nav,
+        [data-theme="modern-green"] .top-nav,
+        [data-theme="professional-purple"] .top-nav,
+        [data-theme="minimalist-gray"] .top-nav,
+        [data-theme="executive-amber"] .top-nav {
+            background: rgba(var(--surface-rgb), 0.98);
             backdrop-filter: blur(15px);
         }
 
@@ -834,8 +961,13 @@
             z-index: 999;
         }
 
-        [data-theme="light"] .sidebar {
-            background: rgba(255, 255, 255, 0.98);
+        [data-theme="light"] .sidebar,
+        [data-theme="corporate-blue"] .sidebar,
+        [data-theme="modern-green"] .sidebar,
+        [data-theme="professional-purple"] .sidebar,
+        [data-theme="minimalist-gray"] .sidebar,
+        [data-theme="executive-amber"] .sidebar {
+            background: rgba(var(--surface-rgb), 0.98);
             backdrop-filter: blur(15px);
         }
 
@@ -1013,8 +1145,13 @@
             backdrop-filter: blur(8px);
         }
 
-        [data-theme="light"] .current-datetime {
-            background: rgba(255, 255, 255, 0.5);
+        [data-theme="light"] .current-datetime,
+        [data-theme="corporate-blue"] .current-datetime,
+        [data-theme="modern-green"] .current-datetime,
+        [data-theme="professional-purple"] .current-datetime,
+        [data-theme="minimalist-gray"] .current-datetime,
+        [data-theme="executive-amber"] .current-datetime {
+            background: rgba(var(--dark-rgb), 0.5);
         }
 
         .current-date {
@@ -1061,10 +1198,11 @@
             border: 1px solid var(--border-color);
             transition: var(--transition);
             box-shadow: 0 3px 15px var(--shadow-color);
+            position: relative;
         }
 
         .stat-card:hover {
-            border-color: rgba(255, 107, 139, 0.3);
+            border-color: var(--light-pink);
             transform: translateY(-3px);
             box-shadow: 0 8px 24px var(--shadow-color);
         }
@@ -1119,64 +1257,13 @@
             color: #ff6b6b;
         }
 
-        /* Forex Card Special Styling */
-        .forex-card {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .forex-card::before {
-            content: '';
+        .stat-timestamp {
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, 
-                rgba(255, 107, 139, 0.05), 
-                rgba(230, 199, 138, 0.05));
-            z-index: 0;
-        }
-
-        .forex-card .stat-icon {
-            background: rgba(230, 199, 138, 0.15);
-            color: var(--accent-gold);
-        }
-
-        .forex-refresh-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(230, 199, 138, 0.1);
-            border: 1px solid rgba(230, 199, 138, 0.2);
-            border-radius: 5px;
-            color: var(--accent-gold);
-            padding: 4px 8px;
-            font-size: 10px;
-            cursor: pointer;
-            transition: var(--transition);
-            z-index: 2;
-        }
-
-        .forex-refresh-btn:hover {
-            background: rgba(230, 199, 138, 0.2);
-            transform: rotate(45deg);
-        }
-
-        .forex-timestamp {
-            font-size: 10px;
+            bottom: 10px;
+            right: 12px;
+            font-size: 9px;
             color: var(--text-secondary);
-            margin-top: 8px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .forex-error {
-            color: #ff6b6b;
-            font-size: 10px;
-            margin-top: 8px;
-            display: none;
+            opacity: 0.7;
         }
 
         /* App Grid */
@@ -1226,11 +1313,15 @@
             box-shadow: 0 4px 20px var(--shadow-color);
             position: relative;
             overflow: hidden;
-            --glow-size: 0px;
         }
 
-        [data-theme="light"] .app-card {
-            background: linear-gradient(135deg, var(--card-bg), rgba(255, 255, 255, 0.7));
+        [data-theme="light"] .app-card,
+        [data-theme="corporate-blue"] .app-card,
+        [data-theme="modern-green"] .app-card,
+        [data-theme="professional-purple"] .app-card,
+        [data-theme="minimalist-gray"] .app-card,
+        [data-theme="executive-amber"] .app-card {
+            background: linear-gradient(135deg, var(--card-bg), rgba(var(--surface-rgb), 0.7));
         }
 
         .app-card::before {
@@ -1299,8 +1390,13 @@
             backface-visibility: hidden;
         }
 
-        [data-theme="light"] .app-icon img {
-            filter: brightness(1) drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        [data-theme="light"] .app-icon img,
+        [data-theme="corporate-blue"] .app-icon img,
+        [data-theme="modern-green"] .app-icon img,
+        [data-theme="professional-purple"] .app-icon img,
+        [data-theme="minimalist-gray"] .app-icon img,
+        [data-theme="executive-amber"] .app-icon img {
+            filter: brightness(1.1) drop-shadow(0 2px 4px rgba(0,0,0,0.1));
         }
 
         /* App Card Hover Effects */
@@ -1318,12 +1414,22 @@
             filter: brightness(1.3) drop-shadow(0 4px 8px rgba(0,0,0,0.3));
         }
 
-        [data-theme="light"] .app-card:hover .app-icon {
+        [data-theme="light"] .app-card:hover .app-icon,
+        [data-theme="corporate-blue"] .app-card:hover .app-icon,
+        [data-theme="modern-green"] .app-card:hover .app-icon,
+        [data-theme="professional-purple"] .app-card:hover .app-icon,
+        [data-theme="minimalist-gray"] .app-card:hover .app-icon,
+        [data-theme="executive-amber"] .app-card:hover .app-icon {
             background: rgba(255, 107, 139, 0.05);
         }
 
-        [data-theme="light"] .app-card:hover .app-icon img {
-            filter: brightness(1.1) drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+        [data-theme="light"] .app-card:hover .app-icon img,
+        [data-theme="corporate-blue"] .app-card:hover .app-icon img,
+        [data-theme="modern-green"] .app-card:hover .app-icon img,
+        [data-theme="professional-purple"] .app-card:hover .app-icon img,
+        [data-theme="minimalist-gray"] .app-card:hover .app-icon img,
+        [data-theme="executive-amber"] .app-card:hover .app-icon img {
+            filter: brightness(1.2) drop-shadow(0 4px 8px rgba(0,0,0,0.2));
         }
 
         /* App Name and Description */
@@ -1439,7 +1545,12 @@
             border: 1px solid var(--border-color);
         }
 
-        [data-theme="light"] .activity-item {
+        [data-theme="light"] .activity-item,
+        [data-theme="corporate-blue"] .activity-item,
+        [data-theme="modern-green"] .activity-item,
+        [data-theme="professional-purple"] .activity-item,
+        [data-theme="minimalist-gray"] .activity-item,
+        [data-theme="executive-amber"] .activity-item {
             background: rgba(0, 0, 0, 0.02);
         }
 
@@ -1612,8 +1723,13 @@
             gap: 16px;
         }
 
-        [data-theme="light"] .loading-spinner {
-            background: rgba(248, 250, 252, 0.9);
+        [data-theme="light"] .loading-spinner,
+        [data-theme="corporate-blue"] .loading-spinner,
+        [data-theme="modern-green"] .loading-spinner,
+        [data-theme="professional-purple"] .loading-spinner,
+        [data-theme="minimalist-gray"] .loading-spinner,
+        [data-theme="executive-amber"] .loading-spinner {
+            background: rgba(var(--dark-rgb), 0.9);
         }
 
         .spinner {
@@ -1625,7 +1741,12 @@
             animation: spin 1s ease-in-out infinite;
         }
 
-        [data-theme="light"] .spinner {
+        [data-theme="light"] .spinner,
+        [data-theme="corporate-blue"] .spinner,
+        [data-theme="modern-green"] .spinner,
+        [data-theme="professional-purple"] .spinner,
+        [data-theme="minimalist-gray"] .spinner,
+        [data-theme="executive-amber"] .spinner {
             border: 3px solid rgba(0, 0, 0, 0.1);
             border-top-color: var(--light-pink);
         }
@@ -1634,23 +1755,6 @@
             color: var(--text-primary);
             font-size: 14px;
             font-weight: 600;
-        }
-
-        /* Forex Loading Indicator */
-        .forex-loading {
-            display: inline-block;
-            width: 12px;
-            height: 12px;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            border-top-color: var(--accent-gold);
-            animation: spin 1s linear infinite;
-            margin-left: 5px;
-        }
-
-        [data-theme="light"] .forex-loading {
-            border: 2px solid rgba(0, 0, 0, 0.1);
-            border-top-color: var(--accent-gold);
         }
 
         /* Responsive Design */
@@ -2104,20 +2208,48 @@
                     <button class="theme-toggle" id="themeToggle">
                         <i class="fas fa-sun"></i>
                         <i class="fas fa-moon"></i>
+                        <i class="fas fa-building"></i>
+                        <i class="fas fa-leaf"></i>
+                        <i class="fas fa-gem"></i>
+                        <i class="fas fa-mountain"></i>
+                        <i class="fas fa-crown"></i>
                         <i class="fas fa-desktop"></i>
                     </button>
                     <div class="theme-dropdown" id="themeDropdown">
                         <div class="theme-option" data-theme="system">
+                            <div class="theme-preview default"></div>
                             <i class="fas fa-desktop"></i>
-                            <span>System</span>
+                            <span>System Default</span>
                         </div>
                         <div class="theme-option" data-theme="light">
+                            <div class="theme-preview light"></div>
                             <i class="fas fa-sun"></i>
-                            <span>Light</span>
+                            <span>Light Theme</span>
                         </div>
-                        <div class="theme-option" data-theme="dark">
-                            <i class="fas fa-moon"></i>
-                            <span>Dark</span>
+                        <div class="theme-option" data-theme="corporate-blue">
+                            <div class="theme-preview corporate-blue"></div>
+                            <i class="fas fa-building"></i>
+                            <span>Corporate Blue</span>
+                        </div>
+                        <div class="theme-option" data-theme="modern-green">
+                            <div class="theme-preview modern-green"></div>
+                            <i class="fas fa-leaf"></i>
+                            <span>Modern Green</span>
+                        </div>
+                        <div class="theme-option" data-theme="professional-purple">
+                            <div class="theme-preview professional-purple"></div>
+                            <i class="fas fa-gem"></i>
+                            <span>Professional Purple</span>
+                        </div>
+                        <div class="theme-option" data-theme="minimalist-gray">
+                            <div class="theme-preview minimalist-gray"></div>
+                            <i class="fas fa-mountain"></i>
+                            <span>Minimalist Gray</span>
+                        </div>
+                        <div class="theme-option" data-theme="executive-amber">
+                            <div class="theme-preview executive-amber"></div>
+                            <i class="fas fa-crown"></i>
+                            <span>Executive Amber</span>
                         </div>
                     </div>
                 </div>
@@ -2276,9 +2408,9 @@
                     </div>
                 </section>
 
-                <!-- Business Stats with Forex -->
+                <!-- Business Stats from Firebase -->
                 <div class="stats-grid" id="statsGrid">
-                    <!-- Stats populated from Firebase & Forex API -->
+                    <!-- Stats populated from Firebase -->
                 </div>
 
                 <!-- Enterprise Applications -->
@@ -2439,15 +2571,6 @@
                 link: 'talents-workspace.html'
             }
         };
-
-        // Forex API Configuration - Using working Forex API
-        const FOREX_API_KEY = "eeb508c45ff6e011d2bc3292";
-        // Using a more reliable forex API endpoint
-        const FOREX_API_URL = `https://api.currencyapi.com/v3/latest?apikey=${FOREX_API_KEY}&base_currency=KES&currencies=USD,EUR,GBP`;
-
-        // Alternative Forex APIs (fallback)
-        const FOREX_API_BACKUP = "https://api.frankfurter.app/latest?from=KES&to=USD";
-        const FOREX_API_BACKUP2 = "https://api.exchangerate-api.com/v4/latest/KES";
 
         // Firebase Configuration
         const firebaseConfig = {
@@ -2625,186 +2748,6 @@
             });
         }
 
-        // Forex API Integration
-        class ForexManager {
-            constructor() {
-                this.rates = {
-                    USD: null,
-                    EUR: null,
-                    GBP: null
-                };
-                this.lastUpdate = null;
-                this.interval = null;
-            }
-
-            async fetchForexData() {
-                try {
-                    if (!isOnline) {
-                        console.log('Offline mode - using cached forex data');
-                        return this.getCachedForexData();
-                    }
-
-                    // Try primary API first
-                    let response = await fetch(FOREX_API_URL);
-                    
-                    if (!response.ok) {
-                        // Try backup API
-                        console.log('Primary API failed, trying backup...');
-                        response = await fetch(FOREX_API_BACKUP);
-                        
-                        if (!response.ok) {
-                            // Try second backup
-                            console.log('Backup API failed, trying second backup...');
-                            response = await fetch(FOREX_API_BACKUP2);
-                        }
-                    }
-                    
-                    if (!response.ok) {
-                        throw new Error(`Forex API error: ${response.status}`);
-                    }
-                    
-                    const data = await response.json();
-                    
-                    // Parse data based on API response format
-                    this.parseForexData(data);
-                    
-                    // Cache the data
-                    this.cacheForexData();
-                    
-                    return this.rates;
-                } catch (error) {
-                    console.error('Error fetching forex data:', error);
-                    
-                    // Try to use cached data
-                    const cached = this.getCachedForexData();
-                    if (cached) {
-                        this.rates = cached.rates;
-                        this.lastUpdate = cached.lastUpdate;
-                        return this.rates;
-                    }
-                    
-                    // Return default rates if all fails
-                    return this.getDefaultRates();
-                }
-            }
-
-            parseForexData(data) {
-                this.lastUpdate = new Date();
-                
-                // Different APIs return different formats
-                if (data.data) {
-                    // currencyapi.com format
-                    if (data.data.USD) this.rates.USD = data.data.USD.value;
-                    if (data.data.EUR) this.rates.EUR = data.data.EUR.value;
-                    if (data.data.GBP) this.rates.GBP = data.data.GBP.value;
-                } else if (data.rates) {
-                    // frankfurter.app or exchangerate-api.com format
-                    if (data.rates.USD) this.rates.USD = data.rates.USD;
-                    if (data.rates.EUR) this.rates.EUR = data.rates.EUR;
-                    if (data.rates.GBP) this.rates.GBP = data.rates.GBP;
-                }
-                
-                // If rates are null, use defaults
-                if (!this.rates.USD) this.rates.USD = 0.0077; // Approx 130 KES = 1 USD
-                if (!this.rates.EUR) this.rates.EUR = 0.0071; // Approx 141 KES = 1 EUR
-                if (!this.rates.GBP) this.rates.GBP = 0.0061; // Approx 164 KES = 1 GBP
-            }
-
-            cacheForexData() {
-                try {
-                    localStorage.setItem('jasiri_forex_data', JSON.stringify({
-                        rates: this.rates,
-                        lastUpdate: this.lastUpdate.toISOString()
-                    }));
-                } catch (e) {
-                    console.error('Error caching forex data:', e);
-                }
-            }
-
-            getCachedForexData() {
-                try {
-                    const cached = localStorage.getItem('jasiri_forex_data');
-                    if (cached) {
-                        const parsed = JSON.parse(cached);
-                        return {
-                            rates: parsed.rates,
-                            lastUpdate: new Date(parsed.lastUpdate)
-                        };
-                    }
-                } catch (e) {
-                    console.error('Error reading cached forex data:', e);
-                }
-                return null;
-            }
-
-            getDefaultRates() {
-                return {
-                    USD: 0.0077, // 1 KES = 0.0077 USD (approx 130 KES per USD)
-                    EUR: 0.0071, // 1 KES = 0.0071 EUR (approx 141 KES per EUR)
-                    GBP: 0.0061  // 1 KES = 0.0061 GBP (approx 164 KES per GBP)
-                };
-            }
-
-            getUSDKESRate() {
-                return this.rates.USD ? (1 / this.rates.USD).toFixed(2) : '130.00';
-            }
-
-            getUSDRate() {
-                return this.rates.USD ? this.rates.USD.toFixed(4) : '0.0077';
-            }
-
-            formatRate(rate) {
-                if (!rate || rate === 'N/A') return 'N/A';
-                return parseFloat(rate).toFixed(2);
-            }
-
-            formatTimestamp(date) {
-                if (!date) return 'Never';
-                
-                const now = new Date();
-                const diff = Math.floor((now - date) / 1000);
-                
-                if (diff < 60) {
-                    return 'Just now';
-                } else if (diff < 3600) {
-                    return `${Math.floor(diff / 60)}m ago`;
-                } else if (diff < 86400) {
-                    return `${Math.floor(diff / 3600)}h ago`;
-                } else {
-                    return date.toLocaleTimeString('en-US', { 
-                        hour: '2-digit', 
-                        minute: '2-digit',
-                        hour12: true 
-                    });
-                }
-            }
-
-            startAutoRefresh(interval = 5 * 60 * 1000) {
-                if (this.interval) {
-                    clearInterval(this.interval);
-                }
-                
-                this.interval = setInterval(async () => {
-                    if (isOnline) {
-                        await this.fetchForexData();
-                        updateDashboardStats();
-                    }
-                }, interval);
-                
-                return this.interval;
-            }
-
-            stopAutoRefresh() {
-                if (this.interval) {
-                    clearInterval(this.interval);
-                    this.interval = null;
-                }
-            }
-        }
-
-        // Initialize Forex Manager
-        const forexManager = new ForexManager();
-
         // Check Authentication State
         auth.onAuthStateChanged((user) => {
             if (user) {
@@ -2831,9 +2774,6 @@
             initializePWAFeatures();
             startSyncInterval();
             
-            // Start forex updates
-            forexManager.startAutoRefresh();
-            
             updateLastSyncTime();
         }
 
@@ -2849,9 +2789,6 @@
                 clearInterval(syncInterval);
                 syncInterval = null;
             }
-            
-            // Stop forex updates
-            forexManager.stopAutoRefresh();
         }
 
         // Login Functionality
@@ -2994,7 +2931,7 @@
             lastSyncTimeElement.textContent = timeText;
         }
 
-        // Load Dashboard Data from Firebase and Forex
+        // Load Dashboard Data from Firebase
         async function loadDashboardData() {
             // Load Firebase data
             database.ref('dashboard').on('value', (snapshot) => {
@@ -3002,49 +2939,59 @@
                 if (data) {
                     updateDashboardStats(data);
                     updateActivityFeed(data);
+                    updateAppStatuses(data);
                     updateConnectionStatus(true);
-                    if (data.fleet?.activeVehicles) {
-                        const efsStatus = document.querySelector('.app-card[data-app="efs"] .app-status');
-                        if (efsStatus) {
-                            efsStatus.textContent = `${data.fleet.activeVehicles} active vehicles`;
-                        }
-                    }
+                } else {
+                    // If no data exists, create sample data structure
+                    createSampleDataStructure();
                 }
             }, (error) => {
                 console.error("Database error:", error);
                 updateConnectionStatus(false);
                 loadFromLocalStorage();
             });
+        }
+
+        // Create Sample Data Structure if none exists
+        function createSampleDataStructure() {
+            const sampleData = {
+                metrics: {
+                    weeklySales: 125000,
+                    productsSold: 284,
+                    growth: 12.5
+                },
+                fleet: {
+                    activeVehicles: 8,
+                    deliveriesToday: 15
+                },
+                stats: {
+                    staff: 45
+                },
+                activities: [
+                    {
+                        description: "System initialized successfully",
+                        module: "SYSTEM",
+                        timestamp: new Date().toISOString()
+                    }
+                ]
+            };
             
-            // Load Forex data
-            await updateForexData();
+            database.ref('dashboard').set(sampleData)
+                .then(() => {
+                    console.log("Sample data structure created");
+                    updateDashboardStats(sampleData);
+                })
+                .catch(error => {
+                    console.error("Error creating sample data:", error);
+                });
         }
 
-        // Update Forex Data
-        async function updateForexData() {
-            await forexManager.fetchForexData();
-            updateDashboardStats();
-        }
-
-        // Update Dashboard Statistics
+        // Update Dashboard Statistics from Firebase
         async function updateDashboardStats(firebaseData) {
             statsGrid.innerHTML = '';
             
-            // Get forex data
-            const usdRate = forexManager.getUSDKESRate();
-            const usdValue = forexManager.getUSDRate();
-            
-            // Default stats
+            // Business stats from Firebase
             const stats = [
-                {
-                    icon: 'fas fa-money-bill-wave',
-                    title: 'USD/KES Rate',
-                    value: usdRate ? `Ksh${usdRate}` : 'Loading...',
-                    trend: usdRate ? `1 USD = ${usdValue} KES` : 'Fetching...',
-                    trendClass: 'trend-up',
-                    isForex: true,
-                    timestamp: forexManager.lastUpdate
-                },
                 {
                     icon: 'fas fa-shopping-bag',
                     title: 'Weekly Revenue',
@@ -3072,14 +3019,30 @@
                     value: firebaseData?.stats?.staff || 0,
                     trend: 'Active',
                     trendClass: 'trend-up'
+                },
+                {
+                    icon: 'fas fa-chart-line',
+                    title: 'Performance',
+                    value: `${firebaseData?.metrics?.growth || 0}%`,
+                    trend: 'Growth rate',
+                    trendClass: 'trend-up'
+                },
+                {
+                    icon: 'fas fa-database',
+                    title: 'Data Points',
+                    value: '2.4K',
+                    trend: 'Active records',
+                    trendClass: 'trend-up'
                 }
             ];
             
             stats.forEach((stat, index) => {
                 const statCard = document.createElement('div');
-                statCard.className = `stat-card ${stat.isForex ? 'forex-card' : ''}`;
+                statCard.className = `stat-card`;
                 
-                let innerHTML = `
+                const timestamp = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                
+                statCard.innerHTML = `
                     <div class="stat-header">
                         <div class="stat-icon">
                             <i class="${stat.icon}"></i>
@@ -3091,29 +3054,9 @@
                         <i class="fas ${stat.trendClass === 'trend-up' ? 'fa-arrow-up' : 'fa-arrow-down'}"></i>
                         ${stat.trend}
                     </div>
+                    <div class="stat-timestamp">${timestamp}</div>
                 `;
                 
-                // Add refresh button and timestamp for forex card
-                if (stat.isForex) {
-                    innerHTML += `
-                        <button class="forex-refresh-btn" onclick="refreshForexData()" title="Refresh forex rates">
-                            <i class="fas fa-sync-alt"></i>
-                        </button>
-                        ${stat.timestamp ? `
-                            <div class="forex-timestamp">
-                                <i class="fas fa-clock"></i>
-                                Updated ${forexManager.formatTimestamp(stat.timestamp)}
-                            </div>
-                        ` : `
-                            <div class="forex-timestamp">
-                                <i class="fas fa-clock"></i>
-                                Updating...
-                            </div>
-                        `}
-                    `;
-                }
-                
-                statCard.innerHTML = innerHTML;
                 statsGrid.appendChild(statCard);
             });
             
@@ -3121,50 +3064,49 @@
             saveToLocalStorage('dashboardStats', stats);
         }
 
-        // Refresh forex data manually
-        async function refreshForexData() {
-            const refreshBtn = document.querySelector('.forex-refresh-btn');
-            if (refreshBtn) {
-                refreshBtn.innerHTML = '<div class="forex-loading"></div>';
-                refreshBtn.disabled = true;
-            }
+        // Update App Statuses based on Firebase data
+        function updateAppStatuses(data) {
+            const apps = {
+                'efs': data?.fleet?.activeVehicles ? `${data.fleet.activeVehicles} active vehicles` : 'Active operations',
+                'emh': data?.metrics?.productsSold ? `${data.metrics.productsSold} products sold` : 'Live data streaming',
+                'erh': data?.stats?.staff ? `${data.stats.staff} team members` : 'Active resources'
+            };
             
-            await updateForexData();
-            
-            if (refreshBtn) {
-                refreshBtn.innerHTML = '<i class="fas fa-sync-alt"></i>';
-                refreshBtn.disabled = false;
-            }
+            Object.keys(apps).forEach(appKey => {
+                const appStatus = document.querySelector(`.app-card[data-app="${appKey}"] .app-status`);
+                if (appStatus) {
+                    appStatus.textContent = apps[appKey];
+                }
+            });
         }
 
-        // Update Activity Feed
+        // Update Activity Feed from Firebase
         function updateActivityFeed(data) {
             if (!activityList) return;
             
             activityList.innerHTML = '';
             
-            const usdRate = forexManager.getUSDKESRate();
-            
-            const activities = [
+            // Default activities if none in Firebase
+            const activities = data?.activities || [
                 {
                     icon: 'fas fa-chart-line',
-                    description: `Weekly revenue: ${formatCurrency(data.metrics?.weeklySales || 0)}`,
+                    description: `Weekly revenue: ${formatCurrency(data?.metrics?.weeklySales || 0)}`,
                     module: 'EMH'
                 },
                 {
                     icon: 'fas fa-truck',
-                    description: `${data.fleet?.deliveriesToday || 8} operations today`,
+                    description: `${data?.fleet?.deliveriesToday || 8} operations today`,
                     module: 'EFS'
                 },
                 {
                     icon: 'fas fa-box',
-                    description: `${data.metrics?.productsSold || 0} units sold`,
+                    description: `${data?.metrics?.productsSold || 0} units sold`,
                     module: 'EMH'
                 },
                 {
-                    icon: 'fas fa-money-bill-wave',
-                    description: `USD/KES: Ksh${usdRate || 'Loading...'}`,
-                    module: 'FOREX'
+                    icon: 'fas fa-users',
+                    description: `${data?.stats?.staff || 0} active team members`,
+                    module: 'ERH'
                 }
             ];
             
@@ -3173,7 +3115,7 @@
                 activityItem.className = 'activity-item';
                 activityItem.innerHTML = `
                     <div class="activity-icon">
-                        <i class="${activity.icon}"></i>
+                        <i class="${activity.icon || 'fas fa-bell'}"></i>
                     </div>
                     <div class="activity-content">
                         <div class="activity-description">${activity.description}</div>
@@ -3320,8 +3262,6 @@
                 
                 if (auth.currentUser) {
                     syncData();
-                    // Refresh forex data when coming back online
-                    updateForexData();
                 }
             } else {
                 connectionStatus.innerHTML = '<i class="fas fa-circle"></i><span>Offline</span>';
@@ -3357,6 +3297,7 @@
             
             showSyncStatus('syncing');
             
+            // Simulate data sync
             setTimeout(() => {
                 updateLastSyncTime();
                 showSyncStatus('synced');
@@ -3427,7 +3368,12 @@
                 
                 if (statsData) {
                     const stats = JSON.parse(statsData);
-                    console.log('Loaded from cache:', stats);
+                    updateDashboardStats({}); // Pass empty object for structure
+                }
+                
+                if (activitiesData) {
+                    const activities = JSON.parse(activitiesData);
+                    updateActivityFeed({ activities });
                 }
             } catch (e) {
                 console.error('Error loading from localStorage:', e);
@@ -3436,7 +3382,7 @@
 
         // Clear Cache
         function clearCache() {
-            if (confirm('Clear all cached data? This will remove offline data including forex rates.')) {
+            if (confirm('Clear all cached data? This will remove offline data.')) {
                 showLoading();
                 
                 Object.keys(localStorage).forEach(key => {
@@ -3465,15 +3411,14 @@
         // Handle beforeunload for data sync
         window.addEventListener('beforeunload', () => {
             if (auth.currentUser && isOnline) {
-                navigator.sendBeacon('/api/sync-last-minute');
+                // Save any pending data
+                const pendingData = {
+                    lastAccess: new Date().toISOString(),
+                    user: auth.currentUser.email
+                };
+                saveToLocalStorage('session', pendingData);
             }
-            
-            // Stop forex updates
-            forexManager.stopAutoRefresh();
         });
-
-        // Make refreshForexData globally accessible
-        window.refreshForexData = refreshForexData;
     </script>
 </body>
 </html>
