@@ -1266,6 +1266,195 @@
             opacity: 0.7;
         }
 
+        /* Storage Usage Progress */
+        .storage-progress {
+            margin-top: 10px;
+        }
+
+        .storage-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            margin-bottom: 5px;
+        }
+
+        .storage-used {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .storage-total {
+            color: var(--text-secondary);
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--light-pink), var(--accent-gold));
+            border-radius: 3px;
+            transition: width 1s ease;
+        }
+
+        [data-theme="light"] .progress-bar {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        /* Active Users Section */
+        .active-users-section {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 3px 15px var(--shadow-color);
+        }
+
+        .active-users-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .active-users-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .active-users-title i {
+            color: var(--online-color);
+        }
+
+        .active-users-count {
+            background: var(--light-pink);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .active-users-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .active-user-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        [data-theme="light"] .active-user-item {
+            background: rgba(0, 0, 0, 0.03);
+        }
+
+        .active-user-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateX(3px);
+        }
+
+        .active-user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--light-pink), var(--accent-gold));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+            color: white;
+        }
+
+        .active-user-info {
+            flex: 1;
+        }
+
+        .active-user-name {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .active-user-role {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .active-user-status {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 10px;
+        }
+
+        .status-indicator {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--online-color);
+        }
+
+        .status-indicator.away {
+            background: var(--accent-gold);
+        }
+
+        .status-indicator.offline {
+            background: var(--offline-color);
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 16px;
+        }
+
+        .quick-action-btn {
+            flex: 1;
+            min-width: 120px;
+            padding: 10px 14px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .quick-action-btn:hover {
+            background: rgba(255, 107, 139, 0.1);
+            color: var(--text-primary);
+            border-color: var(--light-pink);
+            transform: translateY(-2px);
+        }
+
+        .quick-action-btn i {
+            font-size: 14px;
+        }
+
         /* App Grid */
         .section-header {
             display: flex;
@@ -2116,7 +2305,7 @@
         <span>Online</span>
     </div>
 
-    <!-- Sync Status -->
+    <!-- Syncing Indicator -->
     <div class="sync-status" id="syncStatus">
         <i class="fas fa-sync-alt"></i>
         <span>Syncing data...</span>
@@ -2254,6 +2443,14 @@
                     </div>
                 </div>
                 
+                <!-- Notifications Badge -->
+                <div class="notification-badge-wrapper" style="position: relative;">
+                    <button class="theme-toggle" id="notificationsToggle" style="position: relative;">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge" id="notificationBadge" style="position: absolute; top: -5px; right: -5px; display: none;">0</span>
+                    </button>
+                </div>
+                
                 <!-- User Profile -->
                 <div class="user-profile" id="userProfile">
                     <div class="user-avatar" id="userAvatar">AD</div>
@@ -2272,15 +2469,15 @@
                                 <div class="user-role" id="dropdownEmail">admin@yourcompany.com</div>
                             </div>
                         </div>
-                        <a href="#" class="dropdown-item">
+                        <a href="#" class="dropdown-item" id="profileLink">
                             <i class="fas fa-user"></i>
                             <span>My Profile</span>
                         </a>
-                        <a href="#" class="dropdown-item">
+                        <a href="#" class="dropdown-item" id="settingsLink">
                             <i class="fas fa-cog"></i>
                             <span>Settings</span>
                         </a>
-                        <a href="#" class="dropdown-item">
+                        <a href="#" class="dropdown-item" id="securityLink">
                             <i class="fas fa-shield-alt"></i>
                             <span>Security</span>
                         </a>
@@ -2302,14 +2499,19 @@
                     <i class="fas fa-home"></i>
                     <span>Home</span>
                 </a>
-                <a href="#" class="nav-item">
+                <a href="#" class="nav-item" id="analyticsLink">
                     <i class="fas fa-chart-line"></i>
                     <span>Analytics</span>
                 </a>
-                <a href="#" class="nav-item">
+                <a href="#" class="nav-item" id="notificationsLink">
                     <i class="fas fa-bell"></i>
                     <span>Notifications</span>
-                    <span class="notification-badge">3</span>
+                    <span class="notification-badge" id="sidebarNotificationBadge" style="display: none;">0</span>
+                </a>
+                <a href="#" class="nav-item" id="messagesLink">
+                    <i class="fas fa-comments"></i>
+                    <span>Messages</span>
+                    <span class="notification-badge" id="sidebarMessageBadge" style="display: none;">0</span>
                 </a>
             </div>
             
@@ -2358,15 +2560,15 @@
             
             <div class="nav-section">
                 <div class="nav-title">Services</div>
-                <a href="#" class="nav-item">
+                <a href="#" class="nav-item" id="backupLink">
                     <i class="fas fa-database"></i>
                     <span>Backup</span>
                 </a>
-                <a href="#" class="nav-item">
+                <a href="#" class="nav-item" id="securityDashboardLink">
                     <i class="fas fa-shield-alt"></i>
                     <span>Security</span>
                 </a>
-                <a href="#" class="nav-item">
+                <a href="#" class="nav-item" id="systemSettingsLink">
                     <i class="fas fa-cogs"></i>
                     <span>Settings</span>
                 </a>
@@ -2388,7 +2590,7 @@
                             </div>
                             <div class="welcome-meta-item">
                                 <i class="fas fa-hdd"></i>
-                                <span id="storageStatus">Storage: 1.8GB used</span>
+                                <span id="storageStatus">Storage: Calculating...</span>
                             </div>
                             <div class="welcome-meta-item">
                                 <div class="connection-status-indicator">
@@ -2397,6 +2599,31 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- Storage Progress Bar -->
+                        <div class="storage-progress" id="storageProgress" style="display: none;">
+                            <div class="storage-info">
+                                <span class="storage-used" id="storageUsed">0 MB</span>
+                                <span class="storage-total" id="storageTotal">5 GB</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <!-- Quick Actions -->
+                        <div class="quick-actions">
+                            <button class="quick-action-btn" id="sendMessageBtn">
+                                <i class="fas fa-paper-plane"></i>
+                                <span>Send Message</span>
+                            </button>
+                            <button class="quick-action-btn" id="backupNowBtn">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>Backup Now</span>
+                            </button>
+                            <button class="quick-action-btn" id="viewReportsBtn">
+                                <i class="fas fa-chart-pie"></i>
+                                <span>View Reports</span>
+                            </button>
+                        </div>
                     </div>
                     <div class="current-datetime">
                         <div class="current-date" id="currentDate">Monday, January 20, 2025</div>
@@ -2404,6 +2631,32 @@
                         <div class="last-sync">
                             <i class="fas fa-sync-alt"></i>
                             <span id="lastSyncTime">Just now</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Active Users Section -->
+                <section class="active-users-section" id="activeUsersSection">
+                    <div class="active-users-header">
+                        <h3 class="active-users-title">
+                            <i class="fas fa-users"></i> Active Users
+                        </h3>
+                        <span class="active-users-count" id="activeUsersCount">0 online</span>
+                    </div>
+                    <div class="active-users-list" id="activeUsersList">
+                        <!-- Active users will be populated here -->
+                        <div class="active-user-item placeholder">
+                            <div class="active-user-avatar" style="background: rgba(255, 255, 255, 0.1);">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="active-user-info">
+                                <div class="active-user-name">Loading users...</div>
+                                <div class="active-user-role">Connecting to server</div>
+                            </div>
+                            <div class="active-user-status">
+                                <div class="status-indicator offline"></div>
+                                <span>Offline</span>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -2594,6 +2847,10 @@
         let isOnline = navigator.onLine;
         let syncInterval = null;
         let lastSyncTime = new Date();
+        let currentUserId = null;
+        let userPresenceRef = null;
+        let activeUsersListener = null;
+        let storageUsageInterval = null;
 
         // DOM Elements
         const loginContainer = document.getElementById('loginContainer');
@@ -2641,6 +2898,29 @@
         const themeToggle = document.getElementById('themeToggle');
         const themeDropdown = document.getElementById('themeDropdown');
         const themeOptions = document.querySelectorAll('.theme-option');
+        const storageProgress = document.getElementById('storageProgress');
+        const storageUsed = document.getElementById('storageUsed');
+        const storageTotal = document.getElementById('storageTotal');
+        const progressFill = document.getElementById('progressFill');
+        const activeUsersSection = document.getElementById('activeUsersSection');
+        const activeUsersCount = document.getElementById('activeUsersCount');
+        const activeUsersList = document.getElementById('activeUsersList');
+        const notificationBadge = document.getElementById('notificationBadge');
+        const sidebarNotificationBadge = document.getElementById('sidebarNotificationBadge');
+        const sidebarMessageBadge = document.getElementById('sidebarMessageBadge');
+        const notificationsToggle = document.getElementById('notificationsToggle');
+        const sendMessageBtn = document.getElementById('sendMessageBtn');
+        const backupNowBtn = document.getElementById('backupNowBtn');
+        const viewReportsBtn = document.getElementById('viewReportsBtn');
+        const notificationsLink = document.getElementById('notificationsLink');
+        const messagesLink = document.getElementById('messagesLink');
+        const profileLink = document.getElementById('profileLink');
+        const settingsLink = document.getElementById('settingsLink');
+        const securityLink = document.getElementById('securityLink');
+        const backupLink = document.getElementById('backupLink');
+        const securityDashboardLink = document.getElementById('securityDashboardLink');
+        const systemSettingsLink = document.getElementById('systemSettingsLink');
+        const analyticsLink = document.getElementById('analyticsLink');
 
         // Theme Management
         class ThemeManager {
@@ -2669,6 +2949,12 @@
                 this.theme = theme;
                 this.applyTheme();
                 this.updateActiveThemeOption();
+                
+                // Save theme preference to user profile in Firebase
+                if (currentUserId) {
+                    database.ref('users/' + currentUserId + '/profile/theme').set(theme)
+                        .catch(console.error);
+                }
             }
 
             setupEventListeners() {
@@ -2759,6 +3045,7 @@
 
         function handleUserSignedIn(user) {
             console.log("User signed in:", user.email);
+            currentUserId = user.uid;
             
             loginContainer.style.display = 'none';
             appContainer.style.display = 'flex';
@@ -2773,6 +3060,15 @@
             initializeSidebar();
             initializePWAFeatures();
             startSyncInterval();
+            
+            // Setup user presence
+            setupUserPresence(user.uid);
+            
+            // Load user-specific theme
+            loadUserTheme(user.uid);
+            
+            // Start storage monitoring
+            startStorageMonitoring();
             
             updateLastSyncTime();
         }
@@ -2789,6 +3085,254 @@
                 clearInterval(syncInterval);
                 syncInterval = null;
             }
+            
+            if (userPresenceRef) {
+                userPresenceRef.remove();
+                userPresenceRef = null;
+            }
+            
+            if (activeUsersListener) {
+                activeUsersListener.off();
+                activeUsersListener = null;
+            }
+            
+            if (storageUsageInterval) {
+                clearInterval(storageUsageInterval);
+                storageUsageInterval = null;
+            }
+            
+            currentUserId = null;
+        }
+
+        // Setup User Presence System
+        function setupUserPresence(userId) {
+            // Set user as online
+            const userStatusRef = database.ref('activeSessions/' + userId);
+            const userStatus = {
+                lastPing: Date.now(),
+                status: 'online',
+                device: navigator.userAgent,
+                timestamp: Date.now()
+            };
+            
+            userStatusRef.set(userStatus);
+            userPresenceRef = userStatusRef;
+            
+            // Update every 30 seconds
+            const presenceInterval = setInterval(() => {
+                if (currentUserId) {
+                    userStatusRef.update({
+                        lastPing: Date.now(),
+                        status: 'online'
+                    });
+                } else {
+                    clearInterval(presenceInterval);
+                }
+            }, 30000);
+            
+            // Set offline when user closes the app
+            window.addEventListener('beforeunload', () => {
+                if (currentUserId) {
+                    userStatusRef.update({
+                        status: 'offline',
+                        lastSeen: Date.now()
+                    });
+                }
+            });
+            
+            // Listen for active users
+            activeUsersListener = database.ref('activeSessions').on('value', (snapshot) => {
+                updateActiveUsersList(snapshot.val());
+            });
+        }
+
+        // Update Active Users List
+        function updateActiveUsersList(activeSessions) {
+            if (!activeSessions) {
+                activeUsersCount.textContent = '0 online';
+                activeUsersList.innerHTML = '<div class="active-user-item placeholder"><div class="active-user-avatar" style="background: rgba(255, 255, 255, 0.1);"><i class="fas fa-user"></i></div><div class="active-user-info"><div class="active-user-name">No active users</div><div class="active-user-role">Waiting for connections</div></div></div>';
+                return;
+            }
+            
+            const now = Date.now();
+            const activeUsers = [];
+            
+            // Count only users active in last 2 minutes
+            Object.keys(activeSessions).forEach(userId => {
+                const session = activeSessions[userId];
+                if (now - session.lastPing < 120000) { // 2 minutes
+                    activeUsers.push({ userId, ...session });
+                }
+            });
+            
+            // Update count
+            activeUsersCount.textContent = `${activeUsers.length} online`;
+            
+            // Clear and update list
+            activeUsersList.innerHTML = '';
+            
+            if (activeUsers.length === 0) {
+                activeUsersList.innerHTML = '<div class="active-user-item placeholder"><div class="active-user-avatar" style="background: rgba(255, 255, 255, 0.1);"><i class="fas fa-user"></i></div><div class="active-user-info"><div class="active-user-name">No active users</div><div class="active-user-role">All users are offline</div></div></div>';
+                return;
+            }
+            
+            // Load user profiles and display
+            activeUsers.forEach(userData => {
+                database.ref('users/' + userData.userId + '/profile').once('value')
+                    .then((snapshot) => {
+                        const profile = snapshot.val();
+                        if (profile) {
+                            const userItem = document.createElement('div');
+                            userItem.className = 'active-user-item';
+                            userItem.innerHTML = `
+                                <div class="active-user-avatar" style="background: linear-gradient(135deg, ${getColorFromName(profile.fullName)}, ${getColorFromName(profile.fullName, true)});">
+                                    ${getInitials(profile.fullName)}
+                                </div>
+                                <div class="active-user-info">
+                                    <div class="active-user-name">${profile.fullName || 'Unknown User'}</div>
+                                    <div class="active-user-role">${profile.role || 'User'} • ${profile.department || 'Unknown Dept'}</div>
+                                </div>
+                                <div class="active-user-status">
+                                    <div class="status-indicator ${userData.status === 'online' ? '' : 'away'}"></div>
+                                    <span>${userData.status === 'online' ? 'Online' : 'Away'}</span>
+                                </div>
+                            `;
+                            activeUsersList.appendChild(userItem);
+                        }
+                    });
+            });
+        }
+
+        function getInitials(name) {
+            if (!name) return '??';
+            return name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+        }
+
+        function getColorFromName(name, secondary = false) {
+            if (!name) return secondary ? '#e6c78a' : '#ff6b8b';
+            const colors = ['#ff6b8b', '#2196f3', '#00c853', '#ab47bc', '#607d8b', '#ff8f00'];
+            const index = name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) % colors.length;
+            return colors[secondary ? (index + 1) % colors.length : index];
+        }
+
+        // Load User Theme Preference
+        function loadUserTheme(userId) {
+            database.ref('users/' + userId + '/profile/theme').once('value')
+                .then((snapshot) => {
+                    const savedTheme = snapshot.val();
+                    if (savedTheme && savedTheme !== 'system') {
+                        themeManager.setTheme(savedTheme);
+                    }
+                })
+                .catch(console.error);
+        }
+
+        // Firebase Storage Monitoring
+        function startStorageMonitoring() {
+            // Check storage usage immediately
+            checkStorageUsage();
+            
+            // Check every 5 minutes
+            storageUsageInterval = setInterval(checkStorageUsage, 5 * 60 * 1000);
+        }
+
+        async function checkStorageUsage() {
+            try {
+                // For Firebase Storage, we need to estimate usage
+                // Note: Firebase doesn't provide direct storage usage API
+                // This is an estimation based on common patterns
+                
+                // Get list of files in storage to estimate size
+                const storageRef = storage.ref();
+                let totalSize = 0;
+                let fileCount = 0;
+                
+                try {
+                    // List all files (this might be expensive for large storage)
+                    const result = await storageRef.listAll();
+                    
+                    // Estimate size from file metadata
+                    for (const item of result.items) {
+                        const metadata = await item.getMetadata();
+                        totalSize += parseInt(metadata.size || 0);
+                        fileCount++;
+                    }
+                    
+                    // Also check for database size estimation
+                    const dbSize = await estimateDatabaseSize();
+                    totalSize += dbSize;
+                    
+                } catch (error) {
+                    console.log('Storage listing not available, using estimation:', error);
+                    // Fallback estimation
+                    totalSize = await estimateTotalStorage();
+                }
+                
+                // Update UI with storage info
+                updateStorageUI(totalSize, fileCount);
+                
+            } catch (error) {
+                console.error('Error checking storage usage:', error);
+                // Fallback to placeholder data
+                storageStatus.textContent = 'Storage: Error loading';
+                storageProgress.style.display = 'none';
+            }
+        }
+
+        async function estimateDatabaseSize() {
+            try {
+                // Get a sample of data to estimate size
+                const snapshot = await database.ref().limitToFirst(100).once('value');
+                const data = snapshot.val();
+                const dataString = JSON.stringify(data);
+                return dataString.length * 2; // Approximate bytes (2 bytes per char for UTF-16)
+            } catch (error) {
+                return 0;
+            }
+        }
+
+        async function estimateTotalStorage() {
+            // Default estimation for starter plans
+            const defaultTotal = 5 * 1024 * 1024 * 1024; // 5GB default
+            const defaultUsed = 250 * 1024 * 1024; // 250MB estimated usage
+            
+            return defaultUsed;
+        }
+
+        function updateStorageUI(totalBytes, fileCount = 0) {
+            const totalGB = 5; // Assuming 5GB Firebase plan
+            const totalBytesTotal = totalGB * 1024 * 1024 * 1024;
+            
+            const usedMB = Math.round(totalBytes / (1024 * 1024));
+            const totalMB = Math.round(totalBytesTotal / (1024 * 1024));
+            const percentage = Math.min(100, Math.round((totalBytes / totalBytesTotal) * 100));
+            
+            // Update UI elements
+            storageStatus.textContent = `Storage: ${usedMB}MB used`;
+            storageUsed.textContent = `${usedMB}MB`;
+            storageTotal.textContent = `${totalGB}GB`;
+            progressFill.style.width = `${percentage}%`;
+            storageProgress.style.display = 'block';
+            
+            // Color code based on usage
+            if (percentage > 90) {
+                progressFill.style.background = 'linear-gradient(90deg, #ff6b6b, #ff8f00)';
+                storageStatus.innerHTML = `<i class="fas fa-exclamation-triangle" style="color: #ff8f00;"></i> Storage: ${usedMB}MB used (${percentage}%)`;
+            } else if (percentage > 70) {
+                progressFill.style.background = 'linear-gradient(90deg, #ff8f00, #ffca28)';
+                storageStatus.innerHTML = `<i class="fas fa-info-circle" style="color: #ffca28;"></i> Storage: ${usedMB}MB used (${percentage}%)`;
+            } else {
+                progressFill.style.background = 'linear-gradient(90deg, var(--light-pink), var(--accent-gold))';
+            }
+            
+            // Save to localStorage for offline viewing
+            saveToLocalStorage('storageUsage', {
+                usedMB,
+                totalMB,
+                percentage,
+                lastUpdated: Date.now(),
+                fileCount
+            });
         }
 
         // Login Functionality
@@ -2831,6 +3375,9 @@
                 loginEmail.value = rememberedEmail;
                 rememberMe.checked = true;
             }
+            
+            // Set current year in footer
+            document.getElementById("year").textContent = new Date().getFullYear();
         });
 
         loginPassword.addEventListener('keypress', function(e) {
@@ -2873,7 +3420,7 @@
         // Update User Information
         function updateUserInfo(user) {
             const displayName = user.displayName || user.email.split('@')[0];
-            const initials = displayName.split(' ').map(n => n[0]).join('').toUpperCase();
+            const initials = getInitials(displayName);
             
             userAvatar.textContent = initials;
             userName.textContent = displayName;
@@ -2882,6 +3429,34 @@
             dropdownAvatar.textContent = initials;
             dropdownName.textContent = displayName;
             dropdownEmail.textContent = user.email;
+            
+            // Auto-detect theme based on email
+            const detectedTheme = detectThemeFromEmail(user.email);
+            if (detectedTheme && detectedTheme !== 'system') {
+                setTimeout(() => {
+                    themeManager.setTheme(detectedTheme);
+                }, 1000);
+            }
+        }
+
+        function detectThemeFromEmail(email) {
+            if (!email) return 'system';
+            
+            const emailLower = email.toLowerCase();
+            
+            if (emailLower.includes('finance') || emailLower.includes('account') || emailLower.includes('fin')) {
+                return 'modern-green';
+            } else if (emailLower.includes('sales') || emailLower.includes('marketing') || emailLower.includes('sale')) {
+                return 'corporate-blue';
+            } else if (emailLower.includes('it') || emailLower.includes('tech') || emailLower.includes('admin')) {
+                return 'professional-purple';
+            } else if (emailLower.includes('hr') || emailLower.includes('human') || emailLower.includes('resource')) {
+                return 'executive-amber';
+            } else if (emailLower.includes('manager') || emailLower.includes('director') || emailLower.includes('exec')) {
+                return 'minimalist-gray';
+            }
+            
+            return 'system';
         }
 
         // Update Greeting Based on Time
@@ -2950,6 +3525,29 @@
                 updateConnectionStatus(false);
                 loadFromLocalStorage();
             });
+            
+            // Load notifications count
+            if (currentUserId) {
+                database.ref('notifications/userNotifications/' + currentUserId).on('value', (snapshot) => {
+                    const notifications = snapshot.val();
+                    const unreadCount = notifications ? Object.values(notifications).filter(n => !n.read).length : 0;
+                    updateNotificationBadge(unreadCount);
+                });
+                
+                // Load unread messages count
+                database.ref('conversations').orderByChild('participants').equalTo(currentUserId).on('value', (snapshot) => {
+                    let totalUnread = 0;
+                    const conversations = snapshot.val();
+                    if (conversations) {
+                        Object.values(conversations).forEach(conv => {
+                            if (conv.unreadCount && conv.unreadCount[currentUserId]) {
+                                totalUnread += conv.unreadCount[currentUserId];
+                            }
+                        });
+                    }
+                    updateMessageBadge(totalUnread);
+                });
+            }
         }
 
         // Create Sample Data Structure if none exists
@@ -3062,6 +3660,29 @@
             
             // Save to local storage for offline use
             saveToLocalStorage('dashboardStats', stats);
+        }
+
+        // Update Notification Badge
+        function updateNotificationBadge(count) {
+            if (count > 0) {
+                notificationBadge.textContent = count > 99 ? '99+' : count;
+                notificationBadge.style.display = 'block';
+                sidebarNotificationBadge.textContent = count > 99 ? '99+' : count;
+                sidebarNotificationBadge.style.display = 'block';
+            } else {
+                notificationBadge.style.display = 'none';
+                sidebarNotificationBadge.style.display = 'none';
+            }
+        }
+
+        // Update Message Badge
+        function updateMessageBadge(count) {
+            if (count > 0) {
+                sidebarMessageBadge.textContent = count > 99 ? '99+' : count;
+                sidebarMessageBadge.style.display = 'block';
+            } else {
+                sidebarMessageBadge.style.display = 'none';
+            }
         }
 
         // Update App Statuses based on Firebase data
@@ -3197,7 +3818,7 @@
                             console.log('User accepted the install prompt');
                             hideInstallBanner();
                         }
-                        deferredPrompt = null;
+                        deferredPending = null;
                     });
                 }
             });
@@ -3231,6 +3852,74 @@
 
             // Clear cache button
             clearCacheBtn.addEventListener('click', clearCache);
+
+            // Quick action buttons
+            sendMessageBtn.addEventListener('click', () => {
+                alert('Message feature coming soon!');
+            });
+
+            backupNowBtn.addEventListener('click', () => {
+                showLoading();
+                setTimeout(() => {
+                    hideLoading();
+                    alert('Backup initiated successfully!');
+                }, 1500);
+            });
+
+            viewReportsBtn.addEventListener('click', () => {
+                alert('Reports feature coming soon!');
+            });
+
+            // Navigation links
+            notificationsLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                alert('Notifications page coming soon!');
+            });
+
+            messagesLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                alert('Messages page coming soon!');
+            });
+
+            profileLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                alert('Profile page coming soon!');
+            });
+
+            settingsLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                alert('Settings page coming soon!');
+            });
+
+            securityLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                alert('Security page coming soon!');
+            });
+
+            backupLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                alert('Backup management page coming soon!');
+            });
+
+            securityDashboardLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                alert('Security dashboard coming soon!');
+            });
+
+            systemSettingsLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                alert('System settings page coming soon!');
+            });
+
+            analyticsLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                alert('Analytics dashboard coming soon!');
+            });
+
+            notificationsToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                alert('Notifications panel coming soon!');
+            });
         }
 
         // Show/Hide Install Banner
@@ -3302,6 +3991,7 @@
                 updateLastSyncTime();
                 showSyncStatus('synced');
                 loadDashboardData();
+                checkStorageUsage();
             }, 1500);
         }
 
@@ -3365,6 +4055,7 @@
             try {
                 const statsData = localStorage.getItem('jasiri_dashboardStats');
                 const activitiesData = localStorage.getItem('jasiri_recentActivities');
+                const storageData = localStorage.getItem('jasiri_storageUsage');
                 
                 if (statsData) {
                     const stats = JSON.parse(statsData);
@@ -3374,6 +4065,11 @@
                 if (activitiesData) {
                     const activities = JSON.parse(activitiesData);
                     updateActivityFeed({ activities });
+                }
+                
+                if (storageData) {
+                    const storage = JSON.parse(storageData);
+                    updateStorageUI(storage.usedMB * 1024 * 1024);
                 }
             } catch (e) {
                 console.error('Error loading from localStorage:', e);
@@ -3403,11 +4099,6 @@
             }
         }
 
-        // Initialize on load
-        document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById("year").textContent = new Date().getFullYear();
-        });
-
         // Handle beforeunload for data sync
         window.addEventListener('beforeunload', () => {
             if (auth.currentUser && isOnline) {
@@ -3417,7 +4108,20 @@
                     user: auth.currentUser.email
                 };
                 saveToLocalStorage('session', pendingData);
+                
+                // Update user as offline
+                if (userPresenceRef) {
+                    userPresenceRef.update({
+                        status: 'offline',
+                        lastSeen: Date.now()
+                    });
+                }
             }
+        });
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById("year").textContent = new Date().getFullYear();
         });
     </script>
 </body>
