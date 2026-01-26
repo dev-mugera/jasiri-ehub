@@ -47,6 +47,120 @@
             --shadow-color: rgba(0, 0, 0, 0.25);
         }
 
+        /* Professional Theme 1: Corporate Blue */
+        [data-theme="corporate-blue"] {
+            --dark-blue: #1a237e;
+            --medium-blue: #283593;
+            --light-pink: #2196f3;
+            --accent-gold: #ffc107;
+            --soft-teal: #4db6ac;
+            --text-primary: #e8eaf6;
+            --text-secondary: #9fa8da;
+            --card-bg: rgba(33, 33, 33, 0.85);
+            --background-color: #1a237e;
+            --surface-color: #283593;
+            --border-color: rgba(144, 202, 249, 0.12);
+            --shadow-color: rgba(0, 0, 0, 0.3);
+        }
+
+        /* Professional Theme 2: Modern Green */
+        [data-theme="modern-green"] {
+            --dark-blue: #0d3b2a;
+            --medium-blue: #1b5e3f;
+            --light-pink: #00c853;
+            --accent-gold: #ffd54f;
+            --soft-teal: #4db6ac;
+            --text-primary: #e8f5e9;
+            --text-secondary: #a5d6a7;
+            --card-bg: rgba(27, 94, 63, 0.85);
+            --background-color: #0d3b2a;
+            --surface-color: #1b5e3f;
+            --border-color: rgba(129, 199, 132, 0.15);
+            --shadow-color: rgba(0, 0, 0, 0.25);
+        }
+
+        /* Professional Theme 3: Professional Purple */
+        [data-theme="professional-purple"] {
+            --dark-blue: #311b92;
+            --medium-blue: #4527a0;
+            --light-pink: #ab47bc;
+            --accent-gold: #ffca28;
+            --soft-teal: #80deea;
+            --text-primary: #f3e5f5;
+            --text-secondary: #ce93d8;
+            --card-bg: rgba(69, 39, 160, 0.85);
+            --background-color: #311b92;
+            --surface-color: #4527a0;
+            --border-color: rgba(186, 104, 200, 0.15);
+            --shadow-color: rgba(0, 0, 0, 0.3);
+        }
+
+        /* Professional Theme 4: Minimalist Gray */
+        [data-theme="minimalist-gray"] {
+            --dark-blue: #263238;
+            --medium-blue: #37474f;
+            --light-pink: #607d8b;
+            --accent-gold: #ffb300;
+            --soft-teal: #80cbc4;
+            --text-primary: #eceff1;
+            --text-secondary: #b0bec5;
+            --card-bg: rgba(55, 71, 79, 0.85);
+            --background-color: #263238;
+            --surface-color: #37474f;
+            --border-color: rgba(176, 190, 197, 0.15);
+            --shadow-color: rgba(0, 0, 0, 0.25);
+        }
+
+        /* Professional Theme 5: Executive Amber */
+        [data-theme="executive-amber"] {
+            --dark-blue: #4e342e;
+            --medium-blue: #6d4c41;
+            --light-pink: #ff8f00;
+            --accent-gold: #ffca28;
+            --soft-teal: #4db6ac;
+            --text-primary: #fbe9e7;
+            --text-secondary: #d7ccc8;
+            --card-bg: rgba(109, 76, 65, 0.85);
+            --background-color: #4e342e;
+            --surface-color: #6d4c41;
+            --border-color: rgba(255, 183, 77, 0.15);
+            --shadow-color: rgba(0, 0, 0, 0.25);
+        }
+
+        /* Light Theme Variables */
+        [data-theme="light"] {
+            --dark-blue: #f8fafc;
+            --medium-blue: #ffffff;
+            --light-pink: #e11d48;
+            --accent-gold: #d97706;
+            --soft-teal: #0d9488;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --background-color: #f8fafc;
+            --surface-color: #ffffff;
+            --border-color: rgba(0, 0, 0, 0.08);
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
+
+        /* System Theme Detection */
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme]) {
+                --dark-blue: #f8fafc;
+                --medium-blue: #ffffff;
+                --light-pink: #e11d48;
+                --accent-gold: #d97706;
+                --soft-teal: #0d9488;
+                --text-primary: #1e293b;
+                --text-secondary: #64748b;
+                --card-bg: rgba(255, 255, 255, 0.95);
+                --background-color: #f8fafc;
+                --surface-color: #ffffff;
+                --border-color: rgba(0, 0, 0, 0.08);
+                --shadow-color: rgba(0, 0, 0, 0.1);
+            }
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -81,6 +195,17 @@
             z-index: -1;
         }
 
+        [data-theme="light"] .background-pattern,
+        [data-theme="corporate-blue"] .background-pattern,
+        [data-theme="modern-green"] .background-pattern,
+        [data-theme="professional-purple"] .background-pattern,
+        [data-theme="minimalist-gray"] .background-pattern,
+        [data-theme="executive-amber"] .background-pattern {
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(var(--theme-light-rgb), 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(var(--theme-soft-rgb), 0.03) 0%, transparent 20%);
+        }
+
         /* Loading Spinner */
         .loading-spinner {
             display: none;
@@ -97,6 +222,15 @@
             gap: 16px;
         }
 
+        [data-theme="light"] .loading-spinner,
+        [data-theme="corporate-blue"] .loading-spinner,
+        [data-theme="modern-green"] .loading-spinner,
+        [data-theme="professional-purple"] .loading-spinner,
+        [data-theme="minimalist-gray"] .loading-spinner,
+        [data-theme="executive-amber"] .loading-spinner {
+            background: rgba(var(--dark-rgb), 0.9);
+        }
+
         .spinner {
             width: 45px;
             height: 45px;
@@ -104,6 +238,16 @@
             border-radius: 50%;
             border-top-color: var(--light-pink);
             animation: spin 1s ease-in-out infinite;
+        }
+
+        [data-theme="light"] .spinner,
+        [data-theme="corporate-blue"] .spinner,
+        [data-theme="modern-green"] .spinner,
+        [data-theme="professional-purple"] .spinner,
+        [data-theme="minimalist-gray"] .spinner,
+        [data-theme="executive-amber"] .spinner {
+            border: 3px solid rgba(0, 0, 0, 0.1);
+            border-top-color: var(--light-pink);
         }
 
         @keyframes spin {
@@ -133,6 +277,16 @@
             z-index: 1000;
             border-bottom: 1px solid var(--border-color);
             width: 100%;
+        }
+
+        [data-theme="light"] .top-nav,
+        [data-theme="corporate-blue"] .top-nav,
+        [data-theme="modern-green"] .top-nav,
+        [data-theme="professional-purple"] .top-nav,
+        [data-theme="minimalist-gray"] .top-nav,
+        [data-theme="executive-amber"] .top-nav {
+            background: rgba(var(--surface-rgb), 0.98);
+            backdrop-filter: blur(15px);
         }
 
         .nav-left {
@@ -185,6 +339,152 @@
             display: flex;
             align-items: center;
             gap: 12px;
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--light-pink);
+            color: var(--light-pink);
+            transform: rotate(15deg);
+        }
+
+        .theme-toggle i {
+            font-size: 16px;
+            transition: var(--transition);
+        }
+
+        [data-theme="dark"] .theme-toggle .fa-sun,
+        [data-theme="light"] .theme-toggle .fa-moon,
+        [data-theme="corporate-blue"] .theme-toggle .fa-building,
+        [data-theme="modern-green"] .theme-toggle .fa-leaf,
+        [data-theme="professional-purple"] .theme-toggle .fa-gem,
+        [data-theme="minimalist-gray"] .theme-toggle .fa-mountain,
+        [data-theme="executive-amber"] .theme-toggle .fa-crown,
+        :not([data-theme]) .theme-toggle .fa-desktop {
+            display: block;
+        }
+
+        [data-theme="dark"] .theme-toggle .fa-moon,
+        [data-theme="dark"] .theme-toggle .fa-desktop,
+        [data-theme="light"] .theme-toggle .fa-sun,
+        [data-theme="light"] .theme-toggle .fa-desktop,
+        [data-theme="corporate-blue"] .theme-toggle .fa-sun,
+        [data-theme="corporate-blue"] .theme-toggle .fa-moon,
+        [data-theme="corporate-blue"] .theme-toggle .fa-desktop,
+        [data-theme="modern-green"] .theme-toggle .fa-sun,
+        [data-theme="modern-green"] .theme-toggle .fa-moon,
+        [data-theme="modern-green"] .theme-toggle .fa-desktop,
+        [data-theme="professional-purple"] .theme-toggle .fa-sun,
+        [data-theme="professional-purple"] .theme-toggle .fa-moon,
+        [data-theme="professional-purple"] .theme-toggle .fa-desktop,
+        [data-theme="minimalist-gray"] .theme-toggle .fa-sun,
+        [data-theme="minimalist-gray"] .theme-toggle .fa-moon,
+        [data-theme="minimalist-gray"] .theme-toggle .fa-desktop,
+        [data-theme="executive-amber"] .theme-toggle .fa-sun,
+        [data-theme="executive-amber"] .theme-toggle .fa-moon,
+        [data-theme="executive-amber"] .theme-toggle .fa-desktop,
+        :not([data-theme]) .theme-toggle .fa-sun,
+        :not([data-theme]) .theme-toggle .fa-moon {
+            display: none;
+        }
+
+        /* Theme Options Dropdown */
+        .theme-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            min-width: 220px;
+            max-height: 400px;
+            overflow-y: auto;
+            box-shadow: 0 8px 32px var(--shadow-color);
+            backdrop-filter: blur(20px);
+            z-index: 1001;
+            display: none;
+            overflow: hidden;
+            animation: slideDown 0.2s ease-out;
+        }
+
+        .theme-dropdown.active {
+            display: block;
+        }
+
+        .theme-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+        }
+
+        .theme-option:hover {
+            background: rgba(255, 107, 139, 0.1);
+            color: var(--text-primary);
+        }
+
+        .theme-option.active {
+            color: var(--light-pink);
+            background: rgba(255, 107, 139, 0.08);
+        }
+
+        .theme-option i {
+            font-size: 14px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .theme-option.active i {
+            color: var(--light-pink);
+        }
+
+        .theme-preview {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+        }
+
+        .theme-preview.default { background: linear-gradient(135deg, #0a192f 50%, #ff6b8b 50%); }
+        .theme-preview.light { background: linear-gradient(135deg, #f8fafc 50%, #e11d48 50%); }
+        .theme-preview.corporate-blue { background: linear-gradient(135deg, #1a237e 50%, #2196f3 50%); }
+        .theme-preview.modern-green { background: linear-gradient(135deg, #0d3b2a 50%, #00c853 50%); }
+        .theme-preview.professional-purple { background: linear-gradient(135deg, #311b92 50%, #ab47bc 50%); }
+        .theme-preview.minimalist-gray { background: linear-gradient(135deg, #263238 50%, #607d8b 50%); }
+        .theme-preview.executive-amber { background: linear-gradient(135deg, #4e342e 50%, #ff8f00 50%); }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .user-avatar {
@@ -267,6 +567,7 @@
             flex-direction: column;
             height: calc(100vh - var(--topbar-height) - 40px);
             overflow: hidden;
+            box-shadow: 0 4px 20px var(--shadow-color);
         }
 
         .chat-sidebar-header {
@@ -301,6 +602,10 @@
             outline: none;
             border-color: var(--light-pink);
             background: rgba(255, 107, 139, 0.05);
+        }
+
+        [data-theme="light"] .chat-search input {
+            background: rgba(0, 0, 0, 0.05);
         }
 
         .chat-search i {
@@ -463,10 +768,75 @@
             flex-direction: column;
             height: calc(100vh - var(--topbar-height) - 40px);
             overflow: hidden;
+            box-shadow: 0 4px 20px var(--shadow-color);
         }
 
-        .chat-header {
+        /* Workspace Header */
+        .workspace-header {
             padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+            background: rgba(255, 255, 255, 0.02);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .workspace-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .workspace-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--light-pink), var(--accent-gold));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+
+        .workspace-details h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: var(--text-primary);
+        }
+
+        .workspace-details p {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .workspace-stats {
+            display: flex;
+            gap: 15px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--light-pink);
+            margin-bottom: 2px;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Chat Header */
+        .chat-header {
+            padding: 15px 20px;
             border-bottom: 1px solid var(--border-color);
             display: flex;
             align-items: center;
@@ -649,6 +1019,7 @@
             border-radius: 15px;
             position: relative;
             word-wrap: break-word;
+            max-width: 100%;
         }
 
         .message.sent .message-bubble {
@@ -797,6 +1168,10 @@
             resize: none;
             transition: var(--transition);
             line-height: 1.4;
+        }
+
+        [data-theme="light"] .message-input {
+            background: rgba(0, 0, 0, 0.05);
         }
 
         .message-input:focus {
@@ -1056,7 +1431,7 @@
             max-width: 500px;
             max-height: 90vh;
             overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 20px 60px var(--shadow-color);
         }
 
         .modal-header {
@@ -1118,6 +1493,10 @@
             color: var(--text-primary);
             font-size: 13px;
             transition: var(--transition);
+        }
+
+        [data-theme="light"] .form-input {
+            background: rgba(0, 0, 0, 0.05);
         }
 
         .form-input:focus {
@@ -1238,50 +1617,6 @@
             background: rgba(255, 255, 255, 0.08);
         }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .chat-container {
-                flex-direction: column;
-                padding: 10px;
-                gap: 10px;
-            }
-            
-            .chat-sidebar {
-                width: 100%;
-                height: 300px;
-            }
-            
-            .chat-main {
-                height: calc(100vh - var(--topbar-height) - 320px);
-            }
-            
-            .modal {
-                max-width: 95%;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .top-nav {
-                padding: 0 12px;
-            }
-            
-            .chat-header-actions {
-                display: none;
-            }
-            
-            .message {
-                max-width: 85%;
-            }
-            
-            .modal-content {
-                padding: 15px;
-            }
-            
-            .modal-footer {
-                padding: 15px;
-            }
-        }
-
         /* Connection Status */
         .connection-status {
             position: fixed;
@@ -1348,35 +1683,260 @@
             margin-top: 2px;
         }
 
-        /* Message Reactions */
-        .message-reactions {
-            display: flex;
-            gap: 5px;
-            margin-top: 5px;
-            flex-wrap: wrap;
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .chat-container {
+                flex-direction: column;
+                padding: 10px;
+                gap: 10px;
+            }
+            
+            .chat-sidebar {
+                width: 100%;
+                height: 300px;
+            }
+            
+            .chat-main {
+                height: calc(100vh - var(--topbar-height) - 320px);
+            }
+            
+            .modal {
+                max-width: 95%;
+            }
+            
+            .workspace-stats {
+                display: none;
+            }
         }
 
-        .reaction {
-            background: rgba(255, 255, 255, 0.05);
+        @media (max-width: 576px) {
+            .top-nav {
+                padding: 0 12px;
+            }
+            
+            .chat-header-actions {
+                display: none;
+            }
+            
+            .message {
+                max-width: 85%;
+            }
+            
+            .modal-content {
+                padding: 15px;
+            }
+            
+            .modal-footer {
+                padding: 15px;
+            }
+        }
+
+        /* Online Users Sidebar */
+        .online-users {
+            width: 250px;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
             border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 3px 8px;
-            font-size: 12px;
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - var(--topbar-height) - 40px);
+            overflow: hidden;
+            box-shadow: 0 4px 20px var(--shadow-color);
+        }
+
+        .online-users-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .online-users-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
             display: flex;
             align-items: center;
-            gap: 3px;
+            gap: 8px;
+        }
+
+        .online-users-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px 0;
+        }
+
+        .online-user-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .online-user-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .online-user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 12px;
+            color: white;
+            background: linear-gradient(135deg, var(--light-pink), var(--accent-gold));
+            position: relative;
+        }
+
+        .online-user-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .online-indicator {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 10px;
+            height: 10px;
+            background: var(--online-color);
+            border-radius: 50%;
+            border: 2px solid var(--card-bg);
+        }
+
+        .online-user-info {
+            flex: 1;
+        }
+
+        .online-user-name {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 2px;
+            color: var(--text-primary);
+        }
+
+        .online-user-role {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        /* Workspace Stats */
+        .workspace-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            padding: 20px;
+        }
+
+        .workspace-stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--border-radius);
+            padding: 15px;
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .workspace-stat-card:hover {
+            border-color: var(--light-pink);
+            transform: translateY(-2px);
+        }
+
+        .workspace-stat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(255, 107, 139, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: var(--light-pink);
+            margin-bottom: 10px;
+        }
+
+        .workspace-stat-value {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: var(--text-primary);
+        }
+
+        .workspace-stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* Recent Files Section */
+        .recent-files {
+            padding: 20px;
+        }
+
+        .recent-files-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        .files-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
             cursor: pointer;
             transition: var(--transition);
         }
 
-        .reaction:hover {
-            background: rgba(255, 107, 139, 0.1);
-            border-color: var(--light-pink);
+        .file-item:hover {
+            background: rgba(255, 255, 255, 0.08);
         }
 
-        .reaction-count {
-            font-size: 10px;
+        .file-item-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: rgba(255, 107, 139, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--light-pink);
+            font-size: 18px;
+        }
+
+        .file-item-info {
+            flex: 1;
+        }
+
+        .file-item-name {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 2px;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .file-item-meta {
+            font-size: 11px;
             color: var(--text-secondary);
+            display: flex;
+            gap: 8px;
         }
     </style>
 </head>
@@ -1386,7 +1946,7 @@
     <!-- Loading Spinner -->
     <div class="loading-spinner" id="loadingSpinner">
         <div class="spinner"></div>
-        <div class="loading-text">Loading Messages...</div>
+        <div class="loading-text">Loading Workspace...</div>
     </div>
 
     <!-- Connection Status -->
@@ -1406,13 +1966,64 @@
                     <i class="fas fa-comments"></i>
                 </div>
                 <div>
-                    <div class="brand-text">Jasiri Chat</div>
-                    <div class="brand-subtitle">Enterprise Communication</div>
+                    <div class="brand-text">Jasiri Workspace</div>
+                    <div class="brand-subtitle">Team Collaboration</div>
                 </div>
             </div>
         </div>
         
         <div class="nav-right">
+            <!-- Theme Toggle -->
+            <div class="theme-toggle-wrapper" style="position: relative;">
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-sun"></i>
+                    <i class="fas fa-moon"></i>
+                    <i class="fas fa-building"></i>
+                    <i class="fas fa-leaf"></i>
+                    <i class="fas fa-gem"></i>
+                    <i class="fas fa-mountain"></i>
+                    <i class="fas fa-crown"></i>
+                    <i class="fas fa-desktop"></i>
+                </button>
+                <div class="theme-dropdown" id="themeDropdown">
+                    <div class="theme-option" data-theme="system">
+                        <div class="theme-preview default"></div>
+                        <i class="fas fa-desktop"></i>
+                        <span>System Default</span>
+                    </div>
+                    <div class="theme-option" data-theme="light">
+                        <div class="theme-preview light"></div>
+                        <i class="fas fa-sun"></i>
+                        <span>Light Theme</span>
+                    </div>
+                    <div class="theme-option" data-theme="corporate-blue">
+                        <div class="theme-preview corporate-blue"></div>
+                        <i class="fas fa-building"></i>
+                        <span>Corporate Blue</span>
+                    </div>
+                    <div class="theme-option" data-theme="modern-green">
+                        <div class="theme-preview modern-green"></div>
+                        <i class="fas fa-leaf"></i>
+                        <span>Modern Green</span>
+                    </div>
+                    <div class="theme-option" data-theme="professional-purple">
+                        <div class="theme-preview professional-purple"></div>
+                        <i class="fas fa-gem"></i>
+                        <span>Professional Purple</span>
+                    </div>
+                    <div class="theme-option" data-theme="minimalist-gray">
+                        <div class="theme-preview minimalist-gray"></div>
+                        <i class="fas fa-mountain"></i>
+                        <span>Minimalist Gray</span>
+                    </div>
+                    <div class="theme-option" data-theme="executive-amber">
+                        <div class="theme-preview executive-amber"></div>
+                        <i class="fas fa-crown"></i>
+                        <span>Executive Amber</span>
+                    </div>
+                </div>
+            </div>
+            
             <div class="user-profile" id="userProfile">
                 <div class="user-avatar" id="userAvatar">AD</div>
                 <div class="user-info">
@@ -1423,20 +2034,20 @@
         </div>
     </nav>
 
-    <!-- Main Chat Container -->
+    <!-- Main Workspace Container -->
     <div class="chat-container">
-        <!-- Chat Sidebar -->
+        <!-- Left Sidebar - Conversations -->
         <div class="chat-sidebar">
             <div class="chat-sidebar-header">
-                <h3 class="chat-sidebar-title">Messages</h3>
+                <h3 class="chat-sidebar-title">Conversations</h3>
                 <div class="chat-search">
                     <i class="fas fa-search"></i>
                     <input type="text" id="chatSearch" placeholder="Search conversations...">
                 </div>
                 <div class="chat-tabs">
-                    <button class="chat-tab active" data-tab="direct">Direct</button>
+                    <button class="chat-tab active" data-tab="all">All</button>
+                    <button class="chat-tab" data-tab="unread">Unread</button>
                     <button class="chat-tab" data-tab="groups">Groups</button>
-                    <button class="chat-tab" data-tab="channels">Channels</button>
                 </div>
             </div>
 
@@ -1446,32 +2057,50 @@
 
             <button class="new-chat-btn" id="newChatBtn">
                 <i class="fas fa-plus"></i>
-                <span>New Message</span>
+                <span>New Conversation</span>
             </button>
         </div>
 
-        <!-- Chat Main Area -->
+        <!-- Main Chat Area -->
         <div class="chat-main">
-            <!-- No Chat Selected View -->
-            <div class="no-chat-selected" id="noChatView">
-                <div class="no-chat-icon">
-                    <i class="fas fa-comments"></i>
+            <!-- Workspace Header -->
+            <div class="workspace-header" id="workspaceHeader">
+                <div class="workspace-info">
+                    <div class="workspace-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <div class="workspace-details">
+                        <h3>Team Workspace</h3>
+                        <p>Collaborate with your team in real-time</p>
+                    </div>
                 </div>
-                <h3 class="no-chat-title">Select a conversation</h3>
-                <p class="no-chat-subtitle">Choose a chat from the sidebar or start a new conversation</p>
+                <div class="workspace-stats">
+                    <div class="stat-item">
+                        <div class="stat-value" id="onlineCount">0</div>
+                        <div class="stat-label">Online</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="messageCount">0</div>
+                        <div class="stat-label">Messages</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="fileCount">0</div>
+                        <div class="stat-label">Files</div>
+                    </div>
+                </div>
             </div>
 
-            <!-- Chat Header (Hidden by default) -->
+            <!-- Chat Header -->
             <div class="chat-header" id="chatHeader" style="display: none;">
                 <div class="chat-header-info">
                     <div class="chat-header-avatar" id="chatHeaderAvatar">
                         <i class="fas fa-users"></i>
                     </div>
                     <div class="chat-header-details">
-                        <h3 id="chatPartnerName">Group Chat</h3>
+                        <h3 id="chatPartnerName">Select a conversation</h3>
                         <p id="chatStatus">
-                            <span class="status-indicator" id="statusIndicator"></span>
-                            <span id="statusText">Loading...</span>
+                            <span class="status-indicator offline" id="statusIndicator"></span>
+                            <span id="statusText">Click a conversation to start chatting</span>
                         </p>
                     </div>
                 </div>
@@ -1492,8 +2121,55 @@
             </div>
 
             <!-- Messages Container -->
-            <div class="messages-container" id="messagesContainer" style="display: none;">
-                <!-- Messages will be loaded here -->
+            <div class="messages-container" id="messagesContainer">
+                <!-- Welcome Message -->
+                <div class="no-chat-selected">
+                    <div class="no-chat-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3 class="no-chat-title">Welcome to Workspace</h3>
+                    <p class="no-chat-subtitle">Select a conversation from the sidebar or start a new one to begin collaborating with your team.</p>
+                    
+                    <!-- Quick Stats -->
+                    <div class="workspace-stats-grid" style="margin-top: 30px;">
+                        <div class="workspace-stat-card">
+                            <div class="workspace-stat-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="workspace-stat-value" id="welcomeOnlineCount">0</div>
+                            <div class="workspace-stat-label">Team Members Online</div>
+                        </div>
+                        <div class="workspace-stat-card">
+                            <div class="workspace-stat-icon">
+                                <i class="fas fa-comment"></i>
+                            </div>
+                            <div class="workspace-stat-value" id="welcomeMessageCount">0</div>
+                            <div class="workspace-stat-label">Total Messages</div>
+                        </div>
+                        <div class="workspace-stat-card">
+                            <div class="workspace-stat-icon">
+                                <i class="fas fa-file"></i>
+                            </div>
+                            <div class="workspace-stat-value" id="welcomeFileCount">0</div>
+                            <div class="workspace-stat-label">Files Shared</div>
+                        </div>
+                        <div class="workspace-stat-card">
+                            <div class="workspace-stat-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="workspace-stat-value" id="welcomeActiveCount">0</div>
+                            <div class="workspace-stat-label">Active Conversations</div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Files -->
+                    <div class="recent-files" style="margin-top: 30px; width: 100%;">
+                        <h4 class="recent-files-title">Recent Files</h4>
+                        <div class="files-list" id="recentFilesList">
+                            <!-- Recent files will be loaded here -->
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Message Input -->
@@ -1519,8 +2195,8 @@
                     <button class="input-action-btn" id="recordAudioBtn" title="Record Audio">
                         <i class="fas fa-microphone"></i>
                     </button>
-                    <button class="input-action-btn" id="scheduleMessageBtn" title="Schedule Message">
-                        <i class="fas fa-clock"></i>
+                    <button class="input-action-btn" id="emojiBtn" title="Insert Emoji">
+                        <i class="fas fa-smile"></i>
                     </button>
                 </div>
                 <div class="message-input-wrapper">
@@ -1531,6 +2207,18 @@
                 </div>
             </div>
         </div>
+
+        <!-- Right Sidebar - Online Users -->
+        <div class="online-users">
+            <div class="online-users-header">
+                <h3 class="online-users-title">
+                    <i class="fas fa-users"></i> Online Team
+                </h3>
+            </div>
+            <div class="online-users-list" id="onlineUsersList">
+                <!-- Online users will be loaded here -->
+            </div>
+        </div>
     </div>
 
     <!-- Modals -->
@@ -1538,7 +2226,7 @@
     <div class="modal-overlay" id="newChatModal">
         <div class="modal">
             <div class="modal-header">
-                <h3 class="modal-title">New Conversation</h3>
+                <h3 class="modal-title">Start New Conversation</h3>
                 <button class="modal-close" id="closeNewChatModal">
                     <i class="fas fa-times"></i>
                 </button>
@@ -1550,34 +2238,38 @@
                         <select class="form-input form-select" id="conversationType">
                             <option value="direct">Direct Message</option>
                             <option value="group">Group Chat</option>
-                            <option value="channel">Channel</option>
+                            <option value="channel">Team Channel</option>
                         </select>
                     </div>
-                    <div class="form-group" id="recipientField">
-                        <label class="form-label">Recipient</label>
+                    
+                    <div class="form-group" id="directChatFields">
+                        <label class="form-label">Select User</label>
                         <select class="form-input form-select" id="recipientSelect">
-                            <!-- Users will be populated here -->
+                            <option value="">Select a team member...</option>
                         </select>
                     </div>
-                    <div class="form-group" id="groupFields" style="display: none;">
+                    
+                    <div class="form-group" id="groupChatFields" style="display: none;">
                         <label class="form-label">Group Name</label>
                         <input type="text" class="form-input" id="groupName" placeholder="Enter group name">
-                        <label class="form-label">Group Description</label>
-                        <textarea class="form-input form-textarea" id="groupDescription" placeholder="Enter group description"></textarea>
-                        <label class="form-label">Group Members</label>
+                        
+                        <label class="form-label">Add Members</label>
                         <div class="members-list" id="groupMembersList">
-                            <!-- Members will be populated here -->
+                            <!-- Members will be loaded dynamically -->
                         </div>
                     </div>
+                    
                     <div class="form-group" id="channelFields" style="display: none;">
                         <label class="form-label">Channel Name</label>
                         <input type="text" class="form-input" id="channelName" placeholder="Enter channel name">
+                        
                         <label class="form-label">Channel Description</label>
-                        <textarea class="form-input form-textarea" id="channelDescription" placeholder="Enter channel description"></textarea>
+                        <textarea class="form-input form-textarea" id="channelDescription" placeholder="Describe the channel purpose"></textarea>
+                        
                         <label class="form-label">Channel Type</label>
                         <select class="form-input form-select" id="channelType">
-                            <option value="public">Public (Anyone can join)</option>
-                            <option value="private">Private (Invite only)</option>
+                            <option value="public">Public - All team members can join</option>
+                            <option value="private">Private - Invite only</option>
                         </select>
                     </div>
                 </div>
@@ -1610,29 +2302,6 @@
         </div>
     </div>
 
-    <!-- Chat Info Modal -->
-    <div class="modal-overlay" id="chatInfoModal">
-        <div class="modal">
-            <div class="modal-header">
-                <h3 class="modal-title">Chat Information</h3>
-                <button class="modal-close" id="closeChatInfoModal">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-content">
-                <div class="chat-info-content" id="chatInfoContent">
-                    <!-- Chat info will be loaded here -->
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="modal-btn secondary" id="closeChatInfoBtn">Close</button>
-                <button class="modal-btn primary" id="leaveChatBtn" style="display: none;">
-                    <i class="fas fa-sign-out-alt"></i> Leave Chat
-                </button>
-            </div>
-        </div>
-    </div>
-
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
@@ -1651,7 +2320,7 @@
                 department: 'HOG-NBI001'
             },
             'admin@hogcreations.com': {
-                name: 'System Administrator',
+                name: 'System Admin',
                 photo: 'https://i.postimg.cc/9XbqzBx4/HOG-creations.png',
                 role: 'Administrator',
                 department: 'IT Department'
@@ -1662,11 +2331,11 @@
                 role: 'Manager',
                 department: 'Operations'
             },
-            'sales.hog@gmail.com.com': {
-                name: 'Moses Mugera',
+            'sales@hogcreations.com': {
+                name: 'Sales Director',
                 photo: 'https://i.postimg.cc/9XbqzBx4/HOG-creations.png',
-                role: 'Sales Clerk',
-                department: 'Sales and Marketing'
+                role: 'Director',
+                department: 'Sales'
             },
             'finance@hogcreations.com': {
                 name: 'Finance Manager',
@@ -1681,7 +2350,7 @@
                 department: 'Human Resources'
             },
             'logistics@hogcreations.com': {
-                name: 'Logistics Manager',
+                name: 'Logistics Head',
                 photo: 'https://i.postimg.cc/9XbqzBx4/HOG-creations.png',
                 role: 'Manager',
                 department: 'Logistics'
@@ -1689,7 +2358,7 @@
         };
 
         const DEFAULT_USER = {
-            name: 'Guest User',
+            name: 'Team Member',
             photo: null,
             role: 'User',
             department: 'General'
@@ -1725,14 +2394,18 @@
         let isOnline = navigator.onLine;
         let conversationsListener = null;
         let messagesListener = null;
-        let typingTimeout = null;
+        let onlineUsersListener = null;
         let uploadTask = null;
+        let themeManager = null;
 
         // ============================
         // DOM ELEMENTS
         // ============================
         const loadingSpinner = document.getElementById('loadingSpinner');
         const connectionStatus = document.getElementById('connectionStatus');
+        const themeToggle = document.getElementById('themeToggle');
+        const themeDropdown = document.getElementById('themeDropdown');
+        const themeOptions = document.querySelectorAll('.theme-option');
         const userProfile = document.getElementById('userProfile');
         const userAvatar = document.getElementById('userAvatar');
         const userName = document.getElementById('userName');
@@ -1741,7 +2414,7 @@
         const chatTabs = document.querySelectorAll('.chat-tab');
         const conversationsList = document.getElementById('conversationsList');
         const newChatBtn = document.getElementById('newChatBtn');
-        const noChatView = document.getElementById('noChatView');
+        const workspaceHeader = document.getElementById('workspaceHeader');
         const chatHeader = document.getElementById('chatHeader');
         const chatHeaderAvatar = document.getElementById('chatHeaderAvatar');
         const chatPartnerName = document.getElementById('chatPartnerName');
@@ -1759,22 +2432,30 @@
         const attachFileBtn = document.getElementById('attachFileBtn');
         const attachImageBtn = document.getElementById('attachImageBtn');
         const recordAudioBtn = document.getElementById('recordAudioBtn');
-        const scheduleMessageBtn = document.getElementById('scheduleMessageBtn');
+        const emojiBtn = document.getElementById('emojiBtn');
         const videoCallBtn = document.getElementById('videoCallBtn');
         const audioCallBtn = document.getElementById('audioCallBtn');
         const chatInfoBtn = document.getElementById('chatInfoBtn');
         const chatMenuBtn = document.getElementById('chatMenuBtn');
+        const onlineUsersList = document.getElementById('onlineUsersList');
+        const onlineCount = document.getElementById('onlineCount');
+        const messageCount = document.getElementById('messageCount');
+        const fileCount = document.getElementById('fileCount');
+        const welcomeOnlineCount = document.getElementById('welcomeOnlineCount');
+        const welcomeMessageCount = document.getElementById('welcomeMessageCount');
+        const welcomeFileCount = document.getElementById('welcomeFileCount');
+        const welcomeActiveCount = document.getElementById('welcomeActiveCount');
+        const recentFilesList = document.getElementById('recentFilesList');
 
         // Modal Elements
         const newChatModal = document.getElementById('newChatModal');
         const closeNewChatModal = document.getElementById('closeNewChatModal');
         const cancelNewChat = document.getElementById('cancelNewChat');
         const conversationType = document.getElementById('conversationType');
-        const recipientField = document.getElementById('recipientField');
+        const directChatFields = document.getElementById('directChatFields');
         const recipientSelect = document.getElementById('recipientSelect');
-        const groupFields = document.getElementById('groupFields');
+        const groupChatFields = document.getElementById('groupChatFields');
         const groupName = document.getElementById('groupName');
-        const groupDescription = document.getElementById('groupDescription');
         const groupMembersList = document.getElementById('groupMembersList');
         const channelFields = document.getElementById('channelFields');
         const channelName = document.getElementById('channelName');
@@ -1787,12 +2468,6 @@
         const filePreviewContent = document.getElementById('filePreviewContent');
         const closePreviewBtn = document.getElementById('closePreviewBtn');
         const downloadFileBtn = document.getElementById('downloadFileBtn');
-
-        const chatInfoModal = document.getElementById('chatInfoModal');
-        const closeChatInfoModal = document.getElementById('closeChatInfoModal');
-        const chatInfoContent = document.getElementById('chatInfoContent');
-        const closeChatInfoBtn = document.getElementById('closeChatInfoBtn');
-        const leaveChatBtn = document.getElementById('leaveChatBtn');
 
         // ============================
         // UTILITY FUNCTIONS
@@ -1873,6 +2548,83 @@
         }
 
         // ============================
+        // THEME MANAGER
+        // ============================
+        class ThemeManager {
+            constructor() {
+                this.theme = localStorage.getItem('theme') || 'system';
+                this.init();
+            }
+
+            init() {
+                this.applyTheme();
+                this.setupEventListeners();
+                this.updateActiveThemeOption();
+            }
+
+            applyTheme() {
+                if (this.theme === 'system') {
+                    document.documentElement.removeAttribute('data-theme');
+                    localStorage.removeItem('theme');
+                } else {
+                    document.documentElement.setAttribute('data-theme', this.theme);
+                    localStorage.setItem('theme', this.theme);
+                }
+            }
+
+            setTheme(theme) {
+                this.theme = theme;
+                this.applyTheme();
+                this.updateActiveThemeOption();
+                
+                // Save theme preference to user profile in Firebase
+                if (currentUserId) {
+                    database.ref('users/' + currentUserId + '/profile/theme').set(theme)
+                        .catch(console.error);
+                }
+            }
+
+            setupEventListeners() {
+                themeToggle.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    themeDropdown.classList.toggle('active');
+                });
+
+                themeOptions.forEach(option => {
+                    option.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const theme = option.getAttribute('data-theme');
+                        this.setTheme(theme);
+                        themeDropdown.classList.remove('active');
+                    });
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (!themeToggle.contains(e.target) && !themeDropdown.contains(e.target)) {
+                        themeDropdown.classList.remove('active');
+                    }
+                });
+
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+                    if (this.theme === 'system') {
+                        this.applyTheme();
+                    }
+                });
+            }
+
+            updateActiveThemeOption() {
+                themeOptions.forEach(option => {
+                    const optionTheme = option.getAttribute('data-theme');
+                    if (optionTheme === this.theme) {
+                        option.classList.add('active');
+                    } else {
+                        option.classList.remove('active');
+                    }
+                });
+            }
+        }
+
+        // ============================
         // AUTHENTICATION HANDLING
         // ============================
         auth.onAuthStateChanged((user) => {
@@ -1888,9 +2640,13 @@
             currentUserEmail = user.email;
             currentUserInfo = getUserInfo(user.email);
             
+            // Initialize theme manager
+            themeManager = new ThemeManager();
+            
             updateUserInfo();
-            initializeChatSystem();
+            initializeWorkspace();
             setupOnlineStatus();
+            hideLoading();
         }
 
         function handleUserSignedOut() {
@@ -1910,7 +2666,9 @@
                 status: 'online',
                 lastSeen: Date.now(),
                 name: currentUserInfo.name,
-                email: currentUserEmail
+                email: currentUserEmail,
+                role: currentUserInfo.role,
+                department: currentUserInfo.department
             });
 
             // Update when going offline
@@ -1942,19 +2700,28 @@
         }
 
         // ============================
-        // CHAT SYSTEM INITIALIZATION
+        // WORKSPACE INITIALIZATION
         // ============================
-        function initializeChatSystem() {
+        function initializeWorkspace() {
             showLoading();
             
             // Load conversations
             loadConversations();
+            
+            // Load online users
+            loadOnlineUsers();
+            
+            // Load workspace stats
+            loadWorkspaceStats();
             
             // Setup event listeners
             setupEventListeners();
             
             // Setup search
             setupSearch();
+            
+            // Load recent files
+            loadRecentFiles();
             
             hideLoading();
         }
@@ -1970,6 +2737,7 @@
                 .on('value', (snapshot) => {
                     const conversations = snapshot.val();
                     displayConversations(conversations);
+                    updateActiveConversationsCount(conversations);
                 });
         }
 
@@ -2009,6 +2777,7 @@
             // Get conversation name and avatar based on type
             let name = 'Unknown';
             let avatarText = '?';
+            let isGroup = conversation.type !== 'direct';
             
             if (conversation.type === 'direct') {
                 // Find the other participant
@@ -2020,7 +2789,7 @@
                 }
             } else {
                 name = conversation.name || 'Group Chat';
-                avatarText = name.charAt(0).toUpperCase();
+                avatarText = isGroup ? '<i class="fas fa-users"></i>' : name.charAt(0).toUpperCase();
             }
             
             const lastMessage = conversation.lastMessage || {};
@@ -2044,6 +2813,235 @@
         }
 
         // ============================
+        // ONLINE USERS
+        // ============================
+        function loadOnlineUsers() {
+            if (onlineUsersListener) {
+                onlineUsersListener.off();
+            }
+
+            onlineUsersListener = database.ref('userStatus')
+                .orderByChild('status')
+                .equalTo('online')
+                .on('value', (snapshot) => {
+                    const users = snapshot.val();
+                    displayOnlineUsers(users);
+                    updateOnlineCount(users);
+                });
+        }
+
+        function displayOnlineUsers(users) {
+            onlineUsersList.innerHTML = '';
+            
+            if (!users) {
+                onlineUsersList.innerHTML = `
+                    <div style="padding: 20px; text-align: center; color: var(--text-secondary);">
+                        <p>No users online</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Filter out current user
+            const onlineUsers = Object.entries(users)
+                .filter(([userId, userData]) => userId !== currentUserId)
+                .map(([userId, userData]) => ({ userId, ...userData }));
+
+            if (onlineUsers.length === 0) {
+                onlineUsersList.innerHTML = `
+                    <div style="padding: 20px; text-align: center; color: var(--text-secondary);">
+                        <p>You're the only one online</p>
+                    </div>
+                `;
+                return;
+            }
+
+            onlineUsers.forEach(user => {
+                const userItem = document.createElement('div');
+                userItem.className = 'online-user-item';
+                userItem.dataset.userId = user.userId;
+                
+                const userInfo = getUserInfo(user.email) || DEFAULT_USER;
+                
+                userItem.innerHTML = `
+                    <div class="online-user-avatar">
+                        ${userInfo.photo ? 
+                            `<img src="${userInfo.photo}" alt="${userInfo.name}" onerror="this.onerror=null; this.parentElement.innerHTML='${getInitials(userInfo.name)}'">` : 
+                            getInitials(userInfo.name)}
+                        <div class="online-indicator"></div>
+                    </div>
+                    <div class="online-user-info">
+                        <div class="online-user-name">${userInfo.name}</div>
+                        <div class="online-user-role">${userInfo.role} • ${userInfo.department}</div>
+                    </div>
+                `;
+                
+                userItem.addEventListener('click', () => startDirectChat(user.userId, user.email));
+                onlineUsersList.appendChild(userItem);
+            });
+        }
+
+        function updateOnlineCount(users) {
+            if (!users) {
+                onlineCount.textContent = '0';
+                welcomeOnlineCount.textContent = '0';
+                return;
+            }
+            
+            // Count online users (excluding current user)
+            const onlineUserCount = Object.keys(users).filter(id => id !== currentUserId).length;
+            onlineCount.textContent = onlineUserCount;
+            welcomeOnlineCount.textContent = onlineUserCount;
+        }
+
+        // ============================
+        // WORKSPACE STATS
+        // ============================
+        function loadWorkspaceStats() {
+            // Count total messages
+            database.ref('messages').once('value')
+                .then((snapshot) => {
+                    const messages = snapshot.val();
+                    const totalMessages = messages ? Object.keys(messages).reduce((acc, chatId) => {
+                        const chatMessages = messages[chatId];
+                        return acc + Object.keys(chatMessages || {}).length;
+                    }, 0) : 0;
+                    
+                    messageCount.textContent = totalMessages;
+                    welcomeMessageCount.textContent = totalMessages;
+                });
+
+            // Count files (from storage metadata)
+            countFiles();
+            
+            // Count active conversations
+            database.ref('conversations').once('value')
+                .then((snapshot) => {
+                    const conversations = snapshot.val();
+                    const activeConversations = conversations ? Object.keys(conversations).length : 0;
+                    welcomeActiveCount.textContent = activeConversations;
+                });
+        }
+
+        function updateActiveConversationsCount(conversations) {
+            if (!conversations) {
+                welcomeActiveCount.textContent = '0';
+                return;
+            }
+            
+            const activeConversations = Object.keys(conversations).length;
+            welcomeActiveCount.textContent = activeConversations;
+        }
+
+        function countFiles() {
+            // This is a simplified count - in production you would track files in the database
+            database.ref('messages').once('value')
+                .then((snapshot) => {
+                    const messages = snapshot.val();
+                    let fileCountTotal = 0;
+                    
+                    if (messages) {
+                        Object.values(messages).forEach(chatMessages => {
+                            if (chatMessages) {
+                                Object.values(chatMessages).forEach(message => {
+                                    if (message.type === 'file' || message.type === 'image') {
+                                        fileCountTotal++;
+                                    }
+                                });
+                            }
+                        });
+                    }
+                    
+                    fileCount.textContent = fileCountTotal;
+                    welcomeFileCount.textContent = fileCountTotal;
+                });
+        }
+
+        function loadRecentFiles() {
+            database.ref('messages').once('value')
+                .then((snapshot) => {
+                    const messages = snapshot.val();
+                    const recentFiles = [];
+                    
+                    if (messages) {
+                        Object.values(messages).forEach(chatMessages => {
+                            if (chatMessages) {
+                                Object.values(chatMessages).forEach(message => {
+                                    if (message.type === 'file' || message.type === 'image') {
+                                        recentFiles.push({
+                                            name: message.fileName || 'File',
+                                            type: message.type,
+                                            size: message.fileSize || 0,
+                                            timestamp: message.timestamp,
+                                            url: message.fileUrl || message.imageUrl
+                                        });
+                                    }
+                                });
+                            }
+                        });
+                    }
+                    
+                    // Sort by timestamp and get last 5
+                    recentFiles.sort((a, b) => b.timestamp - a.timestamp);
+                    displayRecentFiles(recentFiles.slice(0, 5));
+                });
+        }
+
+        function displayRecentFiles(files) {
+            recentFilesList.innerHTML = '';
+            
+            if (files.length === 0) {
+                recentFilesList.innerHTML = `
+                    <div style="text-align: center; padding: 20px; color: var(--text-secondary);">
+                        <p>No files shared yet</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            files.forEach(file => {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                
+                const fileIcon = file.type === 'image' ? 'fa-image' : 'fa-file';
+                const fileName = file.name || 'Shared file';
+                const fileSize = file.size ? formatFileSize(file.size) : '';
+                
+                fileItem.innerHTML = `
+                    <div class="file-item-icon">
+                        <i class="fas ${fileIcon}"></i>
+                    </div>
+                    <div class="file-item-info">
+                        <div class="file-item-name">${fileName}</div>
+                        <div class="file-item-meta">
+                            <span>${formatTime(file.timestamp)}</span>
+                            ${fileSize ? `<span>• ${fileSize}</span>` : ''}
+                        </div>
+                    </div>
+                `;
+                
+                fileItem.addEventListener('click', () => {
+                    if (file.type === 'image') {
+                        previewImage(file.url);
+                    } else {
+                        previewFile(file.url, fileName);
+                    }
+                });
+                
+                recentFilesList.appendChild(fileItem);
+            });
+        }
+
+        function formatFileSize(bytes) {
+            if (!bytes) return '';
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+        }
+
+        // ============================
         // CHAT MANAGEMENT
         // ============================
         function openChat(chatId, type) {
@@ -2058,9 +3056,10 @@
                 }
             });
             
-            // Hide no chat view, show chat UI
-            noChatView.style.display = 'none';
+            // Hide welcome view, show chat UI
+            workspaceHeader.style.display = 'none';
             chatHeader.style.display = 'flex';
+            messagesContainer.innerHTML = '';
             messagesContainer.style.display = 'flex';
             messageInputContainer.style.display = 'block';
             
@@ -2101,7 +3100,7 @@
                         }
                     } else {
                         chatPartnerName.textContent = chat.name || 'Group Chat';
-                        chatHeaderAvatar.innerHTML = '<i class="fas fa-users"></i>';
+                        chatHeaderAvatar.innerHTML = chat.type === 'group' ? '<i class="fas fa-users"></i>' : '<i class="fas fa-hashtag"></i>';
                         statusIndicator.className = 'status-indicator';
                         statusText.textContent = `${Object.keys(chat.participants || {}).length} members`;
                     }
@@ -2113,7 +3112,7 @@
                 messagesListener.off();
             }
             
-            messagesContainer.innerHTML = '';
+            messagesContainer.innerHTML = '<div style="text-align: center; padding: 20px; color: var(--text-secondary);">Loading messages...</div>';
             
             messagesListener = database.ref('messages/' + chatId)
                 .orderByChild('timestamp')
@@ -2130,7 +3129,18 @@
         }
 
         function displayMessages(messages) {
-            if (!messages) return;
+            if (!messages) {
+                messagesContainer.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: var(--text-secondary);">
+                        <i class="fas fa-comments" style="font-size: 48px; margin-bottom: 20px; opacity: 0.5;"></i>
+                        <p>No messages yet</p>
+                        <p style="font-size: 12px; margin-top: 5px;">Send the first message!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            messagesContainer.innerHTML = '';
             
             // Group messages by date
             const messagesByDate = {};
@@ -2240,14 +3250,6 @@
             return 'fa-file';
         }
 
-        function formatFileSize(bytes) {
-            if (bytes === 0) return '0 Bytes';
-            const k = 1024;
-            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-            const i = Math.floor(Math.log(bytes) / Math.log(k));
-            return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
-        }
-
         function markAsRead(chatId) {
             if (!currentChatId) return;
             
@@ -2264,7 +3266,7 @@
         // MESSAGE SENDING
         // ============================
         function sendMessage(text, type = 'text', fileData = null) {
-            if (!currentChatId || !text.trim() && !fileData) return;
+            if (!currentChatId || (!text.trim() && !fileData)) return;
             
             const message = {
                 senderId: currentUserId,
@@ -2297,9 +3299,14 @@
                     // Clear input
                     messageInput.value = '';
                     sendBtn.disabled = true;
+                    autoResizeTextarea();
                     
                     // Hide upload preview
                     uploadPreview.style.display = 'none';
+                    
+                    // Update workspace stats
+                    loadWorkspaceStats();
+                    loadRecentFiles();
                 })
                 .catch((error) => {
                     console.error('Error sending message:', error);
@@ -2394,85 +3401,10 @@
         }
 
         // ============================
-        // FILE PREVIEW
-        // ============================
-        function previewFile(fileUrl, fileName) {
-            const fileExtension = fileName.split('.').pop().toLowerCase();
-            const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'];
-            const pdfExtensions = ['pdf'];
-            const videoExtensions = ['mp4', 'webm', 'ogg'];
-            const audioExtensions = ['mp3', 'wav', 'ogg'];
-            
-            filePreviewTitle.textContent = fileName;
-            filePreviewContent.innerHTML = '';
-            
-            if (imageExtensions.includes(fileExtension)) {
-                filePreviewContent.innerHTML = `<img src="${fileUrl}" alt="${fileName}" style="width: 100%; border-radius: 8px;">`;
-            } else if (pdfExtensions.includes(fileExtension)) {
-                filePreviewContent.innerHTML = `
-                    <iframe src="${fileUrl}" style="width: 100%; height: 500px; border: none; border-radius: 8px;"></iframe>
-                `;
-            } else if (videoExtensions.includes(fileExtension)) {
-                filePreviewContent.innerHTML = `
-                    <video controls style="width: 100%; border-radius: 8px;">
-                        <source src="${fileUrl}" type="video/${fileExtension}">
-                        Your browser does not support the video tag.
-                    </video>
-                `;
-            } else if (audioExtensions.includes(fileExtension)) {
-                filePreviewContent.innerHTML = `
-                    <div style="text-align: center; padding: 40px;">
-                        <i class="fas fa-file-audio" style="font-size: 64px; color: var(--light-pink); margin-bottom: 20px;"></i>
-                        <h4>${fileName}</h4>
-                        <audio controls style="width: 100%; margin-top: 20px;">
-                            <source src="${fileUrl}" type="audio/${fileExtension}">
-                            Your browser does not support the audio element.
-                        </audio>
-                    </div>
-                `;
-            } else {
-                filePreviewContent.innerHTML = `
-                    <div style="text-align: center; padding: 40px;">
-                        <i class="fas fa-file" style="font-size: 64px; color: var(--light-pink); margin-bottom: 20px;"></i>
-                        <h4>${fileName}</h4>
-                        <p style="color: var(--text-secondary); margin-top: 10px;">Preview not available for this file type</p>
-                    </div>
-                `;
-            }
-            
-            downloadFileBtn.onclick = () => {
-                const a = document.createElement('a');
-                a.href = fileUrl;
-                a.download = fileName;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-            };
-            
-            filePreviewModal.classList.add('active');
-        }
-
-        function previewImage(imageUrl) {
-            filePreviewTitle.textContent = 'Image Preview';
-            filePreviewContent.innerHTML = `<img src="${imageUrl}" alt="Preview" style="width: 100%; border-radius: 8px;">`;
-            
-            downloadFileBtn.onclick = () => {
-                const a = document.createElement('a');
-                a.href = imageUrl;
-                a.download = 'image.jpg';
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-            };
-            
-            filePreviewModal.classList.add('active');
-        }
-
-        // ============================
         // NEW CONVERSATION
         // ============================
         function showNewChatModal() {
-            // Load users
+            // Load users for recipient select and group members
             loadUsersForNewChat();
             
             // Show modal
@@ -2481,21 +3413,16 @@
 
         function loadUsersForNewChat() {
             // Clear existing options
-            recipientSelect.innerHTML = '';
+            recipientSelect.innerHTML = '<option value="">Select a team member...</option>';
             groupMembersList.innerHTML = '';
             
-            // Add current user first
-            const currentUserOption = document.createElement('option');
-            currentUserOption.value = currentUserId;
-            currentUserOption.textContent = `${currentUserInfo.name} (You)`;
-            recipientSelect.appendChild(currentUserOption);
-            
-            // Add other users from hardcoded list
+            // Add users from hardcoded list
             Object.entries(HARDCODED_USERS).forEach(([email, userInfo]) => {
                 if (email !== currentUserEmail) {
+                    // Add to recipient select
                     const option = document.createElement('option');
-                    option.value = email; // Using email as ID for simplicity
-                    option.textContent = `${userInfo.name} - ${userInfo.role}`;
+                    option.value = email;
+                    option.textContent = `${userInfo.name} - ${userInfo.role} (${userInfo.department})`;
                     recipientSelect.appendChild(option);
                     
                     // Add to group members list
@@ -2529,13 +3456,15 @@
         function createDirectChat() {
             const recipientEmail = recipientSelect.value;
             
-            if (!recipientEmail || recipientEmail === currentUserId) {
+            if (!recipientEmail) {
                 alert('Please select a recipient');
                 return;
             }
             
-            // For now, we'll use email as user ID
+            // Generate chat ID
             const chatId = generateChatId(currentUserId, recipientEmail);
+            
+            const recipientInfo = HARDCODED_USERS[recipientEmail] || DEFAULT_USER;
             
             const conversation = {
                 id: chatId,
@@ -2549,10 +3478,10 @@
                         joinedAt: Date.now()
                     },
                     [recipientEmail]: {
-                        name: HARDCODED_USERS[recipientEmail]?.name || 'Unknown',
+                        name: recipientInfo.name,
                         email: recipientEmail,
-                        role: HARDCODED_USERS[recipientEmail]?.role || 'User',
-                        department: HARDCODED_USERS[recipientEmail]?.department || 'General',
+                        role: recipientInfo.role,
+                        department: recipientInfo.department,
                         joinedAt: Date.now()
                     }
                 },
@@ -2569,7 +3498,6 @@
 
         function createGroupChat() {
             const name = groupName.value.trim();
-            const description = groupDescription.value.trim();
             
             if (!name) {
                 alert('Please enter a group name');
@@ -2616,7 +3544,6 @@
                 id: chatId,
                 type: 'group',
                 name: name,
-                description: description,
                 participants: participants,
                 createdAt: Date.now(),
                 lastMessage: null,
@@ -2693,6 +3620,124 @@
                 });
         }
 
+        function startDirectChat(userId, email) {
+            const chatId = generateChatId(currentUserId, userId);
+            
+            // Check if conversation already exists
+            database.ref('conversations/' + chatId).once('value')
+                .then((snapshot) => {
+                    if (snapshot.exists()) {
+                        openChat(chatId, 'direct');
+                    } else {
+                        // Create new conversation
+                        const recipientInfo = getUserInfo(email);
+                        const conversation = {
+                            id: chatId,
+                            type: 'direct',
+                            participants: {
+                                [currentUserId]: {
+                                    name: currentUserInfo.name,
+                                    email: currentUserEmail,
+                                    role: currentUserInfo.role,
+                                    department: currentUserInfo.department,
+                                    joinedAt: Date.now()
+                                },
+                                [userId]: {
+                                    name: recipientInfo.name,
+                                    email: email,
+                                    role: recipientInfo.role,
+                                    department: recipientInfo.department,
+                                    joinedAt: Date.now()
+                                }
+                            },
+                            createdAt: Date.now(),
+                            lastMessage: null,
+                            unreadCount: {
+                                [currentUserId]: 0,
+                                [userId]: 0
+                            }
+                        };
+                        
+                        saveConversation(conversation);
+                    }
+                });
+        }
+
+        // ============================
+        // FILE PREVIEW
+        // ============================
+        function previewFile(fileUrl, fileName) {
+            const fileExtension = fileName.split('.').pop().toLowerCase();
+            const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'];
+            const pdfExtensions = ['pdf'];
+            const videoExtensions = ['mp4', 'webm', 'ogg'];
+            const audioExtensions = ['mp3', 'wav', 'ogg'];
+            
+            filePreviewTitle.textContent = fileName;
+            filePreviewContent.innerHTML = '';
+            
+            if (imageExtensions.includes(fileExtension)) {
+                filePreviewContent.innerHTML = `<img src="${fileUrl}" alt="${fileName}" style="width: 100%; border-radius: 8px;">`;
+            } else if (pdfExtensions.includes(fileExtension)) {
+                filePreviewContent.innerHTML = `
+                    <iframe src="${fileUrl}" style="width: 100%; height: 500px; border: none; border-radius: 8px;"></iframe>
+                `;
+            } else if (videoExtensions.includes(fileExtension)) {
+                filePreviewContent.innerHTML = `
+                    <video controls style="width: 100%; border-radius: 8px;">
+                        <source src="${fileUrl}" type="video/${fileExtension}">
+                        Your browser does not support the video tag.
+                    </video>
+                `;
+            } else if (audioExtensions.includes(fileExtension)) {
+                filePreviewContent.innerHTML = `
+                    <div style="text-align: center; padding: 40px;">
+                        <i class="fas fa-file-audio" style="font-size: 64px; color: var(--light-pink); margin-bottom: 20px;"></i>
+                        <h4>${fileName}</h4>
+                        <audio controls style="width: 100%; margin-top: 20px;">
+                            <source src="${fileUrl}" type="audio/${fileExtension}">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                `;
+            } else {
+                filePreviewContent.innerHTML = `
+                    <div style="text-align: center; padding: 40px;">
+                        <i class="fas fa-file" style="font-size: 64px; color: var(--light-pink); margin-bottom: 20px;"></i>
+                        <h4>${fileName}</h4>
+                        <p style="color: var(--text-secondary); margin-top: 10px;">Preview not available for this file type</p>
+                    </div>
+                `;
+            }
+            
+            downloadFileBtn.onclick = () => {
+                const a = document.createElement('a');
+                a.href = fileUrl;
+                a.download = fileName;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            };
+            
+            filePreviewModal.classList.add('active');
+        }
+
+        function previewImage(imageUrl) {
+            filePreviewTitle.textContent = 'Image Preview';
+            filePreviewContent.innerHTML = `<img src="${imageUrl}" alt="Preview" style="width: 100%; border-radius: 8px;">`;
+            
+            downloadFileBtn.onclick = () => {
+                const a = document.createElement('a');
+                a.href = imageUrl;
+                a.download = 'image.jpg';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            };
+            
+            filePreviewModal.classList.add('active');
+        }
+
         // ============================
         // EVENT LISTENERS SETUP
         // ============================
@@ -2755,9 +3800,16 @@
                 tab.addEventListener('click', () => {
                     chatTabs.forEach(t => t.classList.remove('active'));
                     tab.classList.add('active');
-                    // Filter conversations based on tab
-                    // Implementation depends on your data structure
+                    filterConversations(tab.dataset.tab);
                 });
+            });
+            
+            // Conversation type change
+            conversationType.addEventListener('change', () => {
+                const type = conversationType.value;
+                directChatFields.style.display = type === 'direct' ? 'block' : 'none';
+                groupChatFields.style.display = type === 'group' ? 'block' : 'none';
+                channelFields.style.display = type === 'channel' ? 'block' : 'none';
             });
             
             // Modal controls
@@ -2771,13 +3823,6 @@
             
             createConversationBtn.addEventListener('click', createNewConversation);
             
-            conversationType.addEventListener('change', () => {
-                const type = conversationType.value;
-                recipientField.style.display = type === 'direct' ? 'block' : 'none';
-                groupFields.style.display = type === 'group' ? 'block' : 'none';
-                channelFields.style.display = type === 'channel' ? 'block' : 'none';
-            });
-            
             closeFilePreviewModal.addEventListener('click', () => {
                 filePreviewModal.classList.remove('active');
             });
@@ -2786,16 +3831,13 @@
                 filePreviewModal.classList.remove('active');
             });
             
-            closeChatInfoModal.addEventListener('click', () => {
-                chatInfoModal.classList.remove('active');
-            });
-            
-            closeChatInfoBtn.addEventListener('click', () => {
-                chatInfoModal.classList.remove('active');
-            });
-            
             // Chat actions
-            chatInfoBtn.addEventListener('click', showChatInfo);
+            chatInfoBtn.addEventListener('click', () => {
+                if (currentChatId) {
+                    alert('Chat info feature coming soon!');
+                }
+            });
+            
             videoCallBtn.addEventListener('click', () => {
                 alert('Video call feature coming soon!');
             });
@@ -2811,6 +3853,24 @@
                         modal.classList.remove('active');
                     }
                 });
+            });
+            
+            // Back to workspace
+            document.querySelector('.back-btn').addEventListener('click', () => {
+                if (currentChatId) {
+                    // Return to workspace view
+                    currentChatId = null;
+                    workspaceHeader.style.display = 'flex';
+                    chatHeader.style.display = 'none';
+                    messageInputContainer.style.display = 'none';
+                    
+                    // Show welcome view
+                    messagesContainer.innerHTML = document.querySelector('.no-chat-selected').outerHTML;
+                    loadWorkspaceStats();
+                    loadRecentFiles();
+                } else {
+                    window.location.href = 'index.html';
+                }
             });
         }
 
@@ -2832,126 +3892,35 @@
             });
         }
 
+        function filterConversations(filter) {
+            const items = document.querySelectorAll('.conversation-item');
+            
+            items.forEach(item => {
+                const isGroup = item.querySelector('.conversation-avatar').innerHTML.includes('fa-users');
+                
+                switch (filter) {
+                    case 'all':
+                        item.style.display = 'flex';
+                        break;
+                    case 'unread':
+                        const hasUnread = item.querySelector('.conversation-unread');
+                        item.style.display = hasUnread ? 'flex' : 'none';
+                        break;
+                    case 'groups':
+                        item.style.display = isGroup ? 'flex' : 'none';
+                        break;
+                }
+            });
+        }
+
         function autoResizeTextarea() {
             messageInput.style.height = 'auto';
             messageInput.style.height = Math.min(messageInput.scrollHeight, 120) + 'px';
         }
 
-        function showChatInfo() {
-            if (!currentChatId) return;
-            
-            database.ref('conversations/' + currentChatId).once('value')
-                .then((snapshot) => {
-                    const chat = snapshot.val();
-                    if (!chat) return;
-                    
-                    let content = '';
-                    
-                    if (chat.type === 'direct') {
-                        // Find the other participant
-                        const otherParticipantId = Object.keys(chat.participants).find(id => id !== currentUserId);
-                        const otherParticipant = chat.participants[otherParticipantId];
-                        
-                        content = `
-                            <div style="text-align: center; margin-bottom: 20px;">
-                                <div class="chat-header-avatar" style="width: 80px; height: 80px; margin: 0 auto 15px;">
-                                    ${otherParticipant?.photo ? 
-                                        `<img src="${otherParticipant.photo}" alt="${otherParticipant.name}">` : 
-                                        getInitials(otherParticipant?.name || '?')}
-                                </div>
-                                <h3 style="margin-bottom: 5px;">${otherParticipant?.name || 'Unknown'}</h3>
-                                <p style="color: var(--text-secondary); margin-bottom: 5px;">${otherParticipant?.role || ''}</p>
-                                <p style="color: var(--text-secondary); font-size: 12px;">${otherParticipant?.department || ''}</p>
-                            </div>
-                            <div style="background: rgba(255, 255, 255, 0.03); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-                                <h4 style="margin-bottom: 10px; color: var(--text-primary);">Contact Information</h4>
-                                <div style="display: flex; flex-direction: column; gap: 8px;">
-                                    <div>
-                                        <strong style="color: var(--text-secondary); font-size: 12px;">Email</strong>
-                                        <p style="margin-top: 2px;">${otherParticipant?.email || 'N/A'}</p>
-                                    </div>
-                                    <div>
-                                        <strong style="color: var(--text-secondary); font-size: 12px;">Joined</strong>
-                                        <p style="margin-top: 2px;">${new Date(chat.createdAt).toLocaleDateString()}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
-                        
-                        leaveChatBtn.style.display = 'none';
-                    } else {
-                        content = `
-                            <div style="text-align: center; margin-bottom: 20px;">
-                                <div class="chat-header-avatar" style="width: 80px; height: 80px; margin: 0 auto 15px; border-radius: 20px;">
-                                    <i class="fas fa-users" style="font-size: 32px;"></i>
-                                </div>
-                                <h3 style="margin-bottom: 5px;">${chat.name || 'Group Chat'}</h3>
-                                <p style="color: var(--text-secondary); margin-bottom: 15px;">${chat.description || 'No description'}</p>
-                                <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 20px;">
-                                    <span style="background: rgba(255, 107, 139, 0.1); color: var(--light-pink); padding: 5px 10px; border-radius: 15px; font-size: 12px;">
-                                        ${Object.keys(chat.participants || {}).length} members
-                                    </span>
-                                    <span style="background: rgba(129, 200, 190, 0.1); color: var(--soft-teal); padding: 5px 10px; border-radius: 15px; font-size: 12px;">
-                                        ${chat.type === 'channel' ? 'Channel' : 'Group'}
-                                    </span>
-                                </div>
-                            </div>
-                            <div style="background: rgba(255, 255, 255, 0.03); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-                                <h4 style="margin-bottom: 10px; color: var(--text-primary);">Group Members</h4>
-                                <div style="display: flex; flex-direction: column; gap: 10px; max-height: 200px; overflow-y: auto;">
-                                    ${Object.entries(chat.participants || {}).map(([id, participant]) => `
-                                        <div class="member-item" style="padding: 8px; border-radius: 8px; background: rgba(255, 255, 255, 0.02);">
-                                            <div class="member-avatar" style="width: 36px; height: 36px;">
-                                                ${participant.photo ? 
-                                                    `<img src="${participant.photo}" alt="${participant.name}">` : 
-                                                    getInitials(participant.name)}
-                                            </div>
-                                            <div class="member-info" style="flex: 1;">
-                                                <div class="member-name" style="font-size: 13px; font-weight: 600;">
-                                                    ${participant.name}
-                                                    ${participant.isAdmin ? '<span style="color: var(--light-pink); font-size: 11px; margin-left: 5px;">(Admin)</span>' : ''}
-                                                </div>
-                                                <div class="member-role" style="font-size: 11px; color: var(--text-secondary);">
-                                                    ${participant.role} • ${participant.department}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    `).join('')}
-                                </div>
-                            </div>
-                        `;
-                        
-                        leaveChatBtn.style.display = 'block';
-                        leaveChatBtn.onclick = () => leaveChat();
-                    }
-                    
-                    chatInfoContent.innerHTML = content;
-                    chatInfoModal.classList.add('active');
-                });
-        }
-
-        function leaveChat() {
-            if (!currentChatId) return;
-            
-            if (confirm('Are you sure you want to leave this chat?')) {
-                database.ref('conversations/' + currentChatId + '/participants/' + currentUserId).remove()
-                    .then(() => {
-                        alert('You have left the chat');
-                        chatInfoModal.classList.remove('active');
-                        noChatView.style.display = 'flex';
-                        chatHeader.style.display = 'none';
-                        messagesContainer.style.display = 'none';
-                        messageInputContainer.style.display = 'none';
-                        currentChatId = null;
-                    })
-                    .catch((error) => {
-                        console.error('Error leaving chat:', error);
-                        alert('Failed to leave chat. Please try again.');
-                    });
-            }
-        }
-
-        // Initialize the application
+        // ============================
+        // INITIALIZATION
+        // ============================
         document.addEventListener('DOMContentLoaded', () => {
             // Check authentication
             auth.onAuthStateChanged((user) => {
@@ -2959,7 +3928,14 @@
                     window.location.href = 'index.html';
                 }
             });
+            
+            // Set current year
+            document.getElementById("year").textContent = new Date().getFullYear();
         });
+
+        // Global functions for onclick events
+        window.previewImage = previewImage;
+        window.previewFile = previewFile;
     </script>
 </body>
 </html>
