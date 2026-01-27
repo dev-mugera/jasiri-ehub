@@ -270,6 +270,145 @@
             gap: 16px;
         }
 
+        /* Notification Bell */
+        .notification-bell {
+            position: relative;
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .notification-bell:hover {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+            color: white;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--accent-danger);
+            color: white;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            min-width: 18px;
+            text-align: center;
+            font-weight: 700;
+            border: 2px solid var(--surface-color);
+        }
+
+        /* Notification Dropdown */
+        .notification-dropdown {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            width: 350px;
+            max-height: 400px;
+            overflow-y: auto;
+            box-shadow: var(--shadow-elevated);
+            backdrop-filter: blur(20px);
+            z-index: 1001;
+            display: none;
+            animation: slideDown 0.2s ease-out;
+        }
+
+        .notification-dropdown.active {
+            display: block;
+        }
+
+        .notification-header {
+            padding: 16px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .notification-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .notification-clear {
+            background: none;
+            border: none;
+            color: var(--accent-primary);
+            font-size: 13px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .notification-clear:hover {
+            color: var(--accent-secondary);
+        }
+
+        .notification-list {
+            padding: 8px 0;
+        }
+
+        .notification-item {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .notification-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .notification-item.unread {
+            background: rgba(var(--accent-primary-rgb), 0.08);
+        }
+
+        .notification-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: rgba(var(--accent-primary-rgb), 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-primary);
+            margin-right: 12px;
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-message {
+            font-size: 13px;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .notification-time {
+            font-size: 11px;
+            color: var(--text-tertiary);
+        }
+
+        .notification-empty {
+            padding: 40px 20px;
+            text-align: center;
+            color: var(--text-tertiary);
+        }
+
         /* Professional Theme Toggle */
         .theme-toggle-wrapper {
             position: relative;
@@ -676,6 +815,11 @@
 
         .status-indicator.offline {
             background: var(--offline-color);
+        }
+
+        .chat-header-actions {
+            display: flex;
+            gap: 8px;
         }
 
         /* Professional Messages Container */
@@ -1208,66 +1352,6 @@
             gap: 8px;
         }
 
-        /* Modals */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(10px);
-            z-index: 10000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .modal-overlay.active {
-            display: flex;
-            animation: fadeIn 0.3s ease-out;
-        }
-
-        .modal {
-            background: var(--card-bg);
-            border-radius: var(--border-radius);
-            border: 1px solid var(--border-color);
-            width: 100%;
-            max-width: 500px;
-            max-height: 90vh;
-            overflow: hidden;
-            box-shadow: var(--shadow-elevated);
-        }
-
-        .modal-header {
-            padding: 24px;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .modal-title {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-
-        .modal-close {
-            background: none;
-            border: none;
-            color: var(--text-tertiary);
-            font-size: 20px;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .modal-close:hover {
-            color: var(--accent-danger);
-        }
-
         /* Connection Status */
         .connection-status {
             position: fixed;
@@ -1308,6 +1392,100 @@
             border: 1px solid rgba(239, 68, 68, 0.25);
         }
 
+        /* Permission Modal */
+        .permission-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 10002;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .permission-modal.active {
+            display: flex;
+        }
+
+        .permission-content {
+            background: var(--surface-color);
+            border-radius: var(--border-radius);
+            padding: 32px;
+            max-width: 500px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-elevated);
+        }
+
+        .permission-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            color: white;
+            font-size: 32px;
+        }
+
+        .permission-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .permission-text {
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+
+        .permission-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .permission-btn {
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            min-width: 120px;
+        }
+
+        .permission-btn.allow {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+        }
+
+        .permission-btn.allow:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(var(--accent-primary-rgb), 0.4);
+        }
+
+        .permission-btn.deny {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .permission-btn.deny:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
         /* Responsive Design */
         @media (max-width: 1200px) {
             .online-users {
@@ -1330,6 +1508,11 @@
             .chat-main {
                 height: calc(100vh - var(--topbar-height) - 320px);
             }
+
+            .notification-dropdown {
+                width: 300px;
+                right: -50px;
+            }
         }
 
         @media (max-width: 576px) {
@@ -1339,6 +1522,11 @@
             
             .workspace-stats-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .notification-dropdown {
+                width: 280px;
+                right: -100px;
             }
         }
     </style>
@@ -1356,6 +1544,21 @@
     <div class="connection-status" id="connectionStatus">
         <i class="fas fa-circle"></i>
         <span>Online</span>
+    </div>
+
+    <!-- Permission Request Modal -->
+    <div class="permission-modal" id="permissionModal">
+        <div class="permission-content">
+            <div class="permission-icon">
+                <i class="fas fa-bell"></i>
+            </div>
+            <h3 class="permission-title">Enable Notifications</h3>
+            <p class="permission-text">Get real-time notifications for new messages, file shares, and team updates. Never miss important conversations with your team.</p>
+            <div class="permission-buttons">
+                <button class="permission-btn allow" id="allowNotifications">Allow</button>
+                <button class="permission-btn deny" id="denyNotifications">Not Now</button>
+            </div>
+        </div>
     </div>
 
     <!-- Top Navigation -->
@@ -1376,6 +1579,23 @@
         </div>
         
         <div class="nav-right">
+            <!-- Notification Bell -->
+            <div class="notification-wrapper" style="position: relative;">
+                <button class="notification-bell" id="notificationBell">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge" id="notificationBadge" style="display: none;">0</span>
+                </button>
+                <div class="notification-dropdown" id="notificationDropdown">
+                    <div class="notification-header">
+                        <h4 class="notification-title">Notifications</h4>
+                        <button class="notification-clear" id="clearNotifications">Clear All</button>
+                    </div>
+                    <div class="notification-list" id="notificationList">
+                        <!-- Notifications will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
             <!-- Theme Toggle -->
             <div class="theme-toggle-wrapper" style="position: relative;">
                 <button class="theme-toggle" id="themeToggle">
@@ -1575,6 +1795,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-messaging-compat.js"></script>
 
     <script>
         // ============================
@@ -1639,10 +1860,11 @@
         };
 
         // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
+        const app = firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const database = firebase.database();
         const storage = firebase.storage();
+        const messaging = firebase.messaging();
 
         // ============================
         // APPLICATION VARIABLES
@@ -1656,8 +1878,11 @@
         let conversationsListener = null;
         let messagesListener = null;
         let onlineUsersListener = null;
+        let notificationsListener = null;
         let uploadTask = null;
-        let themeManager = null;
+        let notificationCount = 0;
+        let notificationSound = null;
+        let fcmToken = null;
 
         // ============================
         // UTILITY FUNCTIONS
@@ -1707,7 +1932,300 @@
         }
 
         // ============================
-        // FILE UPLOAD FUNCTIONS
+        // NOTIFICATION SYSTEM
+        // ============================
+        async function requestNotificationPermission() {
+            try {
+                // Check if browser supports notifications
+                if (!('Notification' in window)) {
+                    console.log('This browser does not support notifications');
+                    return false;
+                }
+
+                // Check current permission
+                if (Notification.permission === 'granted') {
+                    await setupFCM();
+                    return true;
+                } else if (Notification.permission === 'denied') {
+                    console.log('Notification permission denied');
+                    return false;
+                } else {
+                    // Show custom permission modal
+                    document.getElementById('permissionModal').classList.add('active');
+                    
+                    return new Promise((resolve) => {
+                        document.getElementById('allowNotifications').onclick = async () => {
+                            document.getElementById('permissionModal').classList.remove('active');
+                            const permission = await Notification.requestPermission();
+                            if (permission === 'granted') {
+                                await setupFCM();
+                                resolve(true);
+                            } else {
+                                resolve(false);
+                            }
+                        };
+                        
+                        document.getElementById('denyNotifications').onclick = () => {
+                            document.getElementById('permissionModal').classList.remove('active');
+                            resolve(false);
+                        };
+                    });
+                }
+            } catch (error) {
+                console.error('Error requesting notification permission:', error);
+                return false;
+            }
+        }
+
+        async function setupFCM() {
+            try {
+                // Request permission and get token
+                fcmToken = await messaging.getToken({ 
+                    vapidKey: 'BElzXoP_6QnG_wy3YhQn6j7q3v9K8LmM5tJkLpO9sQq4rT7vXwYzAaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPp' // You need to generate this in Firebase Console
+                });
+                
+                if (fcmToken) {
+                    // Save token to user's database record
+                    await database.ref(`users/${currentUserId}/fcmToken`).set(fcmToken);
+                    console.log('FCM Token saved:', fcmToken);
+                    
+                    // Setup message handler for background notifications
+                    messaging.onMessage((payload) => {
+                        console.log('Message received:', payload);
+                        showNotification(payload.notification.title, payload.notification.body);
+                    });
+                    
+                    return true;
+                }
+                return false;
+            } catch (error) {
+                console.error('Error setting up FCM:', error);
+                return false;
+            }
+        }
+
+        function showNotification(title, body, tag = 'new-message') {
+            // Create notification sound
+            if (!notificationSound) {
+                notificationSound = new Audio('data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEAQB8AAEAfAAABAAgAZGF0YQ');
+            }
+
+            // Play notification sound
+            try {
+                notificationSound.play();
+            } catch (error) {
+                console.log('Could not play notification sound:', error);
+            }
+
+            // Check if browser supports notifications
+            if (!('Notification' in window) || Notification.permission !== 'granted') {
+                // Fallback to in-app notification
+                addInAppNotification(title, body, 'message');
+                return;
+            }
+
+            // Create and show notification
+            const notification = new Notification(title, {
+                body: body,
+                icon: '/favicon.ico',
+                tag: tag,
+                requireInteraction: false,
+                silent: false // This will use the default notification sound
+            });
+
+            // Handle notification click
+            notification.onclick = () => {
+                window.focus();
+                notification.close();
+                // You could add logic to navigate to the specific chat
+            };
+
+            // Also add to in-app notifications
+            addInAppNotification(title, body, 'message');
+        }
+
+        function addInAppNotification(title, message, type = 'message') {
+            try {
+                const notificationList = document.getElementById('notificationList');
+                const notificationBadge = document.getElementById('notificationBadge');
+                
+                // Create notification item
+                const notificationItem = document.createElement('div');
+                notificationItem.className = 'notification-item unread';
+                notificationItem.dataset.id = Date.now();
+                
+                const icon = type === 'message' ? 'fa-comment' : 
+                            type === 'file' ? 'fa-file' : 
+                            type === 'user' ? 'fa-user-plus' : 'fa-bell';
+                
+                notificationItem.innerHTML = `
+                    <div style="display: flex; align-items: flex-start;">
+                        <div class="notification-icon">
+                            <i class="fas ${icon}"></i>
+                        </div>
+                        <div class="notification-content">
+                            <div class="notification-message">
+                                <strong>${title}</strong><br>
+                                ${message}
+                            </div>
+                            <div class="notification-time">Just now</div>
+                        </div>
+                    </div>
+                `;
+                
+                // Add click handler
+                notificationItem.addEventListener('click', () => {
+                    notificationItem.classList.remove('unread');
+                    updateNotificationBadge(-1);
+                });
+                
+                // Add to top of list
+                notificationList.insertBefore(notificationItem, notificationList.firstChild);
+                
+                // Update badge
+                updateNotificationBadge(1);
+                
+                // Keep only last 50 notifications
+                const items = notificationList.querySelectorAll('.notification-item');
+                if (items.length > 50) {
+                    items[items.length - 1].remove();
+                }
+                
+                // Save to database
+                saveNotificationToDB(title, message, type);
+                
+            } catch (error) {
+                console.error('Error adding in-app notification:', error);
+            }
+        }
+
+        async function saveNotificationToDB(title, message, type) {
+            try {
+                const notificationId = Date.now();
+                await database.ref(`notifications/${currentUserId}/${notificationId}`).set({
+                    title: title,
+                    message: message,
+                    type: type,
+                    timestamp: Date.now(),
+                    read: false
+                });
+            } catch (error) {
+                console.error('Error saving notification to DB:', error);
+            }
+        }
+
+        function updateNotificationBadge(change) {
+            notificationCount = Math.max(0, notificationCount + change);
+            const badge = document.getElementById('notificationBadge');
+            
+            if (notificationCount > 0) {
+                badge.textContent = notificationCount > 99 ? '99+' : notificationCount;
+                badge.style.display = 'block';
+                
+                // Add animation
+                badge.style.animation = 'none';
+                setTimeout(() => {
+                    badge.style.animation = 'pulse 0.5s ease-in-out';
+                }, 10);
+            } else {
+                badge.style.display = 'none';
+            }
+        }
+
+        async function loadNotifications() {
+            try {
+                const snapshot = await database.ref(`notifications/${currentUserId}`).orderByChild('timestamp').limitToLast(50).once('value');
+                const notifications = snapshot.val();
+                const notificationList = document.getElementById('notificationList');
+                
+                if (!notifications) {
+                    notificationList.innerHTML = `
+                        <div class="notification-empty">
+                            <i class="fas fa-bell-slash" style="font-size: 32px; margin-bottom: 12px; opacity: 0.5;"></i>
+                            <p>No notifications yet</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                // Convert to array and sort by timestamp
+                const notificationsArray = Object.entries(notifications)
+                    .map(([id, data]) => ({ id, ...data }))
+                    .sort((a, b) => b.timestamp - a.timestamp);
+                
+                notificationList.innerHTML = '';
+                let unreadCount = 0;
+                
+                notificationsArray.forEach(notification => {
+                    const notificationItem = document.createElement('div');
+                    notificationItem.className = `notification-item ${notification.read ? '' : 'unread'}`;
+                    notificationItem.dataset.id = notification.id;
+                    
+                    const icon = notification.type === 'message' ? 'fa-comment' : 
+                                notification.type === 'file' ? 'fa-file' : 
+                                notification.type === 'user' ? 'fa-user-plus' : 'fa-bell';
+                    
+                    notificationItem.innerHTML = `
+                        <div style="display: flex; align-items: flex-start;">
+                            <div class="notification-icon">
+                                <i class="fas ${icon}"></i>
+                            </div>
+                            <div class="notification-content">
+                                <div class="notification-message">
+                                    <strong>${notification.title}</strong><br>
+                                    ${notification.message}
+                                </div>
+                                <div class="notification-time">${formatTime(notification.timestamp)}</div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Add click handler
+                    notificationItem.addEventListener('click', () => {
+                        markNotificationAsRead(notification.id);
+                        notificationItem.classList.remove('unread');
+                        updateNotificationBadge(-1);
+                    });
+                    
+                    notificationList.appendChild(notificationItem);
+                    
+                    if (!notification.read) {
+                        unreadCount++;
+                    }
+                });
+                
+                updateNotificationBadge(unreadCount - notificationCount);
+                
+            } catch (error) {
+                console.error('Error loading notifications:', error);
+            }
+        }
+
+        async function markNotificationAsRead(notificationId) {
+            try {
+                await database.ref(`notifications/${currentUserId}/${notificationId}/read`).set(true);
+            } catch (error) {
+                console.error('Error marking notification as read:', error);
+            }
+        }
+
+        async function clearAllNotifications() {
+            try {
+                await database.ref(`notifications/${currentUserId}`).remove();
+                document.getElementById('notificationList').innerHTML = `
+                    <div class="notification-empty">
+                        <i class="fas fa-bell-slash" style="font-size: 32px; margin-bottom: 12px; opacity: 0.5;"></i>
+                        <p>No notifications yet</p>
+                    </div>
+                `;
+                updateNotificationBadge(-notificationCount);
+            } catch (error) {
+                console.error('Error clearing notifications:', error);
+            }
+        }
+
+        // ============================
+        // FILE UPLOAD - FIXED VERSION
         // ============================
         async function uploadFile(file, isImage = false) {
             if (!file || !currentChatId) return null;
@@ -1720,46 +2238,103 @@
                 
                 // Create unique file name
                 const timestamp = Date.now();
+                const randomString = Math.random().toString(36).substring(2, 15);
                 const fileExtension = file.name.split('.').pop();
-                const fileName = `${timestamp}_${Math.random().toString(36).substr(2, 9)}.${fileExtension}`;
+                const fileName = `${timestamp}_${randomString}.${fileExtension}`;
                 const filePath = `chat_files/${currentChatId}/${fileName}`;
                 
-                // Upload to Firebase Storage
+                console.log('Starting upload:', file.name, 'Size:', file.size, 'Type:', file.type);
+                
+                // Create storage reference
                 const storageRef = storage.ref(filePath);
-                uploadTask = storageRef.put(file);
+                
+                // Create upload task with metadata
+                uploadTask = storageRef.put(file, {
+                    customMetadata: {
+                        originalName: file.name,
+                        uploadedBy: currentUserEmail,
+                        chatId: currentChatId,
+                        timestamp: timestamp.toString()
+                    }
+                });
                 
                 return new Promise((resolve, reject) => {
                     uploadTask.on('state_changed',
                         (snapshot) => {
                             // Update progress
                             const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                            console.log('Upload progress:', progress + '%');
                             document.getElementById('uploadProgressFill').style.width = progress + '%';
+                            
+                            // Show more detailed progress for debugging
+                            if (snapshot.bytesTransferred === snapshot.totalBytes) {
+                                console.log('Upload complete, getting download URL...');
+                            }
                         },
                         (error) => {
-                            console.error('Upload error:', error);
-                            reject(error);
-                        },
-                        async () => {
-                            // Get download URL
-                            const downloadURL = await storageRef.getDownloadURL();
+                            console.error('Upload error details:', error);
+                            console.error('Error code:', error.code);
+                            console.error('Error message:', error.message);
                             
                             // Hide upload preview
                             document.getElementById('uploadPreview').style.display = 'none';
                             
-                            resolve({
-                                url: downloadURL,
-                                name: file.name,
-                                size: file.size,
-                                type: file.type,
-                                isImage: isImage
-                            });
+                            // Show user-friendly error
+                            let errorMessage = 'Upload failed. ';
+                            
+                            switch (error.code) {
+                                case 'storage/unauthorized':
+                                    errorMessage += 'You don\'t have permission to upload files.';
+                                    break;
+                                case 'storage/canceled':
+                                    errorMessage += 'Upload was cancelled.';
+                                    break;
+                                case 'storage/unknown':
+                                    errorMessage += 'Unknown error occurred. Please check your internet connection.';
+                                    break;
+                                default:
+                                    errorMessage += 'Please try again.';
+                            }
+                            
+                            alert(errorMessage);
+                            reject(error);
+                        },
+                        async () => {
+                            try {
+                                console.log('Upload completed successfully');
+                                
+                                // Get download URL
+                                const downloadURL = await storageRef.getDownloadURL();
+                                console.log('Download URL obtained:', downloadURL);
+                                
+                                // Get file metadata
+                                const metadata = await storageRef.getMetadata();
+                                console.log('File metadata:', metadata);
+                                
+                                // Hide upload preview
+                                document.getElementById('uploadPreview').style.display = 'none';
+                                
+                                resolve({
+                                    url: downloadURL,
+                                    name: file.name,
+                                    size: file.size,
+                                    type: file.type,
+                                    isImage: isImage
+                                });
+                                
+                            } catch (urlError) {
+                                console.error('Error getting download URL:', urlError);
+                                document.getElementById('uploadPreview').style.display = 'none';
+                                alert('File uploaded but could not get download link. Please try again.');
+                                reject(urlError);
+                            }
                         }
                     );
                 });
             } catch (error) {
-                console.error('Upload error:', error);
-                alert('Failed to upload file. Please try again.');
+                console.error('Upload initialization error:', error);
                 document.getElementById('uploadPreview').style.display = 'none';
+                alert('Failed to start upload. Please try again.');
                 return null;
             }
         }
@@ -1767,6 +2342,7 @@
         function cancelUpload() {
             if (uploadTask) {
                 uploadTask.cancel();
+                console.log('Upload cancelled by user');
                 document.getElementById('uploadPreview').style.display = 'none';
             }
         }
@@ -1800,6 +2376,8 @@
                     messageData.type = 'text';
                 }
                 
+                console.log('Sending message:', messageData);
+                
                 // Add message to database
                 const messageRef = database.ref(`messages/${currentChatId}`).push();
                 await messageRef.set(messageData);
@@ -1824,6 +2402,35 @@
                             const unreadRef = database.ref(`conversations/${currentChatId}/unreadCount/${participantId}`);
                             const currentUnread = await unreadRef.once('value');
                             await unreadRef.set((currentUnread.val() || 0) + 1);
+                            
+                            // Send notification to other participants
+                            const participantEmail = participants[participantId].email;
+                            const participantInfo = getUserInfo(participantEmail);
+                            
+                            // Create notification message
+                            const notificationTitle = `New message from ${currentUserInfo.name}`;
+                            const notificationMessage = messageData.text || 
+                                (messageData.type === 'file' ? 'Shared a file' : 'Shared an image');
+                            
+                            // Send push notification if participant has FCM token
+                            const participantTokenSnapshot = await database.ref(`users/${participantId}/fcmToken`).once('value');
+                            const participantToken = participantTokenSnapshot.val();
+                            
+                            if (participantToken) {
+                                // In a real app, you would send this via your backend
+                                // For now, we'll just log it
+                                console.log('Would send push notification to:', participantEmail);
+                            }
+                            
+                            // Add in-app notification for participant
+                            await database.ref(`notifications/${participantId}/${Date.now()}`).set({
+                                title: notificationTitle,
+                                message: notificationMessage,
+                                type: 'message',
+                                timestamp: Date.now(),
+                                read: false,
+                                chatId: currentChatId
+                            });
                         }
                     });
                 }
@@ -1837,6 +2444,8 @@
                 loadWorkspaceStats();
                 loadRecentFiles();
                 
+                console.log('Message sent successfully');
+                
             } catch (error) {
                 console.error('Error sending message:', error);
                 alert('Failed to send message. Please try again.');
@@ -1848,12 +2457,20 @@
         // ============================
         document.addEventListener('DOMContentLoaded', async () => {
             try {
+                console.log('Initializing application...');
+                
+                // Show loading
+                document.getElementById('loadingSpinner').style.display = 'flex';
+                
                 // Check authentication
                 auth.onAuthStateChanged(async (user) => {
                     if (!user) {
+                        console.log('No user found, redirecting to login...');
                         window.location.href = 'index.html';
                         return;
                     }
+                    
+                    console.log('User authenticated:', user.email);
                     
                     currentUserId = user.uid;
                     currentUserEmail = user.email;
@@ -1873,6 +2490,12 @@
                         role: currentUserInfo.role
                     });
                     
+                    // Request notification permission
+                    await requestNotificationPermission();
+                    
+                    // Load notifications
+                    await loadNotifications();
+                    
                     // Load conversations
                     loadConversations();
                     
@@ -1885,14 +2508,87 @@
                     // Set up event listeners
                     setupEventListeners();
                     
+                    // Set up real-time listeners for notifications
+                    setupNotificationListeners();
+                    
                     // Hide loading
                     document.getElementById('loadingSpinner').style.display = 'none';
+                    
+                    console.log('Application initialized successfully');
                 });
             } catch (error) {
                 console.error('Initialization error:', error);
                 alert('Failed to initialize application. Please refresh the page.');
+                document.getElementById('loadingSpinner').style.display = 'none';
             }
         });
+
+        // ============================
+        // NOTIFICATION LISTENERS
+        // ============================
+        function setupNotificationListeners() {
+            // Listen for new messages in conversations where user is a participant
+            database.ref('conversations').orderByChild('updatedAt').on('child_changed', async (snapshot) => {
+                try {
+                    const conversation = snapshot.val();
+                    const conversationId = snapshot.key;
+                    
+                    // Check if user is a participant
+                    if (conversation.participants && conversation.participants[currentUserId]) {
+                        // Check if this is a new message (not from current user)
+                        if (conversation.lastMessage && conversation.lastMessage.senderId !== currentUserId) {
+                            // Don't show notification if user is currently viewing this chat
+                            if (conversationId === currentChatId) return;
+                            
+                            // Get sender info
+                            const senderInfo = conversation.participants[conversation.lastMessage.senderId];
+                            const senderName = senderInfo ? senderInfo.name : 'Someone';
+                            
+                            // Create notification
+                            const notificationTitle = `New message from ${senderName}`;
+                            const notificationMessage = conversation.lastMessage.text || 'Sent a message';
+                            
+                            // Show notification
+                            showNotification(notificationTitle, notificationMessage);
+                            
+                            // Update unread count in sidebar
+                            updateConversationUnreadCount(conversationId);
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error in conversation listener:', error);
+                }
+            });
+            
+            // Listen for new notifications in database
+            database.ref(`notifications/${currentUserId}`).orderByChild('timestamp').limitToLast(1).on('child_added', (snapshot) => {
+                try {
+                    const notification = snapshot.val();
+                    
+                    // Don't show notification if it's from current user's own actions
+                    if (!notification.read && notification.type !== 'system') {
+                        showNotification(notification.title, notification.message, notification.type);
+                    }
+                } catch (error) {
+                    console.error('Error in notification listener:', error);
+                }
+            });
+        }
+
+        function updateConversationUnreadCount(conversationId) {
+            const conversationItem = document.querySelector(`.conversation-item[data-chat-id="${conversationId}"]`);
+            if (conversationItem) {
+                let unreadElement = conversationItem.querySelector('.conversation-unread');
+                if (!unreadElement) {
+                    unreadElement = document.createElement('div');
+                    unreadElement.className = 'conversation-unread';
+                    conversationItem.querySelector('.conversation-meta').appendChild(unreadElement);
+                }
+                
+                const currentCount = parseInt(unreadElement.textContent) || 0;
+                unreadElement.textContent = currentCount + 1;
+            }
+        }
 
         // ============================
         // EVENT LISTENERS
@@ -1922,7 +2618,7 @@
                 }
             });
             
-            // File attachments
+            // File attachments - FIXED
             document.getElementById('attachFileBtn').addEventListener('click', () => {
                 const input = document.createElement('input');
                 input.type = 'file';
@@ -1930,9 +2626,22 @@
                 input.onchange = async (e) => {
                     const file = e.target.files[0];
                     if (file) {
-                        const fileData = await uploadFile(file, false);
-                        if (fileData) {
-                            sendMessage('', fileData);
+                        console.log('File selected:', file.name, 'Size:', file.size);
+                        
+                        // Check file size (limit to 50MB)
+                        const maxSize = 50 * 1024 * 1024; // 50MB in bytes
+                        if (file.size > maxSize) {
+                            alert('File size exceeds 50MB limit. Please choose a smaller file.');
+                            return;
+                        }
+                        
+                        try {
+                            const fileData = await uploadFile(file, false);
+                            if (fileData) {
+                                await sendMessage('', fileData);
+                            }
+                        } catch (error) {
+                            console.error('File upload failed:', error);
                         }
                     }
                 };
@@ -1946,9 +2655,22 @@
                 input.onchange = async (e) => {
                     const file = e.target.files[0];
                     if (file) {
-                        const fileData = await uploadFile(file, true);
-                        if (fileData) {
-                            sendMessage('', fileData);
+                        console.log('Image selected:', file.name, 'Size:', file.size);
+                        
+                        // Check file size (limit to 20MB for images)
+                        const maxSize = 20 * 1024 * 1024; // 20MB in bytes
+                        if (file.size > maxSize) {
+                            alert('Image size exceeds 20MB limit. Please choose a smaller image.');
+                            return;
+                        }
+                        
+                        try {
+                            const fileData = await uploadFile(file, true);
+                            if (fileData) {
+                                await sendMessage('', fileData);
+                            }
+                        } catch (error) {
+                            console.error('Image upload failed:', error);
                         }
                     }
                 };
@@ -1957,6 +2679,25 @@
             
             // Cancel upload
             document.getElementById('cancelUploadBtn').addEventListener('click', cancelUpload);
+            
+            // Notification bell
+            document.getElementById('notificationBell').addEventListener('click', (e) => {
+                e.stopPropagation();
+                document.getElementById('notificationDropdown').classList.toggle('active');
+            });
+            
+            // Clear notifications
+            document.getElementById('clearNotifications').addEventListener('click', clearAllNotifications);
+            
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.notification-wrapper')) {
+                    document.getElementById('notificationDropdown').classList.remove('active');
+                }
+                if (!e.target.closest('.theme-toggle-wrapper')) {
+                    document.getElementById('themeDropdown').classList.remove('active');
+                }
+            });
             
             // New chat button
             document.getElementById('newChatBtn').addEventListener('click', () => {
@@ -1996,13 +2737,44 @@
                 setTimeout(() => {
                     document.getElementById('connectionStatus').style.display = 'none';
                 }, 3000);
+                
+                // Update online status in database
+                if (currentUserId) {
+                    database.ref(`userStatus/${currentUserId}/status`).set('online');
+                }
             });
             
             window.addEventListener('offline', () => {
                 document.getElementById('connectionStatus').innerHTML = '<i class="fas fa-circle"></i><span>Offline</span>';
                 document.getElementById('connectionStatus').className = 'connection-status offline';
                 document.getElementById('connectionStatus').style.display = 'flex';
+                
+                // Update online status in database
+                if (currentUserId) {
+                    database.ref(`userStatus/${currentUserId}/status`).set('offline');
+                }
             });
+            
+            // Theme toggle
+            document.getElementById('themeToggle').addEventListener('click', (e) => {
+                e.stopPropagation();
+                document.getElementById('themeDropdown').classList.toggle('active');
+            });
+            
+            // Theme options
+            document.querySelectorAll('.theme-option').forEach(option => {
+                option.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const theme = option.getAttribute('data-theme');
+                    document.documentElement.setAttribute('data-theme', theme);
+                    localStorage.setItem('theme', theme);
+                    document.getElementById('themeDropdown').classList.remove('active');
+                });
+            });
+            
+            // Load saved theme
+            const savedTheme = localStorage.getItem('theme') || 'system';
+            document.documentElement.setAttribute('data-theme', savedTheme);
         }
 
         function autoResizeTextarea() {
@@ -2056,6 +2828,8 @@
                 }
             }
             
+            const unreadCount = data.unreadCount?.[currentUserId] || 0;
+            
             div.innerHTML = `
                 <div class="conversation-avatar">${avatarText}</div>
                 <div class="conversation-info">
@@ -2064,7 +2838,7 @@
                 </div>
                 <div class="conversation-meta">
                     <div class="conversation-time">${formatTime(data.lastMessage?.timestamp)}</div>
-                    ${data.unreadCount?.[currentUserId] ? `<div class="conversation-unread">${data.unreadCount[currentUserId]}</div>` : ''}
+                    ${unreadCount > 0 ? `<div class="conversation-unread">${unreadCount}</div>` : ''}
                 </div>
             `;
             
@@ -2108,6 +2882,12 @@
             
             // Mark as read
             database.ref(`conversations/${id}/unreadCount/${currentUserId}`).set(0);
+            
+            // Update conversation item unread badge
+            const conversationItem = document.querySelector(`.conversation-item[data-chat-id="${id}"] .conversation-unread`);
+            if (conversationItem) {
+                conversationItem.remove();
+            }
         }
 
         function loadMessages(chatId) {
@@ -2373,26 +3153,45 @@
         function previewImage(url) {
             const modal = document.createElement('div');
             modal.className = 'modal-overlay active';
+            modal.style.position = 'fixed';
+            modal.style.top = '0';
+            modal.style.left = '0';
+            modal.style.right = '0';
+            modal.style.bottom = '0';
+            modal.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+            modal.style.display = 'flex';
+            modal.style.alignItems = 'center';
+            modal.style.justifyContent = 'center';
+            modal.style.zIndex = '10002';
+            
             modal.innerHTML = `
-                <div class="modal" style="max-width: 800px;">
-                    <div class="modal-header">
-                        <h3 class="modal-title">Image Preview</h3>
-                        <button class="modal-close" onclick="this.closest('.modal-overlay').remove()">
+                <div style="background: var(--surface-color); border-radius: var(--border-radius); padding: 24px; max-width: 800px; width: 90%; max-height: 90vh; overflow: auto;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <h3 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 20px; font-weight: 700; color: var(--text-primary);">Image Preview</h3>
+                        <button onclick="this.closest('.modal-overlay').remove()" style="background: none; border: none; color: var(--text-tertiary); font-size: 20px; cursor: pointer;">
                             <i class="fas fa-times"></i>
                         </button>
                     </div>
-                    <div class="modal-content" style="text-align: center; padding: 0;">
-                        <img src="${url}" alt="Preview" style="max-width: 100%; max-height: 70vh; object-fit: contain;">
+                    <div style="text-align: center;">
+                        <img src="${url}" alt="Preview" style="max-width: 100%; max-height: 70vh; object-fit: contain; border-radius: 12px;">
                     </div>
-                    <div class="modal-footer">
-                        <button class="modal-btn secondary" onclick="this.closest('.modal-overlay').remove()">Close</button>
-                        <button class="modal-btn primary" onclick="downloadFile('${url}', 'image.jpg')">
+                    <div style="display: flex; gap: 12px; justify-content: center; margin-top: 24px;">
+                        <button onclick="this.closest('.modal-overlay').remove()" style="padding: 10px 20px; border-radius: 10px; background: rgba(255, 255, 255, 0.05); color: var(--text-primary); border: 1px solid var(--border-color); cursor: pointer;">Close</button>
+                        <button onclick="downloadFile('${url}', 'image.jpg')" style="padding: 10px 20px; border-radius: 10px; background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); color: white; border: none; cursor: pointer;">
                             <i class="fas fa-download"></i> Download
                         </button>
                     </div>
                 </div>
             `;
+            
             document.body.appendChild(modal);
+            
+            // Close modal when clicking outside
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            });
         }
 
         function downloadFile(url, filename) {
@@ -2407,6 +3206,35 @@
         // Make functions globally available
         window.previewImage = previewImage;
         window.downloadFile = downloadFile;
+
+        // Add CSS animation for notification badge
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes pulse {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.2); }
+                100% { transform: scale(1); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Handle page visibility change
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible') {
+                // Page is visible again, update notifications
+                loadNotifications();
+            }
+        });
+
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+            if (currentUserId) {
+                database.ref(`userStatus/${currentUserId}`).update({
+                    status: 'offline',
+                    lastSeen: Date.now()
+                });
+            }
+        });
     </script>
 </body>
 </html>
