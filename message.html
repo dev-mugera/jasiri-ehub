@@ -1798,1055 +1798,628 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-messaging-compat.js"></script>
 
     <script>
-        // ============================
-        // HARDCODED USER IDENTITIES
-        // ============================
-        const HARDCODED_USERS = {
-            'office.hog@gmail.com': {
-                name: 'Central Admin',
-                photo: 'https://i.postimg.cc/3wvN3Xqc/COLLECTIONS.png',
-                role: 'Administrator',
-                department: 'HOG-NBI001'
-            },
-            'sales.hog@gmail.com': {
-                name: 'Sales Clerk',
-                photo: 'https://i.postimg.cc/3wvN3Xqc/COLLECTIONS.png',
-                role: 'Sales',
-                department: 'Sales and Marketing'
-            },
-            'manager@hogcreations.com': {
-                name: 'Operations Manager',
-                photo: 'https://i.postimg.cc/9XbqzBx4/HOG-creations.png',
-                role: 'Manager',
-                department: 'Operations'
-            },
-            'sales@hogcreations.com': {
-                name: 'Sales Director',
-                photo: 'https://i.postimg.cc/9XbqzBx4/HOG-creations.png',
-                role: 'Director',
-                department: 'Sales'
-            },
-            'finance@hogcreations.com': {
-                name: 'Finance Manager',
-                photo: 'https://i.postimg.cc/9XbqzBx4/HOG-creations.png',
-                role: 'Manager',
-                department: 'Finance'
-            },
-            'hr@hogcreations.com': {
-                name: 'HR Manager',
-                photo: 'https://i.postimg.cc/9XbqzBx4/HOG-creations.png',
-                role: 'Manager',
-                department: 'Human Resources'
-            },
-            'logistics@hogcreations.com': {
-                name: 'Logistics Head',
-                photo: 'https://i.postimg.cc/9XbqzBx4/HOG-creations.png',
-                role: 'Manager',
-                department: 'Logistics'
-            }
+    // ============================
+    // HARDCODED USER IDENTITIES
+    // ============================
+    const HARDCODED_USERS = {
+        'office.hog@gmail.com': {
+            name: 'Central Admin',
+            photo: 'https://i.postimg.cc/3wvN3Xqc/COLLECTIONS.png',
+            role: 'Administrator',
+            department: 'HOG-NBI001'
+        },
+        'sales.hog@gmail.com': {
+            name: 'Sales Clerk',
+            photo: 'https://i.postimg.cc/3wvN3Xqc/COLLECTIONS.png',
+            role: 'Sales',
+            department: 'Sales and Marketing'
+        },
+        'manager@hogcreations.com': {
+            name: 'Operations Manager',
+            photo: 'https://i.postimg.cc/9XbqzBx4/HOG-creations.png',
+            role: 'Manager',
+            department: 'Operations'
+        },
+        'sales@hogcreations.com': {
+            name: 'Sales Director',
+            photo: 'https://i.postimg.cc/9XbqzBx4/HOG-creations.png',
+            role: 'Director',
+            department: 'Sales'
+        },
+        'finance@hogcreations.com': {
+            name: 'Finance Manager',
+            photo: 'https://i.postimg.cc/9XbqzBx4/HOG-creations.png',
+            role: 'Manager',
+            department: 'Finance'
+        },
+        'hr@hogcreations.com': {
+            name: 'HR Manager',
+            photo: 'https://i.postimg.cc/9XbqzBx4/HOG-creations.png',
+            role: 'Manager',
+            department: 'Human Resources'
+        },
+        'logistics@hogcreations.com': {
+            name: 'Logistics Head',
+            photo: 'https://i.postimg.cc/9XbqzBx4/HOG-creations.png',
+            role: 'Manager',
+            department: 'Logistics'
+        }
+    };
+
+    // ============================
+    // FIREBASE CONFIGURATION
+    // ============================
+    const firebaseConfig = {
+        apiKey: "AIzaSyCOb4BqfiN3vt1Y13UTEpA_boCqNRH6rrQ",
+        authDomain: "dsog-stores-dashboard.firebaseapp.com",
+        databaseURL: "https://dsog-stores-dashboard-default-rtdb.firebaseio.com",
+        projectId: "dsog-stores-dashboard",
+        storageBucket: "dsog-stores-dashboard.firebasestorage.app",
+        messagingSenderId: "1085972125142",
+        appId: "1:1085972125142:web:9abea9ee0dd792a052c077"
+    };
+
+    // Initialize Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const database = firebase.database();
+    const storage = firebase.storage();
+
+    // ============================
+    // APPLICATION VARIABLES
+    // ============================
+    let currentUserId = null;
+    let currentUserEmail = null;
+    let currentUserInfo = null;
+    let currentChatId = null;
+    let currentChatType = null;
+    let isOnline = navigator.onLine;
+    let conversationsListener = null;
+    let messagesListener = null;
+    let onlineUsersListener = null;
+    let notificationsListener = null;
+    let uploadTask = null;
+    let notificationCount = 0;
+    let notificationSound = null;
+    let fcmToken = null;
+    let isInitialized = false;
+
+    // ============================
+    // UTILITY FUNCTIONS
+    // ============================
+    function getUserInfo(email) {
+        if (!email) return {
+            name: 'Guest User',
+            photo: null,
+            role: 'Guest',
+            department: 'General'
         };
-
-        // ============================
-        // FIREBASE CONFIGURATION
-        // ============================
-        const firebaseConfig = {
-            apiKey: "AIzaSyCOb4BqfiN3vt1Y13UTEpA_boCqNRH6rrQ",
-            authDomain: "dsog-stores-dashboard.firebaseapp.com",
-            databaseURL: "https://dsog-stores-dashboard-default-rtdb.firebaseio.com",
-            projectId: "dsog-stores-dashboard",
-            storageBucket: "dsog-stores-dashboard.firebasestorage.app",
-            messagingSenderId: "1085972125142",
-            appId: "1:1085972125142:web:9abea9ee0dd792a052c077"
+        
+        const normalizedEmail = email.toLowerCase().trim();
+        return HARDCODED_USERS[normalizedEmail] || {
+            name: email.split('@')[0],
+            photo: null,
+            role: 'User',
+            department: 'General'
         };
+    }
 
-        // Initialize Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const database = firebase.database();
-        const storage = firebase.storage();
-        const messaging = firebase.messaging();
+    function getInitials(name) {
+        if (!name) return 'GU';
+        return name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+    }
 
-        // ============================
-        // APPLICATION VARIABLES
-        // ============================
-        let currentUserId = null;
-        let currentUserEmail = null;
-        let currentUserInfo = null;
-        let currentChatId = null;
-        let currentChatType = null;
-        let isOnline = navigator.onLine;
-        let conversationsListener = null;
-        let messagesListener = null;
-        let onlineUsersListener = null;
-        let notificationsListener = null;
-        let uploadTask = null;
-        let notificationCount = 0;
-        let notificationSound = null;
-        let fcmToken = null;
+    function formatTime(timestamp) {
+        if (!timestamp) return '';
+        const date = new Date(timestamp);
+        const now = new Date();
+        const diffMs = now - date;
+        const diffMins = Math.floor(diffMs / 60000);
+        const diffHours = Math.floor(diffMs / 3600000);
+        const diffDays = Math.floor(diffMs / 86400000);
 
-        // ============================
-        // UTILITY FUNCTIONS
-        // ============================
-        function getUserInfo(email) {
-            const normalizedEmail = email.toLowerCase().trim();
-            return HARDCODED_USERS[normalizedEmail] || {
-                name: email.split('@')[0],
-                photo: null,
-                role: 'User',
-                department: 'General'
-            };
+        if (diffMins < 1) return 'Just now';
+        if (diffMins < 60) return `${diffMins}m ago`;
+        if (diffHours < 24) return `${diffHours}h ago`;
+        if (diffDays < 7) return `${diffDays}d ago`;
+        return date.toLocaleDateString();
+    }
+
+    function formatFileSize(bytes) {
+        if (!bytes) return '';
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+    }
+
+    function generateChatId(user1Id, user2Id) {
+        return [user1Id, user2Id].sort().join('_');
+    }
+
+    function showConnectionStatus(online) {
+        const connectionStatus = document.getElementById('connectionStatus');
+        if (online) {
+            connectionStatus.innerHTML = '<i class="fas fa-circle"></i><span>Online</span>';
+            connectionStatus.className = 'connection-status online';
+        } else {
+            connectionStatus.innerHTML = '<i class="fas fa-circle"></i><span>Offline</span>';
+            connectionStatus.className = 'connection-status offline';
+        }
+        
+        connectionStatus.style.display = 'flex';
+        setTimeout(() => {
+            connectionStatus.style.display = 'none';
+        }, 3000);
+    }
+
+    function hideLoading() {
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        if (loadingSpinner) {
+            loadingSpinner.style.display = 'none';
+        }
+        console.log('Loading hidden');
+    }
+
+    function showError(message) {
+        console.error('Error:', message);
+        alert(message);
+        hideLoading();
+    }
+
+    // ============================
+    // NOTIFICATION SYSTEM (SIMPLIFIED)
+    // ============================
+    function requestNotificationPermission() {
+        if (!('Notification' in window)) {
+            console.log('This browser does not support notifications');
+            return false;
         }
 
-        function getInitials(name) {
-            if (!name) return '??';
-            return name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+        if (Notification.permission === 'granted') {
+            return true;
+        } else if (Notification.permission === 'denied') {
+            console.log('Notification permission denied');
+            return false;
         }
 
-        function formatTime(timestamp) {
-            if (!timestamp) return '';
-            const date = new Date(timestamp);
-            const now = new Date();
-            const diffMs = now - date;
-            const diffMins = Math.floor(diffMs / 60000);
-            const diffHours = Math.floor(diffMs / 3600000);
-            const diffDays = Math.floor(diffMs / 86400000);
+        return false;
+    }
 
-            if (diffMins < 1) return 'Just now';
-            if (diffMins < 60) return `${diffMins}m ago`;
-            if (diffHours < 24) return `${diffHours}h ago`;
-            if (diffDays < 7) return `${diffDays}d ago`;
-            return date.toLocaleDateString();
-        }
-
-        function formatFileSize(bytes) {
-            if (!bytes) return '';
-            if (bytes === 0) return '0 Bytes';
-            const k = 1024;
-            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-            const i = Math.floor(Math.log(bytes) / Math.log(k));
-            return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
-        }
-
-        function generateChatId(user1Id, user2Id) {
-            return [user1Id, user2Id].sort().join('_');
-        }
-
-        // ============================
-        // NOTIFICATION SYSTEM
-        // ============================
-        async function requestNotificationPermission() {
-            try {
-                // Check if browser supports notifications
-                if (!('Notification' in window)) {
-                    console.log('This browser does not support notifications');
-                    return false;
-                }
-
-                // Check current permission
-                if (Notification.permission === 'granted') {
-                    await setupFCM();
-                    return true;
-                } else if (Notification.permission === 'denied') {
-                    console.log('Notification permission denied');
-                    return false;
-                } else {
-                    // Show custom permission modal
-                    document.getElementById('permissionModal').classList.add('active');
-                    
-                    return new Promise((resolve) => {
-                        document.getElementById('allowNotifications').onclick = async () => {
-                            document.getElementById('permissionModal').classList.remove('active');
-                            const permission = await Notification.requestPermission();
-                            if (permission === 'granted') {
-                                await setupFCM();
-                                resolve(true);
-                            } else {
-                                resolve(false);
-                            }
-                        };
-                        
-                        document.getElementById('denyNotifications').onclick = () => {
-                            document.getElementById('permissionModal').classList.remove('active');
-                            resolve(false);
-                        };
-                    });
-                }
-            } catch (error) {
-                console.error('Error requesting notification permission:', error);
-                return false;
-            }
-        }
-
-        async function setupFCM() {
-            try {
-                // Request permission and get token
-                fcmToken = await messaging.getToken({ 
-                    vapidKey: 'BElzXoP_6QnG_wy3YhQn6j7q3v9K8LmM5tJkLpO9sQq4rT7vXwYzAaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPp' // You need to generate this in Firebase Console
-                });
-                
-                if (fcmToken) {
-                    // Save token to user's database record
-                    await database.ref(`users/${currentUserId}/fcmToken`).set(fcmToken);
-                    console.log('FCM Token saved:', fcmToken);
-                    
-                    // Setup message handler for background notifications
-                    messaging.onMessage((payload) => {
-                        console.log('Message received:', payload);
-                        showNotification(payload.notification.title, payload.notification.body);
-                    });
-                    
-                    return true;
-                }
-                return false;
-            } catch (error) {
-                console.error('Error setting up FCM:', error);
-                return false;
-            }
-        }
-
-        function showNotification(title, body, tag = 'new-message') {
-            // Create notification sound
-            if (!notificationSound) {
-                notificationSound = new Audio('data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEAQB8AAEAfAAABAAgAZGF0YQ');
-            }
-
-            // Play notification sound
-            try {
-                notificationSound.play();
-            } catch (error) {
-                console.log('Could not play notification sound:', error);
-            }
-
-            // Check if browser supports notifications
-            if (!('Notification' in window) || Notification.permission !== 'granted') {
-                // Fallback to in-app notification
-                addInAppNotification(title, body, 'message');
-                return;
-            }
-
-            // Create and show notification
-            const notification = new Notification(title, {
-                body: body,
-                icon: '/favicon.ico',
-                tag: tag,
-                requireInteraction: false,
-                silent: false // This will use the default notification sound
-            });
-
-            // Handle notification click
-            notification.onclick = () => {
-                window.focus();
-                notification.close();
-                // You could add logic to navigate to the specific chat
-            };
-
-            // Also add to in-app notifications
-            addInAppNotification(title, body, 'message');
-        }
-
-        function addInAppNotification(title, message, type = 'message') {
-            try {
-                const notificationList = document.getElementById('notificationList');
-                const notificationBadge = document.getElementById('notificationBadge');
-                
-                // Create notification item
-                const notificationItem = document.createElement('div');
-                notificationItem.className = 'notification-item unread';
-                notificationItem.dataset.id = Date.now();
-                
-                const icon = type === 'message' ? 'fa-comment' : 
-                            type === 'file' ? 'fa-file' : 
-                            type === 'user' ? 'fa-user-plus' : 'fa-bell';
-                
-                notificationItem.innerHTML = `
-                    <div style="display: flex; align-items: flex-start;">
-                        <div class="notification-icon">
-                            <i class="fas ${icon}"></i>
-                        </div>
-                        <div class="notification-content">
-                            <div class="notification-message">
-                                <strong>${title}</strong><br>
-                                ${message}
-                            </div>
-                            <div class="notification-time">Just now</div>
-                        </div>
+    function showInAppNotification(title, message, type = 'message') {
+        try {
+            const notificationList = document.getElementById('notificationList');
+            const notificationBadge = document.getElementById('notificationBadge');
+            
+            // Create notification item
+            const notificationItem = document.createElement('div');
+            notificationItem.className = 'notification-item unread';
+            notificationItem.dataset.id = Date.now();
+            
+            const icon = type === 'message' ? 'fa-comment' : 
+                        type === 'file' ? 'fa-file' : 
+                        type === 'user' ? 'fa-user-plus' : 'fa-bell';
+            
+            notificationItem.innerHTML = `
+                <div style="display: flex; align-items: flex-start;">
+                    <div class="notification-icon">
+                        <i class="fas ${icon}"></i>
                     </div>
-                `;
-                
-                // Add click handler
-                notificationItem.addEventListener('click', () => {
-                    notificationItem.classList.remove('unread');
-                    updateNotificationBadge(-1);
-                });
-                
-                // Add to top of list
+                    <div class="notification-content">
+                        <div class="notification-message">
+                            <strong>${title}</strong><br>
+                            ${message}
+                        </div>
+                        <div class="notification-time">Just now</div>
+                    </div>
+                </div>
+            `;
+            
+            // Add click handler
+            notificationItem.addEventListener('click', () => {
+                notificationItem.classList.remove('unread');
+                updateNotificationBadge(-1);
+            });
+            
+            // Add to top of list
+            if (notificationList) {
                 notificationList.insertBefore(notificationItem, notificationList.firstChild);
                 
-                // Update badge
-                updateNotificationBadge(1);
-                
-                // Keep only last 50 notifications
+                // Keep only last 20 notifications
                 const items = notificationList.querySelectorAll('.notification-item');
-                if (items.length > 50) {
+                if (items.length > 20) {
                     items[items.length - 1].remove();
                 }
-                
-                // Save to database
-                saveNotificationToDB(title, message, type);
-                
-            } catch (error) {
-                console.error('Error adding in-app notification:', error);
             }
-        }
-
-        async function saveNotificationToDB(title, message, type) {
-            try {
-                const notificationId = Date.now();
-                await database.ref(`notifications/${currentUserId}/${notificationId}`).set({
-                    title: title,
-                    message: message,
-                    type: type,
-                    timestamp: Date.now(),
-                    read: false
-                });
-            } catch (error) {
-                console.error('Error saving notification to DB:', error);
-            }
-        }
-
-        function updateNotificationBadge(change) {
-            notificationCount = Math.max(0, notificationCount + change);
-            const badge = document.getElementById('notificationBadge');
             
+            // Update badge
+            updateNotificationBadge(1);
+            
+        } catch (error) {
+            console.error('Error adding in-app notification:', error);
+        }
+    }
+
+    function updateNotificationBadge(change) {
+        notificationCount = Math.max(0, notificationCount + change);
+        const badge = document.getElementById('notificationBadge');
+        
+        if (badge) {
             if (notificationCount > 0) {
                 badge.textContent = notificationCount > 99 ? '99+' : notificationCount;
                 badge.style.display = 'block';
-                
-                // Add animation
-                badge.style.animation = 'none';
-                setTimeout(() => {
-                    badge.style.animation = 'pulse 0.5s ease-in-out';
-                }, 10);
             } else {
                 badge.style.display = 'none';
             }
         }
+    }
 
-        async function loadNotifications() {
-            try {
-                const snapshot = await database.ref(`notifications/${currentUserId}`).orderByChild('timestamp').limitToLast(50).once('value');
-                const notifications = snapshot.val();
-                const notificationList = document.getElementById('notificationList');
+    // ============================
+    // FILE UPLOAD - SIMPLIFIED AND FIXED
+    // ============================
+    async function uploadFile(file, isImage = false) {
+        if (!file || !currentChatId) return null;
+        
+        try {
+            // Show upload preview
+            const uploadFileName = document.getElementById('uploadFileName');
+            const uploadProgressFill = document.getElementById('uploadProgressFill');
+            const uploadPreview = document.getElementById('uploadPreview');
+            
+            if (uploadFileName) uploadFileName.textContent = file.name;
+            if (uploadProgressFill) uploadProgressFill.style.width = '0%';
+            if (uploadPreview) uploadPreview.style.display = 'flex';
+            
+            // Create unique file name
+            const timestamp = Date.now();
+            const randomString = Math.random().toString(36).substring(2, 15);
+            const fileExtension = file.name.split('.').pop();
+            const fileName = `${timestamp}_${randomString}.${fileExtension}`;
+            const filePath = `chat_files/${currentChatId}/${fileName}`;
+            
+            console.log('Starting upload:', file.name);
+            
+            // Create storage reference
+            const storageRef = storage.ref(filePath);
+            
+            // Create upload task
+            uploadTask = storageRef.put(file);
+            
+            return new Promise((resolve, reject) => {
+                uploadTask.on('state_changed',
+                    (snapshot) => {
+                        // Update progress
+                        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                        console.log('Upload progress:', progress + '%');
+                        if (uploadProgressFill) {
+                            uploadProgressFill.style.width = progress + '%';
+                        }
+                    },
+                    (error) => {
+                        console.error('Upload error:', error);
+                        if (uploadPreview) uploadPreview.style.display = 'none';
+                        reject(error);
+                    },
+                    async () => {
+                        try {
+                            console.log('Upload completed');
+                            const downloadURL = await storageRef.getDownloadURL();
+                            console.log('Download URL obtained');
+                            
+                            if (uploadPreview) uploadPreview.style.display = 'none';
+                            
+                            resolve({
+                                url: downloadURL,
+                                name: file.name,
+                                size: file.size,
+                                type: file.type,
+                                isImage: isImage
+                            });
+                            
+                        } catch (urlError) {
+                            console.error('Error getting download URL:', urlError);
+                            if (uploadPreview) uploadPreview.style.display = 'none';
+                            reject(urlError);
+                        }
+                    }
+                );
+            });
+        } catch (error) {
+            console.error('Upload initialization error:', error);
+            const uploadPreview = document.getElementById('uploadPreview');
+            if (uploadPreview) uploadPreview.style.display = 'none';
+            return null;
+        }
+    }
+
+    function cancelUpload() {
+        if (uploadTask) {
+            uploadTask.cancel();
+            const uploadPreview = document.getElementById('uploadPreview');
+            if (uploadPreview) uploadPreview.style.display = 'none';
+        }
+    }
+
+    // ============================
+    // MESSAGE SENDING
+    // ============================
+    async function sendMessage(text, fileData = null) {
+        if (!currentChatId || (!text.trim() && !fileData)) return;
+        
+        try {
+            let messageData = {
+                senderId: currentUserId,
+                senderInfo: currentUserInfo,
+                text: text.trim(),
+                timestamp: Date.now(),
+                read: false
+            };
+            
+            if (fileData) {
+                messageData.type = fileData.isImage ? 'image' : 'file';
+                messageData.fileUrl = fileData.url;
+                messageData.fileName = fileData.name;
+                messageData.fileSize = fileData.size;
+                messageData.fileType = fileData.type;
                 
-                if (!notifications) {
-                    notificationList.innerHTML = `
-                        <div class="notification-empty">
-                            <i class="fas fa-bell-slash" style="font-size: 32px; margin-bottom: 12px; opacity: 0.5;"></i>
-                            <p>No notifications yet</p>
-                        </div>
-                    `;
+                if (fileData.isImage) {
+                    messageData.imageUrl = fileData.url;
+                }
+            } else {
+                messageData.type = 'text';
+            }
+            
+            console.log('Sending message:', messageData);
+            
+            // Add message to database
+            const messageRef = database.ref(`messages/${currentChatId}`).push();
+            await messageRef.set(messageData);
+            
+            // Update conversation last message
+            await database.ref(`conversations/${currentChatId}`).update({
+                lastMessage: {
+                    text: messageData.text || (messageData.type === 'file' ? 'Shared a file' : 'Shared an image'),
+                    timestamp: messageData.timestamp,
+                    senderId: currentUserId
+                },
+                updatedAt: Date.now()
+            });
+            
+            // Clear input
+            const messageInput = document.getElementById('messageInput');
+            const sendBtn = document.getElementById('sendBtn');
+            if (messageInput) messageInput.value = '';
+            if (sendBtn) sendBtn.disabled = true;
+            const uploadPreview = document.getElementById('uploadPreview');
+            if (uploadPreview) uploadPreview.style.display = 'none';
+            
+            console.log('Message sent successfully');
+            
+        } catch (error) {
+            console.error('Error sending message:', error);
+            alert('Failed to send message. Please try again.');
+        }
+    }
+
+    // ============================
+    // INITIALIZATION - FIXED VERSION
+    // ============================
+    document.addEventListener('DOMContentLoaded', () => {
+        console.log('DOM loaded, initializing...');
+        
+        // Check if Firebase is already initialized
+        if (isInitialized) {
+            console.log('Already initialized, skipping...');
+            return;
+        }
+        
+        try {
+            // Show loading
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            if (loadingSpinner) {
+                loadingSpinner.style.display = 'flex';
+            }
+            
+            // Setup auth state observer FIRST
+            const unsubscribe = auth.onAuthStateChanged(async (user) => {
+                console.log('Auth state changed:', user ? 'User signed in' : 'User signed out');
+                
+                if (!user) {
+                    console.log('No user found, redirecting to login...');
+                    window.location.href = 'index.html';
                     return;
                 }
                 
-                // Convert to array and sort by timestamp
-                const notificationsArray = Object.entries(notifications)
-                    .map(([id, data]) => ({ id, ...data }))
-                    .sort((a, b) => b.timestamp - a.timestamp);
-                
-                notificationList.innerHTML = '';
-                let unreadCount = 0;
-                
-                notificationsArray.forEach(notification => {
-                    const notificationItem = document.createElement('div');
-                    notificationItem.className = `notification-item ${notification.read ? '' : 'unread'}`;
-                    notificationItem.dataset.id = notification.id;
-                    
-                    const icon = notification.type === 'message' ? 'fa-comment' : 
-                                notification.type === 'file' ? 'fa-file' : 
-                                notification.type === 'user' ? 'fa-user-plus' : 'fa-bell';
-                    
-                    notificationItem.innerHTML = `
-                        <div style="display: flex; align-items: flex-start;">
-                            <div class="notification-icon">
-                                <i class="fas ${icon}"></i>
-                            </div>
-                            <div class="notification-content">
-                                <div class="notification-message">
-                                    <strong>${notification.title}</strong><br>
-                                    ${notification.message}
-                                </div>
-                                <div class="notification-time">${formatTime(notification.timestamp)}</div>
-                            </div>
-                        </div>
-                    `;
-                    
-                    // Add click handler
-                    notificationItem.addEventListener('click', () => {
-                        markNotificationAsRead(notification.id);
-                        notificationItem.classList.remove('unread');
-                        updateNotificationBadge(-1);
-                    });
-                    
-                    notificationList.appendChild(notificationItem);
-                    
-                    if (!notification.read) {
-                        unreadCount++;
-                    }
-                });
-                
-                updateNotificationBadge(unreadCount - notificationCount);
-                
-            } catch (error) {
-                console.error('Error loading notifications:', error);
-            }
-        }
-
-        async function markNotificationAsRead(notificationId) {
-            try {
-                await database.ref(`notifications/${currentUserId}/${notificationId}/read`).set(true);
-            } catch (error) {
-                console.error('Error marking notification as read:', error);
-            }
-        }
-
-        async function clearAllNotifications() {
-            try {
-                await database.ref(`notifications/${currentUserId}`).remove();
-                document.getElementById('notificationList').innerHTML = `
-                    <div class="notification-empty">
-                        <i class="fas fa-bell-slash" style="font-size: 32px; margin-bottom: 12px; opacity: 0.5;"></i>
-                        <p>No notifications yet</p>
-                    </div>
-                `;
-                updateNotificationBadge(-notificationCount);
-            } catch (error) {
-                console.error('Error clearing notifications:', error);
-            }
-        }
-
-        // ============================
-        // FILE UPLOAD - FIXED VERSION
-        // ============================
-        async function uploadFile(file, isImage = false) {
-            if (!file || !currentChatId) return null;
-            
-            try {
-                // Show upload preview
-                document.getElementById('uploadFileName').textContent = file.name;
-                document.getElementById('uploadProgressFill').style.width = '0%';
-                document.getElementById('uploadPreview').style.display = 'flex';
-                
-                // Create unique file name
-                const timestamp = Date.now();
-                const randomString = Math.random().toString(36).substring(2, 15);
-                const fileExtension = file.name.split('.').pop();
-                const fileName = `${timestamp}_${randomString}.${fileExtension}`;
-                const filePath = `chat_files/${currentChatId}/${fileName}`;
-                
-                console.log('Starting upload:', file.name, 'Size:', file.size, 'Type:', file.type);
-                
-                // Create storage reference
-                const storageRef = storage.ref(filePath);
-                
-                // Create upload task with metadata
-                uploadTask = storageRef.put(file, {
-                    customMetadata: {
-                        originalName: file.name,
-                        uploadedBy: currentUserEmail,
-                        chatId: currentChatId,
-                        timestamp: timestamp.toString()
-                    }
-                });
-                
-                return new Promise((resolve, reject) => {
-                    uploadTask.on('state_changed',
-                        (snapshot) => {
-                            // Update progress
-                            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                            console.log('Upload progress:', progress + '%');
-                            document.getElementById('uploadProgressFill').style.width = progress + '%';
-                            
-                            // Show more detailed progress for debugging
-                            if (snapshot.bytesTransferred === snapshot.totalBytes) {
-                                console.log('Upload complete, getting download URL...');
-                            }
-                        },
-                        (error) => {
-                            console.error('Upload error details:', error);
-                            console.error('Error code:', error.code);
-                            console.error('Error message:', error.message);
-                            
-                            // Hide upload preview
-                            document.getElementById('uploadPreview').style.display = 'none';
-                            
-                            // Show user-friendly error
-                            let errorMessage = 'Upload failed. ';
-                            
-                            switch (error.code) {
-                                case 'storage/unauthorized':
-                                    errorMessage += 'You don\'t have permission to upload files.';
-                                    break;
-                                case 'storage/canceled':
-                                    errorMessage += 'Upload was cancelled.';
-                                    break;
-                                case 'storage/unknown':
-                                    errorMessage += 'Unknown error occurred. Please check your internet connection.';
-                                    break;
-                                default:
-                                    errorMessage += 'Please try again.';
-                            }
-                            
-                            alert(errorMessage);
-                            reject(error);
-                        },
-                        async () => {
-                            try {
-                                console.log('Upload completed successfully');
-                                
-                                // Get download URL
-                                const downloadURL = await storageRef.getDownloadURL();
-                                console.log('Download URL obtained:', downloadURL);
-                                
-                                // Get file metadata
-                                const metadata = await storageRef.getMetadata();
-                                console.log('File metadata:', metadata);
-                                
-                                // Hide upload preview
-                                document.getElementById('uploadPreview').style.display = 'none';
-                                
-                                resolve({
-                                    url: downloadURL,
-                                    name: file.name,
-                                    size: file.size,
-                                    type: file.type,
-                                    isImage: isImage
-                                });
-                                
-                            } catch (urlError) {
-                                console.error('Error getting download URL:', urlError);
-                                document.getElementById('uploadPreview').style.display = 'none';
-                                alert('File uploaded but could not get download link. Please try again.');
-                                reject(urlError);
-                            }
-                        }
-                    );
-                });
-            } catch (error) {
-                console.error('Upload initialization error:', error);
-                document.getElementById('uploadPreview').style.display = 'none';
-                alert('Failed to start upload. Please try again.');
-                return null;
-            }
-        }
-
-        function cancelUpload() {
-            if (uploadTask) {
-                uploadTask.cancel();
-                console.log('Upload cancelled by user');
-                document.getElementById('uploadPreview').style.display = 'none';
-            }
-        }
-
-        // ============================
-        // MESSAGE SENDING
-        // ============================
-        async function sendMessage(text, fileData = null) {
-            if (!currentChatId || (!text.trim() && !fileData)) return;
-            
-            try {
-                let messageData = {
-                    senderId: currentUserId,
-                    senderInfo: currentUserInfo,
-                    text: text.trim(),
-                    timestamp: Date.now(),
-                    read: false
-                };
-                
-                if (fileData) {
-                    messageData.type = fileData.isImage ? 'image' : 'file';
-                    messageData.fileUrl = fileData.url;
-                    messageData.fileName = fileData.name;
-                    messageData.fileSize = fileData.size;
-                    messageData.fileType = fileData.type;
-                    
-                    if (fileData.isImage) {
-                        messageData.imageUrl = fileData.url;
-                    }
-                } else {
-                    messageData.type = 'text';
-                }
-                
-                console.log('Sending message:', messageData);
-                
-                // Add message to database
-                const messageRef = database.ref(`messages/${currentChatId}`).push();
-                await messageRef.set(messageData);
-                
-                // Update conversation last message
-                await database.ref(`conversations/${currentChatId}`).update({
-                    lastMessage: {
-                        text: messageData.text || (messageData.type === 'file' ? 'Shared a file' : 'Shared an image'),
-                        timestamp: messageData.timestamp,
-                        senderId: currentUserId
-                    },
-                    updatedAt: Date.now()
-                });
-                
-                // Update unread counts for other participants
-                const conversationSnapshot = await database.ref(`conversations/${currentChatId}/participants`).once('value');
-                const participants = conversationSnapshot.val();
-                
-                if (participants) {
-                    Object.keys(participants).forEach(async (participantId) => {
-                        if (participantId !== currentUserId) {
-                            const unreadRef = database.ref(`conversations/${currentChatId}/unreadCount/${participantId}`);
-                            const currentUnread = await unreadRef.once('value');
-                            await unreadRef.set((currentUnread.val() || 0) + 1);
-                            
-                            // Send notification to other participants
-                            const participantEmail = participants[participantId].email;
-                            const participantInfo = getUserInfo(participantEmail);
-                            
-                            // Create notification message
-                            const notificationTitle = `New message from ${currentUserInfo.name}`;
-                            const notificationMessage = messageData.text || 
-                                (messageData.type === 'file' ? 'Shared a file' : 'Shared an image');
-                            
-                            // Send push notification if participant has FCM token
-                            const participantTokenSnapshot = await database.ref(`users/${participantId}/fcmToken`).once('value');
-                            const participantToken = participantTokenSnapshot.val();
-                            
-                            if (participantToken) {
-                                // In a real app, you would send this via your backend
-                                // For now, we'll just log it
-                                console.log('Would send push notification to:', participantEmail);
-                            }
-                            
-                            // Add in-app notification for participant
-                            await database.ref(`notifications/${participantId}/${Date.now()}`).set({
-                                title: notificationTitle,
-                                message: notificationMessage,
-                                type: 'message',
-                                timestamp: Date.now(),
-                                read: false,
-                                chatId: currentChatId
-                            });
-                        }
-                    });
-                }
-                
-                // Clear input and hide upload preview
-                document.getElementById('messageInput').value = '';
-                document.getElementById('sendBtn').disabled = true;
-                document.getElementById('uploadPreview').style.display = 'none';
-                
-                // Update stats
-                loadWorkspaceStats();
-                loadRecentFiles();
-                
-                console.log('Message sent successfully');
-                
-            } catch (error) {
-                console.error('Error sending message:', error);
-                alert('Failed to send message. Please try again.');
-            }
-        }
-
-        // ============================
-        // INITIALIZATION
-        // ============================
-        document.addEventListener('DOMContentLoaded', async () => {
-            try {
-                console.log('Initializing application...');
-                
-                // Show loading
-                document.getElementById('loadingSpinner').style.display = 'flex';
-                
-                // Check authentication
-                auth.onAuthStateChanged(async (user) => {
-                    if (!user) {
-                        console.log('No user found, redirecting to login...');
-                        window.location.href = 'index.html';
-                        return;
-                    }
-                    
-                    console.log('User authenticated:', user.email);
-                    
+                try {
+                    // Set user info
                     currentUserId = user.uid;
                     currentUserEmail = user.email;
                     currentUserInfo = getUserInfo(user.email);
                     
-                    // Update user info
-                    document.getElementById('userAvatar').textContent = getInitials(currentUserInfo.name);
-                    document.getElementById('userName').textContent = currentUserInfo.name;
-                    document.getElementById('userRole').textContent = currentUserInfo.role.toUpperCase();
+                    console.log('User info:', currentUserInfo.name, currentUserEmail);
                     
-                    // Set online status
-                    await database.ref(`userStatus/${currentUserId}`).set({
-                        status: 'online',
-                        lastSeen: Date.now(),
-                        name: currentUserInfo.name,
-                        email: currentUserEmail,
-                        role: currentUserInfo.role
-                    });
+                    // Update UI elements
+                    const userAvatar = document.getElementById('userAvatar');
+                    const userName = document.getElementById('userName');
+                    const userRole = document.getElementById('userRole');
                     
-                    // Request notification permission
-                    await requestNotificationPermission();
+                    if (userAvatar) userAvatar.textContent = getInitials(currentUserInfo.name);
+                    if (userName) userName.textContent = currentUserInfo.name;
+                    if (userRole) userRole.textContent = currentUserInfo.role.toUpperCase();
                     
-                    // Load notifications
-                    await loadNotifications();
-                    
-                    // Load conversations
-                    loadConversations();
-                    
-                    // Load online users
-                    loadOnlineUsers();
-                    
-                    // Load workspace stats
-                    loadWorkspaceStats();
-                    
-                    // Set up event listeners
-                    setupEventListeners();
-                    
-                    // Set up real-time listeners for notifications
-                    setupNotificationListeners();
-                    
-                    // Hide loading
-                    document.getElementById('loadingSpinner').style.display = 'none';
-                    
-                    console.log('Application initialized successfully');
-                });
-            } catch (error) {
-                console.error('Initialization error:', error);
-                alert('Failed to initialize application. Please refresh the page.');
-                document.getElementById('loadingSpinner').style.display = 'none';
-            }
-        });
-
-        // ============================
-        // NOTIFICATION LISTENERS
-        // ============================
-        function setupNotificationListeners() {
-            // Listen for new messages in conversations where user is a participant
-            database.ref('conversations').orderByChild('updatedAt').on('child_changed', async (snapshot) => {
-                try {
-                    const conversation = snapshot.val();
-                    const conversationId = snapshot.key;
-                    
-                    // Check if user is a participant
-                    if (conversation.participants && conversation.participants[currentUserId]) {
-                        // Check if this is a new message (not from current user)
-                        if (conversation.lastMessage && conversation.lastMessage.senderId !== currentUserId) {
-                            // Don't show notification if user is currently viewing this chat
-                            if (conversationId === currentChatId) return;
-                            
-                            // Get sender info
-                            const senderInfo = conversation.participants[conversation.lastMessage.senderId];
-                            const senderName = senderInfo ? senderInfo.name : 'Someone';
-                            
-                            // Create notification
-                            const notificationTitle = `New message from ${senderName}`;
-                            const notificationMessage = conversation.lastMessage.text || 'Sent a message';
-                            
-                            // Show notification
-                            showNotification(notificationTitle, notificationMessage);
-                            
-                            // Update unread count in sidebar
-                            updateConversationUnreadCount(conversationId);
+                    // Set online status (with timeout to prevent blocking)
+                    setTimeout(() => {
+                        if (currentUserId) {
+                            database.ref(`userStatus/${currentUserId}`).set({
+                                status: 'online',
+                                lastSeen: Date.now(),
+                                name: currentUserInfo.name,
+                                email: currentUserEmail,
+                                role: currentUserInfo.role
+                            }).catch(err => console.error('Error setting online status:', err));
                         }
-                    }
+                    }, 100);
+                    
+                    // Setup basic data loaders (non-blocking)
+                    setTimeout(() => {
+                        loadConversations();
+                        loadOnlineUsers();
+                        loadWorkspaceStats();
+                        setupEventListeners();
+                        
+                        // Mark as initialized
+                        isInitialized = true;
+                        
+                        // Hide loading after a minimum time to ensure UI is ready
+                        setTimeout(hideLoading, 500);
+                    }, 300);
+                    
                 } catch (error) {
-                    console.error('Error in conversation listener:', error);
+                    console.error('Error during user initialization:', error);
+                    showError('Failed to initialize user session. Please refresh.');
                 }
             });
             
-            // Listen for new notifications in database
-            database.ref(`notifications/${currentUserId}`).orderByChild('timestamp').limitToLast(1).on('child_added', (snapshot) => {
-                try {
-                    const notification = snapshot.val();
-                    
-                    // Don't show notification if it's from current user's own actions
-                    if (!notification.read && notification.type !== 'system') {
-                        showNotification(notification.title, notification.message, notification.type);
-                    }
-                } catch (error) {
-                    console.error('Error in notification listener:', error);
-                }
-            });
-        }
-
-        function updateConversationUnreadCount(conversationId) {
-            const conversationItem = document.querySelector(`.conversation-item[data-chat-id="${conversationId}"]`);
-            if (conversationItem) {
-                let unreadElement = conversationItem.querySelector('.conversation-unread');
-                if (!unreadElement) {
-                    unreadElement = document.createElement('div');
-                    unreadElement.className = 'conversation-unread';
-                    conversationItem.querySelector('.conversation-meta').appendChild(unreadElement);
-                }
-                
-                const currentCount = parseInt(unreadElement.textContent) || 0;
-                unreadElement.textContent = currentCount + 1;
-            }
-        }
-
-        // ============================
-        // EVENT LISTENERS
-        // ============================
-        function setupEventListeners() {
-            // Message input
-            const messageInput = document.getElementById('messageInput');
-            const sendBtn = document.getElementById('sendBtn');
-            
-            messageInput.addEventListener('input', () => {
-                sendBtn.disabled = !messageInput.value.trim();
-                autoResizeTextarea();
-            });
-            
-            messageInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault();
-                    if (messageInput.value.trim()) {
-                        sendMessage(messageInput.value);
-                    }
-                }
-            });
-            
-            sendBtn.addEventListener('click', () => {
-                if (messageInput.value.trim()) {
-                    sendMessage(messageInput.value);
-                }
-            });
-            
-            // File attachments - FIXED
-            document.getElementById('attachFileBtn').addEventListener('click', () => {
-                const input = document.createElement('input');
-                input.type = 'file';
-                input.accept = '*/*';
-                input.onchange = async (e) => {
-                    const file = e.target.files[0];
-                    if (file) {
-                        console.log('File selected:', file.name, 'Size:', file.size);
-                        
-                        // Check file size (limit to 50MB)
-                        const maxSize = 50 * 1024 * 1024; // 50MB in bytes
-                        if (file.size > maxSize) {
-                            alert('File size exceeds 50MB limit. Please choose a smaller file.');
-                            return;
-                        }
-                        
-                        try {
-                            const fileData = await uploadFile(file, false);
-                            if (fileData) {
-                                await sendMessage('', fileData);
-                            }
-                        } catch (error) {
-                            console.error('File upload failed:', error);
-                        }
-                    }
-                };
-                input.click();
-            });
-            
-            document.getElementById('attachImageBtn').addEventListener('click', () => {
-                const input = document.createElement('input');
-                input.type = 'file';
-                input.accept = 'image/*';
-                input.onchange = async (e) => {
-                    const file = e.target.files[0];
-                    if (file) {
-                        console.log('Image selected:', file.name, 'Size:', file.size);
-                        
-                        // Check file size (limit to 20MB for images)
-                        const maxSize = 20 * 1024 * 1024; // 20MB in bytes
-                        if (file.size > maxSize) {
-                            alert('Image size exceeds 20MB limit. Please choose a smaller image.');
-                            return;
-                        }
-                        
-                        try {
-                            const fileData = await uploadFile(file, true);
-                            if (fileData) {
-                                await sendMessage('', fileData);
-                            }
-                        } catch (error) {
-                            console.error('Image upload failed:', error);
-                        }
-                    }
-                };
-                input.click();
-            });
-            
-            // Cancel upload
-            document.getElementById('cancelUploadBtn').addEventListener('click', cancelUpload);
-            
-            // Notification bell
-            document.getElementById('notificationBell').addEventListener('click', (e) => {
-                e.stopPropagation();
-                document.getElementById('notificationDropdown').classList.toggle('active');
-            });
-            
-            // Clear notifications
-            document.getElementById('clearNotifications').addEventListener('click', clearAllNotifications);
-            
-            // Close dropdowns when clicking outside
-            document.addEventListener('click', (e) => {
-                if (!e.target.closest('.notification-wrapper')) {
-                    document.getElementById('notificationDropdown').classList.remove('active');
-                }
-                if (!e.target.closest('.theme-toggle-wrapper')) {
-                    document.getElementById('themeDropdown').classList.remove('active');
-                }
-            });
-            
-            // New chat button
-            document.getElementById('newChatBtn').addEventListener('click', () => {
-                alert('New chat functionality coming soon!');
-            });
-            
-            // Chat tabs
-            document.querySelectorAll('.chat-tab').forEach(tab => {
-                tab.addEventListener('click', () => {
-                    document.querySelectorAll('.chat-tab').forEach(t => t.classList.remove('active'));
-                    tab.classList.add('active');
-                });
-            });
-            
-            // Search
-            document.getElementById('chatSearch').addEventListener('input', (e) => {
-                const searchTerm = e.target.value.toLowerCase();
-                document.querySelectorAll('.conversation-item').forEach(item => {
-                    const name = item.querySelector('.conversation-name').textContent.toLowerCase();
-                    item.style.display = name.includes(searchTerm) ? 'flex' : 'none';
-                });
-            });
-            
-            // Online user click
-            document.getElementById('onlineUsersList').addEventListener('click', (e) => {
-                const userItem = e.target.closest('.online-user-item');
-                if (userItem) {
-                    alert('Starting conversation with ' + userItem.querySelector('.online-user-name').textContent);
-                }
-            });
-            
-            // Network status
+            // Setup network listeners
             window.addEventListener('online', () => {
-                document.getElementById('connectionStatus').innerHTML = '<i class="fas fa-circle"></i><span>Online</span>';
-                document.getElementById('connectionStatus').className = 'connection-status online';
-                document.getElementById('connectionStatus').style.display = 'flex';
-                setTimeout(() => {
-                    document.getElementById('connectionStatus').style.display = 'none';
-                }, 3000);
-                
-                // Update online status in database
+                showConnectionStatus(true);
                 if (currentUserId) {
                     database.ref(`userStatus/${currentUserId}/status`).set('online');
                 }
             });
             
             window.addEventListener('offline', () => {
-                document.getElementById('connectionStatus').innerHTML = '<i class="fas fa-circle"></i><span>Offline</span>';
-                document.getElementById('connectionStatus').className = 'connection-status offline';
-                document.getElementById('connectionStatus').style.display = 'flex';
-                
-                // Update online status in database
+                showConnectionStatus(false);
                 if (currentUserId) {
                     database.ref(`userStatus/${currentUserId}/status`).set('offline');
                 }
             });
             
-            // Theme toggle
-            document.getElementById('themeToggle').addEventListener('click', (e) => {
-                e.stopPropagation();
-                document.getElementById('themeDropdown').classList.toggle('active');
-            });
-            
-            // Theme options
-            document.querySelectorAll('.theme-option').forEach(option => {
-                option.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const theme = option.getAttribute('data-theme');
-                    document.documentElement.setAttribute('data-theme', theme);
-                    localStorage.setItem('theme', theme);
-                    document.getElementById('themeDropdown').classList.remove('active');
-                });
-            });
-            
-            // Load saved theme
-            const savedTheme = localStorage.getItem('theme') || 'system';
-            document.documentElement.setAttribute('data-theme', savedTheme);
-        }
-
-        function autoResizeTextarea() {
-            const textarea = document.getElementById('messageInput');
-            textarea.style.height = 'auto';
-            textarea.style.height = Math.min(textarea.scrollHeight, 120) + 'px';
-        }
-
-        // ============================
-        // DATA LOADING FUNCTIONS
-        // ============================
-        function loadConversations() {
-            database.ref('conversations').orderByChild('updatedAt').limitToLast(50).on('value', (snapshot) => {
-                const conversations = snapshot.val();
-                const container = document.getElementById('conversationsList');
-                container.innerHTML = '';
-                
-                if (!conversations) {
-                    container.innerHTML = `
-                        <div style="text-align: center; padding: 40px; color: var(--text-tertiary);">
-                            <i class="fas fa-comments" style="font-size: 32px; margin-bottom: 16px; opacity: 0.5;"></i>
-                            <p>No conversations yet</p>
-                        </div>
-                    `;
-                    return;
+            // Cleanup on page unload
+            window.addEventListener('beforeunload', () => {
+                if (currentUserId) {
+                    database.ref(`userStatus/${currentUserId}`).update({
+                        status: 'offline',
+                        lastSeen: Date.now()
+                    }).catch(err => console.error('Cleanup error:', err));
                 }
-                
-                Object.entries(conversations).forEach(([id, data]) => {
-                    if (data.participants && data.participants[currentUserId]) {
-                        const item = createConversationItem(id, data);
-                        container.appendChild(item);
-                    }
-                });
             });
+            
+        } catch (error) {
+            console.error('Initialization error:', error);
+            showError('Failed to initialize application. Please refresh the page.');
         }
+    });
 
-        function createConversationItem(id, data) {
-            const div = document.createElement('div');
-            div.className = 'conversation-item';
-            div.dataset.chatId = id;
+    // ============================
+    // DATA LOADING FUNCTIONS
+    // ============================
+    function loadConversations() {
+        try {
+            console.log('Loading conversations...');
             
-            let name = data.name || 'Unknown';
-            let avatarText = getInitials(name);
-            let lastMessage = data.lastMessage?.text || 'No messages yet';
-            
-            if (data.type === 'direct') {
-                const otherParticipant = Object.values(data.participants).find(p => p.email !== currentUserEmail);
-                if (otherParticipant) {
-                    name = otherParticipant.name;
-                    avatarText = getInitials(name);
-                }
+            // Remove existing listener if any
+            if (conversationsListener) {
+                conversationsListener();
             }
             
-            const unreadCount = data.unreadCount?.[currentUserId] || 0;
-            
-            div.innerHTML = `
-                <div class="conversation-avatar">${avatarText}</div>
-                <div class="conversation-info">
-                    <div class="conversation-name">${name}</div>
-                    <div class="conversation-preview">${lastMessage}</div>
-                </div>
-                <div class="conversation-meta">
-                    <div class="conversation-time">${formatTime(data.lastMessage?.timestamp)}</div>
-                    ${unreadCount > 0 ? `<div class="conversation-unread">${unreadCount}</div>` : ''}
-                </div>
-            `;
-            
-            div.addEventListener('click', () => openChat(id, data));
-            return div;
+            conversationsListener = database.ref('conversations')
+                .orderByChild('updatedAt')
+                .limitToLast(50)
+                .on('value', (snapshot) => {
+                    try {
+                        const conversations = snapshot.val();
+                        const container = document.getElementById('conversationsList');
+                        
+                        if (!container) {
+                            console.error('Conversations container not found');
+                            return;
+                        }
+                        
+                        container.innerHTML = '';
+                        
+                        if (!conversations) {
+                            container.innerHTML = `
+                                <div style="text-align: center; padding: 40px; color: var(--text-tertiary);">
+                                    <i class="fas fa-comments" style="font-size: 32px; margin-bottom: 16px; opacity: 0.5;"></i>
+                                    <p>No conversations yet</p>
+                                </div>
+                            `;
+                            return;
+                        }
+                        
+                        let hasConversations = false;
+                        
+                        Object.entries(conversations).forEach(([id, data]) => {
+                            if (data.participants && data.participants[currentUserId]) {
+                                const item = createConversationItem(id, data);
+                                container.appendChild(item);
+                                hasConversations = true;
+                            }
+                        });
+                        
+                        if (!hasConversations) {
+                            container.innerHTML = `
+                                <div style="text-align: center; padding: 40px; color: var(--text-tertiary);">
+                                    <i class="fas fa-comments" style="font-size: 32px; margin-bottom: 16px; opacity: 0.5;"></i>
+                                    <p>No conversations yet</p>
+                                    <p style="font-size: 12px; margin-top: 8px;">Start a new conversation!</p>
+                                </div>
+                            `;
+                        }
+                        
+                        console.log('Conversations loaded successfully');
+                        
+                    } catch (error) {
+                        console.error('Error processing conversations:', error);
+                    }
+                }, (error) => {
+                    console.error('Error loading conversations:', error);
+                });
+                
+        } catch (error) {
+            console.error('Error setting up conversations listener:', error);
         }
+    }
 
-        function openChat(id, data) {
+    function createConversationItem(id, data) {
+        const div = document.createElement('div');
+        div.className = 'conversation-item';
+        div.dataset.chatId = id;
+        
+        let name = data.name || 'Unknown';
+        let avatarText = getInitials(name);
+        let lastMessage = data.lastMessage?.text || 'No messages yet';
+        
+        if (data.type === 'direct') {
+            const otherParticipant = Object.values(data.participants).find(p => p.email !== currentUserEmail);
+            if (otherParticipant) {
+                name = otherParticipant.name;
+                avatarText = getInitials(name);
+            }
+        }
+        
+        const unreadCount = data.unreadCount?.[currentUserId] || 0;
+        
+        div.innerHTML = `
+            <div class="conversation-avatar">${avatarText}</div>
+            <div class="conversation-info">
+                <div class="conversation-name">${name}</div>
+                <div class="conversation-preview">${lastMessage}</div>
+            </div>
+            <div class="conversation-meta">
+                <div class="conversation-time">${formatTime(data.lastMessage?.timestamp)}</div>
+                ${unreadCount > 0 ? `<div class="conversation-unread">${unreadCount}</div>` : ''}
+            </div>
+        `;
+        
+        div.addEventListener('click', () => openChat(id, data));
+        return div;
+    }
+
+    function openChat(id, data) {
+        try {
             currentChatId = id;
             currentChatType = data.type;
             
@@ -2856,10 +2429,16 @@
                 if (item.dataset.chatId === id) item.classList.add('active');
             });
             
-            document.getElementById('chatHeader').style.display = 'flex';
-            document.getElementById('messageInputContainer').style.display = 'block';
-            document.getElementById('messagesContainer').innerHTML = '';
-            document.getElementById('messagesContainer').style.display = 'flex';
+            const chatHeader = document.getElementById('chatHeader');
+            const messageInputContainer = document.getElementById('messageInputContainer');
+            const messagesContainer = document.getElementById('messagesContainer');
+            
+            if (chatHeader) chatHeader.style.display = 'flex';
+            if (messageInputContainer) messageInputContainer.style.display = 'block';
+            if (messagesContainer) {
+                messagesContainer.innerHTML = '';
+                messagesContainer.style.display = 'flex';
+            }
             
             // Load chat info
             let chatName = data.name || 'Unknown';
@@ -2873,9 +2452,15 @@
                 }
             }
             
-            document.getElementById('chatPartnerName').textContent = chatName;
-            document.getElementById('chatHeaderAvatar').innerHTML = avatarText;
-            document.getElementById('statusText').textContent = data.type === 'direct' ? 'Online' : `${Object.keys(data.participants || {}).length} members`;
+            const chatPartnerName = document.getElementById('chatPartnerName');
+            const chatHeaderAvatar = document.getElementById('chatHeaderAvatar');
+            const statusText = document.getElementById('statusText');
+            
+            if (chatPartnerName) chatPartnerName.textContent = chatName;
+            if (chatHeaderAvatar) chatHeaderAvatar.innerHTML = avatarText;
+            if (statusText) {
+                statusText.textContent = data.type === 'direct' ? 'Online' : `${Object.keys(data.participants || {}).length} members`;
+            }
             
             // Load messages
             loadMessages(id);
@@ -2888,353 +2473,683 @@
             if (conversationItem) {
                 conversationItem.remove();
             }
-        }
-
-        function loadMessages(chatId) {
-            database.ref(`messages/${chatId}`).orderByChild('timestamp').limitToLast(100).on('value', (snapshot) => {
-                const messages = snapshot.val();
-                const container = document.getElementById('messagesContainer');
-                container.innerHTML = '';
-                
-                if (!messages) {
-                    container.innerHTML = `
-                        <div style="text-align: center; padding: 60px; color: var(--text-tertiary);">
-                            <i class="fas fa-comments" style="font-size: 48px; margin-bottom: 20px; opacity: 0.5;"></i>
-                            <p>No messages yet</p>
-                            <p style="font-size: 13px; margin-top: 8px;">Start the conversation!</p>
-                        </div>
-                    `;
-                    return;
-                }
-                
-                // Group messages by date
-                const messagesByDate = {};
-                Object.values(messages).forEach(msg => {
-                    const date = new Date(msg.timestamp).toDateString();
-                    if (!messagesByDate[date]) messagesByDate[date] = [];
-                    messagesByDate[date].push(msg);
-                });
-                
-                // Display messages
-                Object.entries(messagesByDate).forEach(([date, msgs]) => {
-                    const dateDiv = document.createElement('div');
-                    dateDiv.className = 'message-date';
-                    dateDiv.innerHTML = `<span class="date-label">${new Date(date).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</span>`;
-                    container.appendChild(dateDiv);
-                    
-                    msgs.sort((a, b) => a.timestamp - b.timestamp).forEach(msg => {
-                        const messageDiv = createMessageElement(msg);
-                        container.appendChild(messageDiv);
-                    });
-                });
-                
-                // Scroll to bottom
-                setTimeout(() => {
-                    container.scrollTop = container.scrollHeight;
-                }, 100);
-            });
-        }
-
-        function createMessageElement(msg) {
-            const isSent = msg.senderId === currentUserId;
-            const div = document.createElement('div');
-            div.className = `message ${isSent ? 'sent' : 'received'}`;
             
-            let content = '';
-            if (msg.type === 'image') {
-                content = `
-                    <div class="message-bubble">
-                        <img src="${msg.imageUrl}" alt="Shared image" style="max-width: 300px; border-radius: 12px; margin-top: 8px; cursor: pointer;" 
-                             onclick="previewImage('${msg.imageUrl}')">
-                        ${msg.text ? `<div class="message-text" style="margin-top: 8px;">${msg.text}</div>` : ''}
-                    </div>
-                `;
-            } else if (msg.type === 'file') {
-                content = `
-                    <div class="message-bubble">
-                        <div class="file-attachment" onclick="downloadFile('${msg.fileUrl}', '${msg.fileName}')">
-                            <div class="file-icon">
-                                <i class="fas ${getFileIcon(msg.fileType)}"></i>
-                            </div>
-                            <div class="file-info">
-                                <div class="file-name">${msg.fileName}</div>
-                                <div class="file-size">${formatFileSize(msg.fileSize)}</div>
-                            </div>
-                            <div class="file-download">
-                                <i class="fas fa-download"></i>
-                            </div>
-                        </div>
-                        ${msg.text ? `<div class="message-text" style="margin-top: 8px;">${msg.text}</div>` : ''}
-                    </div>
-                `;
-            } else {
-                content = `
-                    <div class="message-bubble">
-                        <div class="message-text">${msg.text}</div>
-                    </div>
-                `;
+        } catch (error) {
+            console.error('Error opening chat:', error);
+        }
+    }
+
+    function loadMessages(chatId) {
+        try {
+            // Remove existing listener if any
+            if (messagesListener) {
+                messagesListener();
             }
             
-            div.innerHTML = `
-                ${!isSent ? `<div class="message-avatar">${getInitials(msg.senderInfo?.name)}</div>` : ''}
-                <div class="message-content">
-                    ${content}
-                    <div class="message-time">
-                        ${new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                        ${isSent && msg.read ? '<span style="margin-left: 4px; color: var(--accent-success);"><i class="fas fa-check-double"></i></span>' : ''}
-                    </div>
-                </div>
-                ${isSent ? `<div class="message-avatar">${getInitials(currentUserInfo.name)}</div>` : ''}
-            `;
+            const messagesContainer = document.getElementById('messagesContainer');
+            if (!messagesContainer) return;
             
-            return div;
-        }
-
-        function getFileIcon(fileType) {
-            if (fileType?.includes('pdf')) return 'fa-file-pdf';
-            if (fileType?.includes('word')) return 'fa-file-word';
-            if (fileType?.includes('excel')) return 'fa-file-excel';
-            if (fileType?.includes('image')) return 'fa-file-image';
-            if (fileType?.includes('video')) return 'fa-file-video';
-            if (fileType?.includes('audio')) return 'fa-file-audio';
-            if (fileType?.includes('zip')) return 'fa-file-archive';
-            return 'fa-file';
-        }
-
-        function loadOnlineUsers() {
-            database.ref('userStatus').orderByChild('status').equalTo('online').on('value', (snapshot) => {
-                const users = snapshot.val();
-                const container = document.getElementById('onlineUsersList');
-                container.innerHTML = '';
-                
-                if (!users) {
-                    container.innerHTML = `
+            messagesContainer.innerHTML = '<div style="text-align: center; padding: 40px; color: var(--text-tertiary);">Loading messages...</div>';
+            
+            messagesListener = database.ref(`messages/${chatId}`)
+                .orderByChild('timestamp')
+                .limitToLast(100)
+                .on('value', (snapshot) => {
+                    try {
+                        const messages = snapshot.val();
+                        displayMessages(messages);
+                        
+                        // Scroll to bottom
+                        setTimeout(() => {
+                            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                        }, 100);
+                        
+                    } catch (error) {
+                        console.error('Error processing messages:', error);
+                    }
+                }, (error) => {
+                    console.error('Error loading messages:', error);
+                    messagesContainer.innerHTML = `
                         <div style="text-align: center; padding: 40px; color: var(--text-tertiary);">
-                            <p>No users online</p>
+                            <i class="fas fa-exclamation-circle" style="font-size: 32px; margin-bottom: 16px;"></i>
+                            <p>Failed to load messages</p>
                         </div>
                     `;
-                    return;
-                }
+                });
                 
-                Object.entries(users).forEach(([id, data]) => {
-                    if (id !== currentUserId) {
-                        const userInfo = getUserInfo(data.email);
-                        const div = document.createElement('div');
-                        div.className = 'online-user-item';
-                        div.innerHTML = `
-                            <div class="online-user-avatar">
-                                ${getInitials(userInfo.name)}
-                                <div class="online-indicator"></div>
-                            </div>
-                            <div class="online-user-info">
-                                <div class="online-user-name">${userInfo.name}</div>
-                                <div class="online-user-role">${userInfo.role}</div>
-                            </div>
-                        `;
-                        container.appendChild(div);
+        } catch (error) {
+            console.error('Error setting up messages listener:', error);
+        }
+    }
+
+    function displayMessages(messages) {
+        const messagesContainer = document.getElementById('messagesContainer');
+        if (!messagesContainer) return;
+        
+        messagesContainer.innerHTML = '';
+        
+        if (!messages) {
+            messagesContainer.innerHTML = `
+                <div style="text-align: center; padding: 60px; color: var(--text-tertiary);">
+                    <i class="fas fa-comments" style="font-size: 48px; margin-bottom: 20px; opacity: 0.5;"></i>
+                    <p>No messages yet</p>
+                    <p style="font-size: 13px; margin-top: 8px;">Start the conversation!</p>
+                </div>
+            `;
+            return;
+        }
+        
+        // Convert to array and sort by timestamp
+        const messagesArray = Object.values(messages).sort((a, b) => a.timestamp - b.timestamp);
+        
+        let lastDate = null;
+        
+        messagesArray.forEach(msg => {
+            const msgDate = new Date(msg.timestamp).toDateString();
+            
+            // Add date separator if date changed
+            if (msgDate !== lastDate) {
+                const dateDiv = document.createElement('div');
+                dateDiv.className = 'message-date';
+                dateDiv.innerHTML = `<span class="date-label">${new Date(msg.timestamp).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</span>`;
+                messagesContainer.appendChild(dateDiv);
+                lastDate = msgDate;
+            }
+            
+            const messageDiv = createMessageElement(msg);
+            messagesContainer.appendChild(messageDiv);
+        });
+    }
+
+    function createMessageElement(msg) {
+        const isSent = msg.senderId === currentUserId;
+        const div = document.createElement('div');
+        div.className = `message ${isSent ? 'sent' : 'received'}`;
+        
+        let content = '';
+        if (msg.type === 'image') {
+            content = `
+                <div class="message-bubble">
+                    <img src="${msg.imageUrl}" alt="Shared image" style="max-width: 300px; border-radius: 12px; margin-top: 8px; cursor: pointer;" 
+                         onclick="previewImage('${msg.imageUrl}')">
+                    ${msg.text ? `<div class="message-text" style="margin-top: 8px;">${msg.text}</div>` : ''}
+                </div>
+            `;
+        } else if (msg.type === 'file') {
+            content = `
+                <div class="message-bubble">
+                    <div class="file-attachment" onclick="downloadFile('${msg.fileUrl}', '${msg.fileName}')">
+                        <div class="file-icon">
+                            <i class="fas ${getFileIcon(msg.fileType)}"></i>
+                        </div>
+                        <div class="file-info">
+                            <div class="file-name">${msg.fileName}</div>
+                            <div class="file-size">${formatFileSize(msg.fileSize)}</div>
+                        </div>
+                        <div class="file-download">
+                            <i class="fas fa-download"></i>
+                        </div>
+                    </div>
+                    ${msg.text ? `<div class="message-text" style="margin-top: 8px;">${msg.text}</div>` : ''}
+                </div>
+            `;
+        } else {
+            content = `
+                <div class="message-bubble">
+                    <div class="message-text">${msg.text}</div>
+                </div>
+            `;
+        }
+        
+        div.innerHTML = `
+            ${!isSent ? `<div class="message-avatar">${getInitials(msg.senderInfo?.name)}</div>` : ''}
+            <div class="message-content">
+                ${content}
+                <div class="message-time">
+                    ${new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                    ${isSent && msg.read ? '<span style="margin-left: 4px; color: var(--accent-success);"><i class="fas fa-check-double"></i></span>' : ''}
+                </div>
+            </div>
+            ${isSent ? `<div class="message-avatar">${getInitials(currentUserInfo.name)}</div>` : ''}
+        `;
+        
+        return div;
+    }
+
+    function getFileIcon(fileType) {
+        if (!fileType) return 'fa-file';
+        if (fileType.includes('pdf')) return 'fa-file-pdf';
+        if (fileType.includes('word')) return 'fa-file-word';
+        if (fileType.includes('excel')) return 'fa-file-excel';
+        if (fileType.includes('image')) return 'fa-file-image';
+        if (fileType.includes('video')) return 'fa-file-video';
+        if (fileType.includes('audio')) return 'fa-file-audio';
+        if (fileType.includes('zip')) return 'fa-file-archive';
+        return 'fa-file';
+    }
+
+    function loadOnlineUsers() {
+        try {
+            console.log('Loading online users...');
+            
+            // Remove existing listener if any
+            if (onlineUsersListener) {
+                onlineUsersListener();
+            }
+            
+            onlineUsersListener = database.ref('userStatus')
+                .orderByChild('status')
+                .equalTo('online')
+                .on('value', (snapshot) => {
+                    try {
+                        const users = snapshot.val();
+                        const container = document.getElementById('onlineUsersList');
+                        const welcomeOnlineCount = document.getElementById('welcomeOnlineCount');
+                        
+                        if (!container) return;
+                        
+                        container.innerHTML = '';
+                        
+                        if (!users) {
+                            container.innerHTML = `
+                                <div style="text-align: center; padding: 40px; color: var(--text-tertiary);">
+                                    <p>No users online</p>
+                                </div>
+                            `;
+                            if (welcomeOnlineCount) welcomeOnlineCount.textContent = '0';
+                            return;
+                        }
+                        
+                        let onlineUserCount = 0;
+                        
+                        Object.entries(users).forEach(([id, data]) => {
+                            if (id !== currentUserId) {
+                                const userInfo = getUserInfo(data.email);
+                                const div = document.createElement('div');
+                                div.className = 'online-user-item';
+                                div.innerHTML = `
+                                    <div class="online-user-avatar">
+                                        ${getInitials(userInfo.name)}
+                                        <div class="online-indicator"></div>
+                                    </div>
+                                    <div class="online-user-info">
+                                        <div class="online-user-name">${userInfo.name}</div>
+                                        <div class="online-user-role">${userInfo.role}</div>
+                                    </div>
+                                `;
+                                container.appendChild(div);
+                                onlineUserCount++;
+                            }
+                        });
+                        
+                        if (onlineUserCount === 0) {
+                            container.innerHTML = `
+                                <div style="text-align: center; padding: 40px; color: var(--text-tertiary);">
+                                    <p>You're the only one online</p>
+                                </div>
+                            `;
+                        }
+                        
+                        if (welcomeOnlineCount) welcomeOnlineCount.textContent = onlineUserCount;
+                        
+                        console.log('Online users loaded:', onlineUserCount);
+                        
+                    } catch (error) {
+                        console.error('Error processing online users:', error);
+                    }
+                }, (error) => {
+                    console.error('Error loading online users:', error);
+                });
+                
+        } catch (error) {
+            console.error('Error setting up online users listener:', error);
+        }
+    }
+
+    async function loadWorkspaceStats() {
+        try {
+            console.log('Loading workspace stats...');
+            
+            // Use Promise.all for parallel loading
+            const [messagesSnapshot, conversationsSnapshot] = await Promise.all([
+                database.ref('messages').once('value').catch(() => null),
+                database.ref('conversations').once('value').catch(() => null)
+            ]);
+            
+            let totalMessages = 0;
+            let totalFiles = 0;
+            let activeConversations = 0;
+            
+            // Count messages and files
+            if (messagesSnapshot && messagesSnapshot.val()) {
+                Object.values(messagesSnapshot.val()).forEach(chatMessages => {
+                    if (chatMessages) {
+                        Object.values(chatMessages).forEach(msg => {
+                            totalMessages++;
+                            if (msg.type === 'file' || msg.type === 'image') {
+                                totalFiles++;
+                            }
+                        });
+                    }
+                });
+            }
+            
+            // Count conversations
+            if (conversationsSnapshot && conversationsSnapshot.val()) {
+                activeConversations = Object.keys(conversationsSnapshot.val()).length;
+            }
+            
+            // Update UI
+            const welcomeMessageCount = document.getElementById('welcomeMessageCount');
+            const welcomeFileCount = document.getElementById('welcomeFileCount');
+            const welcomeActiveCount = document.getElementById('welcomeActiveCount');
+            
+            if (welcomeMessageCount) welcomeMessageCount.textContent = totalMessages;
+            if (welcomeFileCount) welcomeFileCount.textContent = totalFiles;
+            if (welcomeActiveCount) welcomeActiveCount.textContent = activeConversations;
+            
+            console.log('Workspace stats loaded');
+            
+        } catch (error) {
+            console.error('Error loading workspace stats:', error);
+        }
+    }
+
+    async function loadRecentFiles() {
+        try {
+            const messagesSnapshot = await database.ref('messages').once('value');
+            const recentFiles = [];
+            
+            if (messagesSnapshot.val()) {
+                Object.values(messagesSnapshot.val()).forEach(chatMessages => {
+                    if (chatMessages) {
+                        Object.values(chatMessages).forEach(msg => {
+                            if (msg.type === 'file' || msg.type === 'image') {
+                                recentFiles.push({
+                                    name: msg.fileName || 'File',
+                                    type: msg.type,
+                                    size: msg.fileSize || 0,
+                                    timestamp: msg.timestamp,
+                                    url: msg.fileUrl || msg.imageUrl
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+            
+            // Sort and get latest 5
+            recentFiles.sort((a, b) => b.timestamp - a.timestamp);
+            const latestFiles = recentFiles.slice(0, 5);
+            
+            // Display
+            const container = document.getElementById('recentFilesList');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            if (latestFiles.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 20px; color: var(--text-tertiary);">
+                        <p>No files shared yet</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            latestFiles.forEach(file => {
+                const div = document.createElement('div');
+                div.className = 'file-item';
+                div.onclick = () => {
+                    if (file.type === 'image') {
+                        previewImage(file.url);
+                    } else {
+                        downloadFile(file.url, file.name);
+                    }
+                };
+                
+                const icon = file.type === 'image' ? 'fa-image' : 'fa-file';
+                div.innerHTML = `
+                    <div class="file-item-icon">
+                        <i class="fas ${icon}"></i>
+                    </div>
+                    <div class="file-item-info">
+                        <div class="file-item-name">${file.name}</div>
+                        <div class="file-item-meta">
+                            <span>${formatTime(file.timestamp)}</span>
+                            ${file.size ? `<span>• ${formatFileSize(file.size)}</span>` : ''}
+                        </div>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+            
+        } catch (error) {
+            console.error('Error loading recent files:', error);
+        }
+    }
+
+    // ============================
+    // EVENT LISTENERS - SIMPLIFIED
+    // ============================
+    function setupEventListeners() {
+        console.log('Setting up event listeners...');
+        
+        try {
+            // Message input
+            const messageInput = document.getElementById('messageInput');
+            const sendBtn = document.getElementById('sendBtn');
+            
+            if (messageInput && sendBtn) {
+                messageInput.addEventListener('input', () => {
+                    sendBtn.disabled = !messageInput.value.trim();
+                    autoResizeTextarea();
+                });
+                
+                messageInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        if (messageInput.value.trim()) {
+                            sendMessage(messageInput.value);
+                        }
                     }
                 });
                 
-                // Update online count
-                const onlineCount = Object.keys(users).filter(id => id !== currentUserId).length;
-                document.getElementById('welcomeOnlineCount').textContent = onlineCount;
-            });
-        }
-
-        async function loadWorkspaceStats() {
-            try {
-                // Count messages
-                const messagesSnapshot = await database.ref('messages').once('value');
-                let totalMessages = 0;
-                let totalFiles = 0;
-                
-                if (messagesSnapshot.val()) {
-                    Object.values(messagesSnapshot.val()).forEach(chatMessages => {
-                        if (chatMessages) {
-                            Object.values(chatMessages).forEach(msg => {
-                                totalMessages++;
-                                if (msg.type === 'file' || msg.type === 'image') {
-                                    totalFiles++;
-                                }
-                            });
-                        }
-                    });
-                }
-                
-                // Count conversations
-                const conversationsSnapshot = await database.ref('conversations').once('value');
-                const activeConversations = conversationsSnapshot.val() ? Object.keys(conversationsSnapshot.val()).length : 0;
-                
-                // Update UI
-                document.getElementById('welcomeMessageCount').textContent = totalMessages;
-                document.getElementById('welcomeFileCount').textContent = totalFiles;
-                document.getElementById('welcomeActiveCount').textContent = activeConversations;
-                
-            } catch (error) {
-                console.error('Error loading stats:', error);
+                sendBtn.addEventListener('click', () => {
+                    if (messageInput.value.trim()) {
+                        sendMessage(messageInput.value);
+                    }
+                });
             }
-        }
-
-        async function loadRecentFiles() {
-            try {
-                const messagesSnapshot = await database.ref('messages').once('value');
-                const recentFiles = [];
-                
-                if (messagesSnapshot.val()) {
-                    Object.values(messagesSnapshot.val()).forEach(chatMessages => {
-                        if (chatMessages) {
-                            Object.values(chatMessages).forEach(msg => {
-                                if (msg.type === 'file' || msg.type === 'image') {
-                                    recentFiles.push({
-                                        name: msg.fileName || 'File',
-                                        type: msg.type,
-                                        size: msg.fileSize || 0,
-                                        timestamp: msg.timestamp,
-                                        url: msg.fileUrl || msg.imageUrl
-                                    });
+            
+            // File attachments
+            const attachFileBtn = document.getElementById('attachFileBtn');
+            const attachImageBtn = document.getElementById('attachImageBtn');
+            const cancelUploadBtn = document.getElementById('cancelUploadBtn');
+            
+            if (attachFileBtn) {
+                attachFileBtn.addEventListener('click', () => {
+                    const input = document.createElement('input');
+                    input.type = 'file';
+                    input.accept = '*/*';
+                    input.onchange = async (e) => {
+                        const file = e.target.files[0];
+                        if (file) {
+                            try {
+                                const fileData = await uploadFile(file, false);
+                                if (fileData) {
+                                    await sendMessage('', fileData);
                                 }
-                            });
-                        }
-                    });
-                }
-                
-                // Sort and get latest 5
-                recentFiles.sort((a, b) => b.timestamp - a.timestamp);
-                const latestFiles = recentFiles.slice(0, 5);
-                
-                // Display
-                const container = document.getElementById('recentFilesList');
-                container.innerHTML = '';
-                
-                if (latestFiles.length === 0) {
-                    container.innerHTML = `
-                        <div style="text-align: center; padding: 20px; color: var(--text-tertiary);">
-                            <p>No files shared yet</p>
-                        </div>
-                    `;
-                    return;
-                }
-                
-                latestFiles.forEach(file => {
-                    const div = document.createElement('div');
-                    div.className = 'file-item';
-                    div.onclick = () => {
-                        if (file.type === 'image') {
-                            previewImage(file.url);
-                        } else {
-                            downloadFile(file.url, file.name);
+                            } catch (error) {
+                                console.error('File upload failed:', error);
+                            }
                         }
                     };
-                    
-                    const icon = file.type === 'image' ? 'fa-image' : 'fa-file';
-                    div.innerHTML = `
-                        <div class="file-item-icon">
-                            <i class="fas ${icon}"></i>
-                        </div>
-                        <div class="file-item-info">
-                            <div class="file-item-name">${file.name}</div>
-                            <div class="file-item-meta">
-                                <span>${formatTime(file.timestamp)}</span>
-                                ${file.size ? `<span>• ${formatFileSize(file.size)}</span>` : ''}
-                            </div>
-                        </div>
-                    `;
-                    container.appendChild(div);
+                    input.click();
                 });
-                
-            } catch (error) {
-                console.error('Error loading recent files:', error);
             }
-        }
-
-        // ============================
-        // FILE HANDLING FUNCTIONS
-        // ============================
-        function previewImage(url) {
-            const modal = document.createElement('div');
-            modal.className = 'modal-overlay active';
-            modal.style.position = 'fixed';
-            modal.style.top = '0';
-            modal.style.left = '0';
-            modal.style.right = '0';
-            modal.style.bottom = '0';
-            modal.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
-            modal.style.display = 'flex';
-            modal.style.alignItems = 'center';
-            modal.style.justifyContent = 'center';
-            modal.style.zIndex = '10002';
             
-            modal.innerHTML = `
-                <div style="background: var(--surface-color); border-radius: var(--border-radius); padding: 24px; max-width: 800px; width: 90%; max-height: 90vh; overflow: auto;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-                        <h3 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 20px; font-weight: 700; color: var(--text-primary);">Image Preview</h3>
-                        <button onclick="this.closest('.modal-overlay').remove()" style="background: none; border: none; color: var(--text-tertiary); font-size: 20px; cursor: pointer;">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                    <div style="text-align: center;">
-                        <img src="${url}" alt="Preview" style="max-width: 100%; max-height: 70vh; object-fit: contain; border-radius: 12px;">
-                    </div>
-                    <div style="display: flex; gap: 12px; justify-content: center; margin-top: 24px;">
-                        <button onclick="this.closest('.modal-overlay').remove()" style="padding: 10px 20px; border-radius: 10px; background: rgba(255, 255, 255, 0.05); color: var(--text-primary); border: 1px solid var(--border-color); cursor: pointer;">Close</button>
-                        <button onclick="downloadFile('${url}', 'image.jpg')" style="padding: 10px 20px; border-radius: 10px; background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); color: white; border: none; cursor: pointer;">
-                            <i class="fas fa-download"></i> Download
-                        </button>
-                    </div>
-                </div>
-            `;
+            if (attachImageBtn) {
+                attachImageBtn.addEventListener('click', () => {
+                    const input = document.createElement('input');
+                    input.type = 'file';
+                    input.accept = 'image/*';
+                    input.onchange = async (e) => {
+                        const file = e.target.files[0];
+                        if (file) {
+                            try {
+                                const fileData = await uploadFile(file, true);
+                                if (fileData) {
+                                    await sendMessage('', fileData);
+                                }
+                            } catch (error) {
+                                console.error('Image upload failed:', error);
+                            }
+                        }
+                    };
+                    input.click();
+                });
+            }
             
-            document.body.appendChild(modal);
+            if (cancelUploadBtn) {
+                cancelUploadBtn.addEventListener('click', cancelUpload);
+            }
             
-            // Close modal when clicking outside
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    modal.remove();
+            // New chat button
+            const newChatBtn = document.getElementById('newChatBtn');
+            if (newChatBtn) {
+                newChatBtn.addEventListener('click', () => {
+                    showInAppNotification('New Chat', 'New conversation feature coming soon!');
+                });
+            }
+            
+            // Chat tabs
+            document.querySelectorAll('.chat-tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    document.querySelectorAll('.chat-tab').forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                });
+            });
+            
+            // Search
+            const chatSearch = document.getElementById('chatSearch');
+            if (chatSearch) {
+                chatSearch.addEventListener('input', (e) => {
+                    const searchTerm = e.target.value.toLowerCase();
+                    document.querySelectorAll('.conversation-item').forEach(item => {
+                        const name = item.querySelector('.conversation-name').textContent.toLowerCase();
+                        item.style.display = name.includes(searchTerm) ? 'flex' : 'none';
+                    });
+                });
+            }
+            
+            // Online user click
+            const onlineUsersList = document.getElementById('onlineUsersList');
+            if (onlineUsersList) {
+                onlineUsersList.addEventListener('click', (e) => {
+                    const userItem = e.target.closest('.online-user-item');
+                    if (userItem) {
+                        showInAppNotification('Direct Message', `Starting conversation with ${userItem.querySelector('.online-user-name').textContent}`);
+                    }
+                });
+            }
+            
+            // Notification bell
+            const notificationBell = document.getElementById('notificationBell');
+            const notificationDropdown = document.getElementById('notificationDropdown');
+            
+            if (notificationBell && notificationDropdown) {
+                notificationBell.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    notificationDropdown.classList.toggle('active');
+                });
+            }
+            
+            // Clear notifications
+            const clearNotifications = document.getElementById('clearNotifications');
+            if (clearNotifications) {
+                clearNotifications.addEventListener('click', () => {
+                    const notificationList = document.getElementById('notificationList');
+                    if (notificationList) {
+                        notificationList.innerHTML = `
+                            <div class="notification-empty">
+                                <i class="fas fa-bell-slash" style="font-size: 32px; margin-bottom: 12px; opacity: 0.5;"></i>
+                                <p>No notifications yet</p>
+                            </div>
+                        `;
+                    }
+                    updateNotificationBadge(-notificationCount);
+                });
+            }
+            
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.notification-wrapper') && notificationDropdown) {
+                    notificationDropdown.classList.remove('active');
                 }
             });
-        }
+            
+            // Back button
+            const backBtn = document.querySelector('.back-btn');
+            if (backBtn) {
+                backBtn.addEventListener('click', () => {
+                    if (currentChatId) {
+                        // Return to workspace view
+                        currentChatId = null;
+                        const chatHeader = document.getElementById('chatHeader');
+                        const messageInputContainer = document.getElementById('messageInputContainer');
+                        const messagesContainer = document.getElementById('messagesContainer');
+                        
+                        if (chatHeader) chatHeader.style.display = 'none';
+                        if (messageInputContainer) messageInputContainer.style.display = 'none';
+                        if (messagesContainer) {
+                            messagesContainer.innerHTML = `
+                                <div class="no-chat-selected">
+                                    <div style="text-align: center; padding: 40px;">
+                                        <div style="width: 80px; height: 80px; border-radius: 20px; background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); display: flex; align-items: center; justify-content: center; margin: 0 auto 24px;">
+                                            <i class="fas fa-comments" style="font-size: 32px; color: white;"></i>
+                                        </div>
+                                        <h3 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 24px; font-weight: 700; margin-bottom: 12px; color: var(--text-primary);">Enterprise Workspace</h3>
+                                        <p style="color: var(--text-tertiary); max-width: 500px; margin: 0 auto 32px;">Select a conversation to start collaborating with your team members.</p>
+                                        
+                                        <!-- Workspace Stats will be loaded dynamically -->
+                                        <div class="workspace-stats-grid">
+                                            <div class="workspace-stat-card">
+                                                <div class="workspace-stat-icon">
+                                                    <i class="fas fa-users"></i>
+                                                </div>
+                                                <div class="workspace-stat-value" id="welcomeOnlineCount">0</div>
+                                                <div class="workspace-stat-label">Team Online</div>
+                                            </div>
+                                            <div class="workspace-stat-card">
+                                                <div class="workspace-stat-icon">
+                                                    <i class="fas fa-comment"></i>
+                                                </div>
+                                                <div class="workspace-stat-value" id="welcomeMessageCount">0</div>
+                                                <div class="workspace-stat-label">Total Messages</div>
+                                            </div>
+                                            <div class="workspace-stat-card">
+                                                <div class="workspace-stat-icon">
+                                                    <i class="fas fa-file"></i>
+                                                </div>
+                                                <div class="workspace-stat-value" id="welcomeFileCount">0</div>
+                                                <div class="workspace-stat-label">Files Shared</div>
+                                            </div>
+                                            <div class="workspace-stat-card">
+                                                <div class="workspace-stat-icon">
+                                                    <i class="fas fa-clock"></i>
+                                                </div>
+                                                <div class="workspace-stat-value" id="welcomeActiveCount">0</div>
+                                                <div class="workspace-stat-label">Active Chats</div>
+                                            </div>
+                                        </div>
 
-        function downloadFile(url, filename) {
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = filename;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-        }
-
-        // Make functions globally available
-        window.previewImage = previewImage;
-        window.downloadFile = downloadFile;
-
-        // Add CSS animation for notification badge
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes pulse {
-                0% { transform: scale(1); }
-                50% { transform: scale(1.2); }
-                100% { transform: scale(1); }
-            }
-        `;
-        document.head.appendChild(style);
-
-        // Handle page visibility change
-        document.addEventListener('visibilitychange', () => {
-            if (document.visibilityState === 'visible') {
-                // Page is visible again, update notifications
-                loadNotifications();
-            }
-        });
-
-        // Cleanup on page unload
-        window.addEventListener('beforeunload', () => {
-            if (currentUserId) {
-                database.ref(`userStatus/${currentUserId}`).update({
-                    status: 'offline',
-                    lastSeen: Date.now()
+                                        <!-- Recent Files -->
+                                        <div class="recent-files">
+                                            <h4 class="recent-files-title">Recent Files</h4>
+                                            <div class="files-list" id="recentFilesList">
+                                                <!-- Recent files will be loaded here -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                            
+                            // Reload stats
+                            loadWorkspaceStats();
+                            loadRecentFiles();
+                        }
+                    } else {
+                        window.location.href = 'index.html';
+                    }
                 });
             }
+            
+            console.log('Event listeners setup complete');
+            
+        } catch (error) {
+            console.error('Error setting up event listeners:', error);
+        }
+    }
+
+    function autoResizeTextarea() {
+        const textarea = document.getElementById('messageInput');
+        if (textarea) {
+            textarea.style.height = 'auto';
+            textarea.style.height = Math.min(textarea.scrollHeight, 120) + 'px';
+        }
+    }
+
+    // ============================
+    // FILE HANDLING FUNCTIONS
+    // ============================
+    function previewImage(url) {
+        const modal = document.createElement('div');
+        modal.className = 'modal-overlay active';
+        modal.style.position = 'fixed';
+        modal.style.top = '0';
+        modal.style.left = '0';
+        modal.style.right = '0';
+        modal.style.bottom = '0';
+        modal.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+        modal.style.display = 'flex';
+        modal.style.alignItems = 'center';
+        modal.style.justifyContent = 'center';
+        modal.style.zIndex = '10002';
+        
+        modal.innerHTML = `
+            <div style="background: var(--surface-color); border-radius: var(--border-radius); padding: 24px; max-width: 800px; width: 90%; max-height: 90vh; overflow: auto;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                    <h3 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 20px; font-weight: 700; color: var(--text-primary);">Image Preview</h3>
+                    <button onclick="this.closest('.modal-overlay').remove()" style="background: none; border: none; color: var(--text-tertiary); font-size: 20px; cursor: pointer;">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div style="text-align: center;">
+                    <img src="${url}" alt="Preview" style="max-width: 100%; max-height: 70vh; object-fit: contain; border-radius: 12px;">
+                </div>
+                <div style="display: flex; gap: 12px; justify-content: center; margin-top: 24px;">
+                    <button onclick="this.closest('.modal-overlay').remove()" style="padding: 10px 20px; border-radius: 10px; background: rgba(255, 255, 255, 0.05); color: var(--text-primary); border: 1px solid var(--border-color); cursor: pointer;">Close</button>
+                    <button onclick="downloadFile('${url}', 'image.jpg')" style="padding: 10px 20px; border-radius: 10px; background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); color: white; border: none; cursor: pointer;">
+                        <i class="fas fa-download"></i> Download
+                    </button>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        // Close modal when clicking outside
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.remove();
+            }
         });
-    </script>
+    }
+
+    function downloadFile(url, filename) {
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }
+
+    // Make functions globally available
+    window.previewImage = previewImage;
+    window.downloadFile = downloadFile;
+
+    // Add CSS animation for notification badge
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+    `;
+    document.head.appendChild(style);
+</script>
 </body>
 </html>
