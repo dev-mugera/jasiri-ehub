@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jasiri Technology | Enterprise Software Solutions & Business Intelligence</title>
+    <title>Jasiri Technology | Complete Technology Ecosystem</title>
     
     <!-- Modern CSS Features -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -24,12 +24,19 @@
             --accent-green: #48bb78;
             --accent-gold: #d69e2e;
             --accent-pink: #ff6b8b;
+            --accent-cyan: #0ea5e9;
+            --accent-orange: #f97316;
             
             /* Professional Gradients */
             --gradient-primary: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-teal) 100%);
+            --gradient-ecosystem: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 50%, var(--accent-teal) 100%);
             --gradient-dark: linear-gradient(135deg, var(--primary-900) 0%, var(--primary-700) 100%);
             --gradient-card: linear-gradient(145deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
             --gradient-ngao: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-construction: linear-gradient(135deg, #f97316 0%, #d97706 100%);
+            --gradient-healthcare: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            --gradient-education: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            --gradient-logistics: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
             
             /* Typography */
             --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -82,9 +89,6 @@
             background: var(--primary-900);
             overflow-x: hidden;
             min-height: 100vh;
-            background-image: 
-                radial-gradient(circle at 20% 80%, rgba(66, 153, 225, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(56, 178, 172, 0.1) 0%, transparent 50%);
         }
 
         /* Utility Classes */
@@ -97,7 +101,7 @@
 
         .text-center { text-align: center; }
         .text-gradient {
-            background: var(--gradient-primary);
+            background: var(--gradient-ecosystem);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -146,7 +150,7 @@
         .logo-icon {
             width: 40px;
             height: 40px;
-            background: var(--gradient-primary);
+            background: var(--gradient-ecosystem);
             border-radius: var(--radius-sm);
             display: flex;
             align-items: center;
@@ -184,7 +188,7 @@
             left: 0;
             width: 0;
             height: 2px;
-            background: var(--gradient-primary);
+            background: var(--gradient-ecosystem);
             transition: width var(--transition-normal);
         }
 
@@ -211,7 +215,7 @@
         }
 
         .btn-primary {
-            background: var(--gradient-primary);
+            background: var(--gradient-ecosystem);
             color: white;
             box-shadow: var(--shadow-md);
         }
@@ -240,15 +244,10 @@
             padding-top: 80px;
             position: relative;
             overflow: hidden;
-        }
-
-        .hero-background {
-            position: absolute;
-            inset: 0;
             background: 
                 radial-gradient(circle at 20% 80%, rgba(66, 153, 225, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(56, 178, 172, 0.15) 0%, transparent 50%);
-            z-index: -1;
+                radial-gradient(circle at 80% 20%, rgba(56, 178, 172, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(155, 122, 234, 0.1) 0%, transparent 50%);
         }
 
         .hero-content {
@@ -281,108 +280,173 @@
             flex-wrap: wrap;
         }
 
-        /* E-Hub Showcase */
-        .ehub-showcase {
+        /* Ecosystem Visualization */
+        .ecosystem-visual {
             position: relative;
-            border-radius: var(--radius-xl);
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: var(--shadow-2xl);
-            background: rgba(23, 42, 69, 0.6);
-            backdrop-filter: blur(10px);
-            transform-style: preserve-3d;
-            perspective: 1000px;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .ehub-preview {
-            position: relative;
+        .ecosystem-orbit {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: rotate 60s linear infinite;
+        }
+
+        .orbit-1 {
+            width: 400px;
             height: 400px;
+        }
+
+        .orbit-2 {
+            width: 300px;
+            height: 300px;
+        }
+
+        .orbit-3 {
+            width: 200px;
+            height: 200px;
+        }
+
+        .ecosystem-node {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: var(--space-xl);
-        }
-
-        .ehub-dashboard {
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: var(--radius-lg);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            overflow: hidden;
-            position: relative;
-        }
-
-        .dashboard-header {
-            padding: var(--space-md);
-            background: rgba(10, 25, 47, 0.8);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            gap: var(--space-sm);
-        }
-
-        .dashboard-icon {
-            width: 32px;
-            height: 32px;
-            background: var(--gradient-primary);
-            border-radius: var(--radius-sm);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            font-size: 1.5rem;
             color: white;
-        }
-
-        .dashboard-title {
-            font-weight: 600;
-            font-size: 1rem;
-        }
-
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: var(--space-md);
-            padding: var(--space-md);
-        }
-
-        .dashboard-module {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: var(--radius-md);
-            padding: var(--space-md);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid;
+            backdrop-filter: blur(10px);
             transition: all var(--transition-normal);
         }
 
-        .dashboard-module:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: var(--accent-blue);
-            transform: translateY(-2px);
+        .ecosystem-node:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
         }
 
-        .module-icon {
-            width: 40px;
-            height: 40px;
-            background: rgba(66, 153, 225, 0.2);
-            border-radius: var(--radius-sm);
+        .node-network { background: rgba(66, 153, 225, 0.2); border-color: var(--accent-blue); }
+        .node-enterprise { background: rgba(56, 178, 172, 0.2); border-color: var(--accent-teal); }
+        .node-production { background: rgba(249, 115, 22, 0.2); border-color: var(--accent-orange); }
+        .node-healthcare { background: rgba(16, 185, 129, 0.2); border-color: var(--accent-green); }
+        .node-education { background: rgba(139, 92, 246, 0.2); border-color: var(--accent-purple); }
+        .node-logistics { background: rgba(59, 130, 246, 0.2); border-color: #3b82f6; }
+        .node-os { background: rgba(255, 107, 139, 0.2); border-color: var(--accent-pink); }
+        .node-appstore { background: rgba(217, 119, 6, 0.2); border-color: var(--accent-gold); }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Business Areas Section */
+        .areas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-xl);
+            margin-top: var(--space-2xl);
+        }
+
+        .area-card {
+            background: var(--gradient-card);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .area-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .area-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity var(--transition-normal);
+            z-index: 0;
+        }
+
+        .area-card.network::before { background: var(--gradient-primary); }
+        .area-card.enterprise::before { background: var(--gradient-primary); }
+        .area-card.production::before { background: var(--gradient-construction); }
+        .area-card.healthcare::before { background: var(--gradient-healthcare); }
+        .area-card.education::before { background: var(--gradient-education); }
+        .area-card.logistics::before { background: var(--gradient-logistics); }
+
+        .area-card:hover::before {
+            opacity: 0.05;
+        }
+
+        .area-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: var(--radius-md);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--accent-blue);
+            font-size: 1.5rem;
+            color: white;
+            margin-bottom: var(--space-lg);
+            position: relative;
+            z-index: 1;
+        }
+
+        .network .area-icon { background: var(--gradient-primary); }
+        .enterprise .area-icon { background: var(--gradient-primary); }
+        .production .area-icon { background: var(--gradient-construction); }
+        .healthcare .area-icon { background: var(--gradient-healthcare); }
+        .education .area-icon { background: var(--gradient-education); }
+        .logistics .area-icon { background: var(--gradient-logistics); }
+
+        .area-title {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 700;
             margin-bottom: var(--space-sm);
+            color: white;
+            position: relative;
+            z-index: 1;
         }
 
-        .module-name {
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 4px;
+        .area-description {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: var(--space-lg);
+            line-height: 1.7;
+            position: relative;
+            z-index: 1;
         }
 
-        .module-status {
-            font-size: 0.8rem;
-            color: var(--accent-teal);
+        .area-features {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-xs);
+            position: relative;
+            z-index: 1;
+        }
+
+        .area-feature {
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: var(--space-xs);
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+        }
+
+        .area-feature i {
+            font-size: 0.8rem;
+            opacity: 0.7;
         }
 
         /* Section Styling */
@@ -401,197 +465,52 @@
             margin: 0 auto var(--space-2xl);
         }
 
-        /* Products Grid */
-        .products-grid {
+        /* Technology Showcase */
+        .technology-showcase {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: var(--space-xl);
-            margin-top: var(--space-xl);
+            margin-top: var(--space-2xl);
         }
 
-        .product-card {
+        .tech-card {
             background: var(--gradient-card);
             border-radius: var(--radius-lg);
             padding: var(--space-xl);
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all var(--transition-normal);
-            position: relative;
-            overflow: hidden;
         }
 
-        .product-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--accent-blue);
+        .tech-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent-purple);
             box-shadow: var(--shadow-xl);
         }
 
-        .product-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: var(--gradient-primary);
-            opacity: 0;
-            transition: opacity var(--transition-normal);
-            z-index: 0;
-        }
-
-        .product-card:hover::before {
-            opacity: 0.05;
-        }
-
-        .product-icon {
+        .tech-icon {
             width: 60px;
             height: 60px;
+            background: var(--gradient-ecosystem);
             border-radius: var(--radius-md);
-            background: var(--gradient-primary);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.5rem;
             color: white;
             margin-bottom: var(--space-lg);
-            position: relative;
-            z-index: 1;
         }
 
-        .product-title {
-            font-family: var(--font-heading);
-            font-size: 1.5rem;
+        .tech-title {
+            font-size: 1.3rem;
             font-weight: 700;
             margin-bottom: var(--space-sm);
             color: white;
-            position: relative;
-            z-index: 1;
         }
 
-        .product-description {
+        .tech-description {
             color: rgba(255, 255, 255, 0.7);
-            margin-bottom: var(--space-lg);
-            line-height: 1.7;
-            position: relative;
-            z-index: 1;
-        }
-
-        .product-tags {
-            display: flex;
-            gap: var(--space-xs);
-            flex-wrap: wrap;
-            position: relative;
-            z-index: 1;
-        }
-
-        .tag {
-            background: rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.8);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-
-        /* Ngao Security Suite */
-        .ngao-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: var(--space-lg);
-            margin-top: var(--space-xl);
-        }
-
-        .ngao-card {
-            background: var(--gradient-card);
-            border-radius: var(--radius-lg);
-            padding: var(--space-lg);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all var(--transition-normal);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .ngao-card:hover {
-            transform: translateY(-4px);
-            border-color: #764ba2;
-            box-shadow: 0 10px 30px rgba(118, 75, 162, 0.2);
-        }
-
-        .ngao-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: var(--radius-md);
-            background: var(--gradient-ngao);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            color: white;
             margin-bottom: var(--space-md);
-        }
-
-        /* Modules Grid */
-        .modules-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: var(--space-md);
-            margin-top: var(--space-lg);
-        }
-
-        .module-item {
-            background: rgba(255, 255, 255, 0.05);
-            padding: var(--space-md);
-            border-radius: var(--radius-md);
-            text-align: center;
-            transition: all var(--transition-fast);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .module-item:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateY(-4px);
-            border-color: var(--accent-blue);
-        }
-
-        .module-icon-small {
-            width: 48px;
-            height: 48px;
-            background: rgba(66, 153, 225, 0.1);
-            border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto var(--space-sm);
-            color: var(--accent-blue);
-            font-size: 1.2rem;
-        }
-
-        /* Industries Grid */
-        .industries-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: var(--space-md);
-            margin-top: var(--space-lg);
-        }
-
-        .industry-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: var(--space-xs);
-            padding: var(--space-md);
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: var(--radius-md);
-            transition: all var(--transition-fast);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .industry-item:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateY(-4px);
-            border-color: var(--accent-blue);
-        }
-
-        .industry-icon {
-            font-size: 1.5rem;
-            color: var(--accent-blue);
-            margin-bottom: var(--space-xs);
+            line-height: 1.7;
         }
 
         /* Enhanced Footer */
@@ -658,6 +577,33 @@
             animation: fadeIn 0.6s ease-out;
         }
 
+        /* Construction Automation Highlight */
+        .construction-highlight {
+            background: rgba(249, 115, 22, 0.1);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            margin-top: var(--space-xl);
+            border: 1px solid rgba(249, 115, 22, 0.2);
+        }
+
+        .construction-highlight h3 {
+            color: #f97316;
+            margin-bottom: var(--space-md);
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary-800) 0%, var(--primary-700) 100%);
+            border-radius: var(--radius-xl);
+            padding: var(--space-2xl);
+            text-align: center;
+            margin: var(--space-3xl) 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
         /* Responsive Design */
         @media (max-width: 1024px) {
             .hero-content {
@@ -670,9 +616,14 @@
                 justify-content: center;
             }
             
-            .ehub-preview {
-                height: 350px;
+            .ecosystem-visual {
+                height: 400px;
+                order: -1;
             }
+            
+            .orbit-1 { width: 300px; height: 300px; }
+            .orbit-2 { width: 220px; height: 220px; }
+            .orbit-3 { width: 140px; height: 140px; }
         }
 
         @media (max-width: 768px) {
@@ -701,12 +652,8 @@
                 font-size: clamp(2rem, 5vw, 3rem);
             }
             
-            .products-grid {
+            .areas-grid {
                 grid-template-columns: 1fr;
-            }
-            
-            .dashboard-grid {
-                grid-template-columns: repeat(2, 1fr);
             }
             
             .section {
@@ -725,12 +672,18 @@
                 justify-content: center;
             }
             
-            .dashboard-grid {
-                grid-template-columns: 1fr;
+            .ecosystem-visual {
+                height: 300px;
             }
             
-            .modules-grid {
-                grid-template-columns: repeat(2, 1fr);
+            .orbit-1 { width: 250px; height: 250px; }
+            .orbit-2 { width: 180px; height: 180px; }
+            .orbit-3 { width: 110px; height: 110px; }
+            
+            .ecosystem-node {
+                width: 60px;
+                height: 60px;
+                font-size: 1.2rem;
             }
         }
 
@@ -741,44 +694,9 @@
             left: 0;
             width: 0%;
             height: 3px;
-            background: var(--gradient-primary);
+            background: var(--gradient-ecosystem);
             z-index: 1001;
             transition: width 0.1s linear;
-        }
-
-        /* Feature Highlights */
-        .feature-highlight {
-            display: flex;
-            align-items: center;
-            gap: var(--space-md);
-            padding: var(--space-lg);
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: var(--radius-lg);
-            margin-bottom: var(--space-md);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .feature-icon {
-            width: 48px;
-            height: 48px;
-            background: rgba(66, 153, 225, 0.1);
-            border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--accent-blue);
-            font-size: 1.2rem;
-            flex-shrink: 0;
-        }
-
-        /* CTA Section */
-        .cta-section {
-            background: linear-gradient(135deg, var(--primary-800) 0%, var(--primary-700) 100%);
-            border-radius: var(--radius-xl);
-            padding: var(--space-2xl);
-            text-align: center;
-            margin: var(--space-3xl) 0;
-            border: 1px solid rgba(255, 255, 255, 0.1);
         }
     </style>
 </head>
@@ -796,10 +714,10 @@
                 </a>
 
                 <div class="nav-links" id="navLinks">
-                    <a href="#solutions" class="nav-link">Solutions</a>
-                    <a href="#products" class="nav-link">Products</a>
+                    <a href="#ecosystem" class="nav-link">Ecosystem</a>
+                    <a href="#areas" class="nav-link">Business Areas</a>
                     <a href="#technology" class="nav-link">Technology</a>
-                    <a href="#industries" class="nav-link">Industries</a>
+                    <a href="#enterprise" class="nav-link">Enterprise</a>
                     <a href="#contact" class="nav-link">Contact</a>
                     <a href="index.html" class="btn btn-primary">Launch E-Hub</a>
                 </div>
@@ -813,63 +731,229 @@
 
     <!-- Hero Section -->
     <section class="hero">
-        <div class="hero-background"></div>
         <div class="container">
-            <div class="hero-content fade-in">
+            <div class="hero-content">
                 <div class="hero-text">
                     <h1 class="hero-title">
-                        Enterprise Intelligence<br>
-                        <span class="text-gradient">Reinvented</span>
+                        Building Africa's<br>
+                        <span class="text-gradient">Complete Technology Ecosystem</span>
                     </h1>
                     <p class="hero-subtitle">
-                        Jasiri Technology delivers comprehensive SaaS solutions, enterprise intelligence, and secure workspace platforms that transform business operations across industries.
+                        Jasiri Technology is a comprehensive technology ecosystem providing innovative solutions across Network Services, Enterprise Solutions, Production & Manufacturing, Healthcare, Education, and Transport & Logistics.
                     </p>
                     <div class="hero-buttons">
-                        <a href="#demo" class="btn btn-primary">
-                            <i class="fas fa-play-circle"></i> View Platform Demo
+                        <a href="#areas" class="btn btn-primary">
+                            <i class="fas fa-compass"></i> Explore Ecosystem
                         </a>
                         <a href="#contact" class="btn btn-secondary">
-                            <i class="fas fa-calendar"></i> Schedule Consultation
+                            <i class="fas fa-handshake"></i> Partner With Us
                         </a>
                     </div>
                 </div>
                 
-                <div class="ehub-showcase fade-in">
-                    <div class="ehub-preview">
-                        <div class="ehub-dashboard">
-                            <div class="dashboard-header">
-                                <div class="dashboard-icon">
-                                    <i class="fas fa-cube"></i>
-                                </div>
-                                <div class="dashboard-title">Jasiri Enterprise Hub</div>
-                                <div class="module-status">
-                                    <i class="fas fa-circle"></i>
-                                    <span>Live</span>
-                                </div>
-                            </div>
-                            <div class="dashboard-grid">
-                                <div class="dashboard-module">
-                                    <div class="module-icon">
-                                        <i class="fas fa-chart-bar"></i>
-                                    </div>
-                                    <div class="module-name">Sales Hub</div>
-                                    <div class="module-status">Active</div>
-                                </div>
-                                <div class="dashboard-module">
-                                    <div class="module-icon">
-                                        <i class="fas fa-users"></i>
-                                    </div>
-                                    <div class="module-name">Resource Hub</div>
-                                    <div class="module-status">Active</div>
-                                </div>
-                                <div class="dashboard-module">
-                                    <div class="module-icon">
-                                        <i class="fas fa-money-bill-wave"></i>
-                                    </div>
-                                    <div class="module-name">Finance Hub</div>
-                                    <div class="module-status">Active</div>
-                                </div>
-                            </div>
+                <div class="ecosystem-visual fade-in">
+                    <div class="ecosystem-orbit orbit-1"></div>
+                    <div class="ecosystem-orbit orbit-2"></div>
+                    <div class="ecosystem-orbit orbit-3"></div>
+                    
+                    <!-- Business Area Nodes -->
+                    <div class="ecosystem-node node-network" style="transform: rotate(0deg) translateX(200px);">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <div class="ecosystem-node node-enterprise" style="transform: rotate(60deg) translateX(200px);">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <div class="ecosystem-node node-production" style="transform: rotate(120deg) translateX(200px);">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                    <div class="ecosystem-node node-healthcare" style="transform: rotate(180deg) translateX(200px);">
+                        <i class="fas fa-hospital"></i>
+                    </div>
+                    <div class="ecosystem-node node-education" style="transform: rotate(240deg) translateX(200px);">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="ecosystem-node node-logistics" style="transform: rotate(300deg) translateX(200px);">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    
+                    <!-- Technology Nodes -->
+                    <div class="ecosystem-node node-os" style="transform: rotate(30deg) translateX(150px);">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <div class="ecosystem-node node-appstore" style="transform: rotate(150deg) translateX(150px);">
+                        <i class="fas fa-store"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Business Areas Section -->
+    <section class="section" id="areas">
+        <div class="container">
+            <h2 class="section-title text-center fade-in">Our Business Areas</h2>
+            <p class="section-subtitle text-center fade-in">
+                Comprehensive technology solutions across six key sectors driving digital transformation in Africa
+            </p>
+
+            <div class="areas-grid">
+                <!-- Network Services -->
+                <div class="area-card network fade-in">
+                    <div class="area-icon">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <h3 class="area-title">Network Services</h3>
+                    <p class="area-description">
+                        Enterprise-grade network infrastructure, cybersecurity solutions, and connectivity services for businesses of all sizes.
+                    </p>
+                    <div class="area-features">
+                        <div class="area-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Enterprise Network Infrastructure</span>
+                        </div>
+                        <div class="area-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Cybersecurity Solutions</span>
+                        </div>
+                        <div class="area-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Cloud Connectivity</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Enterprise Solutions -->
+                <div class="area-card enterprise fade-in">
+                    <div class="area-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h3 class="area-title">Enterprise Solutions</h3>
+                    <p class="area-description">
+                        Complete enterprise software suite featuring E-Hub with modular business management solutions and AI-powered intelligence.
+                    </p>
+                    <div class="area-features">
+                        <div class="area-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Jasiri E-Hub Suite</span>
+                        </div>
+                        <div class="area-feature">
+                            <i class="fas fa-check"></i>
+                            <span>BizInn AI Intelligence</span>
+                        </div>
+                        <div class="area-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Ngao Security Platform</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Production & Manufacturing -->
+                <div class="area-card production fade-in">
+                    <div class="area-icon">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                    <h3 class="area-title">Production & Manufacturing</h3>
+                    <p class="area-description">
+                        Industrial automation, smart manufacturing solutions, and construction automation technologies.
+                    </p>
+                    <div class="area-features">
+                        <div class="area-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Construction Automation</span>
+                        </div>
+                        <div class="area-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Smart Manufacturing</span>
+                        </div>
+                        <div class="area-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Industrial IoT Solutions</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Construction Automation Highlight -->
+                    <div class="construction-highlight">
+                        <h3>
+                            <i class="fas fa-robot"></i>
+                            Focus: Construction Automation
+                        </h3>
+                        <p style="color: rgba(255, 255, 255, 0.8); font-size: 0.95rem;">
+                            Pioneering automated construction technologies including robotics, BIM integration, and smart site management systems.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Healthcare -->
+                <div class="area-card healthcare fade-in">
+                    <div class="area-icon">
+                        <i class="fas fa-hospital"></i>
+                    </div>
+                    <h3 class="area-title">Healthcare Technology</h3>
+                    <p class="area-description">
+                        Digital health solutions, hospital management systems, and telemedicine platforms for modern healthcare delivery.
+                    </p>
+                    <div class="area-features">
+                        <div class="area-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Hospital Management Systems</span>
+                        </div>
+                        <div class="area-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Telemedicine Platforms</span>
+                        </div>
+                        <div class="area-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Medical IoT Devices</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Education -->
+                <div class="area-card education fade-in">
+                    <div class="area-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3 class="area-title">Education Technology</h3>
+                    <p class="area-description">
+                        EdTech solutions, learning management systems, and digital campus platforms for educational institutions.
+                    </p>
+                    <div class="area-features">
+                        <div class="area-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Learning Management Systems</span>
+                        </div>
+                        <div class="area-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Digital Campus Solutions</span>
+                        </div>
+                        <div class="area-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Virtual Learning Environments</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Transport & Logistics -->
+                <div class="area-card logistics fade-in">
+                    <div class="area-icon">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <h3 class="area-title">Transport & Logistics</h3>
+                    <p class="area-description">
+                        Smart logistics solutions, fleet management systems, and supply chain optimization technologies.
+                    </p>
+                    <div class="area-features">
+                        <div class="area-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Fleet Management Systems</span>
+                        </div>
+                        <div class="area-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Supply Chain Automation</span>
+                        </div>
+                        <div class="area-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Logistics Optimization</span>
                         </div>
                     </div>
                 </div>
@@ -877,268 +961,167 @@
         </div>
     </section>
 
-    <!-- Solutions Section -->
-    <section class="section" id="solutions" style="background: rgba(23, 42, 69, 0.3);">
-        <div class="container">
-            <h2 class="section-title text-center fade-in">Comprehensive Business Solutions</h2>
-            <p class="section-subtitle text-center fade-in">
-                Modular enterprise solutions designed for scalability, integration, and business transformation
-            </p>
-
-            <div class="feature-highlight fade-in">
-                <div class="feature-icon">
-                    <i class="fas fa-cubes"></i>
-                </div>
-                <div>
-                    <h3 style="margin-bottom: var(--space-xs); color: white;">Jasiri Enterprise Suite (E-Hub)</h3>
-                    <p style="color: rgba(255, 255, 255, 0.7);">
-                        A complete modular SaaS platform featuring integrated hubs for comprehensive business management. 
-                        Deploy as a complete suite or individual modules based on your business needs.
-                    </p>
-                </div>
-            </div>
-
-            <div class="modules-grid fade-in">
-                <div class="module-item">
-                    <div class="module-icon-small">
-                        <i class="fas fa-money-bill-wave"></i>
-                    </div>
-                    <h4>Finance Hub</h4>
-                    <p style="font-size: 0.9rem; color: rgba(255,255,255,0.7); margin-top: 4px;">
-                        Accounting, invoicing, financial reporting
-                    </p>
-                </div>
-                <div class="module-item">
-                    <div class="module-icon-small">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <h4>Sales Hub</h4>
-                    <p style="font-size: 0.9rem; color: rgba(255,255,255,0.7); margin-top: 4px;">
-                        CRM, analytics, customer management
-                    </p>
-                </div>
-                <div class="module-item">
-                    <div class="module-icon-small">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <h4>Resource Hub</h4>
-                    <p style="font-size: 0.9rem; color: rgba(255,255,255,0.7); margin-top: 4px;">
-                        HR, asset tracking, project management
-                    </p>
-                </div>
-                <div class="module-item">
-                    <div class="module-icon-small">
-                        <i class="fas fa-user-tie"></i>
-                    </div>
-                    <h4>Talent Hub</h4>
-                    <p style="font-size: 0.9rem; color: rgba(255,255,255,0.7); margin-top: 4px;">
-                        Recruitment, training, performance
-                    </p>
-                </div>
-                <div class="module-item">
-                    <div class="module-icon-small">
-                        <i class="fas fa-tasks"></i>
-                    </div>
-                    <h4>Management Hub</h4>
-                    <p style="font-size: 0.9rem; color: rgba(255,255,255,0.7); margin-top: 4px;">
-                        Operations, planning, analytics
-                    </p>
-                </div>
-                <div class="module-item">
-                    <div class="module-icon-small">
-                        <i class="fas fa-truck"></i>
-                    </div>
-                    <h4>Fleet Hub</h4>
-                    <p style="font-size: 0.9rem; color: rgba(255,255,255,0.7); margin-top: 4px;">
-                        Logistics, shipping, fleet management
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Products Section -->
-    <section class="section" id="products">
+    <!-- Technology Ecosystem -->
+    <section class="section" id="technology" style="background: rgba(23, 42, 69, 0.3);">
         <div class="container">
             <h2 class="section-title text-center fade-in">Our Technology Ecosystem</h2>
             <p class="section-subtitle text-center fade-in">
-                A comprehensive suite of integrated solutions for modern enterprise challenges
+                Integrated technology platforms that power our solutions across all business areas
             </p>
 
-            <div class="products-grid">
-                <!-- Jasiri Enterprise Suite -->
-                <div class="product-card fade-in">
-                    <div class="product-icon">
-                        <i class="fas fa-cubes"></i>
-                    </div>
-                    <h3 class="product-title">Jasiri Enterprise Suite</h3>
-                    <p class="product-description">
-                        Complete modular SaaS platform with real-time analytics, AI-powered insights, and multi-platform integration. Deploy full suite or individual hubs.
-                    </p>
-                    <div class="product-tags">
-                        <span class="tag">Modular</span>
-                        <span class="tag">Real-time</span>
-                        <span class="tag">Cloud Native</span>
-                    </div>
-                </div>
-
-                <!-- Chatsiri Workspace -->
-                <div class="product-card fade-in">
-                    <div class="product-icon">
-                        <i class="fas fa-comments"></i>
-                    </div>
-                    <h3 class="product-title">Chatsiri Workspace</h3>
-                    <p class="product-description">
-                        Integrated collaboration platform with seamless E-Hub integration. Team messaging, video conferencing, and project management in one secure environment.
-                    </p>
-                    <div class="product-tags">
-                        <span class="tag">Integrated</span>
-                        <span class="tag">Secure</span>
-                        <span class="tag">Collaborative</span>
-                    </div>
-                </div>
-
-                <!-- Ngao Security Suite -->
-                <div class="product-card fade-in">
-                    <div class="product-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3 class="product-title">Ngao Security Suite</h3>
-                    <p class="product-description">
-                        Comprehensive security platform featuring advanced threat protection, email security, and compliance management for enterprise-grade protection.
-                    </p>
-                    <div class="product-tags">
-                        <span class="tag">Secure</span>
-                        <span class="tag">Compliant</span>
-                        <span class="tag">24/7 Monitoring</span>
-                    </div>
-                </div>
-
-                <!-- BizInn Intelligence -->
-                <div class="product-card fade-in">
-                    <div class="product-icon">
-                        <i class="fas fa-brain"></i>
-                    </div>
-                    <h3 class="product-title">BizInn Intelligence</h3>
-                    <p class="product-description">
-                        AI-driven enterprise intelligence system providing predictive analytics, automated insights, and data-driven decision making across all business functions.
-                    </p>
-                    <div class="product-tags">
-                        <span class="tag">AI-Powered</span>
-                        <span class="tag">Predictive</span>
-                        <span class="tag">Automated</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Ngao Sub-products -->
-            <div style="margin-top: var(--space-3xl);">
-                <h3 class="section-title" style="font-size: 2rem; text-align: center; margin-bottom: var(--space-xl);">Ngao Security Components</h3>
-                <div class="ngao-grid fade-in">
-                    <div class="ngao-card">
-                        <div class="ngao-icon">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <h4 style="color: white; margin-bottom: var(--space-xs);">Ngao Mail</h4>
-                        <p style="color: rgba(255,255,255,0.7); font-size: 0.95rem;">
-                            Secure enterprise email platform with advanced threat protection, encryption, and compliance features.
-                        </p>
-                    </div>
-                    <div class="ngao-card">
-                        <div class="ngao-icon">
-                            <i class="fas fa-cloud"></i>
-                        </div>
-                        <h4 style="color: white; margin-bottom: var(--space-xs);">Ngao Cloud</h4>
-                        <p style="color: rgba(255,255,255,0.7); font-size: 0.95rem;">
-                            Secure cloud storage and computing platform with military-grade encryption and data protection.
-                        </p>
-                    </div>
-                    <div class="ngao-card">
-                        <div class="ngao-icon">
-                            <i class="fas fa-shield-alt"></i>
-                        </div>
-                        <h4 style="color: white; margin-bottom: var(--space-xs);">Ngao Security</h4>
-                        <p style="color: rgba(255,255,255,0.7); font-size: 0.95rem;">
-                            Comprehensive security monitoring, threat detection, and compliance management system.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Industries Section -->
-    <section class="section" id="industries" style="background: rgba(23, 42, 69, 0.3);">
-        <div class="container">
-            <h2 class="section-title text-center fade-in">Customized for Your Industry</h2>
-            <p class="section-subtitle text-center fade-in">
-                Tailored solutions designed for diverse industry requirements and operational needs
-            </p>
-
-            <div class="industries-grid fade-in">
-                <div class="industry-item">
-                    <i class="fas fa-graduation-cap industry-icon"></i>
-                    <span>Education</span>
-                </div>
-                <div class="industry-item">
-                    <i class="fas fa-hospital industry-icon"></i>
-                    <span>Healthcare</span>
-                </div>
-                <div class="industry-item">
-                    <i class="fas fa-utensils industry-icon"></i>
-                    <span>Restaurants</span>
-                </div>
-                <div class="industry-item">
-                    <i class="fas fa-users industry-icon"></i>
-                    <span>Community Groups</span>
-                </div>
-                <div class="industry-item">
-                    <i class="fas fa-industry industry-icon"></i>
-                    <span>Manufacturing</span>
-                </div>
-                <div class="industry-item">
-                    <i class="fas fa-store industry-icon"></i>
-                    <span>Retail</span>
-                </div>
-                <div class="industry-item">
-                    <i class="fas fa-handshake industry-icon"></i>
-                    <span>Professional Services</span>
-                </div>
-                <div class="industry-item">
-                    <i class="fas fa-warehouse industry-icon"></i>
-                    <span>Logistics</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Technology Section -->
-    <section class="section" id="technology">
-        <div class="container">
-            <h2 class="section-title text-center fade-in">Future-Ready Technology Stack</h2>
-            <p class="section-subtitle text-center fade-in">
-                Building the foundation for tomorrow's enterprise landscape
-            </p>
-
-            <div class="products-grid">
-                <div class="product-card fade-in">
-                    <div class="product-icon">
-                        <i class="fas fa-mobile-alt"></i>
-                    </div>
-                    <h3 class="product-title">Jasiri App Store</h3>
-                    <p class="product-description">
-                        Enterprise-grade application marketplace featuring certified business applications, tools, and integrations.
-                    </p>
-                </div>
-                
-                <div class="product-card fade-in">
-                    <div class="product-icon">
+            <div class="technology-showcase">
+                <!-- Jasiri OS -->
+                <div class="tech-card fade-in">
+                    <div class="tech-icon">
                         <i class="fas fa-laptop-code"></i>
                     </div>
-                    <h3 class="product-title">Coming Soon: Jasiri OS</h3>
-                    <p class="product-description">
-                        Unified operating system for mobile, desktop, and enterprise devices with native E-Hub integration.
+                    <h3 class="tech-title">Jasiri OS</h3>
+                    <p class="tech-description">
+                        Unified operating system for mobile, desktop, and enterprise devices with native integration across all Jasiri platforms.
                     </p>
+                    <div class="area-features">
+                        <div class="area-feature">
+                            <i class="fas fa-mobile-alt"></i>
+                            <span>Mobile & Desktop</span>
+                        </div>
+                        <div class="area-feature">
+                            <i class="fas fa-plug"></i>
+                            <span>Native Integration</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Jasiri App Store -->
+                <div class="tech-card fade-in">
+                    <div class="tech-icon">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <h3 class="tech-title">Jasiri App Store</h3>
+                    <p class="tech-description">
+                        Enterprise-grade application marketplace featuring certified business applications, tools, and industry-specific solutions.
+                    </p>
+                    <div class="area-features">
+                        <div class="area-feature">
+                            <i class="fas fa-certificate"></i>
+                            <span>Certified Applications</span>
+                        </div>
+                        <div class="area-feature">
+                            <i class="fas fa-industry"></i>
+                            <span>Industry-Specific</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cloud Infrastructure -->
+                <div class="tech-card fade-in">
+                    <div class="tech-icon">
+                        <i class="fas fa-cloud"></i>
+                    </div>
+                    <h3 class="tech-title">Cloud Infrastructure</h3>
+                    <p class="tech-description">
+                        Scalable cloud platform supporting all Jasiri solutions with enterprise-grade security and reliability.
+                    </p>
+                    <div class="area-features">
+                        <div class="area-feature">
+                            <i class="fas fa-expand-alt"></i>
+                            <span>Highly Scalable</span>
+                        </div>
+                        <div class="area-feature">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Enterprise Security</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enterprise Solutions Highlight -->
+    <section class="section" id="enterprise">
+        <div class="container">
+            <h2 class="section-title text-center fade-in">Enterprise Solutions Division</h2>
+            <p class="section-subtitle text-center fade-in">
+                Comprehensive business management solutions powering enterprises across Africa
+            </p>
+
+            <div class="areas-grid">
+                <div class="area-card enterprise fade-in">
+                    <div class="area-icon">
+                        <i class="fas fa-cubes"></i>
+                    </div>
+                    <h3 class="area-title">Jasiri E-Hub</h3>
+                    <p class="area-description">
+                        Complete modular enterprise suite with integrated hubs for comprehensive business management.
+                    </p>
+                    <div class="area-features">
+                        <div class="area-feature">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>Sales Hub</span>
+                        </div>
+                        <div class="area-feature">
+                            <i class="fas fa-users"></i>
+                            <span>Resource Hub</span>
+                        </div>
+                        <div class="area-feature">
+                            <i class="fas fa-money-bill-wave"></i>
+                            <span>Finance Hub</span>
+                        </div>
+                        <div class="area-feature">
+                            <i class="fas fa-truck"></i>
+                            <span>Fleet Hub</span>
+                        </div>
+                    </div>
+                    <a href="enterprise.html" class="btn btn-primary" style="margin-top: var(--space-md); width: 100%;">
+                        <i class="fas fa-rocket"></i> Explore Enterprise Solutions
+                    </a>
+                </div>
+
+                <div class="area-card enterprise fade-in">
+                    <div class="area-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3 class="area-title">BizInn Intelligence</h3>
+                    <p class="area-description">
+                        AI-driven enterprise intelligence system providing predictive analytics and data-driven decision making.
+                    </p>
+                    <div class="area-features">
+                        <div class="area-feature">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Predictive Analytics</span>
+                        </div>
+                        <div class="area-feature">
+                            <i class="fas fa-robot"></i>
+                            <span>AI-Powered Insights</span>
+                        </div>
+                        <div class="area-feature">
+                            <i class="fas fa-database"></i>
+                            <span>Data Integration</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="area-card enterprise fade-in">
+                    <div class="area-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="area-title">Ngao Security Suite</h3>
+                    <p class="area-description">
+                        Comprehensive security platform with advanced threat protection and compliance management.
+                    </p>
+                    <div class="area-features">
+                        <div class="area-feature">
+                            <i class="fas fa-envelope"></i>
+                            <span>Ngao Mail</span>
+                        </div>
+                        <div class="area-feature">
+                            <i class="fas fa-cloud"></i>
+                            <span>Ngao Cloud</span>
+                        </div>
+                        <div class="area-feature">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Ngao Security</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1148,13 +1131,13 @@
     <section class="section">
         <div class="container">
             <div class="cta-section fade-in">
-                <h2 class="section-title" style="color: white;">Ready to Transform Your Business?</h2>
+                <h2 class="section-title" style="color: white;">Ready to Transform Your Industry?</h2>
                 <p style="color: rgba(255,255,255,0.8); max-width: 600px; margin: var(--space-md) auto var(--space-xl);">
-                    Join thousands of enterprises that trust Jasiri Technology for their digital transformation journey.
+                    Join Africa's leading technology ecosystem and drive digital transformation in your sector.
                 </p>
                 <div class="hero-buttons" style="justify-content: center;">
                     <a href="#contact" class="btn btn-primary" style="padding: var(--space-md) var(--space-xl);">
-                        <i class="fas fa-calendar-check"></i> Schedule Demo
+                        <i class="fas fa-handshake"></i> Partner With Us
                     </a>
                     <a href="index.html" class="btn btn-secondary" style="padding: var(--space-md) var(--space-xl);">
                         <i class="fas fa-rocket"></i> Launch E-Hub
@@ -1174,27 +1157,29 @@
                         Jasiri Tech
                     </a>
                     <p style="color: rgba(255,255,255,0.7); margin-top: var(--space-md);">
-                        Transforming enterprises through innovative technology solutions and digital excellence.
+                        Africa's Complete Technology Ecosystem - Transforming industries through innovative solutions.
                     </p>
                 </div>
 
                 <div class="footer-section">
-                    <h3>Products</h3>
+                    <h3>Business Areas</h3>
                     <div class="footer-links">
-                        <a href="#solutions" class="footer-link">Enterprise Suite</a>
-                        <a href="#products" class="footer-link">Chatsiri Workspace</a>
-                        <a href="#products" class="footer-link">BizInn Intelligence</a>
-                        <a href="#products" class="footer-link">Ngao Security</a>
+                        <a href="#areas" class="footer-link">Network Services</a>
+                        <a href="#enterprise" class="footer-link">Enterprise Solutions</a>
+                        <a href="#areas" class="footer-link">Production & Manufacturing</a>
+                        <a href="#areas" class="footer-link">Healthcare Technology</a>
+                        <a href="#areas" class="footer-link">Education Technology</a>
+                        <a href="#areas" class="footer-link">Transport & Logistics</a>
                     </div>
                 </div>
 
                 <div class="footer-section">
-                    <h3>Solutions</h3>
+                    <h3>Technology</h3>
                     <div class="footer-links">
-                        <a href="#industries" class="footer-link">By Industry</a>
-                        <a href="#solutions" class="footer-link">By Business Size</a>
-                        <a href="#" class="footer-link">Implementation Services</a>
-                        <a href="#" class="footer-link">Support & Training</a>
+                        <a href="#technology" class="footer-link">Jasiri OS</a>
+                        <a href="#technology" class="footer-link">App Store</a>
+                        <a href="#technology" class="footer-link">Cloud Infrastructure</a>
+                        <a href="enterprise.html" class="footer-link">Enterprise Solutions</a>
                     </div>
                 </div>
 
@@ -1210,12 +1195,18 @@
                         <div class="footer-link">
                             <i class="fas fa-map-marker-alt"></i> Nairobi, Kenya
                         </div>
+                        <div class="footer-link">
+                            <i class="fas fa-building"></i> Enterprise Center
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: var(--space-xl); text-align: center; color: rgba(255,255,255,0.5);">
                 <p>&copy; 2024 Jasiri Technology. All rights reserved.</p>
+                <p style="font-size: 0.9rem; margin-top: var(--space-xs);">
+                    Building Africa's Technology Future
+                </p>
             </div>
         </div>
     </footer>
@@ -1225,6 +1216,7 @@
             initNavigation();
             initScrollEffects();
             initAnimations();
+            initEcosystemAnimation();
         });
 
         function initNavigation() {
@@ -1283,15 +1275,6 @@
                 const scrolled = (winScroll / height) * 100;
                 scrollProgress.style.width = scrolled + '%';
             });
-
-            // Parallax effect for hero
-            window.addEventListener('scroll', () => {
-                const scrolled = window.pageYOffset;
-                const heroBackground = document.querySelector('.hero-background');
-                if (heroBackground) {
-                    heroBackground.style.transform = `translateY(${scrolled * 0.5}px)`;
-                }
-            });
         }
 
         function initAnimations() {
@@ -1313,6 +1296,28 @@
             document.querySelectorAll('.fade-in').forEach(el => {
                 observer.observe(el);
             });
+        }
+
+        function initEcosystemAnimation() {
+            const nodes = document.querySelectorAll('.ecosystem-node');
+            let angle = 0;
+            
+            function animateEcosystem() {
+                angle += 0.5;
+                
+                nodes.forEach((node, index) => {
+                    const baseAngle = (index * 60) + angle;
+                    const radius = index < 6 ? 200 : 150;
+                    const x = Math.cos(baseAngle * Math.PI / 180) * radius;
+                    const y = Math.sin(baseAngle * Math.PI / 180) * radius;
+                    
+                    node.style.transform = `translate(${x}px, ${y}px)`;
+                });
+                
+                requestAnimationFrame(animateEcosystem);
+            }
+            
+            animateEcosystem();
         }
 
         // Initialize animations on load
