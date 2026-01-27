@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jasiri Technology | Projects & Development Timeline</title>
+    
+    <!-- Modern CSS Features -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Professional CSS Variables */
+        :root {
+            /* Professional Color Palette */
+            --color-primary: #0a192f;
+            --color-secondary: #112240;
+            --color-accent: #64ffda;
+            --color-accent-secondary: #57cbff;
+            --color-accent-tertiary: #ff6b8b;
+            --color-white: #e6f1ff;
+            --color-gray-light: #a8b2d1;
+            --color-gray-medium: #8892b0;
+            
+            /* Status Colors */
+            --status-complete: #48bb78;
+            --status-in-progress: #4299e1;
+            --status-just-started: #ed8936;
+            --status-planning: #9f7aea;
+            --status-upcoming: #f56565;
+            
+            /* Gradients */
+            --gradient-primary: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-secondary) 100%);
+            --gradient-secondary: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+            --gradient-card: linear-gradient(145deg, rgba(100, 255, 218, 0.05) 0%, rgba(17, 34, 64, 0.1) 100%);
+            
+            /* Typography */
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-heading: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+            
+            /* Spacing */
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-5: 1.5rem;
+            --space-6: 2rem;
+            --space-8: 3rem;
+            --space-10: 4rem;
+            --space-12: 6rem;
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            
+            /* Borders */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+            
+            /* Transitions */
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Reset */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            color: var(--color-white);
+            background: var(--color-primary);
+            overflow-x: hidden;
+        }
+
+        /* Container */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-6);
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(10, 25, 47, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(100, 255, 218, 0.1);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--space-4) 0;
+            height: 72px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            text-decoration: none;
+            color: var(--color-white);
+            font-weight: 700;
+            font-size: 1.5rem;
+            font-family: var(--font-heading);
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--gradient-primary);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: var(--color-primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: var(--space-6);
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--color-gray-light);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            padding: var(--space-2) 0;
+            position: relative;
+            transition: color var(--transition-fast);
+        }
+
+        .nav-link:hover {
+            color: var(--color-white);
+        }
+
+        .nav-link.active {
+            color: var(--color-accent);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: var(--space-12) 0 var(--space-10);
+            background: linear-gradient(135deg, rgba(10, 25, 47, 0.9) 0%, rgba(17, 34, 64, 0.9) 100%);
+            margin-top: 72px;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-title {
+            font-family: var(--font-heading);
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: var(--space-6);
+            color: var(--color-white);
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--color-gray-light);
+            line-height: 1.8;
+        }
+
+        /* Projects Overview */
+        .projects-overview {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-6);
+            margin: var(--space-10) 0;
+        }
+
+        .overview-card {
+            background: var(--gradient-card);
+            border: 1px solid rgba(100, 255, 218, 0.1);
+            border-radius: var(--radius-xl);
+            padding: var(--space-6);
+            text-align: center;
+            transition: transform var(--transition-normal);
+        }
+
+        .overview-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .overview-number {
+            font-family: var(--font-heading);
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: var(--space-2);
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .overview-label {
+            color: var(--color-gray-light);
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Progress Bars */
+        .progress-section {
+            margin: var(--space-12) 0;
+        }
+
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: var(--space-10);
+            color: var(--color-white);
+        }
+
+        .progress-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-6);
+        }
+
+        .progress-card {
+            background: var(--gradient-card);
+            border: 1px solid rgba(100, 255, 218, 0.1);
+            border-radius: var(--radius-xl);
+            padding: var(--space-6);
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-4);
+        }
+
+        .project-title {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-white);
+        }
+
+        .project-status {
+            padding: var(--space-1) var(--space-3);
+            border-radius: var(--radius-full);
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-complete {
+            background: rgba(72, 187, 120, 0.1);
+            color: var(--status-complete);
+            border: 1px solid rgba(72, 187, 120, 0.2);
+        }
+
+        .status-in-progress {
+            background: rgba(66, 153, 225, 0.1);
+            color: var(--status-in-progress);
+            border: 1px solid rgba(66, 153, 225, 0.2);
+        }
+
+        .status-just-started {
+            background: rgba(237, 137, 54, 0.1);
+            color: var(--status-just-started);
+            border: 1px solid rgba(237, 137, 54, 0.2);
+        }
+
+        .status-planning {
+            background: rgba(159, 122, 234, 0.1);
+            color: var(--status-planning);
+            border: 1px solid rgba(159, 122, 234, 0.2);
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-full);
+            overflow: hidden;
+            margin: var(--space-4) 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: var(--radius-full);
+            transition: width 1s ease-in-out;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            color: var(--color-gray-light);
+            font-size: 0.95rem;
+        }
+
+        .progress-description {
+            color: var(--color-gray-light);
+            margin-top: var(--space-4);
+            line-height: 1.7;
+        }
+
+        /* Development Timeline */
+        .timeline-section {
+            margin: var(--space-12) 0;
+            position: relative;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--gradient-primary);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: center;
+            margin-bottom: var(--space-10);
+            position: relative;
+        }
+
+        .timeline-content {
+            width: 45%;
+            background: var(--gradient-card);
+            border: 1px solid rgba(100, 255, 218, 0.1);
+            border-radius: var(--radius-xl);
+            padding: var(--space-6);
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-left: auto;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-right: auto;
+        }
+
+        .timeline-marker {
+            position: absolute;
+            left: 50%;
+            top: var(--space-6);
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            border: 4px solid var(--color-primary);
+        }
+
+        .timeline-date {
+            position: absolute;
+            top: var(--space-6);
+            color: var(--color-accent);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-date {
+            right: calc(55% + var(--space-6));
+        }
+
+        .timeline-item:nth-child(even) .timeline-date {
+            left: calc(55% + var(--space-6));
+        }
+
+        /* Future Projects */
+        .future-projects {
+            margin: var(--space-12) 0;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-6);
+            margin-top: var(--space-8);
+        }
+
+        .future-card {
+            background: var(--gradient-card);
+            border: 1px solid rgba(100, 255, 218, 0.1);
+            border-radius: var(--radius-xl);
+            padding: var(--space-6);
+            transition: all var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .future-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--color-accent);
+        }
+
+        .future-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: opacity var(--transition-normal);
+        }
+
+        .future-card:hover::before {
+            opacity: 1;
+        }
+
+        .future-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--gradient-primary);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: var(--space-4);
+            color: var(--color-primary);
+            font-size: 1.5rem;
+        }
+
+        .future-title {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: var(--space-2);
+            color: var(--color-white);
+        }
+
+        .future-category {
+            display: inline-block;
+            padding: var(--space-1) var(--space-3);
+            background: rgba(245, 101, 101, 0.1);
+            color: var(--status-upcoming);
+            border-radius: var(--radius-full);
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: var(--space-4);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .future-description {
+            color: var(--color-gray-light);
+            line-height: 1.7;
+            margin-bottom: var(--space-4);
+        }
+
+        .future-timeline {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            color: var(--color-gray-medium);
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--color-secondary);
+            padding: var(--space-12) 0 var(--space-8);
+            border-top: 1px solid rgba(100, 255, 218, 0.1);
+            margin-top: var(--space-12);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-8);
+            margin-bottom: var(--space-8);
+        }
+
+        .footer-column h3 {
+            font-family: var(--font-heading);
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: var(--space-4);
+            color: var(--color-white);
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-2);
+        }
+
+        .footer-link {
+            color: var(--color-gray-light);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color var(--transition-fast);
+        }
+
+        .footer-link:hover {
+            color: var(--color-accent);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: var(--space-8);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-text {
+            color: var(--color-gray-light);
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes progressFill {
+            from { width: 0%; }
+        }
+
+        .progress-fill.animate {
+            animation: progressFill 1s ease-out;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .projects-overview {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .progress-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .timeline::before {
+                left: var(--space-6);
+            }
+            
+            .timeline-content {
+                width: calc(100% - 80px);
+                margin-left: 80px !important;
+            }
+            
+            .timeline-date {
+                left: 0 !important;
+                right: auto !important;
+                width: 60px;
+                text-align: right;
+            }
+            
+            .timeline-marker {
+                left: var(--space-6);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .projects-overview {
+                grid-template-columns: 1fr;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">J</div>
+                    JASIRI
+                </a>
+
+                <div class="nav-links">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="#" class="nav-link active">Projects</a>
+                    <a href="#future" class="nav-link">Future</a>
+                    <a href="#timeline" class="nav-link">Timeline</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title fade-in">Development Portfolio</h1>
+                <p class="hero-subtitle fade-in">
+                    Track our journey from concept to completion. See what we're building now, what's coming next, 
+                    and explore our vision for the future of technology.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Overview -->
+    <section class="container">
+        <div class="projects-overview fade-in">
+            <div class="overview-card">
+                <div class="overview-number">4</div>
+                <div class="overview-label">Active Projects</div>
+            </div>
+            <div class="overview-card">
+                <div class="overview-number">65%</div>
+                <div class="overview-label">Primary Completion</div>
+            </div>
+            <div class="overview-card">
+                <div class="overview-number">3</div>
+                <div class="overview-label">Recently Started</div>
+            </div>
+            <div class="overview-card">
+                <div class="overview-number">6+</div>
+                <div class="overview-label">Future Concepts</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Current Projects Progress -->
+    <section class="progress-section">
+        <div class="container">
+            <h2 class="section-title fade-in">Current Development Status</h2>
+            
+            <div class="progress-grid">
+                <!-- E-Hub Project -->
+                <div class="progress-card fade-in">
+                    <div class="progress-header">
+                        <h3 class="project-title">Jasiri E-Hub</h3>
+                        <span class="project-status status-in-progress">In Development</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill animate" style="width: 65%; background: var(--gradient-primary);"></div>
+                    </div>
+                    <div class="progress-info">
+                        <span>65% Complete</span>
+                        <span>Target: Q2 2024</span>
+                    </div>
+                    <p class="progress-description">
+                        Enterprise management suite with modular architecture. Currently implementing 
+                        Finance, Sales, and Resource Hubs. Core infrastructure complete, module 
+                        integration in progress.
+                    </p>
+                </div>
+
+                <!-- Ngao Security -->
+                <div class="progress-card fade-in">
+                    <div class="progress-header">
+                        <h3 class="project-title">Ngao Security Suite</h3>
+                        <span class="project-status status-just-started">Just Started</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill animate" style="width: 15%; background: linear-gradient(135deg, #ed8936 0%, #f56565 100%);"></div>
+                    </div>
+                    <div class="progress-info">
+                        <span>15% Complete</span>
+                        <span>Target: Q4 2024</span>
+                    </div>
+                    <p class="progress-description">
+                        Comprehensive security platform featuring Ngao Mail, Ngao Cloud, and Ngao Security. 
+                        Currently in architecture design phase with security protocols being established.
+                    </p>
+                </div>
+
+                <!-- Chatsiri Workspace -->
+                <div class="progress-card fade-in">
+                    <div class="progress-header">
+                        <h3 class="project-title">Chatsiri Workspace</h3>
+                        <span class="project-status status-just-started">Just Started</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill animate" style="width: 10%; background: linear-gradient(135deg, #9f7aea 0%, #667eea 100%);"></div>
+                    </div>
+                    <div class="progress-info">
+                        <span>10% Complete</span>
+                        <span>Target: Q3 2024</span>
+                    </div>
+                    <p class="progress-description">
+                        Collaborative workspace platform with E-Hub integration. Currently designing 
+                        real-time communication protocols and user interface frameworks.
+                    </p>
+                </div>
+
+                <!-- BizInn Intelligence -->
+                <div class="progress-card fade-in">
+                    <div class="progress-header">
+                        <h3 class="project-title">BizInn Intelligence</h3>
+                        <span class="project-status status-just-started">Just Started</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill animate" style="width: 5%; background: linear-gradient(135deg, #4299e1 0%, #38b2ac 100%);"></div>
+                    </div>
+                    <div class="progress-info">
+                        <span>5% Complete</span>
+                        <span>Target: Q1 2025</span>
+                    </div>
+                    <p class="progress-description">
+                        AI-driven enterprise intelligence system. Research phase complete, beginning 
+                        algorithm development and data pipeline architecture.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Development Timeline -->
+    <section class="timeline-section" id="timeline">
+        <div class="container">
+            <h2 class="section-title fade-in">Development Timeline</h2>
+            
+            <div class="timeline fade-in">
+                <!-- 2023 -->
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-date">2023</div>
+                    <div class="timeline-content">
+                        <h3 style="color: var(--color-white); margin-bottom: var(--space-2);">E-Hub Foundation</h3>
+                        <p style="color: var(--color-gray-light); line-height: 1.7;">
+                            Initial architecture design and core framework development. 
+                            Established modular structure and database architecture.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Q1 2024 -->
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-date">Q1 2024</div>
+                    <div class="timeline-content">
+                        <h3 style="color: var(--color-white); margin-bottom: var(--space-2);">Core Development</h3>
+                        <p style="color: var(--color-gray-light); line-height: 1.7;">
+                            E-Hub reached 50% completion. Started planning for Ngao, Chatsiri, 
+                            and BizInn projects. Team expansion and resource allocation.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Q2 2024 -->
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-date">Q2 2024</div>
+                    <div class="timeline-content">
+                        <h3 style="color: var(--color-white); margin-bottom: var(--space-2);">Parallel Development</h3>
+                        <p style="color: var(--color-gray-light); line-height: 1.7;">
+                            E-Hub advanced to 65%. Ngao, Chatsiri, and BizInn development initiated. 
+                            Established separate development teams for each project.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Q3 2024 -->
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-date">Q3 2024</div>
+                    <div class="timeline-content">
+                        <h3 style="color: var(--color-white); margin-bottom: var(--space-2);">Beta Releases</h3>
+                        <p style="color: var(--color-gray-light); line-height: 1.7;">
+                            E-Hub beta testing. Chatsiri alpha release. Ngao security protocols 
+                            implementation. BizInn algorithm development.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Q4 2024 -->
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-date">Q4 2024</div>
+                    <div class="timeline-content">
+                        <h3 style="color: var(--color-white); margin-bottom: var(--space-2);">Launch Phase</h3>
+                        <p style="color: var(--color-gray-light); line-height: 1.7;">
+                            E-Hub official launch. Ngao beta release. Chatsiri production ready. 
+                            Begin networking and security project development.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 2025 -->
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-date">2025</div>
+                    <div class="timeline-content">
+                        <h3 style="color: var(--color-white); margin-bottom: var(--space-2);">Expansion Phase</h3>
+                        <p style="color: var(--color-gray-light); line-height: 1.7;">
+                            BizInn intelligence launch. Advanced networking solutions. 
+                            Security platform enhancements. New product line development.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Future Projects -->
+    <section class="future-projects" id="future">
+        <div class="container">
+            <h2 class="section-title fade-in">Upcoming & Future Projects</h2>
+            <p style="text-align: center; color: var(--color-gray-light); max-width: 800px; margin: 0 auto var(--space-10); line-height: 1.8;">
+                Our roadmap includes innovative solutions in networking, security, and enterprise technology 
+                designed to serve humanity for generations to come.
+            </p>
+
+            <div class="projects-grid">
+                <!-- Quantum Network Infrastructure -->
+                <div class="future-card fade-in">
+                    <div class="future-icon">
+                        <i class="fas fa-satellite"></i>
+                    </div>
+                    <div class="future-category">Networking</div>
+                    <h3 class="future-title">Quantum Network Infrastructure</h3>
+                    <p class="future-description">
+                        Next-generation network architecture with quantum-resistant encryption 
+                        and AI-driven traffic optimization for enterprise-scale deployments.
+                    </p>
+                    <div class="future-timeline">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Planned: Q1 2025</span>
+                    </div>
+                </div>
+
+                <!-- Advanced Security Operations -->
+                <div class="future-card fade-in">
+                    <div class="future-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="future-category">Security</div>
+                    <h3 class="future-title">Advanced Security Operations</h3>
+                    <p class="future-description">
+                        AI-powered security operations center with predictive threat analysis 
+                        and automated response systems for real-time protection.
+                    </p>
+                    <div class="future-timeline">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Planned: Q2 2025</span>
+                    </div>
+                </div>
+
+                <!-- Edge Computing Network -->
+                <div class="future-card fade-in">
+                    <div class="future-icon">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <div class="future-category">Networking</div>
+                    <h3 class="future-title">Edge Computing Network</h3>
+                    <p class="future-description">
+                        Distributed edge computing platform with low-latency processing 
+                        and decentralized data storage for IoT and real-time applications.
+                    </p>
+                    <div class="future-timeline">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Planned: Q3 2025</span>
+                    </div>
+                </div>
+
+                <!-- Zero-Trust Security Framework -->
+                <div class="future-card fade-in">
+                    <div class="future-icon">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <div class="future-category">Security</div>
+                    <h3 class="future-title">Zero-Trust Security Framework</h3>
+                    <p class="future-description">
+                        Comprehensive zero-trust architecture with continuous authentication 
+                        and micro-segmentation for enterprise security.
+                    </p>
+                    <div class="future-timeline">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Planned: Q4 2025</span>
+                    </div>
+                </div>
+
+                <!-- 5G Private Networks -->
+                <div class="future-card fade-in">
+                    <div class="future-icon">
+                        <i class="fas fa-tower-cell"></i>
+                    </div>
+                    <div class="future-category">Networking</div>
+                    <h3 class="future-title">5G Private Networks</h3>
+                    <p class="future-description">
+                        Enterprise-grade private 5G networks with custom spectrum allocation 
+                        and dedicated infrastructure for industrial applications.
+                    </p>
+                    <div class="future-timeline">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Planned: 2026</span>
+                    </div>
+                </div>
+
+                <!-- Cyber Threat Intelligence -->
+                <div class="future-card fade-in">
+                    <div class="future-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <div class="future-category">Security</div>
+                    <h3 class="future-title">Cyber Threat Intelligence</h3>
+                    <p class="future-description">
+                        AI-driven threat intelligence platform with global monitoring 
+                        and predictive analytics for emerging security threats.
+                    </p>
+                    <div class="future-timeline">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Planned: 2026</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <a href="index.html" class="logo" style="margin-bottom: var(--space-4); display: inline-flex;">
+                        <div class="logo-icon">J</div>
+                        JASIRI
+                    </a>
+                    <p style="color: var(--color-gray-light); line-height: 1.7;">
+                        Building technology solutions with the durability and foresight 
+                        to serve humanity for generations.
+                    </p>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Current Projects</h3>
+                    <div class="footer-links">
+                        <a href="#" class="footer-link">Jasiri E-Hub</a>
+                        <a href="#" class="footer-link">Ngao Security</a>
+                        <a href="#" class="footer-link">Chatsiri Workspace</a>
+                        <a href="#" class="footer-link">BizInn Intelligence</a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Future Projects</h3>
+                    <div class="footer-links">
+                        <a href="#future" class="footer-link">Quantum Networking</a>
+                        <a href="#future" class="footer-link">Security Operations</a>
+                        <a href="#future" class="footer-link">Edge Computing</a>
+                        <a href="#future" class="footer-link">5G Private Networks</a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Development</h3>
+                    <div class="footer-links">
+                        <a href="#timeline" class="footer-link">Timeline</a>
+                        <a href="#" class="footer-link">Progress Updates</a>
+                        <a href="mailto:dev@jasiri.tech" class="footer-link">Development Contact</a>
+                        <a href="#" class="footer-link">Technical Documentation</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p class="footer-text">
+                    © 2024 Jasiri Technology. Development progress as of December 2023.
+                </p>
+                <p class="footer-text" style="margin-top: var(--space-2);">
+                    All timelines are estimates and subject to change based on development progress.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize animations on load
+        document.addEventListener('DOMContentLoaded', () => {
+            initAnimations();
+            initProgressBars();
+        });
+
+        function initAnimations() {
+            // Fade-in animation on scroll
+            const fadeElements = document.querySelectorAll('.fade-in');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            fadeElements.forEach(element => {
+                observer.observe(element);
+            });
+
+            // Stagger animation for cards
+            const cards = document.querySelectorAll('.progress-card, .future-card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+            });
+        }
+
+        function initProgressBars() {
+            // Add animation class to progress bars
+            const progressBars = document.querySelectorAll('.progress-fill');
+            progressBars.forEach(bar => {
+                bar.classList.add('animate');
+                
+                // Set actual width from style attribute
+                const width = bar.style.width;
+                bar.style.width = '0%';
+                
+                // Animate to actual width
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 100);
+            });
+        }
+
+        // Update current year in footer
+        document.addEventListener('DOMContentLoaded', () => {
+            const yearElement = document.querySelector('.footer-text');
+            if (yearElement) {
+                const currentYear = new Date().getFullYear();
+                yearElement.innerHTML = yearElement.innerHTML.replace('2024', currentYear);
+            }
+        });
+    </script>
+</body>
+</html>
