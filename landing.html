@@ -11,60 +11,57 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
-        /* Enhanced CSS Custom Properties - Timeless Theme */
+        /* Professional CSS Reset and Variables */
         :root {
-            /* Timeless Color System */
-            --timeless-deep: #0a192f;
-            --timeless-dark: #112240;
-            --timeless-blue: #1a365d;
-            --timeless-cyan: #2c5282;
-            --accent-primary: #4299e1;
-            --accent-secondary: #38b2ac;
-            --accent-tertiary: #9f7aea;
-            --accent-success: #48bb78;
-            --accent-warning: #d69e2e;
-            --accent-innovation: #ff6b8b;
+            /* Professional Color Palette */
+            --color-primary: #0a192f;
+            --color-secondary: #112240;
+            --color-accent: #64ffda;
+            --color-accent-secondary: #8892b0;
+            --color-white: #e6f1ff;
+            --color-gray-light: #a8b2d1;
             
-            /* Timeless Gradients */
-            --gradient-timeless: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
-            --gradient-eons: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 50%, var(--accent-tertiary) 100%);
-            --gradient-dark: linear-gradient(135deg, var(--timeless-deep) 0%, var(--timeless-blue) 100%);
-            --gradient-card: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
-            --gradient-innovation: linear-gradient(135deg, var(--accent-innovation) 0%, var(--accent-tertiary) 100%);
+            /* Gradient System */
+            --gradient-primary: linear-gradient(135deg, #64ffda 0%, #57cbff 100%);
+            --gradient-dark: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+            --gradient-card: linear-gradient(145deg, rgba(100, 255, 218, 0.05) 0%, rgba(17, 34, 64, 0.1) 100%);
             
             /* Typography */
-            --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            --font-heading: 'Space Grotesk', sans-serif;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-heading: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
             
-            /* Enhanced Spacing */
-            --space-xs: 0.5rem;
-            --space-sm: 1rem;
-            --space-md: 1.5rem;
-            --space-lg: 2rem;
-            --space-xl: 3rem;
-            --space-2xl: 4rem;
-            --space-3xl: 6rem;
+            /* Spacing System */
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-5: 1.5rem;
+            --space-6: 2rem;
+            --space-8: 3rem;
+            --space-10: 4rem;
+            --space-12: 6rem;
+            --space-16: 8rem;
             
-            /* Timeless Shadows */
-            --shadow-subtle: 0 1px 3px rgba(0,0,0,0.12);
-            --shadow-elevated: 0 4px 6px rgba(0,0,0,0.1);
-            --shadow-prominent: 0 10px 25px rgba(0,0,0,0.2);
-            --shadow-glow: 0 20px 40px rgba(66, 153, 225, 0.15);
+            /* Shadows */
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
             
-            /* Animation */
-            --transition-fast: 150ms ease;
-            --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-slow: 600ms cubic-bezier(0.4, 0, 0.2, 1);
-            
-            /* Border Radius */
-            --radius-sm: 8px;
-            --radius-md: 12px;
-            --radius-lg: 16px;
-            --radius-xl: 24px;
+            /* Borders */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
             --radius-full: 9999px;
+            
+            /* Transitions */
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Reset & Base Styles */
+        /* Reset and Base Styles */
         *, *::before, *::after {
             margin: 0;
             padding: 0;
@@ -74,133 +71,108 @@
         html {
             font-size: 16px;
             scroll-behavior: smooth;
-            scroll-padding-top: 80px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         body {
-            font-family: var(--font-primary);
+            font-family: var(--font-sans);
             line-height: 1.6;
-            color: #f8fafc;
-            background: var(--timeless-deep);
+            color: var(--color-white);
+            background: var(--color-primary);
             overflow-x: hidden;
             min-height: 100vh;
-            position: relative;
-        }
-
-        /* Timeless Background */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(66, 153, 225, 0.08) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(56, 178, 172, 0.08) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(159, 122, 234, 0.05) 0%, transparent 50%);
-            z-index: -1;
         }
 
         /* Utility Classes */
         .container {
             width: 100%;
-            max-width: 1280px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 0 var(--space-lg);
-        }
-
-        .text-center { text-align: center; }
-        .text-gradient {
-            background: var(--gradient-eons);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .text-glow {
-            text-shadow: 0 0 20px rgba(66, 153, 225, 0.3);
+            padding: 0 var(--space-6);
         }
 
         .section {
-            padding: var(--space-3xl) 0;
-            position: relative;
+            padding: var(--space-12) 0;
         }
 
-        /* Enhanced Timeless Header */
+        .text-center {
+            text-align: center;
+        }
+
+        .text-accent {
+            color: var(--color-accent);
+        }
+
+        /* Header & Navigation */
         .header {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
+            right: 0;
             z-index: 1000;
             background: rgba(10, 25, 47, 0.95);
             backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(100, 255, 218, 0.1);
             transition: all var(--transition-normal);
         }
 
         .header.scrolled {
             background: rgba(10, 25, 47, 0.98);
-            box-shadow: var(--shadow-prominent);
+            box-shadow: var(--shadow-lg);
         }
 
         .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: var(--space-md) 0;
+            padding: var(--space-4) 0;
+            height: 72px;
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: var(--space-sm);
+            gap: var(--space-3);
             text-decoration: none;
-            font-weight: 800;
+            color: var(--color-white);
+            font-weight: 700;
             font-size: 1.5rem;
-            color: white;
-            position: relative;
+            font-family: var(--font-heading);
         }
 
         .logo-icon {
-            width: 42px;
-            height: 42px;
-            background: var(--gradient-eons);
+            width: 36px;
+            height: 36px;
+            background: var(--gradient-primary);
             border-radius: var(--radius-md);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-weight: 900;
-            font-size: 1.2rem;
-        }
-
-        .logo-text {
-            font-family: var(--font-heading);
-            letter-spacing: -0.02em;
+            font-weight: 800;
+            color: var(--color-primary);
         }
 
         .nav-links {
             display: flex;
-            gap: var(--space-xl);
+            gap: var(--space-8);
             align-items: center;
         }
 
         .nav-link {
-            color: rgba(248, 250, 252, 0.8);
+            color: var(--color-gray-light);
             text-decoration: none;
-            font-weight: 600;
             font-size: 0.95rem;
-            padding: var(--space-xs) 0;
+            font-weight: 500;
+            padding: var(--space-2) 0;
             position: relative;
-            transition: all var(--transition-fast);
+            transition: color var(--transition-fast);
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.5px;
         }
 
         .nav-link:hover {
-            color: var(--accent-primary);
+            color: var(--color-white);
         }
 
         .nav-link::after {
@@ -210,7 +182,7 @@
             left: 0;
             width: 0;
             height: 2px;
-            background: var(--gradient-eons);
+            background: var(--gradient-primary);
             transition: width var(--transition-normal);
         }
 
@@ -218,509 +190,532 @@
             width: 100%;
         }
 
-        /* Timeless Buttons */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: var(--space-xs);
-            padding: var(--space-sm) var(--space-lg);
-            border-radius: var(--radius-full);
-            font-weight: 700;
-            font-size: 0.95rem;
-            text-decoration: none;
+        .btn-nav {
+            padding: var(--space-3) var(--space-6);
+            background: var(--gradient-primary);
+            color: var(--color-primary);
             border: none;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: all var(--transition-normal);
             cursor: pointer;
-            transition: all var(--transition-normal);
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-            position: relative;
-            overflow: hidden;
-            isolation: isolate;
+            letter-spacing: 0.5px;
         }
 
-        .btn::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: inherit;
-            z-index: -1;
-            opacity: 0.8;
-        }
-
-        .btn::after {
-            content: '';
-            position: absolute;
-            inset: 1px;
-            background: var(--timeless-deep);
-            border-radius: inherit;
-            z-index: -1;
-            transition: all var(--transition-normal);
-        }
-
-        .btn-primary {
-            background: var(--gradient-eons);
-            color: white;
-            box-shadow: var(--shadow-glow);
-        }
-
-        .btn-primary:hover {
+        .btn-nav:hover {
             transform: translateY(-2px);
-            box-shadow: var(--shadow-prominent);
+            box-shadow: var(--shadow-lg);
         }
 
-        .btn-primary:hover::after {
-            opacity: 0.2;
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--color-white);
+            font-size: 1.25rem;
+            cursor: pointer;
+            padding: var(--space-2);
         }
 
-        .btn-secondary {
-            background: transparent;
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .btn-secondary:hover {
-            border-color: var(--accent-primary);
-            background: rgba(66, 153, 225, 0.1);
-            transform: translateY(-2px);
-        }
-
-        /* Hero Section - Building for Eons */
+        /* Hero Section - Professional Design */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
-            padding-top: 80px;
+            padding-top: 72px;
             position: relative;
             overflow: hidden;
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(100, 255, 218, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(87, 203, 255, 0.05) 0%, transparent 50%);
         }
 
         .hero-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: var(--space-2xl);
+            gap: var(--space-10);
             align-items: center;
-            position: relative;
-            z-index: 2;
+        }
+
+        .hero-text {
+            max-width: 600px;
         }
 
         .hero-title {
             font-family: var(--font-heading);
-            font-size: clamp(3rem, 5vw, 4.5rem);
-            font-weight: 900;
+            font-size: 3.5rem;
+            font-weight: 800;
             line-height: 1.1;
-            margin-bottom: var(--space-md);
-            letter-spacing: -0.03em;
+            margin-bottom: var(--space-6);
+            color: var(--color-white);
         }
 
         .hero-subtitle {
-            font-size: 1.3rem;
-            color: rgba(248, 250, 252, 0.8);
-            margin-bottom: var(--space-xl);
+            font-size: 1.25rem;
+            color: var(--color-gray-light);
+            margin-bottom: var(--space-8);
             line-height: 1.8;
-            max-width: 600px;
         }
 
         .hero-buttons {
             display: flex;
-            gap: var(--space-md);
-            flex-wrap: wrap;
+            gap: var(--space-5);
+            align-items: center;
         }
 
-        /* Eons Timeline Visualization */
-        .eons-visual {
+        .btn {
+            padding: var(--space-4) var(--space-8);
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: all var(--transition-normal);
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-3);
+            cursor: pointer;
+            border: none;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: var(--color-primary);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--color-white);
+            border: 1px solid rgba(100, 255, 218, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(100, 255, 218, 0.1);
+            border-color: var(--color-accent);
+            transform: translateY(-2px);
+        }
+
+        /* Professional Timeline Visualization */
+        .timeline-visual {
             position: relative;
-            height: 500px;
+            height: 400px;
             display: flex;
             align-items: center;
             justify-content: center;
-            perspective: 1000px;
         }
 
-        .timeline-spiral {
+        .timeline-line {
             position: relative;
-            width: 400px;
-            height: 400px;
-            transform-style: preserve-3d;
-            animation: rotateSpiral 60s infinite linear;
-        }
-
-        @keyframes rotateSpiral {
-            from { transform: rotateY(0deg) rotateX(15deg); }
-            to { transform: rotateY(360deg) rotateX(15deg); }
+            width: 600px;
+            height: 2px;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                var(--color-accent) 20%, 
+                var(--color-accent) 80%, 
+                transparent 100%);
         }
 
         .timeline-node {
             position: absolute;
-            width: 60px;
-            height: 60px;
-            background: rgba(255, 255, 255, 0.05);
+            width: 12px;
+            height: 12px;
+            background: var(--color-accent);
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            color: white;
-            border: 2px solid;
-            backdrop-filter: blur(10px);
-            transition: all var(--transition-normal);
-            transform-style: preserve-3d;
+            top: 50%;
+            transform: translateY(-50%);
         }
 
-        .timeline-node:hover {
-            transform: scale(1.3);
-            box-shadow: var(--shadow-glow);
+        .node-1 { left: 20%; }
+        .node-2 { left: 40%; }
+        .node-3 { left: 60%; }
+        .node-4 { left: 80%; }
+
+        .timeline-label {
+            position: absolute;
+            top: 30px;
+            transform: translateX(-50%);
+            color: var(--color-gray-light);
+            font-size: 0.9rem;
+            white-space: nowrap;
         }
 
-        .node-present { border-color: var(--accent-primary); background: rgba(66, 153, 225, 0.2); }
-        .node-future { border-color: var(--accent-secondary); background: rgba(56, 178, 172, 0.2); }
-        .node-eons { border-color: var(--accent-tertiary); background: rgba(159, 122, 234, 0.2); }
+        .node-1 .timeline-label { left: 20%; }
+        .node-2 .timeline-label { left: 40%; }
+        .node-3 .timeline-label { left: 60%; }
+        .node-4 .timeline-label { left: 80%; }
 
-        /* Position nodes along a spiral */
-        .node-1 { transform: rotateY(0deg) translateZ(200px); }
-        .node-2 { transform: rotateY(60deg) translateZ(180px); }
-        .node-3 { transform: rotateY(120deg) translateZ(160px); }
-        .node-4 { transform: rotateY(180deg) translateZ(140px); }
-        .node-5 { transform: rotateY(240deg) translateZ(120px); }
-        .node-6 { transform: rotateY(300deg) translateZ(100px); }
+        .timeline-connector {
+            position: absolute;
+            width: 2px;
+            height: 20px;
+            background: var(--color-accent);
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.5;
+        }
 
-        /* Section Styling */
+        .node-1 .timeline-connector { left: 20%; height: 40px; }
+        .node-2 .timeline-connector { left: 40%; height: 30px; }
+        .node-3 .timeline-connector { left: 60%; height: 20px; }
+        .node-4 .timeline-connector { left: 80%; height: 10px; }
+
+        /* Section Titles */
         .section-title {
             font-family: var(--font-heading);
-            font-size: clamp(2.5rem, 4vw, 3.5rem);
-            font-weight: 800;
-            margin-bottom: var(--space-sm);
-            color: white;
-            letter-spacing: -0.02em;
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: var(--space-4);
+            color: var(--color-white);
         }
 
         .section-subtitle {
-            font-size: 1.2rem;
-            color: rgba(248, 250, 252, 0.8);
-            max-width: 800px;
-            margin: 0 auto var(--space-2xl);
+            font-size: 1.125rem;
+            text-align: center;
+            color: var(--color-gray-light);
+            max-width: 600px;
+            margin: 0 auto var(--space-10);
             line-height: 1.8;
         }
 
-        /* Eons Philosophy Section */
+        /* Philosophy Grid */
         .philosophy-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: var(--space-xl);
-            margin-top: var(--space-2xl);
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-6);
+            margin-top: var(--space-10);
         }
 
         .philosophy-card {
             background: var(--gradient-card);
-            border-radius: var(--radius-lg);
-            padding: var(--space-xl);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(100, 255, 218, 0.1);
+            border-radius: var(--radius-xl);
+            padding: var(--space-8);
             transition: all var(--transition-normal);
             position: relative;
             overflow: hidden;
-            backdrop-filter: blur(10px);
         }
 
         .philosophy-card:hover {
             transform: translateY(-8px);
-            border-color: var(--accent-primary);
-            box-shadow: var(--shadow-prominent);
+            border-color: var(--color-accent);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .philosophy-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: opacity var(--transition-normal);
+        }
+
+        .philosophy-card:hover::before {
+            opacity: 1;
         }
 
         .philosophy-icon {
-            width: 70px;
-            height: 70px;
+            width: 64px;
+            height: 64px;
+            background: var(--gradient-primary);
             border-radius: var(--radius-lg);
-            background: var(--gradient-eons);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.8rem;
-            color: white;
-            margin-bottom: var(--space-lg);
+            margin-bottom: var(--space-6);
+            color: var(--color-primary);
+            font-size: 1.5rem;
         }
 
         .philosophy-title {
             font-family: var(--font-heading);
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 700;
-            margin-bottom: var(--space-sm);
-            color: white;
+            margin-bottom: var(--space-4);
+            color: var(--color-white);
         }
 
         .philosophy-description {
-            color: rgba(248, 250, 252, 0.7);
-            line-height: 1.8;
+            color: var(--color-gray-light);
+            line-height: 1.7;
         }
 
-        /* Business Domains Section */
+        /* Domains Section */
         .domains-section {
-            background: rgba(23, 42, 69, 0.3);
+            background: var(--color-secondary);
             border-radius: var(--radius-xl);
-            padding: var(--space-2xl);
-            margin: var(--space-3xl) 0;
+            padding: var(--space-10);
+            margin: var(--space-12) 0;
         }
 
         .domains-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: var(--space-lg);
-            margin-top: var(--space-xl);
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-6);
+            margin-top: var(--space-8);
         }
 
-        .domain-item {
-            display: flex;
-            align-items: center;
-            gap: var(--space-md);
-            padding: var(--space-lg);
-            background: rgba(255, 255, 255, 0.05);
+        .domain-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(100, 255, 218, 0.1);
             border-radius: var(--radius-lg);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: var(--space-6);
             transition: all var(--transition-normal);
         }
 
-        .domain-item:hover {
-            background: rgba(255, 255, 255, 0.08);
+        .domain-card:hover {
+            background: rgba(100, 255, 218, 0.05);
+            border-color: var(--color-accent);
             transform: translateY(-4px);
-            border-color: var(--accent-primary);
         }
 
         .domain-icon {
-            width: 50px;
-            height: 50px;
-            background: rgba(66, 153, 225, 0.1);
+            width: 48px;
+            height: 48px;
+            background: rgba(100, 255, 218, 0.1);
             border-radius: var(--radius-md);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--accent-primary);
-            font-size: 1.2rem;
-            flex-shrink: 0;
+            color: var(--color-accent);
+            margin-bottom: var(--space-4);
+            font-size: 1.25rem;
         }
 
-        .domain-info h4 {
-            color: white;
-            margin-bottom: 4px;
-            font-weight: 700;
+        .domain-title {
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: var(--space-2);
+            color: var(--color-white);
         }
 
-        .domain-info p {
-            color: rgba(248, 250, 252, 0.7);
-            font-size: 0.9rem;
+        .domain-description {
+            color: var(--color-gray-light);
+            font-size: 0.95rem;
+            line-height: 1.6;
         }
 
         /* Technology Stack */
-        .tech-stack {
+        .tech-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: var(--space-xl);
-            margin-top: var(--space-2xl);
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-6);
+            margin-top: var(--space-10);
         }
 
         .tech-card {
             background: var(--gradient-card);
-            border-radius: var(--radius-lg);
-            padding: var(--space-xl);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(100, 255, 218, 0.1);
+            border-radius: var(--radius-xl);
+            padding: var(--space-8);
             transition: all var(--transition-normal);
-            position: relative;
-            overflow: hidden;
         }
 
         .tech-card:hover {
+            border-color: var(--color-accent);
             transform: translateY(-6px);
-            border-color: var(--accent-secondary);
-            box-shadow: var(--shadow-glow);
+            box-shadow: var(--shadow-xl);
         }
 
         .tech-icon {
             width: 60px;
             height: 60px;
-            background: var(--gradient-eons);
-            border-radius: var(--radius-md);
+            background: var(--gradient-primary);
+            border-radius: var(--radius-lg);
             display: flex;
             align-items: center;
             justify-content: center;
+            margin-bottom: var(--space-6);
+            color: var(--color-primary);
             font-size: 1.5rem;
-            color: white;
-            margin-bottom: var(--space-lg);
         }
 
         .tech-title {
+            font-family: var(--font-heading);
             font-size: 1.5rem;
             font-weight: 700;
-            margin-bottom: var(--space-sm);
-            color: white;
+            margin-bottom: var(--space-4);
+            color: var(--color-white);
         }
 
         .tech-description {
-            color: rgba(248, 250, 252, 0.7);
-            line-height: 1.8;
-            margin-bottom: var(--space-md);
+            color: var(--color-gray-light);
+            margin-bottom: var(--space-6);
+            line-height: 1.7;
         }
 
-        /* Eons Commitment */
-        .eons-commitment {
-            background: linear-gradient(135deg, rgba(66, 153, 225, 0.1) 0%, transparent 100%);
+        .tech-link {
+            color: var(--color-accent);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            transition: gap var(--transition-fast);
+        }
+
+        .tech-link:hover {
+            gap: var(--space-3);
+        }
+
+        /* Commitment Section */
+        .commitment-section {
+            background: linear-gradient(135deg, rgba(100, 255, 218, 0.05) 0%, transparent 100%);
             border-radius: var(--radius-xl);
-            padding: var(--space-2xl);
-            margin: var(--space-3xl) 0;
-            border: 1px solid rgba(66, 153, 225, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .eons-commitment::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle, rgba(66, 153, 225, 0.1) 0%, transparent 70%);
-            filter: blur(40px);
+            padding: var(--space-10);
+            margin: var(--space-12) 0;
+            border: 1px solid rgba(100, 255, 218, 0.1);
         }
 
         /* CTA Section */
         .cta-section {
             background: var(--gradient-dark);
             border-radius: var(--radius-xl);
-            padding: var(--space-2xl);
+            padding: var(--space-10);
             text-align: center;
-            margin: var(--space-3xl) 0;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative;
-            overflow: hidden;
+            margin: var(--space-12) 0;
+            border: 1px solid rgba(100, 255, 218, 0.1);
         }
 
-        /* Enhanced Footer */
+        .cta-title {
+            font-family: var(--font-heading);
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: var(--space-4);
+            color: var(--color-white);
+        }
+
+        .cta-description {
+            font-size: 1.125rem;
+            color: var(--color-gray-light);
+            max-width: 600px;
+            margin: 0 auto var(--space-8);
+            line-height: 1.8;
+        }
+
+        /* Footer */
         .footer {
-            background: var(--timeless-dark);
-            padding: var(--space-3xl) 0 var(--space-xl);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative;
-        }
-
-        .footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: var(--gradient-eons);
+            background: var(--color-secondary);
+            padding: var(--space-12) 0 var(--space-8);
+            border-top: 1px solid rgba(100, 255, 218, 0.1);
         }
 
         .footer-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: var(--space-2xl);
-            margin-bottom: var(--space-2xl);
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-10);
+            margin-bottom: var(--space-10);
         }
 
-        .footer-section h3 {
+        .footer-column h3 {
             font-family: var(--font-heading);
-            font-size: 1.3rem;
-            margin-bottom: var(--space-lg);
-            color: white;
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: var(--space-6);
+            color: var(--color-white);
         }
 
         .footer-links {
             display: flex;
             flex-direction: column;
-            gap: var(--space-sm);
+            gap: var(--space-3);
         }
 
         .footer-link {
-            color: rgba(248, 250, 252, 0.7);
+            color: var(--color-gray-light);
             text-decoration: none;
-            transition: all var(--transition-fast);
-            display: flex;
-            align-items: center;
-            gap: var(--space-xs);
+            font-size: 0.95rem;
+            transition: color var(--transition-fast);
         }
 
         .footer-link:hover {
-            color: var(--accent-primary);
-            transform: translateX(5px);
+            color: var(--color-accent);
         }
 
-        /* Mobile Navigation */
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: var(--space-xs);
-            transition: all var(--transition-fast);
+        .footer-bottom {
+            text-align: center;
+            padding-top: var(--space-8);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .mobile-menu-btn:hover {
-            color: var(--accent-primary);
+        .footer-text {
+            color: var(--color-gray-light);
+            font-size: 0.9rem;
         }
 
-        /* Animations */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .fade-in {
-            animation: fadeIn 0.6s ease-out;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(5deg); }
-        }
-
-        .float-animation {
-            animation: float 6s infinite ease-in-out;
+        .footer-tagline {
+            color: var(--color-accent);
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 1rem;
+            margin-top: var(--space-4);
+            letter-spacing: 1px;
         }
 
         /* Responsive Design */
         @media (max-width: 1024px) {
             .hero-content {
                 grid-template-columns: 1fr;
+                gap: var(--space-8);
                 text-align: center;
-                gap: var(--space-xl);
+            }
+            
+            .hero-title {
+                font-size: 3rem;
             }
             
             .hero-buttons {
                 justify-content: center;
             }
             
-            .eons-visual {
-                order: -1;
-                height: 400px;
+            .philosophy-grid,
+            .domains-grid,
+            .tech-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: var(--space-8);
+            }
+            
+            .timeline-visual {
+                height: 300px;
+            }
+            
+            .timeline-line {
+                width: 500px;
             }
         }
 
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background: var(--timeless-dark);
-                flex-direction: column;
-                padding: var(--space-lg);
-                gap: var(--space-md);
-                border-top: 1px solid rgba(255, 255, 255, 0.1);
-                backdrop-filter: blur(20px);
-            }
-            
-            .nav-links.active {
-                display: flex;
             }
             
             .mobile-menu-btn {
@@ -728,26 +723,44 @@
             }
             
             .hero-title {
-                font-size: clamp(2.5rem, 5vw, 3.5rem);
+                font-size: 2.5rem;
             }
             
-            .philosophy-grid {
+            .hero-subtitle {
+                font-size: 1.125rem;
+            }
+            
+            .philosophy-grid,
+            .domains-grid,
+            .tech-grid {
                 grid-template-columns: 1fr;
             }
             
             .section {
-                padding: var(--space-2xl) 0;
+                padding: var(--space-8) 0;
             }
             
-            .domains-grid {
-                grid-template-columns: repeat(2, 1fr);
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .timeline-visual {
+                height: 250px;
+            }
+            
+            .timeline-line {
+                width: 400px;
+            }
+            
+            .timeline-label {
+                font-size: 0.8rem;
             }
         }
 
         @media (max-width: 480px) {
             .hero-buttons {
                 flex-direction: column;
-                width: 100%;
+                align-items: stretch;
             }
             
             .btn {
@@ -755,24 +768,31 @@
                 justify-content: center;
             }
             
-            .eons-visual {
-                height: 300px;
+            .timeline-visual {
+                height: 200px;
             }
             
-            .timeline-spiral {
+            .timeline-line {
                 width: 300px;
-                height: 300px;
             }
             
-            .timeline-node {
-                width: 50px;
-                height: 50px;
-                font-size: 1rem;
+            .domains-section,
+            .commitment-section,
+            .cta-section {
+                padding: var(--space-6);
             }
-            
-            .domains-grid {
-                grid-template-columns: 1fr;
-            }
+        }
+
+        /* Smooth Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* Scroll Progress */
@@ -781,10 +801,10 @@
             top: 0;
             left: 0;
             width: 0%;
-            height: 3px;
-            background: var(--gradient-eons);
+            height: 2px;
+            background: var(--gradient-primary);
             z-index: 1001;
-            transition: width 0.1s linear;
+            transition: width 0.1s ease;
         }
     </style>
 </head>
@@ -798,16 +818,15 @@
             <nav class="navbar">
                 <a href="#" class="logo">
                     <div class="logo-icon">J</div>
-                    <div class="logo-text">JASIRI</div>
+                    JASIRI
                 </a>
 
                 <div class="nav-links" id="navLinks">
-                    <a href="#philosophy" class="nav-link">Our Philosophy</a>
-                    <a href="#domains" class="nav-link">Business Domains</a>
-                    <a href="#technology" class="nav-link">Technology Stack</a>
-                    <a href="#commitment" class="nav-link">Eons Commitment</a>
-                    <a href="#contact" class="nav-link">Contact</a>
-                    <a href="index.html" class="btn btn-primary">Launch E-Hub</a>
+                    <a href="#philosophy" class="nav-link">Philosophy</a>
+                    <a href="#domains" class="nav-link">Domains</a>
+                    <a href="#technology" class="nav-link">Technology</a>
+                    <a href="#commitment" class="nav-link">Commitment</a>
+                    <a href="index.html" class="btn-nav">Launch E-Hub</a>
                 </div>
 
                 <button class="mobile-menu-btn" id="mobileMenuBtn">
@@ -819,46 +838,46 @@
 
     <!-- Hero Section -->
     <section class="hero">
+        <div class="hero-background"></div>
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text fade-in">
                     <h1 class="hero-title">
                         Building Technology<br>
-                        <span class="text-gradient">For Eons</span>
+                        <span class="text-accent">For Eons</span>
                     </h1>
                     <p class="hero-subtitle">
                         We develop enterprise solutions today with the vision and durability to serve humanity for generations to come. Wherever humans live, Jasiri technology will be there—built to last, built to evolve, built for eons.
                     </p>
                     <div class="hero-buttons">
                         <a href="#philosophy" class="btn btn-primary">
-                            <i class="fas fa-compass"></i> Our Philosophy
+                            <i class="fas fa-compass"></i>
+                            Our Philosophy
                         </a>
                         <a href="#technology" class="btn btn-secondary">
-                            <i class="fas fa-cogs"></i> Explore Technology
+                            <i class="fas fa-cogs"></i>
+                            Explore Technology
                         </a>
                     </div>
                 </div>
                 
-                <div class="eons-visual fade-in">
-                    <div class="timeline-spiral">
-                        <!-- Timeline Nodes -->
-                        <div class="timeline-node node-present node-1">
-                            <i class="fas fa-home"></i>
+                <div class="timeline-visual fade-in">
+                    <div class="timeline-line">
+                        <div class="timeline-node node-1">
+                            <div class="timeline-connector"></div>
+                            <div class="timeline-label">Today</div>
                         </div>
-                        <div class="timeline-node node-future node-2">
-                            <i class="fas fa-city"></i>
+                        <div class="timeline-node node-2">
+                            <div class="timeline-connector"></div>
+                            <div class="timeline-label">10 Years</div>
                         </div>
-                        <div class="timeline-node node-future node-3">
-                            <i class="fas fa-globe-americas"></i>
+                        <div class="timeline-node node-3">
+                            <div class="timeline-connector"></div>
+                            <div class="timeline-label">50 Years</div>
                         </div>
-                        <div class="timeline-node node-future node-4">
-                            <i class="fas fa-globe"></i>
-                        </div>
-                        <div class="timeline-node node-eons node-5">
-                            <i class="fas fa-infinity"></i>
-                        </div>
-                        <div class="timeline-node node-eons node-6">
-                            <i class="fas fa-universal-access"></i>
+                        <div class="timeline-node node-4">
+                            <div class="timeline-connector"></div>
+                            <div class="timeline-label">Eons</div>
                         </div>
                     </div>
                 </div>
@@ -866,13 +885,11 @@
         </div>
     </section>
 
-    <!-- Eons Philosophy -->
+    <!-- Philosophy Section -->
     <section class="section" id="philosophy">
         <div class="container">
-            <h2 class="section-title text-center fade-in">
-                The Eons Philosophy
-            </h2>
-            <p class="section-subtitle text-center fade-in">
+            <h2 class="section-title fade-in">The Eons Philosophy</h2>
+            <p class="section-subtitle fade-in">
                 We don't just build for today. We architect technology systems designed to evolve, adapt, and serve humanity across generations.
             </p>
 
@@ -910,76 +927,62 @@
         </div>
     </section>
 
-    <!-- Business Domains -->
+    <!-- Domains Section -->
     <section class="section" id="domains">
         <div class="container">
-            <h2 class="section-title text-center fade-in">
-                Business Domains Built for Longevity
-            </h2>
-            <p class="section-subtitle text-center fade-in">
+            <h2 class="section-title fade-in">Business Domains Built for Longevity</h2>
+            <p class="section-subtitle fade-in">
                 Six core areas where we're developing technology designed to serve humanity for generations
             </p>
 
             <div class="domains-section fade-in">
                 <div class="domains-grid">
-                    <div class="domain-item">
+                    <div class="domain-card fade-in">
                         <div class="domain-icon">
                             <i class="fas fa-network-wired"></i>
                         </div>
-                        <div class="domain-info">
-                            <h4>Network Services</h4>
-                            <p>Future-proof infrastructure for tomorrow's connectivity needs</p>
-                        </div>
+                        <h3 class="domain-title">Network Services</h3>
+                        <p class="domain-description">Future-proof infrastructure for tomorrow's connectivity needs</p>
                     </div>
 
-                    <div class="domain-item">
+                    <div class="domain-card fade-in">
                         <div class="domain-icon">
                             <i class="fas fa-building"></i>
                         </div>
-                        <div class="domain-info">
-                            <h4>Enterprise Solutions</h4>
-                            <p>Business systems designed to evolve with your organization</p>
-                        </div>
+                        <h3 class="domain-title">Enterprise Solutions</h3>
+                        <p class="domain-description">Business systems designed to evolve with your organization</p>
                     </div>
 
-                    <div class="domain-item">
+                    <div class="domain-card fade-in">
                         <div class="domain-icon">
                             <i class="fas fa-industry"></i>
                         </div>
-                        <div class="domain-info">
-                            <h4>Production & Manufacturing</h4>
-                            <p>Industrial technology with decades-long lifecycle planning</p>
-                        </div>
+                        <h3 class="domain-title">Production & Manufacturing</h3>
+                        <p class="domain-description">Industrial technology with decades-long lifecycle planning</p>
                     </div>
 
-                    <div class="domain-item">
+                    <div class="domain-card fade-in">
                         <div class="domain-icon">
                             <i class="fas fa-hospital"></i>
                         </div>
-                        <div class="domain-info">
-                            <h4>Healthcare Technology</h4>
-                            <p>Medical systems built for long-term reliability and evolution</p>
-                        </div>
+                        <h3 class="domain-title">Healthcare Technology</h3>
+                        <p class="domain-description">Medical systems built for long-term reliability and evolution</p>
                     </div>
 
-                    <div class="domain-item">
+                    <div class="domain-card fade-in">
                         <div class="domain-icon">
                             <i class="fas fa-graduation-cap"></i>
                         </div>
-                        <div class="domain-info">
-                            <h4>Education Systems</h4>
-                            <p>Learning platforms designed to adapt to future educational needs</p>
-                        </div>
+                        <h3 class="domain-title">Education Systems</h3>
+                        <p class="domain-description">Learning platforms designed to adapt to future educational needs</p>
                     </div>
 
-                    <div class="domain-item">
+                    <div class="domain-card fade-in">
                         <div class="domain-icon">
                             <i class="fas fa-truck"></i>
                         </div>
-                        <div class="domain-info">
-                            <h4>Transport & Logistics</h4>
-                            <p>Supply chain technology with long-term sustainability</p>
-                        </div>
+                        <h3 class="domain-title">Transport & Logistics</h3>
+                        <p class="domain-description">Supply chain technology with long-term sustainability</p>
                     </div>
                 </div>
             </div>
@@ -989,24 +992,23 @@
     <!-- Technology Stack -->
     <section class="section" id="technology">
         <div class="container">
-            <h2 class="section-title text-center fade-in">
-                Technology Built to Last
-            </h2>
-            <p class="section-subtitle text-center fade-in">
+            <h2 class="section-title fade-in">Technology Built to Last</h2>
+            <p class="section-subtitle fade-in">
                 Our core technology platforms are architected for longevity, evolution, and generational relevance
             </p>
 
-            <div class="tech-stack">
+            <div class="tech-grid">
                 <div class="tech-card fade-in">
                     <div class="tech-icon">
                         <i class="fas fa-cube"></i>
                     </div>
                     <h3 class="tech-title">Jasiri E-Hub</h3>
                     <p class="tech-description">
-                        Enterprise management suite designed with modular architecture that evolves with your business over decades. Forward-compatible APIs ensure seamless integration with future technologies.
+                        Enterprise management suite designed with modular architecture that evolves with your business over decades.
                     </p>
-                    <a href="index.html" class="btn btn-primary" style="padding: var(--space-xs) var(--space-md);">
+                    <a href="index.html" class="tech-link">
                         Explore E-Hub
+                        <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
 
@@ -1016,7 +1018,7 @@
                     </div>
                     <h3 class="tech-title">BizInn Intelligence</h3>
                     <p class="tech-description">
-                        AI systems built with evolutionary algorithms that learn and adapt over extended periods. Designed to remain relevant and valuable as business needs evolve across generations.
+                        AI systems built with evolutionary algorithms that learn and adapt over extended periods of time.
                     </p>
                 </div>
 
@@ -1026,51 +1028,21 @@
                     </div>
                     <h3 class="tech-title">Ngao Security</h3>
                     <p class="tech-description">
-                        Security platform with cryptographic agility, designed to withstand threats decades into the future. Regular cryptographic updates ensure long-term protection.
+                        Security platform with cryptographic agility, designed to withstand threats decades into the future.
                     </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Eons Commitment -->
+    <!-- Commitment Section -->
     <section class="section" id="commitment">
         <div class="container">
-            <div class="eons-commitment fade-in">
-                <h2 class="section-title" style="text-align: center; margin-bottom: var(--space-lg);">
-                    Our Commitment to Generational Impact
-                </h2>
-                <div class="philosophy-grid" style="margin-top: var(--space-xl);">
-                    <div class="philosophy-card" style="background: rgba(255, 255, 255, 0.05);">
-                        <div class="philosophy-icon" style="background: var(--gradient-innovation);">
-                            <i class="fas fa-code-branch"></i>
-                        </div>
-                        <h3 class="philosophy-title">Forward-Compatible Architecture</h3>
-                        <p class="philosophy-description">
-                            Every system we build includes extension points for future technologies we haven't even imagined yet.
-                        </p>
-                    </div>
-
-                    <div class="philosophy-card" style="background: rgba(255, 255, 255, 0.05);">
-                        <div class="philosophy-icon" style="background: var(--gradient-innovation);">
-                            <i class="fas fa-history"></i>
-                        </div>
-                        <h3 class="philosophy-title">Multi-Generational Support</h3>
-                        <p class="philosophy-description">
-                            We plan for technology transitions decades in advance, ensuring smooth evolution without disruption.
-                        </p>
-                    </div>
-
-                    <div class="philosophy-card" style="background: rgba(255, 255, 255, 0.05);">
-                        <div class="philosophy-icon" style="background: var(--gradient-innovation);">
-                            <i class="fas fa-seedling"></i>
-                        </div>
-                        <h3 class="philosophy-title">Sustainable Evolution</h3>
-                        <p class="philosophy-description">
-                            Our technology grows organically, adding capabilities while maintaining compatibility with existing systems.
-                        </p>
-                    </div>
-                </div>
+            <div class="commitment-section fade-in">
+                <h2 class="section-title">Our Commitment to Generational Impact</h2>
+                <p class="section-subtitle">
+                    We architect every solution with future generations in mind, ensuring our technology remains valuable and relevant across decades of technological evolution.
+                </p>
             </div>
         </div>
     </section>
@@ -1079,18 +1051,18 @@
     <section class="section">
         <div class="container">
             <div class="cta-section fade-in">
-                <h2 class="section-title" style="color: white; margin-bottom: var(--space-md);">
-                    Build with Technology That Lasts
-                </h2>
-                <p style="color: rgba(248, 250, 252, 0.9); max-width: 800px; margin: 0 auto var(--space-xl); font-size: 1.2rem;">
+                <h2 class="cta-title">Build with Technology That Lasts</h2>
+                <p class="cta-description">
                     Join organizations that choose technology designed not just for today's challenges, but for tomorrow's opportunities and beyond.
                 </p>
-                <div class="hero-buttons" style="justify-content: center;">
-                    <a href="#contact" class="btn btn-primary" style="padding: var(--space-md) var(--space-xl);">
-                        <i class="fas fa-handshake"></i> Partner for the Long Term
+                <div class="hero-buttons">
+                    <a href="mailto:contact@jasiri.tech" class="btn btn-primary">
+                        <i class="fas fa-handshake"></i>
+                        Partner for the Long Term
                     </a>
-                    <a href="index.html" class="btn btn-secondary" style="padding: var(--space-md) var(--space-xl);">
-                        <i class="fas fa-rocket"></i> Launch E-Hub
+                    <a href="index.html" class="btn btn-secondary">
+                        <i class="fas fa-rocket"></i>
+                        Launch E-Hub
                     </a>
                 </div>
             </div>
@@ -1098,97 +1070,66 @@
     </section>
 
     <!-- Footer -->
-    <footer class="footer" id="contact">
+    <footer class="footer">
         <div class="container">
             <div class="footer-grid">
-                <div class="footer-section">
-                    <a href="#" class="logo" style="margin-bottom: var(--space-md); display: inline-block;">
+                <div class="footer-column">
+                    <a href="#" class="logo" style="margin-bottom: var(--space-6); display: inline-flex;">
                         <div class="logo-icon">J</div>
-                        <div class="logo-text">JASIRI</div>
+                        JASIRI
                     </a>
-                    <p style="color: rgba(248, 250, 252, 0.7); margin-top: var(--space-md); line-height: 1.8;">
-                        Building technology solutions with the durability and foresight to serve humanity for generations. Wherever humans live, Jasiri technology will be there—built for eons.
+                    <p style="color: var(--color-gray-light); line-height: 1.7;">
+                        Building technology solutions with the durability and foresight to serve humanity for generations.
                     </p>
                 </div>
 
-                <div class="footer-section">
+                <div class="footer-column">
                     <h3>Eons Technology</h3>
                     <div class="footer-links">
-                        <a href="#philosophy" class="footer-link">
-                            <i class="fas fa-hourglass-start"></i> Our Philosophy
-                        </a>
-                        <a href="#technology" class="footer-link">
-                            <i class="fas fa-cube"></i> Jasiri E-Hub
-                        </a>
-                        <a href="#technology" class="footer-link">
-                            <i class="fas fa-brain"></i> BizInn Intelligence
-                        </a>
-                        <a href="#technology" class="footer-link">
-                            <i class="fas fa-shield-alt"></i> Ngao Security
-                        </a>
+                        <a href="#philosophy" class="footer-link">Our Philosophy</a>
+                        <a href="#technology" class="footer-link">Jasiri E-Hub</a>
+                        <a href="#technology" class="footer-link">BizInn Intelligence</a>
+                        <a href="#technology" class="footer-link">Ngao Security</a>
                     </div>
                 </div>
 
-                <div class="footer-section">
+                <div class="footer-column">
                     <h3>Business Domains</h3>
                     <div class="footer-links">
-                        <a href="#domains" class="footer-link">
-                            <i class="fas fa-network-wired"></i> Network Services
-                        </a>
-                        <a href="#domains" class="footer-link">
-                            <i class="fas fa-building"></i> Enterprise Solutions
-                        </a>
-                        <a href="#domains" class="footer-link">
-                            <i class="fas fa-industry"></i> Production & Manufacturing
-                        </a>
-                        <a href="#domains" class="footer-link">
-                            <i class="fas fa-hospital"></i> Healthcare Technology
-                        </a>
-                        <a href="#domains" class="footer-link">
-                            <i class="fas fa-graduation-cap"></i> Education Systems
-                        </a>
-                        <a href="#domains" class="footer-link">
-                            <i class="fas fa-truck"></i> Transport & Logistics
-                        </a>
+                        <a href="#domains" class="footer-link">Network Services</a>
+                        <a href="#domains" class="footer-link">Enterprise Solutions</a>
+                        <a href="#domains" class="footer-link">Production & Manufacturing</a>
+                        <a href="#domains" class="footer-link">Healthcare Technology</a>
+                        <a href="#domains" class="footer-link">Education Systems</a>
+                        <a href="#domains" class="footer-link">Transport & Logistics</a>
                     </div>
                 </div>
 
-                <div class="footer-section">
-                    <h3>Build for Eons</h3>
+                <div class="footer-column">
+                    <h3>Contact</h3>
                     <div class="footer-links">
-                        <a href="mailto:contact@jasiri.tech" class="footer-link">
-                            <i class="fas fa-envelope"></i> contact@jasiri.tech
-                        </a>
-                        <a href="tel:+254700123456" class="footer-link">
-                            <i class="fas fa-phone"></i> +254 700 123 456
-                        </a>
-                        <a href="#" class="footer-link">
-                            <i class="fas fa-map-marker-alt"></i> Nairobi, Kenya
-                        </a>
-                        <a href="#" class="footer-link">
-                            <i class="fas fa-calendar-alt"></i> Founded for the Long Term
-                        </a>
+                        <a href="mailto:contact@jasiri.tech" class="footer-link">contact@jasiri.tech</a>
+                        <a href="tel:+254700123456" class="footer-link">+254 700 123 456</a>
+                        <a href="#" class="footer-link">Nairobi, Kenya</a>
                     </div>
                 </div>
             </div>
 
-            <div style="border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: var(--space-xl); text-align: center;">
-                <p style="color: rgba(248, 250, 252, 0.5); font-size: 0.9rem;">
+            <div class="footer-bottom">
+                <p class="footer-text">
                     © 2024 Jasiri Technology. Solutions built for today, architected for tomorrow, designed for eons.
                 </p>
-                <p style="color: var(--accent-primary); margin-top: var(--space-sm); font-family: var(--font-heading); font-weight: 800; letter-spacing: 0.1em;">
-                    BUILDING TECHNOLOGY FOR EONS
-                </p>
+                <p class="footer-tagline">BUILDING TECHNOLOGY FOR EONS</p>
             </div>
         </div>
     </footer>
 
     <script>
+        // Professional initialization
         document.addEventListener('DOMContentLoaded', () => {
             initNavigation();
             initScrollEffects();
             initAnimations();
-            initTimelineAnimation();
         });
 
         function initNavigation() {
@@ -1207,32 +1148,43 @@
 
             // Mobile menu toggle
             mobileMenuBtn.addEventListener('click', () => {
-                navLinks.classList.toggle('active');
+                const isExpanded = mobileMenuBtn.getAttribute('aria-expanded') === 'true';
+                mobileMenuBtn.setAttribute('aria-expanded', !isExpanded);
+                navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
             });
 
             // Close mobile menu when clicking outside
             document.addEventListener('click', (e) => {
-                if (!e.target.closest('.navbar') && navLinks.classList.contains('active')) {
-                    navLinks.classList.remove('active');
+                if (!e.target.closest('.navbar') && navLinks.style.display === 'flex') {
+                    navLinks.style.display = 'none';
+                    mobileMenuBtn.setAttribute('aria-expanded', 'false');
                 }
             });
 
             // Smooth scroll for anchor links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    if (targetId === '#') return;
+                    const href = this.getAttribute('href');
                     
-                    const targetElement = document.querySelector(targetId);
+                    if (href === '#') return;
+                    
+                    e.preventDefault();
+                    const targetElement = document.querySelector(href);
+                    
                     if (targetElement) {
+                        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+                        const headerHeight = document.querySelector('.header').offsetHeight;
+                        
                         window.scrollTo({
-                            top: targetElement.offsetTop - 80,
+                            top: targetPosition - headerHeight,
                             behavior: 'smooth'
                         });
                         
                         // Close mobile menu if open
-                        navLinks.classList.remove('active');
+                        if (navLinks.style.display === 'flex') {
+                            navLinks.style.display = 'none';
+                            mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                        }
                     }
                 });
             });
@@ -1242,62 +1194,50 @@
             // Scroll progress indicator
             const scrollProgress = document.getElementById('scrollProgress');
             window.addEventListener('scroll', () => {
-                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-                const scrolled = (winScroll / height) * 100;
-                scrollProgress.style.width = scrolled + '%';
+                const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const progress = (window.pageYOffset / totalHeight) * 100;
+                scrollProgress.style.width = `${progress}%`;
+            });
+
+            // Fade-in animation on scroll
+            const fadeElements = document.querySelectorAll('.fade-in');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            fadeElements.forEach(element => {
+                observer.observe(element);
             });
         }
 
         function initAnimations() {
-            // Intersection Observer for fade-in animations
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
+            // Add animation delay to timeline nodes
+            const timelineNodes = document.querySelectorAll('.timeline-node');
+            timelineNodes.forEach((node, index) => {
+                node.style.animationDelay = `${index * 0.2}s`;
+            });
 
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('fade-in');
-                    }
-                });
-            }, observerOptions);
-
-            // Observe all elements
-            document.querySelectorAll('.fade-in').forEach(el => {
-                observer.observe(el);
+            // Stagger animation for cards
+            const cards = document.querySelectorAll('.philosophy-card, .domain-card, .tech-card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
             });
         }
 
-        function initTimelineAnimation() {
-            const nodes = document.querySelectorAll('.timeline-node');
-            let time = 0;
-            
-            function animateTimeline() {
-                time += 0.005;
-                
-                nodes.forEach((node, index) => {
-                    const baseAngle = (index * 60) + time * 30;
-                    const radius = 200 - (index * 20);
-                    const x = Math.cos(baseAngle * Math.PI / 180) * radius;
-                    const y = Math.sin(baseAngle * Math.PI / 180) * radius;
-                    
-                    // Add slight floating motion
-                    const floatY = Math.sin(time + index) * 10;
-                    
-                    node.style.transform = `rotateY(${baseAngle}deg) translateZ(${radius}px) translateY(${floatY}px)`;
-                });
-                
-                requestAnimationFrame(animateTimeline);
+        // Set current year in footer
+        document.addEventListener('DOMContentLoaded', () => {
+            const yearSpan = document.querySelector('.footer-text');
+            if (yearSpan) {
+                const currentYear = new Date().getFullYear();
+                yearSpan.innerHTML = yearSpan.innerHTML.replace('2024', currentYear);
             }
-            
-            animateTimeline();
-        }
-
-        // Initialize on load
-        window.addEventListener('load', () => {
-            document.body.classList.add('loaded');
         });
     </script>
 </body>
