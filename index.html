@@ -784,7 +784,7 @@
             transform: translateY(-1px);
         }
 
-        /* Profile Dropdown */
+        /* Profile Dropdown - Enhanced */
         .user-profile {
             position: relative;
             display: flex;
@@ -796,6 +796,7 @@
             transition: var(--transition);
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid var(--border-color);
+            min-width: 200px;
         }
 
         .user-profile:hover {
@@ -811,7 +812,7 @@
             background: var(--surface-color);
             border: 1px solid var(--border-color);
             border-radius: var(--border-radius);
-            min-width: 220px;
+            min-width: 280px;
             box-shadow: 0 8px 32px var(--shadow-color);
             backdrop-filter: blur(20px);
             z-index: 1001;
@@ -836,21 +837,56 @@
         }
 
         .dropdown-header {
-            padding: 16px;
+            padding: 18px 16px;
             border-bottom: 1px solid var(--border-color);
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
+            background: rgba(255, 107, 139, 0.05);
         }
 
         .dropdown-header .user-avatar {
-            width: 40px;
-            height: 40px;
-            font-size: 14px;
+            width: 50px;
+            height: 50px;
+            font-size: 18px;
+            flex-shrink: 0;
         }
 
         .dropdown-header .user-info {
             flex: 1;
+            min-width: 0;
+        }
+
+        .dropdown-header .user-info .user-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 3px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .dropdown-header .user-info .user-email {
+            font-size: 11px;
+            color: var(--light-pink);
+            margin-bottom: 3px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-weight: 500;
+        }
+
+        .dropdown-header .user-info .user-department {
+            font-size: 11px;
+            color: var(--accent-gold);
+            background: rgba(230, 199, 138, 0.1);
+            padding: 3px 8px;
+            border-radius: 12px;
+            display: inline-block;
+            font-weight: 600;
+            margin-top: 2px;
+            border: 1px solid rgba(230, 199, 138, 0.2);
         }
 
         .dropdown-item {
@@ -1157,16 +1193,17 @@
         }
 
         .user-avatar {
-            width: 32px;
-            height: 32px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 13px;
+            font-size: 14px;
             overflow: hidden;
             border: 2px solid var(--light-pink);
+            flex-shrink: 0;
         }
 
         .user-avatar img {
@@ -1178,17 +1215,38 @@
         .user-info {
             display: flex;
             flex-direction: column;
+            min-width: 120px;
         }
 
         .user-name {
-            font-size: 12px;
-            font-weight: 600;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        .user-role {
+        .user-email {
             font-size: 10px;
-            color: var(--text-secondary);
-            letter-spacing: 0.2px;
+            color: var(--light-pink);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-weight: 500;
+        }
+
+        .user-department {
+            font-size: 9px;
+            color: var(--accent-gold);
+            background: rgba(230, 199, 138, 0.1);
+            padding: 2px 6px;
+            border-radius: 10px;
+            display: inline-block;
+            font-weight: 600;
+            margin-top: 2px;
+            border: 1px solid rgba(230, 199, 138, 0.2);
+            max-width: fit-content;
         }
 
         /* Sidebar */
@@ -1637,17 +1695,24 @@
 
         .active-user-info {
             flex: 1;
+            min-width: 0;
         }
 
         .active-user-name {
             font-size: 13px;
             font-weight: 600;
             margin-bottom: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .active-user-role {
             font-size: 11px;
             color: var(--text-secondary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .active-user-status {
@@ -1655,6 +1720,7 @@
             align-items: center;
             gap: 5px;
             font-size: 10px;
+            flex-shrink: 0;
         }
 
         .status-indicator {
@@ -2419,11 +2485,12 @@
             }
             
             .user-info {
-                display: none;
+                min-width: 100px;
             }
             
             .user-profile {
                 padding: 5px 8px;
+                min-width: 160px;
             }
             
             .activity-header {
@@ -2494,7 +2561,7 @@
             }
             
             .profile-dropdown {
-                min-width: 180px;
+                min-width: 250px;
             }
             
             .theme-dropdown {
@@ -2759,8 +2826,9 @@
                 <div class="user-profile" id="userProfile">
                     <div class="user-avatar" id="userAvatar">AD</div>
                     <div class="user-info">
-                        <div class="user-name" id="userName">Admin User</div>
-                        <div class="user-role" id="userRole">Administrator</div>
+                        <div class="user-name" id="userName">Loading...</div>
+                        <div class="user-email" id="userEmail">loading...</div>
+                        <div class="user-department" id="userDepartment">Department</div>
                     </div>
                     <i class="fas fa-chevron-down" style="font-size: 12px; margin-left: 8px;"></i>
                     
@@ -2768,9 +2836,10 @@
                     <div class="profile-dropdown" id="profileDropdown">
                         <div class="dropdown-header">
                             <div class="user-avatar" id="dropdownAvatar">AD</div>
-                            <div>
-                                <div class="user-name" id="dropdownName">Admin User</div>
-                                <div class="user-role" id="dropdownEmail">admin@yourcompany.com</div>
+                            <div class="user-info">
+                                <div class="user-name" id="dropdownName">Loading...</div>
+                                <div class="user-email" id="dropdownEmail">loading...</div>
+                                <div class="user-department" id="dropdownDepartment">Department</div>
                             </div>
                         </div>
                         <a href="#" class="dropdown-item" id="profileLink">
@@ -2888,6 +2957,10 @@
                         <h1 id="greetingText">Welcome back</h1>
                         <p>Access your enterprise dashboard. Monitor key metrics, manage operations, and track performance in real-time across all business modules.</p>
                         <div class="welcome-meta">
+                            <div class="welcome-meta-item">
+                                <i class="fas fa-user-circle"></i>
+                                <span id="welcomeUserName">Loading user...</span>
+                            </div>
                             <div class="welcome-meta-item">
                                 <i class="fas fa-database"></i>
                                 <span id="connectionStatusText">Connected</span>
@@ -3444,98 +3517,6 @@
         }
 
         // ============================
-        // HARDCODED USER IDENTITIES
-        // ============================
-        const HARDCODED_USERS = {
-            'office.hog@gmail.com': {
-                name: 'Central Admin',
-                photo: 'https://i.postimg.cc/3wvN3Xqc/COLLECTIONS.png',
-                role: 'Administrator',
-                department: 'HOG-NBI001'
-            },
-            // Add more users as needed
-            'sales.hog@gmail.com': {
-                name: 'Moses Mugera',
-                photo: 'https://i.postimg.cc/3wvN3Xqc/COLLECTIONS.png',
-                role: 'Sales Clerk',
-                department: 'Sales and Marketing'
-            },
-            'manager@hogcreations.com': {
-                name: 'Operations Manager',
-                photo: 'https://i.postimg.cc/9XbqzBx4/HOG-creations.png',
-                role: 'Manager',
-                department: 'Operations'
-            },
-            'sales@hogcreations.com': {
-                name: 'Sales Director',
-                photo: 'https://i.postimg.cc/9XbqzBx4/HOG-creations.png',
-                role: 'Director',
-                department: 'Sales'
-            }
-        };
-
-        // ============================
-        // DEFAULT USER INFO
-        // ============================
-        const DEFAULT_USER = {
-            name: 'Guest User',
-            photo: null,
-            role: 'User',
-            department: 'General'
-        };
-
-        // ============================
-        // APP ICONS CONFIGURATION
-        // ============================
-        const appIcons = {
-            'emh': {
-                name: 'Sales Hub',
-                description: 'Sales, operations & analytics with real-time insights',
-                iconUrl: 'https://i.postimg.cc/BbZ5c1Tv/20260119-1500-Image-Generation-remix-01kfb1znpceyc8d9dztq9ea0y3-1-removebg-preview(1).png',
-                colorClass: 'emh-icon',
-                status: 'Live data streaming',
-                animation: 'float',
-                link: 'emh-workspace.html'
-            },
-            'erh': {
-                name: 'Resource Hub',
-                description: 'HR management, asset tracking, and project coordination',
-                iconUrl: 'https://i.postimg.cc/3rFrpW8P/20260112-1839-Image-Generation-remix-01kesdpw6ce8s88amr0e92g276-removebg-preview-removebg-preview.png',
-                colorClass: 'erh-icon',
-                status: 'Active resources',
-                animation: 'color-shift',
-                link: 'erh-workspace.html'
-            },
-            'efh': {
-                name: 'Finance Hub',
-                description: 'Accounting, financial reporting, and budget management',
-                iconUrl: 'https://i.postimg.cc/nLkCKS3J/20260119-1502-Image-Generation-remix-01kfb24hnje88t8jgrmchg3m4w-1-removebg-preview.png',
-                colorClass: 'efh-icon',
-                status: 'Financial Management',
-                animation: 'spin',
-                link: 'efh-workspace.html'
-            },
-            'efs': {
-                name: 'Fleet Hub',
-                description: 'Logistics, courier, shipping & fleet management operations',
-                iconUrl: 'https://i.postimg.cc/MTYB3K5P/20260119-1531-Image-Generation-remix-01kfb3rnfzfzxt9rhe0336w04w-1-removebg-preview.png',
-                colorClass: 'efs-icon',
-                status: 'Active operations',
-                animation: 'bounce',
-                link: 'efs-workspace.html'
-            },
-            'talents': {
-                name: 'Talents Hub',
-                description: 'Human resource and Learning and Development Space',
-                iconUrl: 'https://i.postimg.cc/wvFVykC1/20260119-1539-Image-Generation-remix-01kfb488qbfhz9a354vdfwrwva-1-removebg-preview.png',
-                colorClass: 'talents-icon',
-                status: 'Talent Management',
-                animation: 'color-shift',
-                link: 'talents-workspace.html'
-            }
-        };
-
-        // ============================
         // FIREBASE CONFIGURATION
         // ============================
         const firebaseConfig = {
@@ -3583,8 +3564,14 @@
         const mainContent = document.getElementById('mainContent');
         const userAvatar = document.getElementById('userAvatar');
         const userName = document.getElementById('userName');
-        const userRole = document.getElementById('userRole');
+        const userEmail = document.getElementById('userEmail');
+        const userDepartment = document.getElementById('userDepartment');
+        const dropdownAvatar = document.getElementById('dropdownAvatar');
+        const dropdownName = document.getElementById('dropdownName');
+        const dropdownEmail = document.getElementById('dropdownEmail');
+        const dropdownDepartment = document.getElementById('dropdownDepartment');
         const greetingText = document.getElementById('greetingText');
+        const welcomeUserName = document.getElementById('welcomeUserName');
         const currentDate = document.getElementById('currentDate');
         const currentTime = document.getElementById('currentTime');
         const statsGrid = document.getElementById('statsGrid');
@@ -3611,9 +3598,6 @@
         const userProfile = document.getElementById('userProfile');
         const profileDropdown = document.getElementById('profileDropdown');
         const profileLogout = document.getElementById('profileLogout');
-        const dropdownAvatar = document.getElementById('dropdownAvatar');
-        const dropdownName = document.getElementById('dropdownName');
-        const dropdownEmail = document.getElementById('dropdownEmail');
         const themeToggle = document.getElementById('themeToggle');
         const themeDropdown = document.getElementById('themeDropdown');
         const themeOptions = document.querySelectorAll('.theme-option');
@@ -3637,30 +3621,110 @@
         // ============================
         // UTILITY FUNCTIONS
         // ============================
-        function getUserInfo(email) {
-            const normalizedEmail = email.toLowerCase().trim();
-            return HARDCODED_USERS[normalizedEmail] || DEFAULT_USER;
-        }
-
         function getInitials(name) {
-            if (!name) return '??';
+            if (!name || name === 'Loading...') return '??';
             return name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
         }
 
-        function setUserAvatar(element, userInfo) {
-            if (userInfo.photo) {
-                element.innerHTML = `<img src="${userInfo.photo}" alt="${userInfo.name}">`;
-            } else {
-                element.textContent = getInitials(userInfo.name);
-                element.style.background = `linear-gradient(135deg, ${getColorFromName(userInfo.name)}, ${getColorFromName(userInfo.name, true)})`;
-            }
-        }
-
         function getColorFromName(name, secondary = false) {
-            if (!name) return secondary ? '#e6c78a' : '#ff6b8b';
+            if (!name || name === 'Loading...') return secondary ? '#e6c78a' : '#ff6b8b';
             const colors = ['#ff6b8b', '#2196f3', '#00c853', '#ab47bc', '#607d8b', '#ff8f00'];
             const index = name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) % colors.length;
             return colors[secondary ? (index + 1) % colors.length : index];
+        }
+
+        function setUserAvatar(element, name) {
+            if (!name || name === 'Loading...') {
+                element.textContent = '??';
+                element.style.background = 'linear-gradient(135deg, #ff6b8b, #e6c78a)';
+                return;
+            }
+            element.textContent = getInitials(name);
+            element.style.background = `linear-gradient(135deg, ${getColorFromName(name)}, ${getColorFromName(name, true)})`;
+        }
+
+        async function loadUserProfile(user) {
+            try {
+                // First, try to get user profile from Firebase
+                const snapshot = await database.ref('users/' + user.uid).once('value');
+                const userData = snapshot.val();
+                
+                if (userData && userData.profile) {
+                    // Use Firebase user data
+                    const profile = userData.profile;
+                    updateUserDisplay(
+                        profile.displayName || user.email.split('@')[0],
+                        user.email,
+                        profile.department || 'General',
+                        profile.photoURL || null
+                    );
+                } else {
+                    // Create default profile in Firebase
+                    const defaultProfile = {
+                        displayName: user.email.split('@')[0],
+                        email: user.email,
+                        department: 'General',
+                        photoURL: null,
+                        createdAt: new Date().toISOString(),
+                        lastLogin: new Date().toISOString()
+                    };
+                    
+                    await database.ref('users/' + user.uid + '/profile').set(defaultProfile);
+                    updateUserDisplay(
+                        defaultProfile.displayName,
+                        user.email,
+                        defaultProfile.department,
+                        null
+                    );
+                }
+            } catch (error) {
+                console.error('Error loading user profile:', error);
+                // Fallback to basic user info
+                updateUserDisplay(
+                    user.email.split('@')[0],
+                    user.email,
+                    'General',
+                    null
+                );
+            }
+        }
+
+        function updateUserDisplay(name, email, department, photoURL) {
+            // Update all user display elements
+            userName.textContent = name;
+            userEmail.textContent = email;
+            userDepartment.textContent = department;
+            welcomeUserName.textContent = name;
+            
+            dropdownName.textContent = name;
+            dropdownEmail.textContent = email;
+            dropdownDepartment.textContent = department;
+            
+            // Set avatars
+            setUserAvatar(userAvatar, name);
+            setUserAvatar(dropdownAvatar, name);
+            
+            // Update greeting
+            updateGreeting(name);
+            
+            // Save to localStorage for quick load
+            localStorage.setItem('currentUser', JSON.stringify({
+                name,
+                email,
+                department,
+                lastLogin: new Date().toISOString()
+            }));
+        }
+
+        function updateGreeting(name = 'User') {
+            const hour = new Date().getHours();
+            let greeting;
+            
+            if (hour < 12) greeting = "Good Morning";
+            else if (hour < 18) greeting = "Good Afternoon";
+            else greeting = "Good Evening";
+            
+            greetingText.textContent = `${greeting}, ${name}`;
         }
 
         // ============================
@@ -3873,8 +3937,7 @@
             loginContainer.style.display = 'none';
             appContainer.style.display = 'flex';
             
-            updateUserInfo(user);
-            updateGreeting();
+            loadUserProfile(user);
             updateDateTime();
             setInterval(updateDateTime, 1000);
             
@@ -3924,22 +3987,8 @@
             
             currentUserId = null;
             currentUserEmail = null;
-        }
-
-        // ============================
-        // USER PROFILE MANAGEMENT
-        // ============================
-        function updateUserInfo(user) {
-            const userInfo = getUserInfo(user.email);
             
-            setUserAvatar(userAvatar, userInfo);
-            setUserAvatar(dropdownAvatar, userInfo);
-            
-            userName.textContent = userInfo.name;
-            userRole.textContent = userInfo.role;
-            
-            dropdownName.textContent = userInfo.name;
-            dropdownEmail.textContent = user.email;
+            localStorage.removeItem('currentUser');
         }
 
         // ============================
@@ -3947,17 +3996,15 @@
         // ============================
         function setupUserPresence(userId) {
             const userStatusRef = database.ref('activeSessions/' + userId);
-            const userInfo = getUserInfo(currentUserEmail);
             
             const userStatus = {
                 lastPing: Date.now(),
                 status: 'online',
                 device: navigator.userAgent,
                 timestamp: Date.now(),
-                name: userInfo.name,
-                role: userInfo.role,
-                department: userInfo.department,
-                photo: userInfo.photo || null
+                name: userName.textContent,
+                email: currentUserEmail,
+                department: userDepartment.textContent
             };
             
             userStatusRef.set(userStatus);
@@ -4020,27 +4067,19 @@
                 const userItem = document.createElement('div');
                 userItem.className = 'active-user-item';
                 
-                let userInfo = DEFAULT_USER;
-                if (userData.email) {
-                    userInfo = getUserInfo(userData.email);
-                } else if (userData.name) {
-                    userInfo = {
-                        name: userData.name,
-                        role: userData.role || 'User',
-                        department: userData.department || 'General',
-                        photo: userData.photo || null
-                    };
-                }
+                const displayName = userData.name || userData.email?.split('@')[0] || 'User';
+                const displayEmail = userData.email || 'No email';
+                const displayDepartment = userData.department || 'General';
                 
                 userItem.innerHTML = `
                     <div class="active-user-avatar">
-                        ${userInfo.photo ? 
-                            `<img src="${userInfo.photo}" alt="${userInfo.name}">` : 
-                            getInitials(userInfo.name)}
+                        ${getInitials(displayName)}
                     </div>
                     <div class="active-user-info">
-                        <div class="active-user-name">${userInfo.name}</div>
-                        <div class="active-user-role">${userInfo.role} • ${userInfo.department}</div>
+                        <div class="active-user-name" title="${displayName}">${displayName}</div>
+                        <div class="active-user-role" title="${displayEmail} • ${displayDepartment}">
+                            ${displayDepartment} • ${displayEmail}
+                        </div>
                     </div>
                     <div class="active-user-status">
                         <div class="status-indicator ${userData.status === 'online' ? '' : 'away'}"></div>
@@ -4241,17 +4280,6 @@
         // ============================
         // DASHBOARD FUNCTIONS
         // ============================
-        function updateGreeting() {
-            const hour = new Date().getHours();
-            let greeting;
-            
-            if (hour < 12) greeting = "Good Morning";
-            else if (hour < 18) greeting = "Good Afternoon";
-            else greeting = "Good Evening";
-            
-            greetingText.textContent = `${greeting}`;
-        }
-
         function updateDateTime() {
             const now = new Date();
             
@@ -4868,6 +4896,55 @@
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById("year").textContent = new Date().getFullYear();
         });
+
+        // APP ICONS CONFIGURATION
+        const appIcons = {
+            'emh': {
+                name: 'Sales Hub',
+                description: 'Sales, operations & analytics with real-time insights',
+                iconUrl: 'https://i.postimg.cc/BbZ5c1Tv/20260119-1500-Image-Generation-remix-01kfb1znpceyc8d9dztq9ea0y3-1-removebg-preview(1).png',
+                colorClass: 'emh-icon',
+                status: 'Live data streaming',
+                animation: 'float',
+                link: 'emh-workspace.html'
+            },
+            'erh': {
+                name: 'Resource Hub',
+                description: 'HR management, asset tracking, and project coordination',
+                iconUrl: 'https://i.postimg.cc/3rFrpW8P/20260112-1839-Image-Generation-remix-01kesdpw6ce8s88amr0e92g276-removebg-preview-removebg-preview.png',
+                colorClass: 'erh-icon',
+                status: 'Active resources',
+                animation: 'color-shift',
+                link: 'erh-workspace.html'
+            },
+            'efh': {
+                name: 'Finance Hub',
+                description: 'Accounting, financial reporting, and budget management',
+                iconUrl: 'https://i.postimg.cc/nLkCKS3J/20260119-1502-Image-Generation-remix-01kfb24hnje88t8jgrmchg3m4w-1-removebg-preview.png',
+                colorClass: 'efh-icon',
+                status: 'Financial Management',
+                animation: 'spin',
+                link: 'efh-workspace.html'
+            },
+            'efs': {
+                name: 'Fleet Hub',
+                description: 'Logistics, courier, shipping & fleet management operations',
+                iconUrl: 'https://i.postimg.cc/MTYB3K5P/20260119-1531-Image-Generation-remix-01kfb3rnfzfzxt9rhe0336w04w-1-removebg-preview.png',
+                colorClass: 'efs-icon',
+                status: 'Active operations',
+                animation: 'bounce',
+                link: 'efs-workspace.html'
+            },
+            'talents': {
+                name: 'Talents Hub',
+                description: 'Human resource and Learning and Development Space',
+                iconUrl: 'https://i.postimg.cc/wvFVykC1/20260119-1539-Image-Generation-remix-01kfb488qbfhz9a354vdfwrwva-1-removebg-preview.png',
+                colorClass: 'talents-icon',
+                status: 'Talent Management',
+                animation: 'color-shift',
+                link: 'talents-workspace.html'
+            }
+        };
     </script>
 </body>
 </html>
