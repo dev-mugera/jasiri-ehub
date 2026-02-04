@@ -77,9 +77,10 @@
             background: var(--color-primary);
             min-height: 100vh;
             position: relative;
+            overflow-x: hidden;
         }
 
-        /* Background Image Overlay for entire page */
+        /* Enhanced Background Image with Blur */
         body::before {
             content: '';
             position: fixed;
@@ -92,7 +93,24 @@
             background-position: center;
             background-repeat: no-repeat;
             opacity: 0.4;
+            filter: blur(15px); /* Main blur effect for background */
             z-index: -3;
+            pointer-events: none;
+            transform: scale(1.1); /* Scale to prevent blur edges */
+        }
+
+        /* Dark overlay for better text readability */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, 
+                rgba(10, 14, 23, 0.85) 0%, 
+                rgba(17, 24, 39, 0.75) 100%);
+            z-index: -2;
             pointer-events: none;
         }
 
@@ -103,6 +121,7 @@
 
         ::-webkit-scrollbar-track {
             background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
         }
 
         ::-webkit-scrollbar-thumb {
@@ -123,7 +142,7 @@
             position: relative;
         }
 
-        /* SECTION BACKGROUNDS WITH YOUR IMAGE */
+        /* SECTION BACKGROUNDS WITH YOUR IMAGE AND BLUR */
         .section::before {
             content: '';
             position: absolute;
@@ -135,14 +154,30 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            opacity: 0.3;
+            opacity: 0.25;
+            filter: blur(8px); /* Subtle blur for section backgrounds */
             z-index: -1;
         }
 
         /* Special treatment for hero section */
         .hero::before {
-            opacity: 0.4;
+            opacity: 0.3;
+            filter: blur(10px);
             background-attachment: fixed;
+        }
+
+        /* Overlay for sections to improve text visibility */
+        .section::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, 
+                rgba(10, 14, 23, 0.7) 0%, 
+                rgba(17, 24, 39, 0.6) 100%);
+            z-index: -1;
         }
 
         .text-center {
@@ -160,15 +195,18 @@
             left: 0;
             right: 0;
             z-index: 1000;
-            background: rgba(10, 14, 23, 0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(10, 14, 23, 0.85);
+            backdrop-filter: blur(15px); /* Blur effect for header */
+            -webkit-backdrop-filter: blur(15px);
             border-bottom: 1px solid rgba(59, 130, 246, 0.2);
             transition: all var(--transition-normal);
         }
 
         .header.scrolled {
-            background: rgba(10, 14, 23, 0.98);
+            background: rgba(10, 14, 23, 0.92);
             box-shadow: var(--shadow-lg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
         }
 
         .navbar {
@@ -227,7 +265,7 @@
             color: var(--color-white);
         }
 
-        /* BUTTON BACKGROUND WITH YOUR IMAGE */
+        /* BUTTON BACKGROUND WITH YOUR IMAGE AND BLUR */
         .btn-nav {
             padding: var(--space-3) var(--space-6);
             color: var(--color-white);
@@ -257,6 +295,7 @@
             background-size: cover;
             background-position: center;
             opacity: 0.7;
+            filter: blur(4px); /* Blur effect for button background */
             z-index: -1;
             transition: opacity var(--transition-normal);
         }
@@ -268,13 +307,14 @@
             left: 1px;
             right: 1px;
             bottom: 1px;
-            background: rgba(10, 14, 23, 0.9);
+            background: rgba(10, 14, 23, 0.85);
             border-radius: calc(var(--radius-md) - 1px);
             z-index: -1;
         }
 
         .btn-nav:hover::before {
             opacity: 1;
+            filter: blur(6px); /* Increased blur on hover */
         }
 
         .btn-nav:hover {
@@ -285,13 +325,16 @@
         /* Mobile Menu */
         .mobile-menu-btn {
             display: none;
-            background: none;
-            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             color: var(--color-white);
             font-size: 1.5rem;
             cursor: pointer;
             padding: var(--space-2);
             z-index: 2;
+            border-radius: var(--radius-md);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
 
         /* Hero Section */
@@ -338,7 +381,7 @@
             align-items: center;
         }
 
-        /* BUTTONS WITH YOUR IMAGE BACKGROUND */
+        /* BUTTONS WITH YOUR IMAGE BACKGROUND AND BLUR */
         .btn {
             padding: var(--space-4) var(--space-8);
             border-radius: var(--radius-md);
@@ -368,8 +411,9 @@
             background-size: cover;
             background-position: center;
             opacity: 0.8;
+            filter: blur(3px); /* Blur effect for button background */
             z-index: -2;
-            transition: opacity var(--transition-normal);
+            transition: all var(--transition-normal);
         }
 
         .btn::after {
@@ -386,6 +430,7 @@
 
         .btn:hover::before {
             opacity: 1;
+            filter: blur(5px); /* Increased blur on hover */
         }
 
         .btn-primary {
@@ -482,7 +527,7 @@
             z-index: 1;
         }
 
-        /* CARD BORDERS WITH YOUR IMAGE */
+        /* CARD BORDERS WITH YOUR IMAGE AND BLUR EFFECTS */
         .philosophy-card,
         .domain-card,
         .tech-card {
@@ -491,11 +536,32 @@
             padding: var(--space-6);
             transition: all var(--transition-normal);
             position: relative;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px); /* Glass morphism blur effect */
+            -webkit-backdrop-filter: blur(12px);
             border: none;
+            overflow: hidden;
         }
 
-        /* Card border with your image */
+        /* Enhanced blur background for cards */
+        .philosophy-card::after,
+        .domain-card::after,
+        .tech-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: var(--bg-image);
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
+            filter: blur(6px); /* Background blur for cards */
+            z-index: -1;
+            transition: opacity var(--transition-normal);
+        }
+
+        /* Card border with your image and blur */
         .philosophy-card::before,
         .domain-card::before,
         .tech-card::before {
@@ -509,22 +575,56 @@
             background-size: cover;
             background-position: center;
             border-radius: calc(var(--radius-lg) + 2px);
-            z-index: -1;
+            z-index: -2;
             opacity: 0.6;
-            transition: opacity var(--transition-normal);
+            filter: blur(4px); /* Blur effect for card border */
+            transition: all var(--transition-normal);
         }
 
         .philosophy-card:hover::before,
         .domain-card:hover::before,
         .tech-card:hover::before {
             opacity: 0.9;
+            filter: blur(6px); /* Increased blur on hover */
+        }
+
+        .philosophy-card:hover::after,
+        .domain-card:hover::after,
+        .tech-card:hover::after {
+            opacity: 0.25;
         }
 
         .philosophy-card:hover,
         .domain-card:hover,
         .tech-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px) scale(1.02);
             box-shadow: var(--shadow-xl);
+            backdrop-filter: blur(16px); /* Enhanced blur on hover */
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        /* Inner glow effect for cards */
+        .philosophy-card .inner-glow,
+        .domain-card .inner-glow,
+        .tech-card .inner-glow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, 
+                rgba(59, 130, 246, 0.1) 0%, 
+                transparent 50%);
+            border-radius: var(--radius-lg);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity var(--transition-normal);
+        }
+
+        .philosophy-card:hover .inner-glow,
+        .domain-card:hover .inner-glow,
+        .tech-card:hover .inner-glow {
+            opacity: 1;
         }
 
         /* Philosophy Grid */
@@ -570,11 +670,14 @@
             margin: var(--space-10) 0;
             position: relative;
             overflow: hidden;
+            backdrop-filter: blur(8px); /* Blur for section container */
+            -webkit-backdrop-filter: blur(8px);
         }
 
         .domains-section::before {
             border-radius: var(--radius-xl);
             opacity: 0.4;
+            filter: blur(10px); /* Increased blur for domain section */
         }
 
         .domains-grid {
@@ -672,11 +775,14 @@
             margin: var(--space-10) 0;
             position: relative;
             overflow: hidden;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
         }
 
         .commitment-section::before {
             border-radius: var(--radius-xl);
             opacity: 0.35;
+            filter: blur(8px);
         }
 
         /* CTA Section */
@@ -687,11 +793,14 @@
             margin: var(--space-10) 0;
             position: relative;
             overflow: hidden;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
         }
 
         .cta-section::before {
             border-radius: var(--radius-xl);
             opacity: 0.4;
+            filter: blur(8px);
         }
 
         .cta-title {
@@ -719,10 +828,13 @@
             padding: var(--space-10) 0 var(--space-6);
             border-top: 1px solid rgba(59, 130, 246, 0.2);
             position: relative;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
         }
 
         .footer::before {
             opacity: 0.3;
+            filter: blur(6px);
         }
 
         .footer-grid {
@@ -815,11 +927,34 @@
             .timeline-line {
                 width: 500px;
             }
+            
+            /* Reduce blur on mobile for performance */
+            body::before {
+                filter: blur(10px);
+            }
+            
+            .philosophy-card,
+            .domain-card,
+            .tech-card {
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
+            }
         }
 
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
+                position: fixed;
+                top: 80px;
+                left: 0;
+                right: 0;
+                background: rgba(10, 14, 23, 0.95);
+                backdrop-filter: blur(15px);
+                -webkit-backdrop-filter: blur(15px);
+                padding: var(--space-6);
+                flex-direction: column;
+                gap: var(--space-4);
+                border-bottom: 1px solid rgba(59, 130, 246, 0.2);
             }
             
             .mobile-menu-btn {
@@ -865,6 +1000,11 @@
             .cta-section {
                 padding: var(--space-6);
             }
+            
+            /* Further reduce blur on mobile */
+            body::before {
+                filter: blur(8px);
+            }
         }
 
         @media (max-width: 480px) {
@@ -891,6 +1031,10 @@
             .cta-section {
                 padding: var(--space-5);
             }
+            
+            body::before {
+                filter: blur(6px);
+            }
         }
 
         /* Smooth Animations */
@@ -916,6 +1060,21 @@
             z-index: 1001;
             transition: width 0.1s ease;
             box-shadow: 0 0 10px var(--color-accent);
+            backdrop-filter: blur(2px);
+        }
+
+        /* Performance optimization for blur effects */
+        @supports not (backdrop-filter: blur(1px)) {
+            .philosophy-card,
+            .domain-card,
+            .tech-card,
+            .domains-section,
+            .commitment-section,
+            .cta-section,
+            .footer,
+            .header {
+                background: rgba(17, 24, 39, 0.95);
+            }
         }
     </style>
 </head>
@@ -1002,6 +1161,7 @@
 
             <div class="philosophy-grid">
                 <div class="philosophy-card fade-in">
+                    <div class="inner-glow"></div>
                     <div class="philosophy-icon">
                         <i class="fas fa-hourglass-start"></i>
                     </div>
@@ -1012,6 +1172,7 @@
                 </div>
 
                 <div class="philosophy-card fade-in">
+                    <div class="inner-glow"></div>
                     <div class="philosophy-icon">
                         <i class="fas fa-sync-alt"></i>
                     </div>
@@ -1022,6 +1183,7 @@
                 </div>
 
                 <div class="philosophy-card fade-in">
+                    <div class="inner-glow"></div>
                     <div class="philosophy-icon">
                         <i class="fas fa-shield-alt"></i>
                     </div>
@@ -1045,6 +1207,7 @@
             <div class="domains-section fade-in">
                 <div class="domains-grid">
                     <div class="domain-card fade-in">
+                        <div class="inner-glow"></div>
                         <div class="domain-icon">
                             <i class="fas fa-network-wired"></i>
                         </div>
@@ -1053,6 +1216,7 @@
                     </div>
 
                     <div class="domain-card fade-in">
+                        <div class="inner-glow"></div>
                         <div class="domain-icon">
                             <i class="fas fa-building"></i>
                         </div>
@@ -1061,6 +1225,7 @@
                     </div>
 
                     <div class="domain-card fade-in">
+                        <div class="inner-glow"></div>
                         <div class="domain-icon">
                             <i class="fas fa-industry"></i>
                         </div>
@@ -1069,6 +1234,7 @@
                     </div>
 
                     <div class="domain-card fade-in">
+                        <div class="inner-glow"></div>
                         <div class="domain-icon">
                             <i class="fas fa-hospital"></i>
                         </div>
@@ -1077,6 +1243,7 @@
                     </div>
 
                     <div class="domain-card fade-in">
+                        <div class="inner-glow"></div>
                         <div class="domain-icon">
                             <i class="fas fa-graduation-cap"></i>
                         </div>
@@ -1085,6 +1252,7 @@
                     </div>
 
                     <div class="domain-card fade-in">
+                        <div class="inner-glow"></div>
                         <div class="domain-icon">
                             <i class="fas fa-truck"></i>
                         </div>
@@ -1106,6 +1274,7 @@
 
             <div class="tech-grid">
                 <div class="tech-card fade-in">
+                    <div class="inner-glow"></div>
                     <div class="tech-icon">
                         <i class="fas fa-cube"></i>
                     </div>
@@ -1120,6 +1289,7 @@
                 </div>
 
                 <div class="tech-card fade-in">
+                    <div class="inner-glow"></div>
                     <div class="tech-icon">
                         <i class="fas fa-brain"></i>
                     </div>
@@ -1127,9 +1297,14 @@
                     <p class="tech-description">
                         AI systems built with evolutionary algorithms that learn and adapt over extended periods of time.
                     </p>
+                    <a href="#" class="tech-link">
+                        Learn More
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
                 </div>
 
                 <div class="tech-card fade-in">
+                    <div class="inner-glow"></div>
                     <div class="tech-icon">
                         <i class="fas fa-shield-alt"></i>
                     </div>
@@ -1137,6 +1312,10 @@
                     <p class="tech-description">
                         Security platform with cryptographic agility, designed to withstand threats decades into the future.
                     </p>
+                    <a href="#" class="tech-link">
+                        Explore Security
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
                 </div>
             </div>
         </div>
@@ -1364,12 +1543,32 @@
             element.addEventListener('mouseenter', () => {
                 element.style.transform = element.classList.contains('btn') || element.classList.contains('btn-nav') 
                     ? 'translateY(-3px) scale(1.05)' 
-                    : 'translateY(-5px) scale(1.02)';
+                    : 'translateY(-8px) scale(1.02)';
             });
             
             element.addEventListener('mouseleave', () => {
                 element.style.transform = 'translateY(0) scale(1)';
             });
+        });
+
+        // Performance optimization: reduce blur on scroll
+        let scrollTimeout;
+        window.addEventListener('scroll', () => {
+            clearTimeout(scrollTimeout);
+            
+            // Reduce blur during scrolling for performance
+            document.querySelectorAll('.philosophy-card, .domain-card, .tech-card').forEach(card => {
+                card.style.backdropFilter = 'blur(8px)';
+                card.style.webkitBackdropFilter = 'blur(8px)';
+            });
+            
+            scrollTimeout = setTimeout(() => {
+                // Restore blur after scrolling stops
+                document.querySelectorAll('.philosophy-card, .domain-card, .tech-card').forEach(card => {
+                    card.style.backdropFilter = 'blur(12px)';
+                    card.style.webkitBackdropFilter = 'blur(12px)';
+                });
+            }, 100);
         });
     </script>
 </body>
