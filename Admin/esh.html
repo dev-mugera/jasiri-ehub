@@ -1,0 +1,1535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jasiri E-Hub | Admin Panel</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-primary: #0a192f;
+            --bg-secondary: #172a45;
+            --accent-blue: #64ffda;
+            --accent-pink: #ff6b8b;
+            --accent-gold: #e6c78a;
+            --text-primary: #f0e6ef;
+            --text-secondary: #b8b8d1;
+            --border-color: rgba(255, 255, 255, 0.12);
+            --card-bg: rgba(23, 42, 69, 0.95);
+            --success: #4CAF50;
+            --warning: #ff9800;
+            --danger: #f44336;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 24px;
+        }
+
+        .admin-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .admin-header {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 24px 32px;
+            margin-bottom: 24px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .admin-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .admin-title i {
+            font-size: 28px;
+            color: var(--accent-blue);
+        }
+
+        .admin-title h1 {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .admin-title span {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-left: 8px;
+        }
+
+        .admin-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--accent-blue);
+        }
+
+        .btn-primary {
+            background: var(--accent-blue);
+            color: var(--bg-primary);
+            border-color: var(--accent-blue);
+        }
+
+        .btn-primary:hover {
+            background: #7affdd;
+        }
+
+        .btn-success {
+            background: var(--success);
+            border-color: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #45a049;
+        }
+
+        .btn-warning {
+            background: var(--warning);
+            border-color: var(--warning);
+            color: var(--bg-primary);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            border-color: var(--danger);
+            color: white;
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: rgba(100, 255, 218, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: var(--accent-blue);
+        }
+
+        .stat-info h3 {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .stat-info p {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        /* Search and Filter */
+        .filter-bar {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            align-items: center;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0 16px;
+        }
+
+        .search-box i {
+            color: var(--text-secondary);
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 16px;
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-size: 14px;
+            outline: none;
+        }
+
+        .search-box input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .filter-select {
+            padding: 12px 20px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 14px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .filter-select option {
+            background: var(--bg-secondary);
+        }
+
+        /* Section Tabs */
+        .section-tabs {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            background: var(--card-bg);
+            padding: 8px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .section-tab {
+            padding: 10px 20px;
+            border-radius: 8px;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-tab:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+        }
+
+        .section-tab.active {
+            background: rgba(100, 255, 218, 0.1);
+            color: var(--accent-blue);
+        }
+
+        .section-tab .count {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+        }
+
+        /* Tools Grid */
+        .tools-grid-admin {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
+
+        .tool-card-admin {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            transition: all 0.2s;
+        }
+
+        .tool-card-admin:hover {
+            border-color: var(--accent-blue);
+            box-shadow: 0 4px 20px rgba(100, 255, 218, 0.1);
+        }
+
+        .tool-header-admin {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+
+        .tool-icon-admin {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-gold));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--bg-primary);
+        }
+
+        .tool-info-admin {
+            flex: 1;
+        }
+
+        .tool-name-admin {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+
+        .tool-name-admin h3 {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .tool-badge-admin {
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 700;
+            background: rgba(100, 255, 218, 0.15);
+            color: var(--accent-blue);
+        }
+
+        .tool-category {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .tool-description-admin {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        .tool-sheet-url {
+            margin-bottom: 16px;
+        }
+
+        .url-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .url-display {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-family: monospace;
+            word-break: break-all;
+            border: 1px solid var(--border-color);
+        }
+
+        .tool-actions {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+        }
+
+        .tool-actions .btn {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 32px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .modal-header h2 {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 20px;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .modal-close:hover {
+            color: var(--accent-pink);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--accent-blue);
+        }
+
+        .form-group textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .icon-preview {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .icon-preview i {
+            font-size: 24px;
+            color: var(--accent-blue);
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            margin-top: 24px;
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transform: translateX(120%);
+            transition: transform 0.3s;
+            z-index: 1001;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.success {
+            border-left: 4px solid var(--success);
+        }
+
+        .toast.error {
+            border-left: 4px solid var(--danger);
+        }
+
+        .toast i {
+            font-size: 20px;
+        }
+
+        .toast.success i {
+            color: var(--success);
+        }
+
+        .toast.error i {
+            color: var(--danger);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .empty-state i {
+            font-size: 48px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .empty-state h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .empty-state p {
+            color: var(--text-secondary);
+        }
+
+        /* Loading */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 25, 47, 0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1002;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .loader {
+            width: 40px;
+            aspect-ratio: 1;
+            --c: no-repeat linear-gradient(var(--accent-blue) 0 0);
+            background: var(--c), var(--c), var(--c), var(--c), var(--c), var(--c);
+            animation: l14-1 0.5s infinite alternate, l14-2 2s infinite;
+        }
+
+        @keyframes l14-1 {
+            0%, 10% { background-size: 20% 100%; }
+            100% { background-size: 20% 20%; }
+        }
+
+        @keyframes l14-2 {
+            0%, 49.9% { background-position: 0 0, 0 100%, 50% 50%, 50% 50%, 100% 0, 100% 100%; }
+            50%, 100% { background-position: 0 50%, 0 50%, 50% 0, 50% 100%, 100% 50%, 100% 50%; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 16px;
+            }
+
+            .admin-header {
+                padding: 20px;
+            }
+
+            .tools-grid-admin {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-bar {
+                flex-direction: column;
+            }
+
+            .search-box {
+                min-width: auto;
+            }
+
+            .section-tabs {
+                overflow-x: auto;
+                flex-wrap: nowrap;
+                padding-bottom: 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loader"></div>
+        <div>Processing...</div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">Changes saved successfully</span>
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="modal-overlay" id="editModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="modalTitle">Edit Tool</h2>
+                <button class="modal-close" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="editForm">
+                <input type="hidden" id="editSectionId">
+                <input type="hidden" id="editToolIndex">
+                
+                <div class="form-group">
+                    <label for="editToolName">Tool Name</label>
+                    <input type="text" id="editToolName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="editToolDescription">Description</label>
+                    <textarea id="editToolDescription" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="editToolIcon">Icon (Font Awesome Class)</label>
+                    <input type="text" id="editToolIcon" placeholder="fas fa-chart-line" required>
+                    <div class="icon-preview">
+                        <i id="iconPreview" class="fas fa-chart-line"></i>
+                        <span style="font-size: 12px; color: var(--text-secondary);">Preview</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="editToolBadge">Badge Text</label>
+                    <input type="text" id="editToolBadge" value="Active">
+                </div>
+                
+                <div class="form-group">
+                    <label for="editSheetUrl">Google Sheets URL</label>
+                    <textarea id="editSheetUrl" required></textarea>
+                </div>
+                
+                <div class="modal-actions">
+                    <button type="button" class="btn" onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add New Tool Modal -->
+    <div class="modal-overlay" id="addModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Add New Tool</h2>
+                <button class="modal-close" onclick="closeAddModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="addForm">
+                <div class="form-group">
+                    <label for="addSection">Section</label>
+                    <select id="addSection" required>
+                        <option value="">Select Section...</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="addToolName">Tool Name</label>
+                    <input type="text" id="addToolName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="addToolDescription">Description</label>
+                    <textarea id="addToolDescription" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="addToolIcon">Icon (Font Awesome Class)</label>
+                    <input type="text" id="addToolIcon" placeholder="fas fa-chart-line" required>
+                    <div class="icon-preview">
+                        <i id="addIconPreview" class="fas fa-chart-line"></i>
+                        <span style="font-size: 12px; color: var(--text-secondary);">Preview</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="addToolBadge">Badge Text</label>
+                    <input type="text" id="addToolBadge" value="Active">
+                </div>
+                
+                <div class="form-group">
+                    <label for="addSheetUrl">Google Sheets URL</label>
+                    <textarea id="addSheetUrl" required></textarea>
+                </div>
+                
+                <div class="modal-actions">
+                    <button type="button" class="btn" onclick="closeAddModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add Tool</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bulk Import Modal -->
+    <div class="modal-overlay" id="importModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Bulk Import / Export</h2>
+                <button class="modal-close" onclick="closeImportModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div style="margin-bottom: 24px;">
+                <h3 style="font-size: 14px; margin-bottom: 12px;">Export Configuration</h3>
+                <button class="btn btn-primary" onclick="exportConfig()" style="width: 100%; justify-content: center;">
+                    <i class="fas fa-download"></i> Download JSON Configuration
+                </button>
+            </div>
+            
+            <div>
+                <h3 style="font-size: 14px; margin-bottom: 12px;">Import Configuration</h3>
+                <div class="form-group">
+                    <label for="importFile">Select JSON File</label>
+                    <input type="file" id="importFile" accept=".json,application/json">
+                </div>
+                <button class="btn btn-warning" onclick="importConfig()" style="width: 100%; justify-content: center;">
+                    <i class="fas fa-upload"></i> Import Configuration
+                </button>
+                <p style="font-size: 12px; color: var(--text-secondary); margin-top: 12px;">
+                    Warning: Importing will replace all current tool configurations.
+                </p>
+            </div>
+            
+            <div class="modal-actions" style="margin-top: 24px;">
+                <button type="button" class="btn" onclick="closeImportModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="admin-container">
+        <!-- Header -->
+        <div class="admin-header">
+            <div class="admin-title">
+                <i class="fas fa-cog"></i>
+                <div>
+                    <h1>Jasiri E-Hub Admin Panel <span>v2.1</span></h1>
+                    <p style="font-size: 13px; color: var(--text-secondary);">Manage Google Sheets and Tool Configuration</p>
+                </div>
+            </div>
+            <div class="admin-actions">
+                <button class="btn" onclick="openAddModal()">
+                    <i class="fas fa-plus"></i> Add Tool
+                </button>
+                <button class="btn btn-warning" onclick="openImportModal()">
+                    <i class="fas fa-file-import"></i> Import/Export
+                </button>
+                <button class="btn btn-success" onclick="generateCode()">
+                    <i class="fas fa-code"></i> Generate Code
+                </button>
+                <button class="btn btn-primary" onclick="saveAllChanges()">
+                    <i class="fas fa-save"></i> Save All
+                </button>
+            </div>
+        </div>
+
+        <!-- Stats Bar -->
+        <div class="stats-bar">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-folder"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="totalSections">0</h3>
+                    <p>Total Sections</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-tools"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="totalTools">0</h3>
+                    <p>Total Tools</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-link"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="validUrls">0</h3>
+                    <p>Valid Sheet URLs</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="lastModified">Never</h3>
+                    <p>Last Modified</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search and Filter -->
+        <div class="filter-bar">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search tools by name, description, or URL..." onkeyup="filterTools()">
+            </div>
+            <select class="filter-select" id="categoryFilter" onchange="filterTools()">
+                <option value="">All Categories</option>
+                <option value="Sales Operations">Sales Operations</option>
+                <option value="Customer Management">Customer Management</option>
+                <option value="Product Information">Product Information</option>
+                <option value="Inventory">Inventory</option>
+                <option value="Sales Analytics">Sales Analytics</option>
+            </select>
+        </div>
+
+        <!-- Section Tabs -->
+        <div class="section-tabs" id="sectionTabs">
+            <!-- Dynamically populated -->
+        </div>
+
+        <!-- Tools Grid -->
+        <div id="toolsGridContainer">
+            <div id="toolsGridAdmin" class="tools-grid-admin">
+                <!-- Dynamically populated -->
+            </div>
+        </div>
+
+        <!-- Generated Code Output -->
+        <div id="codeOutput" style="display: none; margin-top: 24px;">
+            <div style="background: var(--card-bg); border-radius: 12px; padding: 20px; border: 1px solid var(--border-color);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                    <h3 style="font-size: 16px;">Generated moduleData Code</h3>
+                    <button class="btn" onclick="copyCode()">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </div>
+                <textarea id="generatedCode" readonly style="width: 100%; height: 400px; background: rgba(0,0,0,0.3); color: var(--accent-blue); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; font-family: monospace; font-size: 12px; resize: vertical;"></textarea>
+                <p style="font-size: 12px; color: var(--text-secondary); margin-top: 12px;">
+                    Copy this code and replace the moduleData object in your enterprise-sales-hub.html file.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Default module data structure
+        let moduleData = {};
+
+        // Section display names
+        const sectionDisplayNames = {
+            'point-of-sale': 'Point of Sale',
+            'transactions': 'Transaction History',
+            'returns': 'Returns & Refunds',
+            'customer-database': 'Customer Database',
+            'invoicing': 'Invoicing',
+            'loyalty': 'Loyalty Programs',
+            'product-catalog': 'Product Catalog',
+            'pricing': 'Product Management',
+            'specials': 'Specials & Promotions',
+            'stock-levels': 'Stock Levels',
+            'replenishment': 'Replenishment',
+            'inventory-reports': 'Inventory Reports',
+            'sales-reports': 'Sales Reports',
+            'performance': 'Performance Metrics',
+            'trends': 'Sales Trends'
+        };
+
+        // Category mapping
+        const sectionCategories = {
+            'point-of-sale': 'Sales Operations',
+            'transactions': 'Sales Operations',
+            'returns': 'Sales Operations',
+            'customer-database': 'Customer Management',
+            'invoicing': 'Customer Management',
+            'loyalty': 'Customer Management',
+            'product-catalog': 'Product Information',
+            'pricing': 'Product Information',
+            'specials': 'Product Information',
+            'stock-levels': 'Inventory',
+            'replenishment': 'Inventory',
+            'inventory-reports': 'Inventory',
+            'sales-reports': 'Sales Analytics',
+            'performance': 'Sales Analytics',
+            'trends': 'Sales Analytics'
+        };
+
+        let currentSection = '';
+        let currentFilter = '';
+
+        // Load data from localStorage or use default
+        function loadData() {
+            const savedData = localStorage.getItem('jasiri_module_data');
+            if (savedData) {
+                try {
+                    moduleData = JSON.parse(savedData);
+                    showToast('Data loaded from localStorage', 'success');
+                } catch (e) {
+                    loadDefaultData();
+                }
+            } else {
+                loadDefaultData();
+            }
+            updateStats();
+            renderSectionTabs();
+            renderTools();
+        }
+
+        function loadDefaultData() {
+            // Default data structure (same as in the main file)
+            moduleData = {
+                "point-of-sale": {
+                    title: "Point of Sale",
+                    description: "Manage point of sale operations and transactions",
+                    tools: [
+                        { name: "New Sale", description: "Create new sales transactions", icon: "fas fa-cash-register", sheetUrl: "https://docs.google.com/spreadsheets/d/1F7tL4EAJeUsNgW_Q4ns8a69iK6GfIrvCafxGVuT7qog/edit?usp=sharing", badge: "Active" },
+                        { name: "Quick Invoice", description: "Generate quick invoices for customers", icon: "fas fa-file-invoice-dollar", sheetUrl: "https://docs.google.com/spreadsheets/d/1R1LH8KIIJmSuEzRW_dfI3H1Slu9w9vW4tY1XJ2Krcs4/edit?usp=sharing", badge: "Active" },
+                        { name: "Hold Order", description: "Manage held orders and pending transactions", icon: "fas fa-pause-circle", sheetUrl: "https://docs.google.com/spreadsheets/d/11vK-1ogIl4q-rg053Ql7rHz3CD1vfXmgmum9xP4CUXo/edit", badge: "Active" }
+                    ]
+                },
+                "transactions": {
+                    title: "Transaction History",
+                    description: "View and manage transaction history",
+                    tools: [
+                        { name: "Today's Transactions", description: "View today's sales transactions", icon: "fas fa-history", sheetUrl: "https://docs.google.com/spreadsheets/d/1qDnaVeBiWxuF0m1Yk-03REwM8bqwXMlOnJpuqdlTqZ8/edit", badge: "Active" },
+                        { name: "Void Transactions", description: "Manage voided transactions and refunds", icon: "fas fa-ban", sheetUrl: "https://docs.google.com/spreadsheets/d/1KVnZUXasm0HqXrskp7cdTrFYiGzrZs07qSzbnV9DNIs/edit", badge: "Active" },
+                        { name: "Transaction Search", description: "Search and filter transaction history", icon: "fas fa-search", sheetUrl: "https://docs.google.com/spreadsheets/d/1eLQeQqKJGZqYKRlluZTHg__V_XvSqQxv2lH_sHkMg4E/edit?usp=sharing", badge: "Active" }
+                    ]
+                },
+                "returns": {
+                    title: "Returns & Refunds",
+                    description: "Manage product returns and refund processing",
+                    tools: [
+                        { name: "Process Return", description: "Process customer returns and exchanges", icon: "fas fa-undo", sheetUrl: "https://docs.google.com/spreadsheets/d/1hoo8598qY1UQJwf3qSo6EEC0eZel44WGzM2SuO8A6qA/edit", badge: "Active" },
+                        { name: "Refund History", description: "Track refund history and status", icon: "fas fa-money-bill-wave", sheetUrl: "https://docs.google.com/spreadsheets/d/1PxLHWjimhlC-s8pQ0-SWCE2Jkg3rxRmL3lubyfE-oNo/edit", badge: "Active" },
+                        { name: "Return Reasons", description: "Analyze return reasons and patterns", icon: "fas fa-chart-pie", sheetUrl: "https://docs.google.com/spreadsheets/d/1gGD8EF8ob4U_rV8TDGlvDuMdnT2ErdgjR476CqEA8Ws/edit", badge: "Active" }
+                    ]
+                },
+                "customer-database": {
+                    title: "Customer Database",
+                    description: "Manage customer information and relationships",
+                    tools: [
+                        { name: "Customer Directory", description: "Complete customer contact database", icon: "fas fa-address-book", sheetUrl: "https://docs.google.com/spreadsheets/d/1Pf3wheyISr5LnzRevgyJ0o9Pkgw0UL4lKs9BTa-KMvY/edit", badge: "Active" },
+                        { name: "Customer Groups", description: "Organize customers into groups and segments", icon: "fas fa-users", sheetUrl: "https://docs.google.com/spreadsheets/d/1M1pHs_X8yg72RMmW6LHyz3Zb8qbJN5pteIaJg977Xbk/edit", badge: "Active" },
+                        { name: "Customer Activity", description: "Track customer purchase history and activity", icon: "fas fa-chart-line", sheetUrl: "https://docs.google.com/spreadsheets/d/1DdJfJtZyzCDVHvF-YjY9vBsCqPq4E8gIuSxXxYqj9Ao/edit?usp=sharing", badge: "Active" }
+                    ]
+                },
+                "invoicing": {
+                    title: "Invoicing",
+                    description: "Create and manage customer invoices",
+                    tools: [
+                        { name: "Create Invoice", description: "Generate customer invoices", icon: "fas fa-file-invoice", sheetUrl: "https://docs.google.com/spreadsheets/d/1zKjKjKzKjKzKjKzKjKzKjKzKjKzKjKzKjKzKjKz/edit?usp=sharing", badge: "Active" },
+                        { name: "Payment Tracking", description: "Track invoice payments and status", icon: "fas fa-check-circle", sheetUrl: "https://docs.google.com/spreadsheets/d/1Fhpzj-Dm5YFOIRUYSHVNWyImj0uMUaGdeB3dFIDAGMM/edit", badge: "Active" },
+                        { name: "Invoice Archive", description: "Archive of past invoices and records", icon: "fas fa-archive", sheetUrl: "https://docs.google.com/spreadsheets/d/1archive_invoice_sheet_id/edit?usp=sharing", badge: "Active" }
+                    ]
+                },
+                "loyalty": {
+                    title: "Loyalty Programs",
+                    description: "Manage customer loyalty programs",
+                    tools: [
+                        { name: "Loyalty Members", description: "Manage loyalty program members", icon: "fas fa-crown", sheetUrl: "https://docs.google.com/spreadsheets/d/1uZwl7-8Zi4YfT-sdiExCcrDUoJ_FQZmhQiX7j3fKbI0/edit", badge: "Active" },
+                        { name: "Points Redemption", description: "Process loyalty points redemption", icon: "fas fa-gift", sheetUrl: "https://docs.google.com/spreadsheets/d/1QEdFp_wblY_eaH00RwOdcY-MUqg_On6R2bnIjPPwxaQ/edit", badge: "Active" },
+                        { name: "Rewards Catalog", description: "Catalog of loyalty rewards and benefits", icon: "fas fa-star", sheetUrl: "https://docs.google.com/spreadsheets/d/148kODEe388XlQNU_-dNZcs_ensVYoGDmYsl-ApnCLx8/edit", badge: "Active" }
+                    ]
+                },
+                "product-catalog": {
+                    title: "Product Catalog",
+                    description: "Manage product information and catalog",
+                    tools: [
+                        { name: "Product Details", description: "Detailed product information database", icon: "fas fa-box", sheetUrl: "https://docs.google.com/spreadsheets/d/1TaYcki7lJ1kC4q8mfNly_d_e1a7PcYV8oHotLtom5R4/edit", badge: "Active" },
+                        { name: "Product Categories", description: "Organize products into categories", icon: "fas fa-tags", sheetUrl: "https://docs.google.com/spreadsheets/d/1product_categories_sheet_id/edit?usp=sharing", badge: "Active" },
+                        { name: "Product Search", description: "Advanced product search functionality", icon: "fas fa-search", sheetUrl: "https://docs.google.com/spreadsheets/d/1product_search_sheet_id/edit?usp=sharing", badge: "Active" }
+                    ]
+                },
+                "pricing": {
+                    title: "Product Management",
+                    description: "Manage product pricing and updates",
+                    tools: [
+                        { name: "Franchise Store", description: "Franchise store product management", icon: "fas fa-store", sheetUrl: "https://docs.google.com/spreadsheets/d/1lXh-0l7_HOE67vFHqH4wu6HGsFnIIrXwNq1ydcVUweU/edit", badge: "Active" },
+                        { name: "Retail Store", description: "Retail store product management", icon: "fas fa-shopping-bag", sheetUrl: "https://docs.google.com/spreadsheets/d/1_wSoJ2vxHi4RRQiABt4VJv2WImk6hbmBTDQL60I-EQ4/edit?usp=sharing", badge: "Active" },
+                        { name: "Price Lists", description: "Manage product price lists", icon: "fas fa-tag", sheetUrl: "https://docs.google.com/spreadsheets/d/1fSQO1ec_15eCwCNIH3BWVygdmL3nPBycExTTE5isjdM/edit", badge: "Active" },
+                        { name: "Price Updates", description: "Track and manage price updates", icon: "fas fa-sync-alt", sheetUrl: "https://docs.google.com/spreadsheets/d/177srRZ_v9oaomBg7Osn3ut9gdAHB_zFXlhgvcmRmhkk/edit", badge: "Active" }
+                    ]
+                },
+                "specials": {
+                    title: "Specials & Promotions",
+                    description: "Manage special offers and promotions",
+                    tools: [
+                        { name: "Current Promotions", description: "Active promotions and special offers", icon: "fas fa-percentage", sheetUrl: "https://docs.google.com/spreadsheets/d/1cdPeOG6LjKV3sgMDmzYcowclqLcKBjx_7iVM0QeH3ik/edit", badge: "Active" },
+                        { name: "Create Promotion", description: "Create new promotions and offers", icon: "fas fa-plus-circle", sheetUrl: "https://docs.google.com/spreadsheets/d/1NxmD23P2Y4nwEWK7EdrFXkXayy_LA1b0jS8XmCOolRU/edit", badge: "Active" },
+                        { name: "Promotion Results", description: "Track promotion performance and results", icon: "fas fa-chart-line", sheetUrl: "https://docs.google.com/spreadsheets/d/1_dPOvSQo5ue7SxvuVz3BotcJaIYWQL0k9Aod3O6AruE/edit", badge: "Active" }
+                    ]
+                },
+                "stock-levels": {
+                    title: "Stock Levels",
+                    description: "Monitor and manage inventory stock levels",
+                    tools: [
+                        { name: "Current Inventory", description: "Current inventory stock levels", icon: "fas fa-boxes", sheetUrl: "https://docs.google.com/spreadsheets/d/1iskSt2krpmI5smrA59_WSugpYT44S28QaA7NLx_5seA/edit", badge: "Active" },
+                        { name: "Low Stock Alerts", description: "Low stock alerts and notifications", icon: "fas fa-exclamation-triangle", sheetUrl: "https://docs.google.com/spreadsheets/d/12sbaXzyvK3137rz2Tx5I4TSqhzLHxcKBlvKKutQ6kPc/edit", badge: "Active" },
+                        { name: "Inventory Valuation", description: "Inventory valuation and costing", icon: "fas fa-calculator", sheetUrl: "https://docs.google.com/spreadsheets/d/1BzyxkoCa6RMtNvs2-AToIVKImdMvAAYWfqtWNGvFpS0/edit", badge: "Active" }
+                    ]
+                },
+                "replenishment": {
+                    title: "Replenishment",
+                    description: "Manage inventory replenishment and orders",
+                    tools: [
+                        { name: "Purchase Orders", description: "Create and manage purchase orders", icon: "fas fa-clipboard-list", sheetUrl: "https://docs.google.com/spreadsheets/d/1OyH4-vZkIgNKWhQQUBVoNat6LVSoOGutbR3O73Kzo_Q/edit", badge: "Active" },
+                        { name: "Vendor Management", description: "Manage vendor relationships", icon: "fas fa-truck", sheetUrl: "https://docs.google.com/spreadsheets/d/1U4c9DVC6IdDvTgcTJSH28vAlRXTnEZY6fWrdv0DlMJI/edit", badge: "Active" },
+                        { name: "Receiving", description: "Manage inventory receiving process", icon: "fas fa-dolly", sheetUrl: "https://docs.google.com/spreadsheets/d/1OElvvz5BRRjKMIiYW1YtA7fQAHT-jDZVUjfvbL0qGg0/edit", badge: "Active" }
+                    ]
+                },
+                "inventory-reports": {
+                    title: "Inventory Reports",
+                    description: "Generate inventory reports and analytics",
+                    tools: [
+                        { name: "Inventory Movement", description: "Track inventory movement and flow", icon: "fas fa-exchange-alt", sheetUrl: "https://docs.google.com/spreadsheets/d/1yt6j4xYVsfnlYBs7x-MTxdW6QUiL4a15ZmBqo6bZasc/edit", badge: "Active" },
+                        { name: "Stock Adjustments", description: "Manage stock adjustments and corrections", icon: "fas fa-adjust", sheetUrl: "https://docs.google.com/spreadsheets/d/1s8rVN0H6LvGLRrlyuTnnmLCRC_-TwVaBLxkg9AmVlRQ/edit", badge: "Active" },
+                        { name: "Inventory Accuracy", description: "Track inventory accuracy and variance", icon: "fas fa-check-double", sheetUrl: "https://docs.google.com/spreadsheets/d/1KqLNKcdvlIysFp9UOZo3WOQFv2gxs0i2E_T_jfE73oc/edit", badge: "Active" }
+                    ]
+                },
+                "sales-reports": {
+                    title: "Sales Reports",
+                    description: "Generate sales reports and analytics",
+                    tools: [
+                        { name: "Daily Sales", description: "Daily sales reports and analysis", icon: "fas fa-calendar-day", sheetUrl: "https://docs.google.com/spreadsheets/d/1Grhedm8TOsl5YKUh-2VByuv2UAaBEJNn20URNrjYDyo/edit?usp=sharing", badge: "Active" },
+                        { name: "Product Performance", description: "Product performance analysis", icon: "fas fa-chart-bar", sheetUrl: "https://docs.google.com/spreadsheets/d/1VPpOrg3dRF-991iyWTHYe8PG1SX677I3IJaH2j7oLnI/edit", badge: "Active" },
+                        { name: "Sales by Category", description: "Sales analysis by product category", icon: "fas fa-chart-pie", sheetUrl: "https://docs.google.com/spreadsheets/d/1YuQhNl-G9YCFc7S24RdPltCT0Z2CmicAjxvFNilaGOE/edit", badge: "Active" }
+                    ]
+                },
+                "performance": {
+                    title: "Performance Metrics",
+                    description: "Track sales performance metrics",
+                    tools: [
+                        { name: "Salesperson Performance", description: "Sales team performance tracking", icon: "fas fa-user-tie", sheetUrl: "https://docs.google.com/spreadsheets/d/18UEJxzUSx1MAjfLSHPpE0Z5ot9z-Dkr-NNaeiVwm5TM/edit", badge: "Active" },
+                        { name: "Conversion Rates", description: "Sales conversion rate analysis", icon: "fas fa-chart-line", sheetUrl: "https://docs.google.com/spreadsheets/d/1dXdtHwgdaV7DDDtJQCuYe0MlOkEMKc1fxQbqxfsFGw4/edit", badge: "Active" },
+                        { name: "Average Transaction", description: "Average transaction value analysis", icon: "fas fa-dollar-sign", sheetUrl: "https://docs.google.com/spreadsheets/d/1Q9E_I-o3XloXCW5zuLZLoGzgDQos2MnhRFZZcnWIMIk/edit", badge: "Active" }
+                    ]
+                },
+                "trends": {
+                    title: "Sales Trends",
+                    description: "Analyze sales trends and patterns",
+                    tools: [
+                        { name: "Historical Comparison", description: "Historical sales comparison", icon: "fas fa-history", sheetUrl: "https://docs.google.com/spreadsheets/d/1txg8o17LPzagzhd3h-rHKdRgVPqXNacTJ_XkbZ_wpuY/edit", badge: "Active" },
+                        { name: "Seasonal Trends", description: "Seasonal sales trend analysis", icon: "fas fa-sun", sheetUrl: "https://docs.google.com/spreadsheets/d/1wSTZKGsks788uqo2CXF0bJRiyb-kTGCbHeXrJMhvqtE/edit", badge: "Active" },
+                        { name: "Forecasting", description: "Sales forecasting and predictions", icon: "fas fa-chart-line", sheetUrl: "https://docs.google.com/spreadsheets/d/1Xus5PJ8sRiaCuJrdbOefhMsXgbm4SC8yALq_xabn9Eo/edit", badge: "Active" }
+                    ]
+                }
+            };
+        }
+
+        // Update statistics
+        function updateStats() {
+            const sections = Object.keys(moduleData).length;
+            let tools = 0;
+            let validUrls = 0;
+            
+            Object.values(moduleData).forEach(section => {
+                section.tools.forEach(tool => {
+                    tools++;
+                    if (isValidSheetUrl(tool.sheetUrl)) {
+                        validUrls++;
+                    }
+                });
+            });
+            
+            document.getElementById('totalSections').textContent = sections;
+            document.getElementById('totalTools').textContent = tools;
+            document.getElementById('validUrls').textContent = validUrls;
+            
+            const lastModified = localStorage.getItem('jasiri_last_modified');
+            if (lastModified) {
+                document.getElementById('lastModified').textContent = new Date(lastModified).toLocaleDateString();
+            }
+        }
+
+        function isValidSheetUrl(url) {
+            return url && url.includes('docs.google.com/spreadsheets/d/');
+        }
+
+        // Render section tabs
+        function renderSectionTabs() {
+            const tabsContainer = document.getElementById('sectionTabs');
+            const sections = Object.keys(moduleData);
+            
+            let html = `<button class="section-tab ${currentSection === '' ? 'active' : ''}" onclick="selectSection('')">
+                <i class="fas fa-th-large"></i> All Tools
+                <span class="count">${getTotalTools()}</span>
+            </button>`;
+            
+            sections.forEach(sectionId => {
+                const section = moduleData[sectionId];
+                html += `<button class="section-tab ${currentSection === sectionId ? 'active' : ''}" onclick="selectSection('${sectionId}')">
+                    <i class="fas fa-folder"></i> ${section.title}
+                    <span class="count">${section.tools.length}</span>
+                </button>`;
+            });
+            
+            tabsContainer.innerHTML = html;
+        }
+
+        function getTotalTools() {
+            let total = 0;
+            Object.values(moduleData).forEach(section => {
+                total += section.tools.length;
+            });
+            return total;
+        }
+
+        function selectSection(sectionId) {
+            currentSection = sectionId;
+            renderSectionTabs();
+            renderTools();
+        }
+
+        // Render tools grid
+        function renderTools() {
+            const grid = document.getElementById('toolsGridAdmin');
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const categoryFilter = document.getElementById('categoryFilter').value;
+            
+            let html = '';
+            let hasTools = false;
+            
+            Object.entries(moduleData).forEach(([sectionId, section]) => {
+                // Filter by section
+                if (currentSection && currentSection !== sectionId) return;
+                
+                // Filter by category
+                const category = sectionCategories[sectionId] || '';
+                if (categoryFilter && category !== categoryFilter) return;
+                
+                section.tools.forEach((tool, index) => {
+                    // Search filter
+                    if (searchTerm) {
+                        const searchable = `${tool.name} ${tool.description} ${tool.sheetUrl} ${section.title}`.toLowerCase();
+                        if (!searchable.includes(searchTerm)) return;
+                    }
+                    
+                    hasTools = true;
+                    const isValid = isValidSheetUrl(tool.sheetUrl);
+                    
+                    html += `
+                        <div class="tool-card-admin">
+                            <div class="tool-header-admin">
+                                <div class="tool-icon-admin">
+                                    <i class="${tool.icon || 'fas fa-tools'}"></i>
+                                </div>
+                                <div class="tool-info-admin">
+                                    <div class="tool-name-admin">
+                                        <h3>${tool.name}</h3>
+                                        <span class="tool-badge-admin">${tool.badge || 'Active'}</span>
+                                    </div>
+                                    <div class="tool-category">
+                                        <i class="fas fa-folder"></i> ${section.title}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tool-description-admin">${tool.description}</div>
+                            <div class="tool-sheet-url">
+                                <div class="url-label">
+                                    <i class="fas fa-link"></i> Google Sheets URL
+                                    ${!isValid ? '<span style="color: var(--danger);"><i class="fas fa-exclamation-triangle"></i> Invalid</span>' : ''}
+                                </div>
+                                <div class="url-display">${truncateUrl(tool.sheetUrl)}</div>
+                            </div>
+                            <div class="tool-actions">
+                                <button class="btn" onclick="testSheet('${sectionId}', ${index})">
+                                    <i class="fas fa-external-link-alt"></i> Test
+                                </button>
+                                <button class="btn" onclick="editTool('${sectionId}', ${index})">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button class="btn btn-danger" onclick="deleteTool('${sectionId}', ${index})">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+            });
+            
+            if (!hasTools) {
+                html = `
+                    <div class="empty-state">
+                        <i class="fas fa-search"></i>
+                        <h3>No tools found</h3>
+                        <p>Try adjusting your search or filter criteria</p>
+                    </div>
+                `;
+            }
+            
+            grid.innerHTML = html;
+        }
+
+        function truncateUrl(url) {
+            if (!url) return 'No URL set';
+            if (url.length > 50) {
+                return url.substring(0, 47) + '...';
+            }
+            return url;
+        }
+
+        function filterTools() {
+            renderTools();
+        }
+
+        // Test sheet
+        function testSheet(sectionId, toolIndex) {
+            const tool = moduleData[sectionId].tools[toolIndex];
+            if (tool.sheetUrl) {
+                window.open(tool.sheetUrl, '_blank');
+            } else {
+                showToast('No URL set for this tool', 'error');
+            }
+        }
+
+        // Edit tool
+        function editTool(sectionId, toolIndex) {
+            const tool = moduleData[sectionId].tools[toolIndex];
+            
+            document.getElementById('editSectionId').value = sectionId;
+            document.getElementById('editToolIndex').value = toolIndex;
+            document.getElementById('editToolName').value = tool.name || '';
+            document.getElementById('editToolDescription').value = tool.description || '';
+            document.getElementById('editToolIcon').value = tool.icon || 'fas fa-tools';
+            document.getElementById('editToolBadge').value = tool.badge || 'Active';
+            document.getElementById('editSheetUrl').value = tool.sheetUrl || '';
+            
+            updateIconPreview();
+            
+            document.getElementById('editModal').style.display = 'flex';
+        }
+
+        function updateIconPreview() {
+            const iconClass = document.getElementById('editToolIcon').value;
+            document.getElementById('iconPreview').className = iconClass;
+        }
+
+        function updateAddIconPreview() {
+            const iconClass = document.getElementById('addToolIcon').value;
+            document.getElementById('addIconPreview').className = iconClass;
+        }
+
+        // Save tool changes
+        document.getElementById('editForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const sectionId = document.getElementById('editSectionId').value;
+            const toolIndex = parseInt(document.getElementById('editToolIndex').value);
+            
+            moduleData[sectionId].tools[toolIndex] = {
+                name: document.getElementById('editToolName').value,
+                description: document.getElementById('editToolDescription').value,
+                icon: document.getElementById('editToolIcon').value,
+                badge: document.getElementById('editToolBadge').value,
+                sheetUrl: document.getElementById('editSheetUrl').value
+            };
+            
+            closeModal();
+            renderTools();
+            updateStats();
+            showToast('Tool updated successfully', 'success');
+        });
+
+        // Icon input listeners
+        document.getElementById('editToolIcon').addEventListener('input', updateIconPreview);
+        document.getElementById('addToolIcon').addEventListener('input', updateAddIconPreview);
+
+        function closeModal() {
+            document.getElementById('editModal').style.display = 'none';
+        }
+
+        // Add new tool
+        function openAddModal() {
+            const sectionSelect = document.getElementById('addSection');
+            sectionSelect.innerHTML = '<option value="">Select Section...</option>';
+            
+            Object.entries(moduleData).forEach(([id, section]) => {
+                const option = document.createElement('option');
+                option.value = id;
+                option.textContent = section.title;
+                sectionSelect.appendChild(option);
+            });
+            
+            document.getElementById('addToolName').value = '';
+            document.getElementById('addToolDescription').value = '';
+            document.getElementById('addToolIcon').value = 'fas fa-tools';
+            document.getElementById('addToolBadge').value = 'Active';
+            document.getElementById('addSheetUrl').value = '';
+            
+            updateAddIconPreview();
+            
+            document.getElementById('addModal').style.display = 'flex';
+        }
+
+        function closeAddModal() {
+            document.getElementById('addModal').style.display = 'none';
+        }
+
+        document.getElementById('addForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const sectionId = document.getElementById('addSection').value;
+            if (!sectionId) {
+                showToast('Please select a section', 'error');
+                return;
+            }
+            
+            const newTool = {
+                name: document.getElementById('addToolName').value,
+                description: document.getElementById('addToolDescription').value,
+                icon: document.getElementById('addToolIcon').value,
+                badge: document.getElementById('addToolBadge').value,
+                sheetUrl: document.getElementById('addSheetUrl').value
+            };
+            
+            moduleData[sectionId].tools.push(newTool);
+            
+            closeAddModal();
+            renderSectionTabs();
+            renderTools();
+            updateStats();
+            showToast('New tool added successfully', 'success');
+        });
+
+        // Delete tool
+        function deleteTool(sectionId, toolIndex) {
+            if (confirm('Are you sure you want to delete this tool?')) {
+                moduleData[sectionId].tools.splice(toolIndex, 1);
+                renderSectionTabs();
+                renderTools();
+                updateStats();
+                showToast('Tool deleted successfully', 'success');
+            }
+        }
+
+        // Save all changes to localStorage
+        function saveAllChanges() {
+            showLoading();
+            
+            setTimeout(() => {
+                localStorage.setItem('jasiri_module_data', JSON.stringify(moduleData));
+                localStorage.setItem('jasiri_last_modified', new Date().toISOString());
+                
+                hideLoading();
+                updateStats();
+                showToast('All changes saved to localStorage', 'success');
+            }, 500);
+        }
+
+        // Import/Export
+        function openImportModal() {
+            document.getElementById('importModal').style.display = 'flex';
+        }
+
+        function closeImportModal() {
+            document.getElementById('importModal').style.display = 'none';
+        }
+
+        function exportConfig() {
+            const dataStr = JSON.stringify(moduleData, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            
+            const exportFileDefaultName = `jasiri-config-${new Date().toISOString().split('T')[0]}.json`;
+            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+            
+            showToast('Configuration exported', 'success');
+        }
+
+        function importConfig() {
+            const fileInput = document.getElementById('importFile');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                showToast('Please select a file', 'error');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const importedData = JSON.parse(e.target.result);
+                    
+                    // Validate structure
+                    if (typeof importedData === 'object') {
+                        moduleData = importedData;
+                        localStorage.setItem('jasiri_module_data', JSON.stringify(moduleData));
+                        localStorage.setItem('jasiri_last_modified', new Date().toISOString());
+                        
+                        closeImportModal();
+                        renderSectionTabs();
+                        renderTools();
+                        updateStats();
+                        showToast('Configuration imported successfully', 'success');
+                    } else {
+                        showToast('Invalid configuration file', 'error');
+                    }
+                } catch (err) {
+                    showToast('Error parsing JSON file', 'error');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // Generate code
+        function generateCode() {
+            const codeOutput = document.getElementById('codeOutput');
+            const generatedCode = document.getElementById('generatedCode');
+            
+            const code = `// Complete Module Data with ALL sheets and sections
+const moduleData = ${JSON.stringify(moduleData, null, 4)};`;
+            
+            generatedCode.value = code;
+            codeOutput.style.display = 'block';
+            
+            // Scroll to code output
+            codeOutput.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function copyCode() {
+            const generatedCode = document.getElementById('generatedCode');
+            generatedCode.select();
+            document.execCommand('copy');
+            showToast('Code copied to clipboard', 'success');
+        }
+
+        // Toast notification
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            const icon = toast.querySelector('i');
+            
+            toastMessage.textContent = message;
+            toast.className = `toast ${type} show`;
+            
+            if (type === 'success') {
+                icon.className = 'fas fa-check-circle';
+            } else {
+                icon.className = 'fas fa-exclamation-circle';
+            }
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Loading overlay
+        function showLoading() {
+            document.getElementById('loadingOverlay').style.display = 'flex';
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingOverlay').style.display = 'none';
+        }
+
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            const editModal = document.getElementById('editModal');
+            const addModal = document.getElementById('addModal');
+            const importModal = document.getElementById('importModal');
+            
+            if (event.target === editModal) {
+                closeModal();
+            }
+            if (event.target === addModal) {
+                closeAddModal();
+            }
+            if (event.target === importModal) {
+                closeImportModal();
+            }
+        };
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadData();
+            
+            // Set up search debounce
+            let searchTimeout;
+            document.getElementById('searchInput').addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    filterTools();
+                }, 300);
+            });
+        });
+    </script>
+</body>
+</html>
