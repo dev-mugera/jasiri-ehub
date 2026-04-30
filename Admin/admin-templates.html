@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jasiri Suite | Manage Templates</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --purple-900: #1a0a2e; --purple-800: #2d1154; --purple-700: #3d1a6e;
+            --purple-600: #6B3BC2; --purple-500: #8B5CF6; --purple-400: #A78BFA;
+            --purple-300: #C4B5FD; --purple-200: #DDD6FE; --purple-100: #EDE9FE;
+            --purple-50: #F5F3FF; --white: #FFFFFF; --gray-50: #FAFAFA;
+            --gray-100: #F5F5F5; --gray-200: #E5E5E5; --gray-300: #D4D4D4;
+            --gray-400: #A3A3A3; --gray-500: #737373; --gray-600: #525252;
+            --gray-700: #404040; --gray-900: #171717;
+            --success: #10B981; --warning: #F59E0B; --danger: #EF4444;
+            --pink: #EC4899; --orange: #F97316; --teal: #14B8A6;
+            --gradient-primary: linear-gradient(135deg, #6B3BC2 0%, #8B5CF6 100%);
+            --gradient-dark: linear-gradient(135deg, #1a0a2e 0%, #3d1a6e 100%);
+            --shadow-sm: 0 1px 3px rgba(107, 59, 194, 0.06);
+            --shadow-md: 0 4px 16px rgba(107, 59, 194, 0.10);
+            --shadow-lg: 0 12px 40px rgba(107, 59, 194, 0.15);
+            --shadow-xl: 0 24px 60px rgba(107, 59, 194, 0.20);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+        body {
+            background: linear-gradient(180deg, var(--purple-50) 0%, var(--white) 100%);
+            color: var(--gray-900); min-height: 100vh;
+        }
+
+        /* ---- TOP BAR ---- */
+        .topbar {
+            background: rgba(255,255,255,0.97); backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--purple-100);
+            padding: 0 1.5rem; height: 60px; display: flex;
+            align-items: center; justify-content: space-between;
+            position: sticky; top: 0; z-index: 100;
+        }
+        .topbar-left { display: flex; align-items: center; gap: 1rem; }
+        .back-btn {
+            width: 36px; height: 36px; border-radius: 50%;
+            border: 1px solid var(--purple-100); background: white;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            color: var(--gray-700); transition: all 0.2s; text-decoration: none;
+        }
+        .back-btn:hover { background: var(--purple-50); border-color: var(--purple-300); color: var(--purple-600); }
+        .app-title { display: flex; align-items: center; gap: 0.5rem; }
+        .app-icon {
+            width: 32px; height: 32px; background: var(--gradient-primary);
+            border-radius: 8px; display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 0.85rem;
+        }
+        .app-title h1 { font-size: 1rem; font-weight: 700; }
+        .topbar-right { display: flex; align-items: center; gap: 0.8rem; }
+
+        .btn {
+            padding: 9px 16px; border-radius: 10px; font-size: 13px; font-weight: 600;
+            cursor: pointer; transition: all 0.2s; border: 1px solid var(--purple-100);
+            background: white; color: var(--gray-700); display: inline-flex;
+            align-items: center; gap: 6px; font-family: 'Inter', sans-serif; text-decoration: none;
+        }
+        .btn:hover { background: var(--purple-50); border-color: var(--purple-300); }
+        .btn-primary { background: var(--gradient-primary); color: white; border-color: transparent; }
+        .btn-primary:hover { opacity: 0.92; transform: translateY(-1px); box-shadow: var(--shadow-md); }
+        .btn-danger { color: var(--danger); border-color: #FECACA; }
+        .btn-danger:hover { background: #FEF2F2; border-color: var(--danger); }
+        .btn-success { background: var(--success); color: white; border-color: transparent; }
+        .btn-sm { padding: 4px 8px; font-size: 11px; border-radius: 6px; }
+
+        .container { max-width: 1280px; margin: 0 auto; padding: 24px; }
+
+        /* ---- PAGE HEADER ---- */
+        .page-header {
+            background: white; border-radius: 20px; padding: 24px 28px;
+            margin-bottom: 24px; border: 1px solid var(--purple-100);
+            box-shadow: var(--shadow-sm);
+            display: flex; justify-content: space-between; align-items: center;
+            flex-wrap: wrap; gap: 16px;
+        }
+        .page-header-left h1 { font-size: 22px; font-weight: 800; margin-bottom: 4px; }
+        .page-header-left p { font-size: 13px; color: var(--gray-500); }
+
+        /* ---- STATS ---- */
+        .stats-row {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 14px; margin-bottom: 24px;
+        }
+        .stat-card {
+            background: white; border-radius: 16px; padding: 18px;
+            border: 1px solid var(--purple-100); display: flex; align-items: center;
+            gap: 12px; box-shadow: var(--shadow-sm);
+        }
+        .stat-icon {
+            width: 44px; height: 44px; border-radius: 12px; display: flex;
+            align-items: center; justify-content: center; font-size: 18px;
+            background: var(--purple-50); color: var(--purple-600);
+        }
+        .stat-info h3 { font-size: 20px; font-weight: 800; }
+        .stat-info p { font-size: 11px; color: var(--gray-500); }
+
+        /* ---- FILTERS ---- */
+        .filter-bar {
+            background: white; border-radius: 14px; padding: 12px 18px;
+            margin-bottom: 20px; border: 1px solid var(--purple-100);
+            box-shadow: var(--shadow-sm);
+            display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+        }
+        .filter-bar input {
+            flex: 1; min-width: 200px; padding: 9px 14px;
+            border: 2px solid var(--purple-100); border-radius: 10px;
+            font-size: 13px; font-family: 'Inter', sans-serif; outline: none;
+        }
+        .filter-bar input:focus { border-color: var(--purple-400); }
+        .filter-bar select {
+            padding: 9px 14px; border: 2px solid var(--purple-100);
+            border-radius: 10px; font-size: 13px; font-family: 'Inter', sans-serif;
+            outline: none; cursor: pointer; background: white;
+        }
+
+        /* ---- TABLE ---- */
+        .table-container {
+            background: white; border-radius: 20px; overflow: hidden;
+            border: 1px solid var(--purple-100); box-shadow: var(--shadow-sm);
+        }
+        .table-header {
+            display: grid;
+            grid-template-columns: 50px 2fr 1fr 100px 100px 120px;
+            padding: 14px 20px; background: var(--purple-50);
+            font-size: 11px; font-weight: 700; color: var(--gray-600);
+            text-transform: uppercase; letter-spacing: 0.5px;
+            align-items: center;
+        }
+        .table-row {
+            display: grid;
+            grid-template-columns: 50px 2fr 1fr 100px 100px 120px;
+            padding: 14px 20px; border-top: 1px solid var(--purple-50);
+            align-items: center; font-size: 13px; transition: background 0.15s;
+        }
+        .table-row:hover { background: var(--purple-50); }
+        .table-row .thumb {
+            width: 38px; height: 38px; border-radius: 8px; object-fit: cover;
+            background: var(--purple-100);
+        }
+        .table-row .name-cell { font-weight: 600; }
+        .table-row .tier-badge, .table-row .app-badge {
+            display: inline-block; padding: 3px 10px; border-radius: 12px;
+            font-size: 10px; font-weight: 700; text-transform: uppercase;
+        }
+        .tier-free-badge { background: #D1FAE5; color: #065F46; }
+        .tier-pro-badge { background: #EDE9FE; color: #5B21B6; }
+        .tier-enterprise-badge { background: #FEF3C7; color: #92400E; }
+        .app-emh-badge { background: #EDE9FE; color: #5B21B6; }
+        .app-erh-badge { background: #FCE7F3; color: #9D174D; }
+        .app-efh-badge { background: #FEF3C7; color: #92400E; }
+        .app-efs-badge { background: #D1FAE5; color: #065F46; }
+        .app-talents-badge { background: #FFEDD5; color: #9A3412; }
+        .actions-cell { display: flex; gap: 6px; }
+
+        .empty-row { text-align: center; padding: 40px; color: var(--gray-400); grid-column: 1/-1; }
+
+        /* ---- MODAL ---- */
+        .modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.55); backdrop-filter: blur(6px);
+            justify-content: center; align-items: center; z-index: 1000;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal {
+            background: white; border-radius: 24px; padding: 0;
+            max-width: 600px; width: 92%; max-height: 88vh; overflow: hidden;
+            box-shadow: var(--shadow-xl);
+            animation: modalIn 0.3s cubic-bezier(0.2, 0.8, 0.4, 1);
+            display: flex; flex-direction: column;
+        }
+        @keyframes modalIn {
+            from { opacity: 0; transform: translateY(24px) scale(0.96); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .modal-header {
+            padding: 20px 24px; border-bottom: 1px solid var(--purple-100);
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .modal-header h2 { font-size: 18px; font-weight: 800; }
+        .modal-close {
+            width: 34px; height: 34px; border-radius: 50%; background: var(--gray-100);
+            border: none; cursor: pointer; display: flex; align-items: center;
+            justify-content: center; color: var(--gray-600); font-size: 15px;
+            transition: all 0.2s;
+        }
+        .modal-close:hover { background: #FEE2E2; color: var(--danger); }
+        .modal-body { padding: 24px; overflow-y: auto; flex: 1; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+        .form-row.full { grid-template-columns: 1fr; }
+        .form-group { margin-bottom: 16px; }
+        .form-group label {
+            display: block; font-size: 12px; font-weight: 600;
+            margin-bottom: 5px; color: var(--gray-700);
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%; padding: 10px 14px;
+            border: 2px solid var(--purple-100); border-radius: 10px;
+            font-size: 13px; font-family: 'Inter', sans-serif; outline: none;
+            transition: border-color 0.2s; background: white;
+        }
+        .form-group textarea { min-height: 80px; resize: vertical; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: var(--purple-400);
+        }
+        .form-group .hint {
+            font-size: 10px; color: var(--gray-400); margin-top: 4px;
+        }
+        .modal-footer {
+            padding: 16px 24px; border-top: 1px solid var(--purple-100);
+            display: flex; gap: 10px; justify-content: flex-end; background: var(--gray-50);
+        }
+
+        /* ---- TOAST ---- */
+        .toast {
+            position: fixed; bottom: 28px; right: 28px;
+            background: white; border: 1px solid var(--purple-100);
+            border-radius: 14px; padding: 16px 24px;
+            display: flex; align-items: center; gap: 10px;
+            box-shadow: var(--shadow-lg); transform: translateX(120%);
+            transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.4, 1); z-index: 2000;
+        }
+        .toast.show { transform: translateX(0); }
+        .toast.success { border-left: 4px solid var(--success); }
+        .toast.success i { color: var(--success); }
+        .toast.error { border-left: 4px solid var(--danger); }
+        .toast.error i { color: var(--danger); }
+        .toast i { font-size: 20px; }
+
+        .loading-state { display: flex; justify-content: center; padding: 40px; color: var(--purple-600); }
+        .loader { width: 32px; height: 32px; border: 3px solid var(--purple-100); border-top-color: var(--purple-600); border-radius: 50%; animation: spin 0.8s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        @media (max-width: 768px) {
+            .container { padding: 16px; }
+            .table-header, .table-row { grid-template-columns: 38px 1fr 80px 100px; }
+            .table-header span:nth-child(4), .table-row span:nth-child(4) { display: none; }
+            .form-row { grid-template-columns: 1fr; }
+            .page-header { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ==== TOP BAR ==== -->
+<header class="topbar">
+    <div class="topbar-left">
+        <a href="templates.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+        <div class="app-title">
+            <div class="app-icon"><i class="fas fa-cog"></i></div>
+            <h1>Manage Templates</h1>
+        </div>
+    </div>
+    <div class="topbar-right">
+        <a href="templates.html" class="btn"><i class="fas fa-eye"></i> View Gallery</a>
+        <button class="btn btn-danger" onclick="handleSignOut()"><i class="fas fa-sign-out-alt"></i> Sign Out</button>
+    </div>
+</header>
+
+<!-- ==== MAIN CONTENT ==== -->
+<div class="container">
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="page-header-left">
+            <h1>📋 Sheet Templates Admin</h1>
+            <p>Create and manage templates for all 5 business hubs</p>
+        </div>
+        <button class="btn btn-primary" onclick="openAddModal()"><i class="fas fa-plus"></i> Add New Template</button>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row">
+        <div class="stat-card"><div class="stat-icon"><i class="fas fa-layer-group"></i></div><div class="stat-info"><h3 id="statTotal">0</h3><p>Total Templates</p></div></div>
+        <div class="stat-card"><div class="stat-icon" style="color:var(--success);"><i class="fas fa-gift"></i></div><div class="stat-info"><h3 id="statFree">0</h3><p>Free</p></div></div>
+        <div class="stat-card"><div class="stat-icon" style="color:var(--purple-600);"><i class="fas fa-star"></i></div><div class="stat-info"><h3 id="statPro">0</h3><p>Pro</p></div></div>
+        <div class="stat-card"><div class="stat-icon" style="color:var(--warning);"><i class="fas fa-crown"></i></div><div class="stat-info"><h3 id="statEnterprise">0</h3><p>Enterprise</p></div></div>
+    </div>
+
+    <!-- Filters -->
+    <div class="filter-bar">
+        <input type="text" id="filterSearch" placeholder="🔍 Search templates..." oninput="renderList()">
+        <select id="filterApp" onchange="renderList()">
+            <option value="all">All Apps</option>
+            <option value="emh">Sales Hub</option>
+            <option value="erh">Resource Hub</option>
+            <option value="efh">Finance Hub</option>
+            <option value="efs">Fleet Hub</option>
+            <option value="talents">Talents Hub</option>
+        </select>
+        <select id="filterTier" onchange="renderList()">
+            <option value="all">All Tiers</option>
+            <option value="free">Free</option>
+            <option value="pro">Pro</option>
+            <option value="enterprise">Enterprise</option>
+        </select>
+    </div>
+
+    <!-- Table -->
+    <div class="table-container">
+        <div class="table-header">
+            <span></span>
+            <span>Template</span>
+            <span>App</span>
+            <span>Tier</span>
+            <span>Views</span>
+            <span>Actions</span>
+        </div>
+        <div id="templatesList">
+            <div class="loading-state"><div class="loader"></div></div>
+        </div>
+    </div>
+</div>
+
+<!-- ==== ADD/EDIT MODAL ==== -->
+<div class="modal-overlay" id="templateModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h2 id="modalTitle">Add Template</h2>
+            <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+            <form onsubmit="return false;">
+                <input type="hidden" id="editTemplateId">
+                
+                <div class="form-group">
+                    <label>Template Name *</label>
+                    <input type="text" id="templateName" placeholder="e.g., Daily Sales Tracker" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="templateDesc" placeholder="Describe what this template does..."></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>App *</label>
+                        <select id="templateApp" required>
+                            <option value="emh">💰 Sales Hub</option>
+                            <option value="erh">👥 Resource Hub</option>
+                            <option value="efh">📊 Finance Hub</option>
+                            <option value="efs">🚚 Fleet Hub</option>
+                            <option value="talents">🎓 Talents Hub</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Tier *</label>
+                        <select id="templateTier" required>
+                            <option value="free">🆓 Free</option>
+                            <option value="pro">⭐ Professional</option>
+                            <option value="enterprise">👑 Enterprise</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Category</label>
+                    <input type="text" id="templateCategory" placeholder="e.g., Sales Reports, HR, Logistics">
+                </div>
+
+                <div class="form-group">
+                    <label>Google Sheet URL *</label>
+                    <input type="url" id="templateUrl" placeholder="https://docs.google.com/spreadsheets/d/..." required>
+                    <div class="hint">Paste the full Google Sheets URL. Thumbnail will be auto-generated.</div>
+                </div>
+
+                <div class="form-group">
+                    <label>Custom Image URL (optional)</label>
+                    <input type="url" id="templateImage" placeholder="https://i.postimg.cc/... or leave empty for auto-thumbnail">
+                    <div class="hint">Leave empty to use auto-generated Google Sheets thumbnail.</div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" onclick="closeModal()">Cancel</button>
+            <button class="btn btn-primary" onclick="saveTemplate()">
+                <i class="fas fa-save"></i> Save Template
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- ==== CONFIRM DELETE MODAL ==== -->
+<div class="modal-overlay" id="confirmDeleteModal">
+    <div class="modal" style="max-width:420px;">
+        <div class="modal-header">
+            <h2>Delete Template?</h2>
+            <button class="modal-close" onclick="closeDeleteModal()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+            <p style="color:var(--gray-600);">Are you sure you want to delete <strong id="deleteTemplateName"></strong>? This action cannot be undone.</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" onclick="closeDeleteModal()">Cancel</button>
+            <button class="btn btn-danger" onclick="confirmDelete()"><i class="fas fa-trash"></i> Delete</button>
+        </div>
+    </div>
+</div>
+
+<!-- ==== TOAST ==== -->
+<div class="toast" id="toast"><i class="fas fa-check-circle"></i><span id="toastMessage"></span></div>
+
+<!-- ==== SCRIPTS ==== -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyC4GYjju0-ckHraZ3H5qR3MkID_BWoYQXk",
+        authDomain: "jasiri-suite.firebaseapp.com",
+        databaseURL: "https://jasiri-suite-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "jasiri-suite",
+        storageBucket: "jasiri-suite.firebasestorage.app",
+        messagingSenderId: "414625239065",
+        appId: "1:414625239065:web:8cc055fd20d3d66a8e5a88"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getDatabase(app);
+
+    let allTemplates = {};
+    let editingId = null;
+    let deleteId = null;
+
+    window.handleSignOut = async () => { await signOut(auth); window.location.href = 'index.html'; };
+
+    // ============ TOAST ============
+    function showToast(msg, type = 'success') {
+        const t = document.getElementById('toast');
+        document.getElementById('toastMessage').textContent = msg;
+        t.className = `toast ${type} show`;
+        setTimeout(() => t.classList.remove('show'), 3000);
+    }
+
+    // ============ LOAD ============
+    async function loadTemplates() {
+        const snap = await get(ref(db, 'templates/sheets'));
+        allTemplates = snap.val() || {};
+        updateStats();
+        renderList();
+    }
+
+    function updateStats() {
+        const entries = Object.values(allTemplates);
+        let free = 0, pro = 0, ent = 0;
+        entries.forEach(t => {
+            if (t.tier === 'free') free++;
+            else if (t.tier === 'pro') pro++;
+            else if (t.tier === 'enterprise') ent++;
+        });
+        document.getElementById('statTotal').textContent = entries.length;
+        document.getElementById('statFree').textContent = free;
+        document.getElementById('statPro').textContent = pro;
+        document.getElementById('statEnterprise').textContent = ent;
+    }
+
+    function renderList() {
+        const list = document.getElementById('templatesList');
+        const search = document.getElementById('filterSearch').value.toLowerCase();
+        const filterApp = document.getElementById('filterApp').value;
+        const filterTier = document.getElementById('filterTier').value;
+
+        let entries = Object.entries(allTemplates);
+
+        if (filterApp !== 'all') entries = entries.filter(([, t]) => t.app === filterApp);
+        if (filterTier !== 'all') entries = entries.filter(([, t]) => t.tier === filterTier);
+        if (search) {
+            entries = entries.filter(([, t]) =>
+                (t.name || '').toLowerCase().includes(search) ||
+                (t.description || '').toLowerCase().includes(search) ||
+                (t.category || '').toLowerCase().includes(search)
+            );
+        }
+
+        if (entries.length === 0) {
+            list.innerHTML = '<div class="empty-row">No templates found</div>';
+            return;
+        }
+
+        const appNames = { emh: 'Sales Hub', erh: 'Resource Hub', efh: 'Finance Hub', efs: 'Fleet Hub', talents: 'Talents Hub' };
+        const tierNames = { free: 'Free', pro: 'Pro', enterprise: 'Enterprise' };
+
+        list.innerHTML = entries.map(([id, t]) => {
+            const thumbSrc = t.imageUrl || (t.sheetUrl ? 
+                `https://docs.google.com/spreadsheets/d/${extractSheetId(t.sheetUrl)}/export?format=png&size=80x80` : '');
+
+            return `
+            <div class="table-row">
+                <span>
+                    ${thumbSrc ? `<img src="${thumbSrc}" class="thumb" alt="" onerror="this.style.display='none'">` : 
+                    `<div class="thumb" style="display:flex;align-items:center;justify-content:center;color:var(--purple-400);"><i class="fas fa-file-excel"></i></div>`}
+                </span>
+                <span class="name-cell">${t.name || 'Untitled'}</span>
+                <span><span class="app-badge app-${t.app}-badge">${appNames[t.app] || t.app}</span></span>
+                <span><span class="tier-badge tier-${t.tier}-badge">${tierNames[t.tier] || 'Free'}</span></span>
+                <span style="color:var(--gray-500);">${t.views || 0}</span>
+                <span class="actions-cell">
+                    <button class="btn btn-sm" onclick="editTemplate('${id}')" title="Edit"><i class="fas fa-edit"></i></button>
+                    <button class="btn btn-sm" onclick="previewTemplate('${id}')" title="Preview"><i class="fas fa-eye"></i></button>
+                    <button class="btn btn-sm btn-danger" onclick="openDeleteModal('${id}')" title="Delete"><i class="fas fa-trash"></i></button>
+                </span>
+            </div>`;
+        }).join('');
+    }
+
+    function extractSheetId(url) {
+        const m = url?.match(/\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/);
+        return m ? m[1] : null;
+    }
+
+    // ============ MODALS ============
+    window.openAddModal = () => {
+        editingId = null;
+        document.getElementById('modalTitle').textContent = 'Add New Template';
+        document.getElementById('editTemplateId').value = '';
+        document.getElementById('templateName').value = '';
+        document.getElementById('templateDesc').value = '';
+        document.getElementById('templateCategory').value = '';
+        document.getElementById('templateUrl').value = '';
+        document.getElementById('templateImage').value = '';
+        document.getElementById('templateApp').value = 'emh';
+        document.getElementById('templateTier').value = 'free';
+        document.getElementById('templateModal').classList.add('active');
+    };
+
+    window.editTemplate = (id) => {
+        const t = allTemplates[id];
+        if (!t) return;
+        editingId = id;
+        document.getElementById('modalTitle').textContent = 'Edit Template';
+        document.getElementById('editTemplateId').value = id;
+        document.getElementById('templateName').value = t.name || '';
+        document.getElementById('templateDesc').value = t.description || '';
+        document.getElementById('templateCategory').value = t.category || '';
+        document.getElementById('templateUrl').value = t.sheetUrl || '';
+        document.getElementById('templateImage').value = t.imageUrl || '';
+        document.getElementById('templateApp').value = t.app || 'emh';
+        document.getElementById('templateTier').value = t.tier || 'free';
+        document.getElementById('templateModal').classList.add('active');
+    };
+
+    window.closeModal = () => {
+        document.getElementById('templateModal').classList.remove('active');
+    };
+
+    window.saveTemplate = async () => {
+        const name = document.getElementById('templateName').value.trim();
+        const url = document.getElementById('templateUrl').value.trim();
+
+        if (!name) { showToast('Template name is required', 'error'); return; }
+        if (!url) { showToast('Google Sheet URL is required', 'error'); return; }
+        if (!url.includes('docs.google.com/spreadsheets')) {
+            showToast('Please enter a valid Google Sheets URL', 'error'); return;
+        }
+
+        const id = editingId || 'tpl_' + Date.now().toString(36);
+        const data = {
+            id,
+            name,
+            description: document.getElementById('templateDesc').value.trim(),
+            category: document.getElementById('templateCategory').value.trim(),
+            app: document.getElementById('templateApp').value,
+            tier: document.getElementById('templateTier').value,
+            sheetUrl: url,
+            imageUrl: document.getElementById('templateImage').value.trim(),
+            views: editingId ? (allTemplates[editingId]?.views || 0) : 0,
+            updatedAt: new Date().toISOString()
+        };
+
+        if (!editingId) {
+            data.createdAt = new Date().toISOString();
+        }
+
+        await set(ref(db, `templates/sheets/${id}`), data);
+        closeModal();
+        loadTemplates();
+        showToast(editingId ? 'Template updated!' : 'Template created!');
+    };
+
+    // ============ DELETE ============
+    window.openDeleteModal = (id) => {
+        deleteId = id;
+        document.getElementById('deleteTemplateName').textContent = allTemplates[id]?.name || 'this template';
+        document.getElementById('confirmDeleteModal').classList.add('active');
+    };
+    window.closeDeleteModal = () => {
+        document.getElementById('confirmDeleteModal').classList.remove('active');
+        deleteId = null;
+    };
+    window.confirmDelete = async () => {
+        if (!deleteId) return;
+        await set(ref(db, `templates/sheets/${deleteId}`), null);
+        closeDeleteModal();
+        loadTemplates();
+        showToast('Template deleted');
+    };
+
+    // ============ PREVIEW ============
+    window.previewTemplate = (id) => {
+        const t = allTemplates[id];
+        if (!t?.sheetUrl) return;
+        window.open(t.sheetUrl.replace('/edit', '/preview'), '_blank');
+    };
+
+    // Close modals on overlay click
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('modal-overlay')) {
+            e.target.classList.remove('active');
+        }
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            document.querySelectorAll('.modal-overlay.active').forEach(m => m.classList.remove('active'));
+        }
+    });
+
+    // ============ AUTH ============
+    onAuthStateChanged(auth, async (user) => {
+        if (!user) { window.location.href = 'index.html'; return; }
+        const adminSnap = await get(ref(db, `admins/${user.uid}`));
+        if (!adminSnap.exists()) {
+            // Also allow tenant owners/admins
+            const urlParams = new URLSearchParams(window.location.search);
+            const tenantId = urlParams.get('tenant');
+            if (tenantId) {
+                const memberSnap = await get(ref(db, `tenants/${tenantId}/members/${user.uid}`));
+                const role = memberSnap.exists() ? memberSnap.val().role : '';
+                if (role !== 'owner' && role !== 'admin') {
+                    window.location.href = 'workspace.html';
+                    return;
+                }
+            } else {
+                window.location.href = 'workspace.html';
+                return;
+            }
+        }
+        loadTemplates();
+    });
+</script>
+</body>
+</html>
