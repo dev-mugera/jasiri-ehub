@@ -1,1314 +1,2666 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>Jasiri Suite | Enterprise Productivity Platform</title>
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      background: #FFFFFF;
-      color: #1A1A2E;
-      overflow-x: hidden;
-      scroll-behavior: smooth;
-    }
-
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar {
-      width: 6px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #F5F0FF;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #9B5DE5;
-      border-radius: 10px;
-    }
-
-    /* Navigation */
-    .nav-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
-      background: rgba(255, 255, 255, 0.96);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(107, 59, 194, 0.1);
-    }
-
-    .navbar {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo {
-      display: flex;
-      align-items: baseline;
-      gap: 0.6rem;
-    }
-
-    .logo h1 {
-      font-size: 1.6rem;
-      font-weight: 800;
-      background: linear-gradient(135deg, #6B3BC2 0%, #9B5DE5 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      letter-spacing: -0.3px;
-    }
-
-    .logo-badge {
-      background: linear-gradient(135deg, #6B3BC2 0%, #9B5DE5 100%);
-      padding: 0.2rem 0.7rem;
-      border-radius: 30px;
-      font-size: 0.6rem;
-      font-weight: 600;
-      color: white;
-    }
-
-    .client-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      background: rgba(107, 59, 194, 0.08);
-      padding: 0.25rem 0.9rem;
-      border-radius: 40px;
-      font-size: 0.7rem;
-      font-weight: 500;
-      color: #6B3BC2;
-      margin-left: 0.8rem;
-      border: 1px solid rgba(107, 59, 194, 0.15);
-    }
-
-    .client-badge i {
-      font-size: 0.6rem;
-      color: #4CAF50;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 0.5rem;
-      align-items: center;
-    }
-
-    .nav-link {
-      text-decoration: none;
-      color: #5A4B78;
-      font-weight: 500;
-      font-size: 0.9rem;
-      padding: 0.5rem 1rem;
-      border-radius: 40px;
-      transition: all 0.2s ease;
-    }
-
-    .nav-link:hover {
-      color: #6B3BC2;
-      background: #F5F0FF;
-    }
-
-    .nav-link.highlight {
-      background: linear-gradient(135deg, #6B3BC2 0%, #9B5DE5 100%);
-      color: white;
-    }
-
-    .nav-link.highlight:hover {
-      opacity: 0.9;
-      transform: translateY(-1px);
-    }
-
-    .login-btn-nav {
-      background: transparent;
-      border: 1.5px solid #E0D4FF;
-      padding: 0.5rem 1.2rem;
-      border-radius: 40px;
-      color: #6B3BC2;
-      font-weight: 600;
-      font-size: 0.85rem;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .login-btn-nav:hover {
-      background: #6B3BC2;
-      border-color: #6B3BC2;
-      color: white;
-      transform: translateY(-1px);
-    }
-
-    /* Hero Section */
-    .hero {
-      background: linear-gradient(135deg, #FAF7FF 0%, #F3EDFF 100%);
-      padding: 8rem 2rem 5rem 2rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero::after {
-      content: '';
-      position: absolute;
-      top: -20%;
-      right: -5%;
-      width: 50%;
-      height: 120%;
-      background: radial-gradient(circle, rgba(155, 93, 229, 0.04) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .hero-content {
-      max-width: 1280px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 4rem;
-      position: relative;
-      z-index: 2;
-    }
-
-    .hero-text {
-      flex: 1;
-    }
-
-    .hero-badge {
-      display: inline-block;
-      background: rgba(107, 59, 194, 0.1);
-      padding: 0.3rem 1rem;
-      border-radius: 40px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: #6B3BC2;
-      margin-bottom: 1.5rem;
-    }
-
-    .hero-text h2 {
-      font-size: 3.2rem;
-      font-weight: 800;
-      line-height: 1.2;
-      background: linear-gradient(135deg, #1A1A2E 0%, #6B3BC2 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      margin-bottom: 1.2rem;
-    }
-
-    .hero-text p {
-      font-size: 1.05rem;
-      color: #5A4B78;
-      line-height: 1.6;
-      margin-bottom: 2rem;
-      max-width: 500px;
-    }
-
-    .hero-cta {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #6B3BC2 0%, #9B5DE5 100%);
-      color: white;
-      border: none;
-      padding: 0.85rem 2rem;
-      border-radius: 40px;
-      font-weight: 600;
-      font-size: 0.95rem;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      text-decoration: none;
-      box-shadow: 0 4px 15px rgba(107, 59, 194, 0.2);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(107, 59, 194, 0.3);
-    }
-
-    .btn-secondary {
-      background: transparent;
-      color: #6B3BC2;
-      border: 1.5px solid #E0D4FF;
-      padding: 0.85rem 2rem;
-      border-radius: 40px;
-      font-weight: 600;
-      font-size: 0.95rem;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      text-decoration: none;
-    }
-
-    .btn-secondary:hover {
-      background: #F5F0FF;
-      border-color: #6B3BC2;
-    }
-
-    .hero-stats {
-      display: flex;
-      gap: 2rem;
-      margin-top: 2rem;
-    }
-
-    .stat-item {
-      text-align: left;
-    }
-
-    .stat-number {
-      font-size: 1.8rem;
-      font-weight: 800;
-      color: #6B3BC2;
-    }
-
-    .stat-label {
-      font-size: 0.75rem;
-      color: #9B8BBF;
-      font-weight: 500;
-      margin-top: 0.2rem;
-    }
-
-    .hero-visual {
-      flex: 0.8;
-      text-align: center;
-    }
-
-    .hero-visual i {
-      font-size: 10rem;
-      background: linear-gradient(135deg, #6B3BC2, #9B5DE5);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      opacity: 0.9;
-    }
-
-    /* Quick Access Cards */
-    .quick-access {
-      max-width: 1280px;
-      margin: -2rem auto 0;
-      padding: 0 2rem;
-      position: relative;
-      z-index: 10;
-    }
-
-    .access-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1.5rem;
-      justify-content: center;
-    }
-
-    .access-card {
-      background: white;
-      border-radius: 1.2rem;
-      padding: 1.2rem 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      text-decoration: none;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.04);
-      border: 1px solid #F0EAFF;
-      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.4, 1);
-    }
-
-    .access-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 20px 35px rgba(107, 59, 194, 0.12);
-      border-color: #D9CCFF;
-    }
-
-    .access-card.featured {
-      border: 2px solid #9B5DE5;
-      background: linear-gradient(135deg, #FEFCFF, #FBF8FF);
-    }
-
-    .access-icon {
-      width: 48px;
-      height: 48px;
-      background: linear-gradient(135deg, #F5F0FF, #FBF8FF);
-      border-radius: 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .access-card.featured .access-icon {
-      background: linear-gradient(135deg, #6B3BC2, #9B5DE5);
-    }
-
-    .access-card.featured .access-icon i {
-      color: white;
-    }
-
-    .access-icon i {
-      font-size: 1.4rem;
-      color: #6B3BC2;
-    }
-
-    .access-info h4 {
-      font-size: 1rem;
-      font-weight: 700;
-      color: #1A1A2E;
-      margin-bottom: 0.2rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .access-info p {
-      font-size: 0.7rem;
-      color: #9B8BBF;
-    }
-
-    .new-badge {
-      background: #F15BB5;
-      color: white;
-      font-size: 0.55rem;
-      font-weight: 700;
-      padding: 0.15rem 0.5rem;
-      border-radius: 20px;
-      text-transform: uppercase;
-    }
-
-    /* Main Content */
-    .main-content {
-      max-width: 1280px;
-      margin: 5rem auto;
-      padding: 0 2rem;
-    }
-
-    .section-header {
-      text-align: center;
-      margin-bottom: 3rem;
-    }
-
-    .section-header h3 {
-      font-size: 2rem;
-      font-weight: 700;
-      color: #1A1A2E;
-      margin-bottom: 0.75rem;
-    }
-
-    .section-header p {
-      color: #7A6A9E;
-      font-size: 1rem;
-    }
-
-    .header-accent {
-      width: 50px;
-      height: 3px;
-      background: linear-gradient(90deg, #6B3BC2, #9B5DE5);
-      margin: 1rem auto 0;
-      border-radius: 3px;
-    }
-
-    /* News Grid */
-    .news-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 2rem;
-    }
-
-    .news-card {
-      background: white;
-      border-radius: 1.5rem;
-      overflow: hidden;
-      transition: all 0.4s ease;
-      border: 1px solid #F0EAFF;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
-    }
-
-    .news-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 25px 40px rgba(107, 59, 194, 0.1);
-      border-color: #D9CCFF;
-    }
-
-    .card-media {
-      height: 160px;
-      background: linear-gradient(135deg, #F8F4FF, #F1EAFF);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-    }
-
-    .card-media span {
-      font-size: 3rem;
-    }
-
-    .card-category {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      background: rgba(107, 59, 194, 0.9);
-      backdrop-filter: blur(4px);
-      padding: 0.25rem 0.8rem;
-      border-radius: 30px;
-      font-size: 0.65rem;
-      font-weight: 600;
-      color: white;
-      letter-spacing: 0.3px;
-    }
-
-    .card-content {
-      padding: 1.4rem;
-    }
-
-    .card-title {
-      font-weight: 700;
-      font-size: 1.1rem;
-      color: #1A1A2E;
-      margin-bottom: 0.6rem;
-      line-height: 1.4;
-    }
-
-    .card-description {
-      font-size: 0.85rem;
-      color: #6B5A8A;
-      line-height: 1.5;
-      margin-bottom: 1rem;
-    }
-
-    .card-meta {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.7rem;
-      color: #9B8BBF;
-      border-top: 1px solid #F5EFFF;
-      padding-top: 0.8rem;
-    }
-
-    /* Features Section */
-    .features-section {
-      background: #FBF9FF;
-      border-radius: 2rem;
-      padding: 3rem;
-      margin-top: 4rem;
-    }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 2rem;
-      margin-top: 2rem;
-    }
-
-    .feature-card {
-      text-align: center;
-      padding: 1.5rem;
-    }
-
-    .feature-icon {
-      width: 56px;
-      height: 56px;
-      background: linear-gradient(135deg, #6B3BC2, #9B5DE5);
-      border-radius: 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 1rem;
-    }
-
-    .feature-icon i {
-      font-size: 1.4rem;
-      color: white;
-    }
-
-    .feature-card h4 {
-      font-size: 1rem;
-      font-weight: 700;
-      color: #1A1A2E;
-      margin-bottom: 0.5rem;
-    }
-
-    .feature-card p {
-      font-size: 0.8rem;
-      color: #7A6A9E;
-      line-height: 1.5;
-    }
-
-    /* Loading & Empty States */
-    .loading-state {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 4rem;
-      gap: 1rem;
-      color: #9B5DE5;
-    }
-
-    .empty-state {
-      text-align: center;
-      padding: 4rem;
-      color: #9B8BBF;
-    }
-
-    /* Modal */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(8px);
-      z-index: 2000;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .modal.active {
-      display: flex;
-      animation: fadeIn 0.2s ease;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    .modal-container {
-      background: white;
-      border-radius: 1.5rem;
-      max-width: 420px;
-      width: 90%;
-      padding: 2rem;
-      position: relative;
-      animation: slideUp 0.3s cubic-bezier(0.2, 0.8, 0.4, 1);
-    }
-
-    @keyframes slideUp {
-      from {
-        transform: translateY(30px);
-        opacity: 0;
-      }
-      to {
-        transform: translateY(0);
-        opacity: 1;
-      }
-    }
-
-    .modal-close {
-      position: absolute;
-      top: 1.2rem;
-      right: 1.2rem;
-      cursor: pointer;
-      color: #9B8BBF;
-      transition: 0.2s;
-    }
-
-    .modal-close:hover {
-      color: #6B3BC2;
-    }
-
-    .modal-header {
-      text-align: center;
-      margin-bottom: 1.8rem;
-    }
-
-    .modal-icon {
-      width: 56px;
-      height: 56px;
-      background: linear-gradient(135deg, #6B3BC2, #9B5DE5);
-      border-radius: 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 1rem;
-    }
-
-    .modal-icon i {
-      font-size: 1.5rem;
-      color: white;
-    }
-
-    .modal-header h3 {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: #1A1A2E;
-    }
-
-    .modal-header p {
-      font-size: 0.8rem;
-      color: #7A6A9E;
-      margin-top: 0.3rem;
-    }
-
-    .input-field {
-      margin-bottom: 1.2rem;
-    }
-
-    .input-field label {
-      display: block;
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: #4A3A6E;
-      margin-bottom: 0.4rem;
-    }
-
-    .input-wrapper {
-      display: flex;
-      align-items: center;
-      border: 1.5px solid #EAE3FF;
-      border-radius: 0.8rem;
-      background: #FEFCFF;
-      transition: all 0.2s;
-      padding: 0.1rem 1rem;
-    }
-
-    .input-wrapper:focus-within {
-      border-color: #9B5DE5;
-      box-shadow: 0 0 0 3px rgba(107, 59, 194, 0.08);
-    }
-
-    .input-wrapper i {
-      color: #B8A8E0;
-      font-size: 0.9rem;
-      margin-right: 0.8rem;
-    }
-
-    .input-wrapper input {
-      width: 100%;
-      padding: 0.8rem 0;
-      border: none;
-      background: transparent;
-      font-size: 0.9rem;
-      font-weight: 500;
-      outline: none;
-      font-family: 'Inter', sans-serif;
-    }
-
-    .submit-btn {
-      width: 100%;
-      background: linear-gradient(135deg, #6B3BC2, #9B5DE5);
-      border: none;
-      padding: 0.85rem;
-      border-radius: 0.8rem;
-      color: white;
-      font-weight: 600;
-      font-size: 0.9rem;
-      cursor: pointer;
-      transition: all 0.2s;
-      margin-top: 0.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-    }
-
-    .submit-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(107, 59, 194, 0.3);
-    }
-
-    .submit-btn:disabled {
-      opacity: 0.7;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    .error-message {
-      background: #FFF0F3;
-      color: #E5484D;
-      font-size: 0.7rem;
-      padding: 0.6rem;
-      border-radius: 0.8rem;
-      margin-top: 1rem;
-      text-align: center;
-      display: none;
-    }
-
-    .modal-footer-note {
-      text-align: center;
-      font-size: 0.65rem;
-      color: #9B8BBF;
-      margin-top: 1.2rem;
-      padding-top: 1rem;
-      border-top: 1px solid #F0EAFF;
-    }
-
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: 2rem;
-      color: #9B8BBF;
-      font-size: 0.75rem;
-      border-top: 1px solid #F0EAFF;
-    }
-
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      margin-bottom: 1rem;
-    }
-
-    .footer-links a {
-      color: #7A6A9E;
-      text-decoration: none;
-      font-size: 0.8rem;
-      transition: color 0.2s;
-    }
-
-    .footer-links a:hover {
-      color: #6B3BC2;
-    }
-
-    /* Responsive */
-    @media (max-width: 900px) {
-      .hero-content {
-        flex-direction: column;
-        text-align: center;
-      }
-      .hero-text h2 {
-        font-size: 2.4rem;
-      }
-      .hero-text p {
-        max-width: 100%;
-      }
-      .hero-cta {
-        justify-content: center;
-      }
-      .hero-stats {
-        justify-content: center;
-      }
-      .navbar {
-        flex-direction: column;
-        gap: 1rem;
-      }
-      .nav-links {
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-      .features-section {
-        padding: 1.8rem;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .access-grid {
-        grid-template-columns: 1fr;
-      }
-      .hero-cta {
-        flex-direction: column;
-      }
-      .btn-primary, .btn-secondary {
-        width: 100%;
-        justify-content: center;
-      }
-    }
-  </style>
-</head>
-<body>
-
-<div id="root"></div>
-
-<script>
-  // FIREBASE CONFIGURATION - Unified with E-Hub
-  const firebaseConfig = {
-    apiKey: "AIzaSyCOb4BqfiN3vt1Y13UTEpA_boCqNRH6rrQ",
-    authDomain: "dsog-stores-dashboard.firebaseapp.com",
-    databaseURL: "https://dsog-stores-dashboard-default-rtdb.firebaseio.com",
-    projectId: "dsog-stores-dashboard",
-    storageBucket: "dsog-stores-dashboard.firebasestorage.app",
-    messagingSenderId: "1085972125142",
-    appId: "1:1085972125142:web:9abea9ee0dd792a052c077"
-  };
-
-  firebase.initializeApp(firebaseConfig);
-  const auth = firebase.auth();
-  const db = firebase.database();
-
-  const root = document.getElementById('root');
-
-  // Multi-tenant: Detect client from URL
-  let CLIENT_ID = 'default';
-  let CLIENT_INFO = null;
-
-  function detectClient() {
-    // Method 1: URL Path (jasiri.vercel.app/[client]/...)
-    const path = window.location.pathname;
-    const pathMatch = path.match(/^\/([^\/]+)(?:\/|$)/);
-    if (pathMatch && pathMatch[1] && !['index.html', 'dashboard.html', 'e-hub', 'chatsiri.html'].includes(pathMatch[1])) {
-      CLIENT_ID = pathMatch[1];
-      localStorage.setItem('jasiri_client_id', CLIENT_ID);
-      return;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jasiri E-Hub | Enterprise Sales Hub</title>
     
-    // Method 2: Subdomain ([client].jasiri.vercel.app)
-    const hostname = window.location.hostname;
-    const parts = hostname.split('.');
-    if (parts.length > 2 && parts[0] !== 'www' && parts[0] !== 'jasiri') {
-      CLIENT_ID = parts[0];
-      localStorage.setItem('jasiri_client_id', CLIENT_ID);
-      return;
-    }
+    <!-- Meta Tags -->
+    <meta name="application-name" content="Jasiri E-Hub">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Jasiri E-Hub">
+    <meta name="description" content="Enterprise Sales Hub - DSOG Business Solutions">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#0a192f">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="theme-color" content="#0a192f">
     
-    // Method 3: URL Parameter (?client=xxx)
-    const urlParams = new URLSearchParams(window.location.search);
-    const clientParam = urlParams.get('client');
-    if (clientParam) {
-      CLIENT_ID = clientParam;
-      localStorage.setItem('jasiri_client_id', CLIENT_ID);
-      return;
-    }
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/icons/touch-icon-ipad.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/touch-icon-iphone-retina.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="/icons/touch-icon-ipad-retina.png">
     
-    // Method 4: localStorage (returning visitor)
-    const savedClient = localStorage.getItem('jasiri_client_id');
-    if (savedClient) {
-      CLIENT_ID = savedClient;
-      return;
-    }
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
     
-    // Default
-    CLIENT_ID = 'default';
-  }
-
-  // Load client info from Firebase
-  async function loadClientInfo() {
-    try {
-      const snapshot = await db.ref(`clients/${CLIENT_ID}/info`).once('value');
-      CLIENT_INFO = snapshot.val() || { name: 'Jasiri Suite' };
-      return CLIENT_INFO;
-    } catch (error) {
-      console.warn('Client info load error:', error);
-      CLIENT_INFO = { name: 'Jasiri Suite' };
-      return CLIENT_INFO;
-    }
-  }
-
-  // Helper Functions
-  function escapeHtml(str) {
-    if (!str) return '';
-    return str.replace(/[&<>]/g, (m) => {
-      if (m === '&') return '&amp;';
-      if (m === '<') return '&lt;';
-      if (m === '>') return '&gt;';
-      return m;
-    });
-  }
-
-  function formatDate(dateStr) {
-    if (!dateStr) return 'Just now';
-    try {
-      const date = new Date(dateStr);
-      if (isNaN(date.getTime())) return dateStr;
-      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-    } catch {
-      return dateStr;
-    }
-  }
-
-  // Load News from Firebase (Multi-tenant aware)
-  async function loadNews() {
-    const container = document.getElementById('newsContainer');
-    if (!container) return;
-
-    container.innerHTML = `
-      <div class="loading-state">
-        <i class="fas fa-spinner fa-pulse"></i>
-        <span>Loading updates...</span>
-      </div>
-    `;
-
-    try {
-      // Try client-specific news first, fallback to global
-      let snapshot = await db.ref(`clients/${CLIENT_ID}/landing/news`).once('value');
-      let data = snapshot.val();
-      
-      // If no client-specific news, try global
-      if (!data) {
-        snapshot = await db.ref('landing/news').once('value');
-        data = snapshot.val();
-      }
-
-      if (!data || typeof data !== 'object' || Object.keys(data).length === 0) {
-        container.innerHTML = `
-          <div class="empty-state">
-            <i class="fas fa-newspaper" style="font-size: 2.5rem; opacity: 0.4;"></i>
-            <p style="margin-top: 1rem;">No updates available. Check back soon.</p>
-          </div>
-        `;
-        return;
-      }
-
-      const articles = Object.keys(data).map(key => ({
-        id: key,
-        title: data[key].title || 'Announcement',
-        description: data[key].description || data[key].content || 'No additional details.',
-        date: data[key].date || data[key].publishedAt || new Date().toISOString(),
-        icon: data[key].icon || '📰',
-        category: data[key].category || 'Update'
-      }));
-
-      articles.sort((a, b) => new Date(b.date) - new Date(a.date));
-
-      const cardsHtml = articles.slice(0, 6).map(article => `
-        <div class="news-card">
-          <div class="card-media">
-            <span>${escapeHtml(article.icon)}</span>
-            <span class="card-category">${escapeHtml(article.category)}</span>
-          </div>
-          <div class="card-content">
-            <h4 class="card-title">${escapeHtml(article.title)}</h4>
-            <p class="card-description">${escapeHtml(article.description.substring(0, 120))}${article.description.length > 120 ? '...' : ''}</p>
-            <div class="card-meta">
-              <span><i class="far fa-calendar-alt"></i> ${formatDate(article.date)}</span>
-              <span><i class="fas fa-chart-line"></i> ${escapeHtml(CLIENT_INFO?.name || 'Jasiri Suite')}</span>
-            </div>
-          </div>
-        </div>
-      `).join('');
-
-      container.innerHTML = `<div class="news-grid">${cardsHtml}</div>`;
-    } catch (error) {
-      console.error('News load error:', error);
-      container.innerHTML = `
-        <div class="empty-state">
-          <i class="fas fa-exclamation-triangle"></i>
-          <p>Unable to load updates. Please refresh.</p>
-        </div>
-      `;
-    }
-  }
-
-  // Modal Functions
-  function showModal() {
-    const modal = document.getElementById('loginModal');
-    if (modal) {
-      modal.classList.add('active');
-      setTimeout(() => {
-        const emailInput = document.getElementById('modalEmail');
-        if (emailInput) emailInput.focus();
-      }, 100);
-    }
-  }
-
-  function hideModal() {
-    const modal = document.getElementById('loginModal');
-    if (modal) {
-      modal.classList.remove('active');
-      const form = document.getElementById('loginFormElement');
-      if (form) form.reset();
-      const errorDiv = document.getElementById('modalError');
-      if (errorDiv) {
-        errorDiv.style.display = 'none';
-        errorDiv.innerText = '';
-      }
-    }
-  }
-
-  // Handle Login
-  async function handleLogin(email, password, btn, errorDiv) {
-    try {
-      await auth.signInWithEmailAndPassword(email, password);
-      // Redirect to dashboard with client context
-      window.location.href = `dashboard.html?client=${CLIENT_ID}`;
-    } catch (err) {
-      let message = 'Invalid credentials. Access denied.';
-      if (err.code === 'auth/user-not-found') message = 'No account found with this email.';
-      if (err.code === 'auth/wrong-password') message = 'Incorrect password. Please try again.';
-      if (err.code === 'auth/invalid-email') message = 'Please enter a valid email address.';
-      if (err.code === 'auth/too-many-requests') message = 'Too many attempts. Please try again later.';
-      errorDiv.innerText = message;
-      errorDiv.style.display = 'block';
-      btn.disabled = false;
-      btn.innerHTML = '<i class="fas fa-arrow-right-to-bracket"></i> Sign In';
-    }
-  }
-
-  // Render Main Page
-  async function renderPage() {
-    await loadClientInfo();
+    <!-- Manifest -->
+    <link rel="manifest" href="/manifest.json">
     
-    const clientDisplayName = CLIENT_INFO?.name || 'Jasiri Suite';
-    const showClientBadge = CLIENT_ID !== 'default';
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    root.innerHTML = `
-      <div class="nav-container">
-        <div class="navbar">
-          <div class="logo">
-            <h1>${escapeHtml(clientDisplayName)}</h1>
-            <span class="logo-badge">enterprise</span>
-            ${showClientBadge ? `
-              <span class="client-badge">
-                <i class="fas fa-building"></i> ${escapeHtml(CLIENT_ID)}
-              </span>
-            ` : ''}
-          </div>
-          <div class="nav-links">
-            <a href="#" class="nav-link">Platform</a>
-            <a href="#" class="nav-link">Solutions</a>
-            <a href="e-hub?client=${CLIENT_ID}" class="nav-link highlight">
-              <i class="fas fa-store"></i> E-Hub
-            </a>
-            <a href="#" class="nav-link">Enterprise</a>
-            <button class="login-btn-nav" id="openModalBtn">
-              <i class="fas fa-lock"></i> Sign In
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div class="hero">
-        <div class="hero-content">
-          <div class="hero-text">
-            <span class="hero-badge">Enterprise-grade productivity</span>
-            <h2>Work smarter,<br>collaborate faster</h2>
-            <p>${escapeHtml(clientDisplayName)} delivers a powerful ecosystem of business tools designed for modern teams. Seamless collaboration, real-time insights, and enterprise-grade security.</p>
-            <div class="hero-cta">
-              <a href="dashboard.html?client=${CLIENT_ID}" class="btn-primary">
-                <i class="fas fa-chart-pie"></i> Go to Dashboard
-              </a>
-              <a href="e-hub?client=${CLIENT_ID}" class="btn-secondary">
-                <i class="fas fa-store"></i> Enterprise Hub
-              </a>
-            </div>
-            <div class="hero-stats">
-              <div class="stat-item">
-                <div class="stat-number">99.9%</div>
-                <div class="stat-label">Uptime SLA</div>
-              </div>
-              <div class="stat-item">
-                <div class="stat-number">24/7</div>
-                <div class="stat-label">Support</div>
-              </div>
-              <div class="stat-item">
-                <div class="stat-number">SOC 2</div>
-                <div class="stat-label">Compliant</div>
-              </div>
-            </div>
-          </div>
-          <div class="hero-visual">
-            <i class="fas fa-cloud-upload-alt"></i>
-          </div>
-        </div>
-      </div>
-
-      <div class="quick-access">
-        <div class="access-grid">
-          <a href="e-hub?client=${CLIENT_ID}" class="access-card featured">
-            <div class="access-icon">
-              <i class="fas fa-store"></i>
-            </div>
-            <div class="access-info">
-              <h4>
-                Enterprise Hub
-                <span class="new-badge">New</span>
-              </h4>
-              <p>Sales & inventory management</p>
-            </div>
-          </a>
-          <a href="chatsiri.html?client=${CLIENT_ID}" class="access-card">
-            <div class="access-icon">
-              <i class="fas fa-comments"></i>
-            </div>
-            <div class="access-info">
-              <h4>Chatsiri</h4>
-              <p>Collaborative workspace</p>
-            </div>
-          </a>
-          <a href="dashboard.html?client=${CLIENT_ID}" class="access-card">
-            <div class="access-icon">
-              <i class="fas fa-chart-pie"></i>
-            </div>
-            <div class="access-info">
-              <h4>Dashboard</h4>
-              <p>Analytics & insights</p>
-            </div>
-          </a>
-          <a href="documents.html?client=${CLIENT_ID}" class="access-card">
-            <div class="access-icon">
-              <i class="fas fa-file-alt"></i>
-            </div>
-            <div class="access-info">
-              <h4>Documents</h4>
-              <p>File management</p>
-            </div>
-          </a>
-        </div>
-      </div>
-
-      <div class="main-content">
-        <div class="section-header">
-          <h3>Platform Updates</h3>
-          <p>Latest news and announcements from ${escapeHtml(clientDisplayName)}</p>
-          <div class="header-accent"></div>
-        </div>
-        <div id="newsContainer"></div>
-
-        <div class="features-section">
-          <div class="section-header">
-            <h3>Why ${escapeHtml(clientDisplayName)}?</h3>
-            <p>Everything your enterprise needs to thrive</p>
-          </div>
-          <div class="features-grid">
-            <div class="feature-card">
-              <div class="feature-icon">
-                <i class="fas fa-bolt"></i>
-              </div>
-              <h4>Lightning Fast</h4>
-              <p>Real-time updates and instant sync across all devices</p>
-            </div>
-            <div class="feature-card">
-              <div class="feature-icon">
-                <i class="fas fa-shield-alt"></i>
-              </div>
-              <h4>Enterprise Security</h4>
-              <p>Bank-grade encryption and role-based access control</p>
-            </div>
-            <div class="feature-card">
-              <div class="feature-icon">
-                <i class="fas fa-chart-line"></i>
-              </div>
-              <h4>Advanced Analytics</h4>
-              <p>Comprehensive insights to drive business decisions</p>
-            </div>
-            <div class="feature-card">
-              <div class="feature-icon">
-                <i class="fas fa-store"></i>
-              </div>
-              <h4>E-Hub Platform</h4>
-              <p>Complete sales and inventory management solution</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <footer>
-        <div class="footer-links">
-          <a href="#">About</a>
-          <a href="#">Privacy</a>
-          <a href="#">Terms</a>
-          <a href="#">Contact</a>
-          <a href="#">Support</a>
-        </div>
-        <p>© 2026 ${escapeHtml(clientDisplayName)} — Powered by Jasiri Suite. All rights reserved.</p>
-      </footer>
-
-      <div id="loginModal" class="modal">
-        <div class="modal-container">
-          <div class="modal-close" id="closeModalBtn">
-            <i class="fas fa-times"></i>
-          </div>
-          <div class="modal-header">
-            <div class="modal-icon">
-              <i class="fas fa-lock"></i>
-            </div>
-            <h3>Sign in</h3>
-            <p>Access your ${escapeHtml(clientDisplayName)} dashboard</p>
-          </div>
-          <form id="loginFormElement">
-            <div class="input-field">
-              <label>Email address</label>
-              <div class="input-wrapper">
-                <i class="fas fa-envelope"></i>
-                <input type="email" id="modalEmail" placeholder="admin@company.com" required autocomplete="email">
-              </div>
-            </div>
-            <div class="input-field">
-              <label>Password</label>
-              <div class="input-wrapper">
-                <i class="fas fa-lock"></i>
-                <input type="password" id="modalPassword" placeholder="Enter your password" required autocomplete="current-password">
-              </div>
-            </div>
-            <button type="submit" class="submit-btn" id="modalSubmitBtn">
-              <i class="fas fa-arrow-right-to-bracket"></i> Sign In
-            </button>
-            <div id="modalError" class="error-message"></div>
-          </form>
-          <div class="modal-footer-note">
-            <i class="fas fa-shield-alt"></i> Authorized personnel only
-          </div>
-        </div>
-      </div>
-    `;
-
-    // Load news
-    loadNews();
-
-    // Event Listeners
-    const openBtn = document.getElementById('openModalBtn');
-    const closeBtn = document.getElementById('closeModalBtn');
-    const modal = document.getElementById('loginModal');
-    const loginForm = document.getElementById('loginFormElement');
-    const submitBtn = document.getElementById('modalSubmitBtn');
-    const errorDiv = document.getElementById('modalError');
-
-    if (openBtn) openBtn.addEventListener('click', showModal);
-    if (closeBtn) closeBtn.addEventListener('click', hideModal);
-    if (modal) {
-      modal.addEventListener('click', (e) => {
-        if (e.target === modal) hideModal();
-      });
-    }
-
-    if (loginForm) {
-      loginForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const email = document.getElementById('modalEmail').value.trim();
-        const password = document.getElementById('modalPassword').value;
-
-        if (!email || !password) {
-          errorDiv.innerText = 'Please enter both email and password.';
-          errorDiv.style.display = 'block';
-          return;
+    <style>
+        :root {
+            /* Professional DSOG Theme - Default Dark */
+            --dark-blue: #0a192f;
+            --medium-blue: #172a45;
+            --light-pink: #ff6b8b;
+            --accent-gold: #e6c78a;
+            --soft-teal: #81c8be;
+            --light-blue: #64ffda;
+            --purple: #9d65c9;
+            --text-primary: #f0e6ef;
+            --text-secondary: #b8b8d1;
+            --card-bg: rgba(23, 42, 69, 0.85);
+            --sidebar-width: 280px;
+            --topbar-height: 60px;
+            --border-radius: 10px;
+            --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --content-max-width: 1300px;
+            --online-color: #4ade80;
+            --offline-color: #f87171;
+            --background-color: #0a192f;
+            --surface-color: #172a45;
+            --border-color: rgba(255, 255, 255, 0.12);
+            --shadow-color: rgba(0, 0, 0, 0.25);
+            --success-green: #4CAF50;
+            --warning-orange: #ff9800;
         }
 
-        errorDiv.style.display = 'none';
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Authenticating...';
+        /* Light Theme Variables */
+        [data-theme="light"] {
+            --dark-blue: #f8fafc;
+            --medium-blue: #ffffff;
+            --light-pink: #e11d48;
+            --accent-gold: #d97706;
+            --soft-teal: #0d9488;
+            --light-blue: #059669;
+            --purple: #7c3aed;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --background-color: #f8fafc;
+            --surface-color: #ffffff;
+            --border-color: rgba(0, 0, 0, 0.08);
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --online-color: #059669;
+            --offline-color: #dc2626;
+            --success-green: #059669;
+            --warning-orange: #d97706;
+        }
 
-        await handleLogin(email, password, submitBtn, errorDiv);
-      });
-    }
+        /* System Theme Detection */
+        @media (prefers-color-scheme: light) {
+            :root:not([data-theme]) {
+                --dark-blue: #f8fafc;
+                --medium-blue: #ffffff;
+                --light-pink: #e11d48;
+                --accent-gold: #d97706;
+                --soft-teal: #0d9488;
+                --light-blue: #059669;
+                --purple: #7c3aed;
+                --text-primary: #1e293b;
+                --text-secondary: #64748b;
+                --card-bg: rgba(255, 255, 255, 0.95);
+                --background-color: #f8fafc;
+                --surface-color: #ffffff;
+                --border-color: rgba(0, 0, 0, 0.08);
+                --shadow-color: rgba(0, 0, 0, 0.1);
+                --online-color: #059669;
+                --offline-color: #dc2626;
+                --success-green: #059669;
+                --warning-orange: #d97706;
+            }
+        }
 
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && modal && modal.classList.contains('active')) {
-        hideModal();
-      }
-    });
-  }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
 
-  // Initialize
-  detectClient();
-  
-  // Auth Check - Redirect if already logged in
-  auth.onAuthStateChanged(user => {
-    if (user) {
-      window.location.href = `dashboard.html?client=${CLIENT_ID}`;
-    } else {
-      renderPage();
-    }
-  });
-</script>
+        html {
+            font-size: 14px;
+            scroll-behavior: smooth;
+            height: 100%;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .background-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(100, 255, 218, 0.1) 0%, transparent 50%);
+            background-size: 400% 400%;
+            z-index: -1;
+            animation: gradientMove 30s ease infinite;
+        }
+        
+        [data-theme="light"] .background-pattern {
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(5, 150, 105, 0.05) 0%, transparent 50%);
+        }
+        
+        @keyframes gradientMove {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 100% 100%; }
+            100% { background-position: 0% 0%; }
+        }
+
+        /* Professional Navigation Styles */
+        .dashboard-header {
+            background: var(--surface-color);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            padding: 12px 16px;
+            margin-bottom: 24px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 8px var(--shadow-color);
+        }
+
+        .dashboard-nav {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 13px;
+            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            white-space: nowrap;
+        }
+
+        [data-theme="light"] .nav-btn {
+            background: rgba(0, 0, 0, 0.03);
+        }
+
+        .nav-btn:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--light-blue);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(100, 255, 218, 0.15);
+        }
+
+        [data-theme="light"] .nav-btn:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-btn.active {
+            color: var(--light-blue);
+            background: rgba(100, 255, 218, 0.1);
+            border-color: rgba(100, 255, 218, 0.2);
+            box-shadow: 0 4px 12px rgba(100, 255, 218, 0.15);
+        }
+
+        .nav-btn i {
+            font-size: 14px;
+            width: 16px;
+            text-align: center;
+        }
+
+        .nav-badge {
+            background: var(--light-pink);
+            color: white;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            margin-left: 4px;
+            font-weight: 700;
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--light-blue);
+            color: var(--light-blue);
+            transform: rotate(15deg);
+        }
+
+        .theme-toggle i {
+            font-size: 16px;
+            transition: var(--transition);
+        }
+
+        [data-theme="dark"] .theme-toggle .fa-sun,
+        [data-theme="light"] .theme-toggle .fa-moon,
+        :not([data-theme]) .theme-toggle .fa-desktop {
+            display: block;
+        }
+
+        [data-theme="dark"] .theme-toggle .fa-moon,
+        [data-theme="dark"] .theme-toggle .fa-desktop,
+        [data-theme="light"] .theme-toggle .fa-sun,
+        [data-theme="light"] .theme-toggle .fa-desktop,
+        :not([data-theme]) .theme-toggle .fa-sun,
+        :not([data-theme]) .theme-toggle .fa-moon {
+            display: none;
+        }
+
+        /* Theme Options Dropdown */
+        .theme-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            min-width: 180px;
+            box-shadow: 0 8px 32px var(--shadow-color);
+            backdrop-filter: blur(20px);
+            z-index: 1001;
+            display: none;
+            overflow: hidden;
+            animation: slideDown 0.2s ease-out;
+        }
+
+        .theme-dropdown.active {
+            display: block;
+        }
+
+        .theme-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+        }
+
+        .theme-option:hover {
+            background: rgba(100, 255, 218, 0.1);
+            color: var(--text-primary);
+        }
+
+        .theme-option.active {
+            color: var(--light-blue);
+            background: rgba(100, 255, 218, 0.08);
+        }
+
+        .theme-option i {
+            font-size: 14px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .theme-option.active i {
+            color: var(--light-blue);
+        }
+
+        /* Profile Dropdown */
+        .user-profile {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            border-radius: 7px;
+            cursor: pointer;
+            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        .user-profile:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--light-blue);
+        }
+
+        .profile-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            min-width: 220px;
+            box-shadow: 0 8px 32px var(--shadow-color);
+            backdrop-filter: blur(20px);
+            z-index: 1001;
+            display: none;
+            overflow: hidden;
+        }
+
+        .profile-dropdown.active {
+            display: block;
+            animation: slideDown 0.2s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .dropdown-header {
+            padding: 16px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .dropdown-header .user-avatar {
+            width: 40px;
+            height: 40px;
+            font-size: 14px;
+        }
+
+        .dropdown-header .user-info {
+            flex: 1;
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .dropdown-item:hover {
+            background: rgba(100, 255, 218, 0.1);
+            color: var(--text-primary);
+        }
+
+        .dropdown-item.logout {
+            color: #ff6b6b;
+            border-top: 1px solid rgba(255, 107, 139, 0.1);
+            background: rgba(255, 107, 139, 0.05);
+        }
+
+        .dropdown-item.logout:hover {
+            background: rgba(255, 107, 139, 0.15);
+            color: #ff5252;
+        }
+
+        /* Loading Spinner */
+        .loading-spinner {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 25, 47, 0.95);
+            z-index: 10003;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        [data-theme="light"] .loading-spinner {
+            background: rgba(248, 250, 252, 0.95);
+        }
+
+        .loader {
+            width: 45px;
+            aspect-ratio: 1;
+            --c: no-repeat linear-gradient(var(--light-blue) 0 0);
+            background: var(--c), var(--c), var(--c), var(--c), var(--c), var(--c);
+            animation: 
+                l14-1 .5s infinite alternate,
+                l14-2 2s infinite;
+        }
+        
+        @keyframes l14-1 {
+            0%,10% { background-size: 20% 100%; }
+            100% { background-size: 20% 20%; }
+        }
+        
+        @keyframes l14-2 {
+            0%,49.9% { background-position: 0 0, 0 100%, 50% 50%, 50% 50%, 100% 0, 100% 100%; }
+            50%,100% { background-position: 0 50%, 0 50%, 50% 0, 50% 100%, 100% 50%, 100% 50%; }
+        }
+
+        .loading-text {
+            color: var(--text-primary);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* Connection Status */
+        .connection-status {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 5px 10px;
+            border-radius: 16px;
+            font-size: 11px;
+            font-weight: 600;
+            z-index: 10001;
+            display: none;
+            align-items: center;
+            gap: 5px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .connection-status.online {
+            background: rgba(74, 222, 128, 0.15);
+            color: var(--online-color);
+            border: 1px solid rgba(74, 222, 128, 0.25);
+        }
+        
+        .connection-status.offline {
+            background: rgba(248, 113, 113, 0.15);
+            color: var(--offline-color);
+            border: 1px solid rgba(248, 113, 113, 0.25);
+        }
+
+        /* Syncing Indicator */
+        .sync-status {
+            position: fixed;
+            bottom: 70px;
+            right: 15px;
+            background: var(--surface-color);
+            border-radius: var(--border-radius);
+            padding: 10px 14px;
+            font-size: 12px;
+            display: none;
+            align-items: center;
+            gap: 8px;
+            z-index: 10000;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 3px 15px var(--shadow-color);
+            backdrop-filter: blur(10px);
+        }
+        
+        .sync-status.syncing {
+            color: var(--accent-gold);
+        }
+        
+        .sync-status.synced {
+            color: var(--soft-teal);
+        }
+        
+        .sync-status i {
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Update Available Banner */
+        .update-banner {
+            position: fixed;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--surface-color);
+            border: 1px solid rgba(230, 199, 138, 0.3);
+            border-radius: var(--border-radius);
+            padding: 10px 16px;
+            display: none;
+            align-items: center;
+            gap: 10px;
+            z-index: 10002;
+            box-shadow: 0 4px 20px var(--shadow-color);
+            backdrop-filter: blur(10px);
+            max-width: 380px;
+            width: 90%;
+        }
+        
+        .update-banner-content {
+            flex: 1;
+            font-size: 12px;
+            color: var(--text-primary);
+        }
+        
+        .update-btn {
+            padding: 5px 10px;
+            background: var(--accent-gold);
+            color: var(--dark-blue);
+            border: none;
+            border-radius: 5px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+        
+        .update-btn:hover {
+            background: #f0d5a5;
+            transform: translateY(-1px);
+        }
+
+        /* Access Denied Message */
+        .access-denied {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--background-color);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            text-align: center;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .access-denied h2 {
+            color: var(--light-pink);
+            margin-bottom: 20px;
+            font-size: 28px;
+            font-weight: 700;
+        }
+        
+        .access-denied p {
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+            font-size: 15px;
+            max-width: 500px;
+            line-height: 1.6;
+        }
+        
+        .access-denied-btn {
+            background: var(--light-pink);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .access-denied-btn:hover {
+            background: #ff7d9b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(255, 107, 139, 0.25);
+        }
+
+        /* Firebase Loading Overlay */
+        .firebase-loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--background-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            gap: 20px;
+        }
+
+        .firebase-loading .loader {
+            width: 50px;
+        }
+
+        .firebase-loading p {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .firebase-error {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--surface-color);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            max-width: 400px;
+            border: 1px solid var(--border-color);
+            z-index: 9999;
+        }
+
+        .firebase-error i {
+            font-size: 48px;
+            color: var(--danger);
+            margin-bottom: 16px;
+        }
+
+        .firebase-error h3 {
+            margin-bottom: 12px;
+        }
+
+        .firebase-error p {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .firebase-error button {
+            background: var(--light-blue);
+            color: var(--dark-blue);
+            border: none;
+            padding: 10px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Workspace Container */
+        .app-container {
+            display: none;
+            height: 100vh;
+            width: 100%;
+            max-width: 100vw;
+            overflow: hidden;
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--topbar-height);
+            background: rgba(23, 42, 69, 0.98);
+            backdrop-filter: blur(15px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+            width: 100%;
+        }
+
+        [data-theme="light"] .top-nav {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(15px);
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .menu-toggle {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 17px;
+            cursor: pointer;
+            padding: 7px;
+            border-radius: 5px;
+            transition: var(--transition);
+            display: none;
+        }
+
+        .menu-toggle:hover {
+            color: var(--light-blue);
+            background: rgba(100, 255, 218, 0.1);
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-logo-icon {
+            font-size: 18px;
+            color: var(--light-blue);
+        }
+
+        .brand-text {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .brand-subtitle {
+            font-size: 9px;
+            color: var(--text-secondary);
+            margin-top: 1px;
+            letter-spacing: 0.3px;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--light-blue), var(--accent-gold));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-name {
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .user-role {
+            font-size: 10px;
+            color: var(--text-secondary);
+            letter-spacing: 0.2px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: var(--topbar-height);
+            left: 0;
+            width: var(--sidebar-width);
+            height: calc(100vh - var(--topbar-height));
+            background: rgba(23, 42, 69, 0.98);
+            backdrop-filter: blur(15px);
+            border-right: 1px solid var(--border-color);
+            padding: 24px 0;
+            overflow-y: auto;
+            transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 999;
+        }
+
+        [data-theme="light"] .sidebar {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(15px);
+        }
+
+        .nav-section {
+            padding: 0 18px;
+            margin-bottom: 20px;
+        }
+
+        .nav-title {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            padding-left: 6px;
+        }
+
+        .nav-section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 14px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            border-radius: 7px;
+            transition: var(--transition);
+            user-select: none;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .nav-section-title:hover {
+            background: rgba(100, 255, 218, 0.1);
+            color: var(--text-primary);
+        }
+
+        .nav-section-title i {
+            font-size: 14px;
+            width: 18px;
+            text-align: center;
+        }
+
+        .nav-submenu {
+            list-style: none;
+            padding: 5px 0 15px 0;
+            margin: 0 0 10px 0;
+            display: none;
+        }
+
+        .nav-section.active .nav-submenu {
+            display: block;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px 10px 44px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 7px;
+            margin-bottom: 3px;
+            transition: var(--transition);
+            border: 1px solid transparent;
+            font-size: 13px;
+        }
+
+        .nav-link:hover {
+            background: rgba(100, 255, 218, 0.1);
+            color: var(--text-primary);
+            border-color: rgba(100, 255, 218, 0.15);
+        }
+
+        .nav-link.active {
+            background: rgba(100, 255, 218, 0.12);
+            color: var(--light-blue);
+            border-color: rgba(100, 255, 218, 0.25);
+        }
+
+        .nav-link i {
+            font-size: 11px;
+            width: 14px;
+            text-align: center;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            margin-top: var(--topbar-height);
+            height: calc(100vh - var(--topbar-height));
+            width: calc(100% - var(--sidebar-width));
+            transition: margin-left 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Content Container */
+        .content-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            padding: 24px;
+        }
+
+        /* Tools Section */
+        .tools-section {
+            flex: 1;
+            display: block;
+        }
+
+        .tools-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .tools-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tools-title i {
+            font-size: 18px;
+            color: var(--light-blue);
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .tool-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 24px;
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
+            height: 100%;
+            box-shadow: 0 3px 15px var(--shadow-color);
+        }
+
+        .tool-card:hover {
+            border-color: var(--light-blue);
+            background: rgba(100, 255, 218, 0.06);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(100, 255, 218, 0.15);
+        }
+
+        .tool-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+
+        .tool-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+            background: linear-gradient(135deg, var(--light-blue), var(--soft-teal));
+        }
+
+        .tool-info h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: var(--text-primary);
+        }
+
+        .tool-info p {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .tool-description {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            line-height: 1.5;
+            flex: 1;
+        }
+
+        .tool-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(100, 255, 218, 0.15);
+            color: var(--light-blue);
+            border-radius: 16px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            border: 1px solid rgba(100, 255, 218, 0.25);
+        }
+
+        /* Sheets Container */
+        .sheets-container {
+            position: fixed;
+            top: var(--topbar-height);
+            left: var(--sidebar-width);
+            right: 0;
+            bottom: 0;
+            background: var(--background-color);
+            z-index: 998;
+            display: none;
+            flex-direction: column;
+            transition: left 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 24px;
+        }
+
+        /* Sheets Card */
+        .sheets-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            box-shadow: 0 6px 24px var(--shadow-color);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .sheets-header {
+            background: rgba(10, 25, 47, 0.5);
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            flex-shrink: 0;
+        }
+
+        [data-theme="light"] .sheets-header {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .sheets-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sheets-title i {
+            color: var(--light-blue);
+        }
+
+        .sheets-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .sheets-control-btn {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        [data-theme="light"] .sheets-control-btn {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .sheets-control-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-primary);
+        }
+
+        [data-theme="light"] .sheets-control-btn:hover {
+            background: rgba(0, 0, 0, 0.08);
+        }
+
+        .sheets-control-btn.active {
+            background: rgba(100, 255, 218, 0.1);
+            color: var(--light-blue);
+            border-color: rgba(100, 255, 218, 0.2);
+        }
+
+        /* Iframe Container */
+        .iframe-container {
+            flex: 1;
+            position: relative;
+            background: white;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+        }
+
+        /* Iframe itself */
+        #iframe {
+            flex: 1;
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+        }
+
+        /* Sheet Loader */
+        .sheet-loader {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 25, 47, 0.95);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 20;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        [data-theme="light"] .sheet-loader {
+            background: rgba(248, 250, 252, 0.95);
+        }
+        
+        .sheet-loader-text {
+            color: var(--light-blue);
+            margin-top: 20px;
+            font-size: 15px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+
+        /* Current Sheet Info */
+        .current-sheet-info {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            background: rgba(10, 25, 47, 0.9);
+            padding: 8px 16px;
+            border-radius: 6px;
+            color: var(--light-blue);
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 5;
+            display: none;
+            border: 1px solid rgba(100, 255, 218, 0.2);
+            backdrop-filter: blur(5px);
+            max-width: 80%;
+        }
+
+        [data-theme="light"] .current-sheet-info {
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--light-blue);
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: auto;
+            padding: 24px 0 0 0;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 12px;
+            width: 100%;
+            flex-shrink: 0;
+            display: block !important;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: var(--text-primary);
+            font-weight: 700;
+            justify-content: center;
+        }
+
+        .footer-logo i {
+            color: var(--light-blue);
+        }
+
+        .footer-info {
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .footer-version {
+            margin-top: 6px;
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .footer-link:hover {
+            color: var(--light-blue);
+        }
+
+        /* Last Synced Indicator */
+        .last-synced {
+            font-size: 10px;
+            color: var(--text-secondary);
+            margin-top: 8px;
+        }
+
+        .last-synced i {
+            margin-right: 4px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .sidebar {
+                width: 240px;
+            }
+            
+            .main-content {
+                margin-left: 240px;
+                width: calc(100% - 240px);
+            }
+            
+            .sheets-container {
+                left: 240px;
+            }
+            
+            .content-container {
+                padding: 20px;
+            }
+            
+            .tools-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .dashboard-nav {
+                flex-wrap: wrap;
+                justify-content: flex-start;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            .sidebar {
+                transform: translateX(-100%);
+                width: 260px;
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+                box-shadow: 6px 0 30px var(--shadow-color);
+            }
+            
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+            }
+            
+            .sheets-container {
+                left: 0;
+            }
+            
+            .tools-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .dashboard-header {
+                margin: 16px;
+                margin-bottom: 24px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            html {
+                font-size: 13px;
+            }
+            
+            .top-nav {
+                padding: 0 16px;
+            }
+            
+            .content-container {
+                padding: 16px;
+            }
+            
+            .tools-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            
+            .tools-title {
+                font-size: 18px;
+            }
+            
+            .tool-card {
+                padding: 20px;
+            }
+            
+            .sheets-container {
+                padding: 16px;
+            }
+            
+            .sheets-header {
+                padding: 14px 20px;
+            }
+            
+            .sheets-title {
+                font-size: 16px;
+            }
+            
+            .user-info {
+                display: none;
+            }
+            
+            .user-profile {
+                padding: 5px 8px;
+            }
+            
+            .current-sheet-info {
+                font-size: 11px;
+                padding: 6px 12px;
+                bottom: 10px;
+                right: 10px;
+            }
+
+            .footer {
+                padding: 20px 0 0 0;
+            }
+            
+            .dashboard-nav {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .nav-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .tools-title {
+                font-size: 17px;
+            }
+            
+            .access-denied h2 {
+                font-size: 24px;
+            }
+            
+            .access-denied p {
+                font-size: 14px;
+                padding: 0 16px;
+            }
+            
+            .sheets-controls {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .sheets-control-btn {
+                padding: 5px 10px;
+                font-size: 11px;
+            }
+            
+            .profile-dropdown {
+                min-width: 180px;
+            }
+            
+            .theme-dropdown {
+                min-width: 160px;
+            }
+            
+            .dashboard-header {
+                padding: 10px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .brand-text {
+                font-size: 15px;
+            }
+            
+            .sheet-loader-text {
+                font-size: 14px;
+                padding: 0 16px;
+            }
+
+            .tool-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+            
+            .nav-btn {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .loading-spinner,
+            .access-denied,
+            .top-nav,
+            .sidebar,
+            .connection-status,
+            .sync-status,
+            .update-banner,
+            .footer,
+            .firebase-loading,
+            .firebase-error {
+                display: none !important;
+            }
+            
+            .main-content {
+                margin: 0;
+                padding: 20px;
+                width: 100%;
+            }
+            
+            .tool-card,
+            .sheets-card {
+                border: 1px solid #ddd;
+            }
+            
+            body {
+                background: white !important;
+                color: black !important;
+            }
+        }
+
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-pattern"></div>
+
+    <!-- Firebase Loading Overlay -->
+    <div class="firebase-loading" id="firebaseLoading">
+        <div class="loader"></div>
+        <p>Loading configuration from Firebase...</p>
+    </div>
+
+    <!-- Firebase Error -->
+    <div class="firebase-error" id="firebaseError" style="display: none;">
+        <i class="fas fa-exclamation-triangle"></i>
+        <h3>Connection Error</h3>
+        <p id="firebaseErrorMessage">Unable to load configuration. Using cached data.</p>
+        <button onclick="retryFirebaseLoad()">Retry</button>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div class="loading-spinner" id="loadingSpinner">
+        <div class="loader"></div>
+        <div class="loading-text">Loading Enterprise Sales Hub...</div>
+    </div>
+
+    <!-- Connection Status -->
+    <div class="connection-status" id="connectionStatus">
+        <i class="fas fa-circle"></i>
+        <span>Online</span>
+    </div>
+
+    <!-- Syncing Indicator -->
+    <div class="sync-status" id="syncStatus">
+        <i class="fas fa-sync-alt"></i>
+        <span>Syncing data...</span>
+    </div>
+
+    <!-- Update Available Banner -->
+    <div class="update-banner" id="updateBanner">
+        <div class="update-banner-content">
+            New version available. Update for latest features.
+        </div>
+        <button class="update-btn" id="updateBtn">Update</button>
+    </div>
+
+    <!-- Access Denied Message -->
+    <div class="access-denied" id="accessDenied">
+        <h2>🔒 Access Restricted</h2>
+        <p>You need to be logged in to access the Enterprise Sales Hub. Please sign in through the main dashboard first.</p>
+        <a href="index.html" class="access-denied-btn">Go to Dashboard</a>
+    </div>
+
+    <!-- Workspace Container -->
+    <div class="app-container" id="appContainer">
+        <!-- Top Navigation -->
+        <nav class="top-nav">
+            <div class="nav-left">
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="brand-logo">
+                    <div class="brand-logo-icon">
+                        <i class="fas fa-cash-register"></i>
+                    </div>
+                    <div>
+                        <div class="brand-text">Jasiri E-Hub</div>
+                        <div class="brand-subtitle">Enterprise Sales Hub</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="nav-right">
+                <!-- Theme Toggle -->
+                <div class="theme-toggle-wrapper" style="position: relative;">
+                    <button class="theme-toggle" id="themeToggle">
+                        <i class="fas fa-sun"></i>
+                        <i class="fas fa-moon"></i>
+                        <i class="fas fa-desktop"></i>
+                    </button>
+                    <div class="theme-dropdown" id="themeDropdown">
+                        <div class="theme-option" data-theme="system">
+                            <i class="fas fa-desktop"></i>
+                            <span>System</span>
+                        </div>
+                        <div class="theme-option" data-theme="light">
+                            <i class="fas fa-sun"></i>
+                            <span>Light</span>
+                        </div>
+                        <div class="theme-option" data-theme="dark">
+                            <i class="fas fa-moon"></i>
+                            <span>Dark</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- User Profile -->
+                <div class="user-profile" id="userProfile">
+                    <div class="user-avatar" id="userAvatar">JD</div>
+                    <div class="user-info">
+                        <div class="user-name" id="userName">John Doe</div>
+                        <div class="user-role" id="userRole">Store Manager</div>
+                    </div>
+                    <i class="fas fa-chevron-down" style="font-size: 12px; margin-left: 8px;"></i>
+                    
+                    <!-- Profile Dropdown -->
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <div class="dropdown-header">
+                            <div class="user-avatar" id="dropdownAvatar">JD</div>
+                            <div>
+                                <div class="user-name" id="dropdownName">John Doe</div>
+                                <div class="user-role" id="dropdownEmail">john.doe@dsog.com</div>
+                            </div>
+                        </div>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-user"></i>
+                            <span>My Profile</span>
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Security</span>
+                        </a>
+                        <div style="height: 1px; background: var(--border-color); margin: 4px 0;"></div>
+                        <a href="#" class="dropdown-item logout" id="profileLogout">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Log Out</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="nav-section">
+                <div class="nav-title">Navigation</div>
+                <div class="nav-section-title" id="dashboardLink">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Dashboard Navigation</span>
+                </div>
+                <ul class="nav-submenu">
+                    <li><a href="index.html" class="nav-link">
+                        <i class="fas fa-home"></i> Home Dashboard
+                    </a></li>
+                    <li><a href="kpi-dashboard.html" class="nav-link">
+                        <i class="fas fa-chart-bar"></i> Analytics Dashboard
+                    </a></li>
+                    <li><a href="best-seller.html" class="nav-link">
+                        <i class="fas fa-crown"></i> Best Sellers Dashboard
+                    </a></li>
+                    <li><a href="#" class="nav-link active">
+                        <i class="fas fa-th-large"></i> Enterprise Hub (Active)
+                    </a></li>
+                </ul>
+            </div>
+            
+            <!-- Dynamic sections will be injected here -->
+            <div id="dynamicSidebarSections"></div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content" id="mainContent">
+            <!-- Content Container -->
+            <div class="content-container">
+                <!-- Professional Dashboard Navigation Header -->
+                <div class="dashboard-header">
+                    <div class="dashboard-nav">
+                        <a href="index.html" class="nav-btn">
+                            <i class="fas fa-home"></i> Home
+                        </a>
+                        <a href="kpi-dashboard.html" class="nav-btn">
+                            <i class="fas fa-chart-line"></i> Analytics
+                        </a>
+                        <a href="best-seller.html" class="nav-btn">
+                            <i class="fas fa-crown"></i> Best Sellers
+                        </a>
+                        <a href="documents.html" class="nav-btn">
+                            <i class="fas fa-file-alt"></i> Documents
+                        </a>
+                        <a href="new-arrivals.html" class="nav-btn">
+                            <i class="fas fa-box"></i> New Arrivals
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Tools Section -->
+                <section class="tools-section" id="toolsSection">
+                    <div class="tools-header">
+                        <h2 class="tools-title">
+                            <i class="fas fa-tools"></i> Enterprise Tools
+                        </h2>
+                    </div>
+                    
+                    <div class="tools-grid" id="toolsGrid">
+                        <!-- Tools will be populated dynamically -->
+                    </div>
+
+                    <!-- Footer -->
+                    <footer class="footer">
+                        <div class="footer-logo">
+                            <i class="fas fa-cube"></i> Jasiri E-Hub • Enterprise Sales Hub
+                        </div>
+                        <div class="footer-info">
+                            <div>© <span id="year"></span> DSOG Business Solutions. All rights reserved.</div>
+                            <div class="footer-version">
+                                Version 2.1 • Secure Connection • Offline Capable
+                            </div>
+                            <div class="last-synced" id="lastSynced">
+                                <i class="fas fa-cloud"></i> Configuration loaded from Firebase
+                            </div>
+                        </div>
+                        <div class="footer-links">
+                            <a href="#" class="footer-link">Support</a>
+                            <a href="#" class="footer-link">Documentation</a>
+                            <a href="#" class="footer-link">Privacy</a>
+                            <a href="#" class="footer-link">Terms</a>
+                            <a href="#" class="footer-link">Contact</a>
+                            <a href="#" class="footer-link" id="clearCacheBtn">Clear Cache</a>
+                            <a href="#" class="footer-link" id="refreshConfigBtn">
+                                <i class="fas fa-sync-alt"></i> Refresh Config
+                            </a>
+                        </div>
+                    </footer>
+                </section>
+            </div>
+
+            <!-- Sheets Container -->
+            <div class="sheets-container" id="sheetsContainer">
+                <!-- Sheets Card -->
+                <div class="sheets-card">
+                    <div class="sheets-header">
+                        <div class="sheets-title">
+                            <i class="fas fa-file-excel"></i>
+                            <span id="currentSheetTitle">Google Sheets</span>
+                        </div>
+                        <div class="sheets-controls">
+                            <button class="sheets-control-btn" id="editModeBtn" data-mode="edit">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button class="sheets-control-btn active" id="viewModeBtn" data-mode="view">
+                                <i class="fas fa-eye"></i> View
+                            </button>
+                            <button class="sheets-control-btn" id="fullscreenBtn">
+                                <i class="fas fa-expand"></i> Fullscreen
+                            </button>
+                            <button class="sheets-control-btn" id="refreshSheetBtn">
+                                <i class="fas fa-redo"></i> Refresh
+                            </button>
+                            <button class="sheets-control-btn" id="closeSheetBtn">
+                                <i class="fas fa-times"></i> Close
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="iframe-container">
+                        <!-- Sheet Loader -->
+                        <div class="sheet-loader" id="sheetLoader">
+                            <div class="loader"></div>
+                            <div class="sheet-loader-text" id="sheetLoaderText">Loading sheet...</div>
+                        </div>
+                        
+                        <!-- Current Sheet Info -->
+                        <div class="current-sheet-info" id="currentSheetInfo"></div>
+                        
+                        <!-- Iframe -->
+                        <iframe id="iframe" loading="lazy" title="EMH Workspace Content" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
+    <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCOb4BqfiN3vt1Y13UTEpA_boCqNRH6rrQ",
+            authDomain: "dsog-stores-dashboard.firebaseapp.com",
+            databaseURL: "https://dsog-stores-dashboard-default-rtdb.firebaseio.com",
+            projectId: "dsog-stores-dashboard",
+            storageBucket: "dsog-stores-dashboard.firebasestorage.app",
+            messagingSenderId: "1085972125142",
+            appId: "1:1085972125142:web:9abea9ee0dd792a052c077"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const database = firebase.database();
+
+        // Global Variables
+        let moduleData = {};
+        let sectionCategories = {};
+        let currentSheetName = '';
+        let currentSheetId = '';
+        let currentViewMode = 'view';
+        let isOnline = navigator.onLine;
+        let syncInterval = null;
+        let lastSyncTime = new Date();
+        let firebaseLoaded = false;
+
+        // DOM Elements
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const accessDenied = document.getElementById('accessDenied');
+        const appContainer = document.getElementById('appContainer');
+        const connectionStatus = document.getElementById('connectionStatus');
+        const syncStatus = document.getElementById('syncStatus');
+        const updateBanner = document.getElementById('updateBanner');
+        const updateBtn = document.getElementById('updateBtn');
+        const sheetLoader = document.getElementById('sheetLoader');
+        const sheetLoaderText = document.getElementById('sheetLoaderText');
+        const currentSheetInfo = document.getElementById('currentSheetInfo');
+        const iframe = document.getElementById('iframe');
+        const userAvatar = document.getElementById('userAvatar');
+        const userName = document.getElementById('userName');
+        const userRole = document.getElementById('userRole');
+        const dropdownAvatar = document.getElementById('dropdownAvatar');
+        const dropdownName = document.getElementById('dropdownName');
+        const dropdownEmail = document.getElementById('dropdownEmail');
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const editModeBtn = document.getElementById('editModeBtn');
+        const viewModeBtn = document.getElementById('viewModeBtn');
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+        const refreshSheetBtn = document.getElementById('refreshSheetBtn');
+        const closeSheetBtn = document.getElementById('closeSheetBtn');
+        const currentSheetTitle = document.getElementById('currentSheetTitle');
+        const toolsSection = document.getElementById('toolsSection');
+        const sheetsContainer = document.getElementById('sheetsContainer');
+        const toolsGrid = document.getElementById('toolsGrid');
+        const userProfile = document.getElementById('userProfile');
+        const profileDropdown = document.getElementById('profileDropdown');
+        const profileLogout = document.getElementById('profileLogout');
+        const themeToggle = document.getElementById('themeToggle');
+        const themeDropdown = document.getElementById('themeDropdown');
+        const themeOptions = document.querySelectorAll('.theme-option');
+        const clearCacheBtn = document.getElementById('clearCacheBtn');
+        const refreshConfigBtn = document.getElementById('refreshConfigBtn');
+        const dashboardLink = document.getElementById('dashboardLink');
+        const firebaseLoading = document.getElementById('firebaseLoading');
+        const firebaseError = document.getElementById('firebaseError');
+        const firebaseErrorMessage = document.getElementById('firebaseErrorMessage');
+
+        // Theme Management
+        class ThemeManager {
+            constructor() {
+                this.theme = localStorage.getItem('theme') || 'system';
+                this.init();
+            }
+
+            init() {
+                this.applyTheme();
+                this.setupEventListeners();
+                this.updateActiveThemeOption();
+            }
+
+            applyTheme() {
+                if (this.theme === 'system') {
+                    document.documentElement.removeAttribute('data-theme');
+                    localStorage.removeItem('theme');
+                } else {
+                    document.documentElement.setAttribute('data-theme', this.theme);
+                    localStorage.setItem('theme', this.theme);
+                }
+            }
+
+            setTheme(theme) {
+                this.theme = theme;
+                this.applyTheme();
+                this.updateActiveThemeOption();
+            }
+
+            setupEventListeners() {
+                themeToggle.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    themeDropdown.classList.toggle('active');
+                });
+
+                themeOptions.forEach(option => {
+                    option.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const theme = option.getAttribute('data-theme');
+                        this.setTheme(theme);
+                        themeDropdown.classList.remove('active');
+                    });
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (!themeToggle.contains(e.target) && !themeDropdown.contains(e.target)) {
+                        themeDropdown.classList.remove('active');
+                    }
+                });
+
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+                    if (this.theme === 'system') {
+                        this.applyTheme();
+                    }
+                });
+            }
+
+            updateActiveThemeOption() {
+                themeOptions.forEach(option => {
+                    const optionTheme = option.getAttribute('data-theme');
+                    if (optionTheme === this.theme) {
+                        option.classList.add('active');
+                    } else {
+                        option.classList.remove('active');
+                    }
+                });
+            }
+        }
+
+        // Initialize Theme Manager
+        const themeManager = new ThemeManager();
+
+        // Load Configuration from Firebase
+        async function loadConfigFromFirebase() {
+            try {
+                firebaseLoading.style.display = 'flex';
+                firebaseError.style.display = 'none';
+                
+                // Load sections
+                const sectionsSnapshot = await database.ref('enterpriseHub/sections').once('value');
+                const sections = sectionsSnapshot.val() || {};
+                
+                // Load categories
+                const categoriesSnapshot = await database.ref('enterpriseHub/categories').once('value');
+                sectionCategories = categoriesSnapshot.val() || {};
+                
+                // Build moduleData structure
+                moduleData = {};
+                const promises = [];
+                
+                for (const [sectionId, section] of Object.entries(sections)) {
+                    moduleData[sectionId] = {
+                        title: section.title || sectionId,
+                        description: section.description || '',
+                        tools: []
+                    };
+                    
+                    // Load tools for this section
+                    const toolsPromise = database.ref(`enterpriseHub/tools/${sectionId}`).once('value')
+                        .then((toolsSnapshot) => {
+                            const tools = toolsSnapshot.val() || {};
+                            moduleData[sectionId].tools = Object.values(tools);
+                        });
+                    
+                    promises.push(toolsPromise);
+                }
+                
+                await Promise.all(promises);
+                
+                // Cache the configuration
+                localStorage.setItem('jasiri_firebase_config', JSON.stringify({
+                    moduleData,
+                    sectionCategories,
+                    timestamp: new Date().toISOString()
+                }));
+                
+                firebaseLoaded = true;
+                firebaseLoading.style.display = 'none';
+                
+                // Update last synced indicator
+                document.getElementById('lastSynced').innerHTML = 
+                    `<i class="fas fa-check-circle" style="color: var(--success-green);"></i> Configuration synced from Firebase`;
+                
+                return true;
+                
+            } catch (error) {
+                console.error('Firebase load error:', error);
+                firebaseLoading.style.display = 'none';
+                
+                // Try to load from cache
+                const cached = localStorage.getItem('jasiri_firebase_config');
+                if (cached) {
+                    try {
+                        const cachedData = JSON.parse(cached);
+                        moduleData = cachedData.moduleData;
+                        sectionCategories = cachedData.sectionCategories;
+                        firebaseLoaded = true;
+                        
+                        firebaseErrorMessage.textContent = `Using cached configuration from ${new Date(cachedData.timestamp).toLocaleString()}`;
+                        firebaseError.style.display = 'block';
+                        
+                        document.getElementById('lastSynced').innerHTML = 
+                            `<i class="fas fa-database"></i> Using cached configuration`;
+                        
+                        return true;
+                    } catch (e) {
+                        console.error('Cache load error:', e);
+                    }
+                }
+                
+                // Load default data as fallback
+                loadDefaultData();
+                firebaseErrorMessage.textContent = 'Unable to connect to Firebase. Using default configuration.';
+                firebaseError.style.display = 'block';
+                
+                return false;
+            }
+        }
+
+        // Retry Firebase load
+        function retryFirebaseLoad() {
+            loadConfigFromFirebase().then(() => {
+                if (firebaseLoaded) {
+                    renderSidebarSections();
+                    if (currentSection) {
+                        loadSection(currentSection);
+                    }
+                }
+            });
+        }
+
+        // Default data (fallback)
+        function loadDefaultData() {
+            moduleData = {
+                "point-of-sale": {
+                    title: "Point of Sale",
+                    description: "Manage point of sale operations and transactions",
+                    tools: [
+                        { name: "New Sale", description: "Create new sales transactions", icon: "fas fa-cash-register", sheetUrl: "https://docs.google.com/spreadsheets/d/1F7tL4EAJeUsNgW_Q4ns8a69iK6GfIrvCafxGVuT7qog/edit?usp=sharing", badge: "Active" }
+                    ]
+                }
+            };
+            sectionCategories = {
+                "point-of-sale": "Sales Operations"
+            };
+        }
+
+        // Render dynamic sidebar sections
+        function renderSidebarSections() {
+            const sidebarSections = document.getElementById('dynamicSidebarSections');
+            
+            // Group sections by category
+            const sectionsByCategory = {};
+            
+            Object.entries(moduleData).forEach(([sectionId, section]) => {
+                const category = sectionCategories[sectionId] || 'Other';
+                if (!sectionsByCategory[category]) {
+                    sectionsByCategory[category] = [];
+                }
+                sectionsByCategory[category].push({ sectionId, section });
+            });
+            
+            // Define icons for categories
+            const categoryIcons = {
+                'Sales Operations': 'fa-shopping-cart',
+                'Customer Management': 'fa-users',
+                'Product Information': 'fa-box-open',
+                'Inventory': 'fa-warehouse',
+                'Sales Analytics': 'fa-chart-bar',
+                'Other': 'fa-folder'
+            };
+            
+            let html = '';
+            
+            // Sort categories
+            const sortedCategories = Object.keys(sectionsByCategory).sort((a, b) => {
+                const order = ['Sales Operations', 'Customer Management', 'Product Information', 'Inventory', 'Sales Analytics'];
+                return order.indexOf(a) - order.indexOf(b);
+            });
+            
+            sortedCategories.forEach(category => {
+                const sections = sectionsByCategory[category];
+                const isActive = sections.some(s => currentSection === s.sectionId);
+                
+                html += `
+                    <div class="nav-section ${isActive ? 'active' : ''}">
+                        <div class="nav-section-title">
+                            <i class="fas ${categoryIcons[category] || 'fa-folder'}"></i>
+                            <span>${category}</span>
+                        </div>
+                        <ul class="nav-submenu">
+                `;
+                
+                sections.forEach(({ sectionId, section }) => {
+                    html += `
+                        <li><a href="#" class="nav-link ${currentSection === sectionId ? 'active' : ''}" data-section="${sectionId}">
+                            <i class="fas fa-chevron-right"></i> ${section.title || sectionId}
+                        </a></li>
+                    `;
+                });
+                
+                html += `
+                        </ul>
+                    </div>
+                `;
+            });
+            
+            sidebarSections.innerHTML = html;
+            
+            // Re-attach event listeners
+            attachSidebarEvents();
+        }
+
+        // Attach sidebar events
+        function attachSidebarEvents() {
+            // Navigation section titles
+            document.querySelectorAll('.nav-section-title').forEach(title => {
+                if (title.id !== 'dashboardLink') {
+                    title.addEventListener('click', (e) => {
+                        const section = e.currentTarget.parentElement;
+                        const isActive = section.classList.contains('active');
+                        
+                        // Close all other sections
+                        document.querySelectorAll('.nav-section').forEach(s => {
+                            if (s !== section) {
+                                s.classList.remove('active');
+                            }
+                        });
+                        
+                        if (!isActive) {
+                            section.classList.add('active');
+                        }
+                    });
+                }
+            });
+
+            // Navigation links
+            document.querySelectorAll('.nav-link[data-section]').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    
+                    document.querySelectorAll('.nav-link').forEach(l => {
+                        l.classList.remove('active');
+                    });
+                    
+                    link.classList.add('active');
+                    
+                    const sectionId = link.dataset.section;
+                    loadSection(sectionId);
+                    
+                    if (window.innerWidth <= 992) {
+                        sidebar.classList.remove('active');
+                    }
+                });
+            });
+        }
+
+        // Current section tracking
+        let currentSection = '';
+
+        // Load section tools
+        function loadSection(sectionId) {
+            currentSection = sectionId;
+            const sectionData = moduleData[sectionId];
+            
+            if (!sectionData) {
+                console.error('Section not found:', sectionId);
+                return;
+            }
+
+            // Clear tools grid
+            toolsGrid.innerHTML = '';
+
+            // Set section title
+            const toolsTitle = document.querySelector('.tools-title');
+            toolsTitle.innerHTML = `<i class="fas fa-tools"></i> ${sectionData.title} <span style="font-size: 14px; color: var(--text-secondary); margin-left: 8px;">${sectionData.description}</span>`;
+
+            // Create tool cards
+            if (sectionData.tools && sectionData.tools.length > 0) {
+                sectionData.tools.forEach(tool => {
+                    const toolCard = document.createElement('div');
+                    toolCard.className = 'tool-card';
+                    toolCard.innerHTML = `
+                        <div class="tool-header">
+                            <div class="tool-icon">
+                                <i class="${tool.icon || 'fas fa-tools'}"></i>
+                            </div>
+                            <div class="tool-info">
+                                <h3>${tool.name}</h3>
+                                <p><span class="tool-badge">${tool.badge || 'Active'}</span></p>
+                            </div>
+                        </div>
+                        <div class="tool-description">${tool.description}</div>
+                    `;
+
+                    toolCard.addEventListener('click', () => {
+                        openSheet(tool.sheetUrl, tool.name, sectionData.title);
+                    });
+
+                    toolsGrid.appendChild(toolCard);
+                });
+            } else {
+                toolsGrid.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-secondary);">
+                        <i class="fas fa-tools" style="font-size: 48px; margin-bottom: 16px; opacity: 0.5;"></i>
+                        <p>No tools available in this section.</p>
+                    </div>
+                `;
+            }
+            
+            // Update active states in sidebar
+            renderSidebarSections();
+        }
+
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registered: ', registration.scope);
+                        
+                        registration.addEventListener('updatefound', () => {
+                            const newWorker = registration.installing;
+                            newWorker.addEventListener('statechange', () => {
+                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                    showUpdateBanner();
+                                }
+                            });
+                        });
+                    })
+                    .catch(error => {
+                        console.log('ServiceWorker registration failed: ', error);
+                    });
+            });
+        }
+
+        function showUpdateBanner() {
+            updateBanner.style.display = 'flex';
+        }
+
+        function hideUpdateBanner() {
+            updateBanner.style.display = 'none';
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', async function() {
+            initializeApp();
+        });
+
+        async function initializeApp() {
+            // Check initial connection status
+            updateOnlineStatus();
+            
+            // Set up connection status listeners
+            window.addEventListener('online', updateOnlineStatus);
+            window.addEventListener('offline', updateOnlineStatus);
+            
+            // Load Firebase configuration first
+            await loadConfigFromFirebase();
+            
+            // Check authentication
+            checkAuth();
+            
+            // Set current year in footer
+            document.getElementById('year').textContent = new Date().getFullYear();
+            
+            // Setup update button
+            updateBtn.addEventListener('click', () => {
+                if ('serviceWorker' in navigator) {
+                    navigator.serviceWorker.ready.then(registration => {
+                        registration.update();
+                        hideUpdateBanner();
+                    });
+                }
+            });
+            
+            // Clear cache button
+            clearCacheBtn.addEventListener('click', clearCache);
+            
+            // Refresh config button
+            refreshConfigBtn.addEventListener('click', async () => {
+                showLoading();
+                await loadConfigFromFirebase();
+                hideLoading();
+                if (currentSection) {
+                    loadSection(currentSection);
+                } else {
+                    // Load first section by default
+                    const firstSection = Object.keys(moduleData)[0];
+                    if (firstSection) {
+                        loadSection(firstSection);
+                    }
+                }
+                renderSidebarSections();
+                showToast('Configuration refreshed');
+            });
+            
+            // Setup dashboard navigation buttons
+            setupDashboardNavigation();
+        }
+
+        function setupDashboardNavigation() {
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    if (!this.href || this.href === '#') {
+                        e.preventDefault();
+                        return;
+                    }
+                    
+                    showLoading();
+                    
+                    setTimeout(() => {
+                        window.location.href = this.href;
+                    }, 300);
+                });
+            });
+        }
+
+        function updateOnlineStatus() {
+            isOnline = navigator.onLine;
+            
+            if (isOnline) {
+                connectionStatus.innerHTML = '<i class="fas fa-circle"></i><span>Online</span>';
+                connectionStatus.className = 'connection-status online';
+                
+                if (auth.currentUser) {
+                    syncData();
+                }
+            } else {
+                connectionStatus.innerHTML = '<i class="fas fa-circle"></i><span>Offline</span>';
+                connectionStatus.className = 'connection-status offline';
+            }
+            
+            connectionStatus.style.display = 'flex';
+            setTimeout(() => {
+                connectionStatus.style.display = 'none';
+            }, 3000);
+        }
+
+        function syncData() {
+            if (!isOnline) {
+                showSyncStatus('offline');
+                return;
+            }
+            
+            showSyncStatus('syncing');
+            
+            setTimeout(() => {
+                showSyncStatus('synced');
+            }, 1500);
+        }
+
+        function showSyncStatus(status) {
+            if (status === 'syncing') {
+                syncStatus.innerHTML = '<i class="fas fa-sync-alt"></i><span>Syncing data...</span>';
+                syncStatus.className = 'sync-status syncing';
+            } else if (status === 'synced') {
+                syncStatus.innerHTML = '<i class="fas fa-check-circle"></i><span>Data synced</span>';
+                syncStatus.className = 'sync-status synced';
+            } else if (status === 'offline') {
+                syncStatus.innerHTML = '<i class="fas fa-wifi-slash"></i><span>Cannot sync - Offline</span>';
+                syncStatus.className = 'sync-status offline';
+            }
+            
+            syncStatus.style.display = 'flex';
+            setTimeout(() => {
+                syncStatus.style.display = 'none';
+            }, 3000);
+        }
+
+        function startSyncInterval() {
+            syncInterval = setInterval(() => {
+                if (isOnline && auth.currentUser) {
+                    syncData();
+                }
+            }, 5 * 60 * 1000);
+        }
+
+        function showLoading() {
+            loadingSpinner.style.display = 'flex';
+        }
+
+        function hideLoading() {
+            loadingSpinner.style.display = 'none';
+        }
+
+        function checkAuth() {
+            const user = auth.currentUser;
+            
+            if (user) {
+                handleUserSignedIn(user);
+            } else {
+                auth.onAuthStateChanged((user) => {
+                    if (user) {
+                        handleUserSignedIn(user);
+                    } else {
+                        setTimeout(() => {
+                            loadingSpinner.style.display = 'none';
+                            accessDenied.style.display = 'flex';
+                        }, 1500);
+                    }
+                });
+            }
+        }
+
+        function handleUserSignedIn(user) {
+            console.log('User signed in:', user.email);
+            
+            loadingSpinner.style.display = 'none';
+            accessDenied.style.display = 'none';
+            appContainer.style.display = 'block';
+            
+            updateUserInfo(user);
+            initApp();
+            
+            // Load first section
+            const firstSection = Object.keys(moduleData)[0];
+            if (firstSection) {
+                loadSection(firstSection);
+            }
+            
+            startSyncInterval();
+        }
+
+        function updateUserInfo(user) {
+            const displayName = user.displayName || user.email.split('@')[0];
+            const firstName = displayName.split(' ')[0];
+            const lastName = displayName.split(' ')[1] || '';
+            
+            const initials = (firstName[0] + (lastName[0] || '')).toUpperCase();
+            userAvatar.textContent = initials;
+            userName.textContent = displayName;
+            userRole.textContent = user.email.includes('admin') ? 'Administrator' : 'Store Manager';
+            
+            dropdownAvatar.textContent = initials;
+            dropdownName.textContent = displayName;
+            dropdownEmail.textContent = user.email;
+        }
+
+        function initApp() {
+            setupEventListeners();
+            setupIframeEvents();
+            setupSheetControls();
+            renderSidebarSections();
+            
+            userProfile.addEventListener('click', function(e) {
+                e.stopPropagation();
+                profileDropdown.classList.toggle('active');
+            });
+
+            document.addEventListener('click', function(e) {
+                if (!userProfile.contains(e.target)) {
+                    profileDropdown.classList.remove('active');
+                }
+                if (!themeToggle.contains(e.target) && !themeDropdown.contains(e.target)) {
+                    themeDropdown.classList.remove('active');
+                }
+            });
+
+            profileLogout.addEventListener('click', function(e) {
+                e.preventDefault();
+                showLoading();
+                auth.signOut()
+                    .then(() => {
+                        hideLoading();
+                        window.location.href = 'index.html';
+                    })
+                    .catch(console.error);
+            });
+            
+            dashboardLink.addEventListener('click', () => {
+                const parent = dashboardLink.parentElement;
+                parent.classList.toggle('active');
+            });
+        }
+
+        function setupEventListeners() {
+            menuToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('active');
+            });
+
+            document.addEventListener('click', (e) => {
+                if (window.innerWidth <= 992 && 
+                    !sidebar.contains(e.target) && 
+                    !menuToggle.contains(e.target) && 
+                    sidebar.classList.contains('active')) {
+                    sidebar.classList.remove('active');
+                }
+            });
+        }
+
+        function setupIframeEvents() {
+            iframe.addEventListener('load', () => {
+                sheetLoader.style.display = 'none';
+                if (currentSheetName) {
+                    currentSheetInfo.textContent = currentSheetName;
+                    currentSheetInfo.style.display = 'block';
+                }
+            });
+
+            iframe.addEventListener('loadstart', () => {
+                sheetLoader.style.display = 'flex';
+                currentSheetInfo.style.display = 'none';
+            });
+
+            iframe.addEventListener('error', () => {
+                sheetLoader.style.display = 'none';
+                currentSheetInfo.style.display = 'none';
+                sheetLoaderText.textContent = 'Error loading sheet. Please try again.';
+                setTimeout(() => {
+                    sheetLoaderText.textContent = 'Loading sheet...';
+                }, 3000);
+            });
+        }
+
+        function setupSheetControls() {
+            editModeBtn.addEventListener('click', () => {
+                setViewMode('edit');
+            });
+
+            viewModeBtn.addEventListener('click', () => {
+                setViewMode('view');
+            });
+
+            fullscreenBtn.addEventListener('click', () => {
+                const iframeContainer = iframe.parentElement;
+                
+                if (!document.fullscreenElement) {
+                    iframeContainer.requestFullscreen().catch(err => {
+                        console.log(`Error attempting to enable fullscreen: ${err.message}`);
+                    });
+                } else {
+                    document.exitFullscreen();
+                }
+            });
+
+            refreshSheetBtn.addEventListener('click', () => {
+                if (currentSheetId) {
+                    loadSheet(currentSheetId, currentSheetName);
+                }
+            });
+
+            closeSheetBtn.addEventListener('click', () => {
+                sheetsContainer.style.display = 'none';
+                toolsSection.style.display = 'block';
+                iframe.src = '';
+                currentSheetName = '';
+                currentSheetId = '';
+            });
+
+            document.addEventListener('fullscreenchange', () => {
+                if (document.fullscreenElement) {
+                    fullscreenBtn.innerHTML = '<i class="fas fa-compress"></i> Exit Fullscreen';
+                } else {
+                    fullscreenBtn.innerHTML = '<i class="fas fa-expand"></i> Fullscreen';
+                }
+            });
+        }
+
+        function openSheet(sheetUrl, sheetName, sectionTitle) {
+            toolsSection.style.display = 'none';
+            sheetsContainer.style.display = 'flex';
+            currentSheetTitle.textContent = `${sectionTitle} - ${sheetName}`;
+            loadSheet(sheetUrl, sheetName);
+        }
+
+        function loadSheet(sheetUrl, sheetName) {
+            currentSheetName = sheetName;
+            
+            const sheetId = extractSheetId(sheetUrl);
+            if (!sheetId) {
+                showSheetError('Invalid sheet URL');
+                return;
+            }
+            
+            currentSheetId = sheetId;
+            sheetLoader.style.display = 'flex';
+            sheetLoaderText.textContent = `Loading ${sheetName}...`;
+            
+            const mode = currentViewMode === 'edit' ? 'edit' : 'preview';
+            const url = `https://docs.google.com/spreadsheets/d/${sheetId}/${mode}?usp=sharing&rm=minimal`;
+            
+            iframe.src = url;
+        }
+
+        function extractSheetId(url) {
+            try {
+                const match = url.match(/\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/);
+                return match ? match[1] : null;
+            } catch (e) {
+                console.error('Error extracting sheet ID:', e);
+                return null;
+            }
+        }
+
+        function setViewMode(mode) {
+            currentViewMode = mode;
+            
+            editModeBtn.classList.toggle('active', mode === 'edit');
+            viewModeBtn.classList.toggle('active', mode === 'view');
+            
+            if (currentSheetId) {
+                loadSheet(currentSheetId, currentSheetName);
+            }
+        }
+
+        function showSheetError(message) {
+            sheetLoader.style.display = 'flex';
+            sheetLoaderText.textContent = message;
+            
+            setTimeout(() => {
+                sheetLoader.style.display = 'none';
+            }, 3000);
+        }
+
+        function clearCache() {
+            if (confirm('Clear all cached data? This will remove offline data.')) {
+                showLoading();
+                
+                Object.keys(localStorage).forEach(key => {
+                    if (key.startsWith('jasiri_')) {
+                        localStorage.removeItem(key);
+                    }
+                });
+                
+                if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+                    navigator.serviceWorker.controller.postMessage({type: 'CLEAR_CACHE'});
+                }
+                
+                setTimeout(() => {
+                    hideLoading();
+                    alert('Cache cleared successfully');
+                    location.reload();
+                }, 1000);
+            }
+        }
+
+        function showToast(message, type = 'info') {
+            // Simple toast implementation
+            console.log(`[${type}] ${message}`);
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', () => {
+            auth.onAuthStateChanged((user) => {
+                if (!user) {
+                    showLoading();
+                    setTimeout(() => {
+                        if (!auth.currentUser) {
+                            checkAuth();
+                        }
+                    }, 2000);
+                }
+            });
+        });
+    </script>
 </body>
 </html>
