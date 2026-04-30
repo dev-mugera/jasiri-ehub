@@ -10,30 +10,15 @@
     
     <style>
         :root {
-            --purple-900: #1a0a2e;
-            --purple-800: #2d1154;
-            --purple-700: #3d1a6e;
-            --purple-600: #6B3BC2;
-            --purple-500: #8B5CF6;
-            --purple-400: #A78BFA;
-            --purple-300: #C4B5FD;
-            --purple-200: #DDD6FE;
-            --purple-100: #EDE9FE;
-            --purple-50: #F5F3FF;
-            --white: #FFFFFF;
-            --gray-50: #FAFAFA;
-            --gray-100: #F5F5F5;
-            --gray-200: #E5E5E5;
-            --gray-500: #737373;
-            --gray-600: #525252;
-            --gray-700: #404040;
-            --gray-900: #171717;
-            --success: #10B981;
-            --warning: #F59E0B;
-            --danger: #EF4444;
-            --pink: #EC4899;
-            --orange: #F97316;
-            --teal: #14B8A6;
+            --purple-900: #1a0a2e; --purple-800: #2d1154; --purple-700: #3d1a6e;
+            --purple-600: #6B3BC2; --purple-500: #8B5CF6; --purple-400: #A78BFA;
+            --purple-300: #C4B5FD; --purple-200: #DDD6FE; --purple-100: #EDE9FE;
+            --purple-50: #F5F3FF; --white: #FFFFFF; --gray-50: #FAFAFA;
+            --gray-100: #F5F5F5; --gray-200: #E5E5E5; --gray-300: #D4D4D4;
+            --gray-400: #A3A3A3; --gray-500: #737373; --gray-600: #525252;
+            --gray-700: #404040; --gray-900: #171717;
+            --success: #10B981; --warning: #F59E0B; --danger: #EF4444;
+            --pink: #EC4899; --orange: #F97316; --teal: #14B8A6; --blue: #3B82F6;
             --gradient-primary: linear-gradient(135deg, #6B3BC2 0%, #8B5CF6 100%);
             --gradient-dark: linear-gradient(135deg, #1a0a2e 0%, #2d1154 50%, #3d1a6e 100%);
             --shadow-sm: 0 1px 3px rgba(107, 59, 194, 0.08);
@@ -46,8 +31,7 @@
 
         body {
             background: linear-gradient(180deg, var(--purple-50) 0%, var(--white) 100%);
-            color: var(--gray-900);
-            min-height: 100vh;
+            color: var(--gray-900); min-height: 100vh;
         }
 
         .container { max-width: 1200px; margin: 0 auto; padding: 24px; }
@@ -80,7 +64,7 @@
             justify-content: center; color: white; font-weight: 700; font-size: 0.8rem; cursor: pointer;
         }
         .plan-badge {
-            padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700;
+            padding: 5px 14px; border-radius: 20px; font-size: 11px; font-weight: 700;
         }
         .plan-free { background: var(--gray-100); color: var(--gray-600); }
         .plan-pro { background: #EDE9FE; color: #5B21B6; }
@@ -96,7 +80,7 @@
 
         /* Stats */
         .stats-row {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 14px; margin-bottom: 24px;
         }
         .stat-card {
@@ -130,7 +114,7 @@
             flex-direction: column; box-shadow: var(--shadow-sm); cursor: pointer;
         }
         .admin-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--purple-300); }
-        .admin-card.locked { opacity: 0.6; cursor: not-allowed; }
+        .admin-card.locked { opacity: 0.55; cursor: not-allowed; }
         .admin-card.locked:hover { transform: none; box-shadow: var(--shadow-sm); border-color: var(--purple-100); }
         .card-icon-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
         .card-icon {
@@ -142,6 +126,7 @@
         .card-icon.yellow { background: #FEF3C7; color: #F59E0B; }
         .card-icon.green { background: #D1FAE5; color: #10B981; }
         .card-icon.orange { background: #FFEDD5; color: #F97316; }
+        .card-icon.blue { background: #DBEAFE; color: #3B82F6; }
         .card-icon.gray { background: var(--gray-100); color: var(--gray-600); }
         .card-icon.teal { background: #CCFBF1; color: #0D9488; }
         .card-title { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
@@ -152,8 +137,22 @@
         }
         .badge-available { background: #D1FAE5; color: #065F46; }
         .badge-upgrade { background: #FEF3C7; color: #92400E; }
+        .badge-free-tier { background: #DBEAFE; color: #1E40AF; }
         .badge-coming { background: var(--gray-100); color: var(--gray-600); }
         .card-arrow { text-align: right; color: var(--purple-400); font-size: 14px; }
+
+        /* Plan Limits Bar */
+        .plan-limits {
+            background: white; border-radius: 14px; padding: 14px 20px;
+            margin-bottom: 20px; border: 1px solid var(--purple-100);
+            display: flex; gap: 24px; flex-wrap: wrap; box-shadow: var(--shadow-sm);
+        }
+        .plan-limit-item {
+            display: flex; align-items: center; gap: 8px; font-size: 12px;
+        }
+        .plan-limit-item i { color: var(--purple-500); }
+        .plan-limit-item strong { color: var(--gray-900); }
+        .plan-limit-item .used { color: var(--warning); font-weight: 600; }
 
         /* Upgrade Banner */
         .upgrade-banner {
@@ -185,6 +184,7 @@
             .container { padding: 16px; }
             .cards-grid { grid-template-columns: 1fr; }
             .upgrade-banner { flex-direction: column; text-align: center; gap: 12px; }
+            .plan-limits { flex-direction: column; gap: 8px; }
         }
     </style>
 </head>
@@ -221,10 +221,18 @@
     <!-- Upgrade Banner (Free users) -->
     <div class="upgrade-banner" id="upgradeBanner" style="display:none;">
         <div>
-            <h3>🚀 Upgrade to Pro</h3>
-            <p>Unlock all 5 hubs, unlimited sheets, custom branding, and more.</p>
+            <h3>🚀 Upgrade to Pro — Unlock All 5 Hubs</h3>
+            <p>Get unlimited sheets, custom branding, and all business hubs for only KSh 850/month.</p>
         </div>
-        <a href="billing.html" class="btn btn-white">Upgrade Now — KSh 850/mo</a>
+        <a href="billing.html" class="btn btn-white">Upgrade Now</a>
+    </div>
+
+    <!-- Plan Limits -->
+    <div class="plan-limits" id="planLimits">
+        <div class="plan-limit-item"><i class="fas fa-layer-group"></i> <strong id="limitHubs">2</strong> Active Hubs</div>
+        <div class="plan-limit-item"><i class="fas fa-link"></i> <strong id="limitSheets">5</strong> Sheet Connections</div>
+        <div class="plan-limit-item"><i class="fas fa-users"></i> <strong id="limitUsers">3</strong> Team Members</div>
+        <div class="plan-limit-item"><i class="fas fa-tasks"></i> <strong>E-KAZI:</strong> <span id="limitEkazi">3 assignments/day</span></div>
     </div>
 
     <!-- Stats -->
@@ -245,12 +253,42 @@
             <div class="stat-icon"><i class="fas fa-layer-group"></i></div>
             <div class="stat-info"><h3 id="statHubs">-</h3><p>Active Hubs</p></div>
         </div>
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-tasks"></i></div>
+            <div class="stat-info"><h3 id="statEkazi">-</h3><p>E-KAZI Tasks</p></div>
+        </div>
     </div>
 
     <!-- Hub Configuration Section -->
     <div class="section-label">🛠️ Hub Configuration</div>
     <div class="cards-grid" id="hubCards">
         <!-- Dynamically populated -->
+    </div>
+
+    <!-- E-KAZI & Other Tools -->
+    <div class="section-label">🔧 Additional Platforms</div>
+    <div class="cards-grid">
+        <!-- E-KAZI -->
+        <a href="ekazi-workspace.html" class="admin-card" id="ekaziCard">
+            <div class="card-icon-row">
+                <div class="card-icon blue"><i class="fas fa-tasks"></i></div>
+                <span class="card-badge badge-free-tier" id="ekaziBadge">Free Tier</span>
+            </div>
+            <div class="card-title">🔷 E-KAZI Platform</div>
+            <div class="card-desc">Assign tasks to freelancers. Up to <strong id="ekaziLimit">3 assignments/day</strong> on Free plan.</div>
+            <div class="card-arrow"><i class="fas fa-arrow-right"></i></div>
+        </a>
+
+        <!-- Templates -->
+        <a href="templates.html" class="admin-card">
+            <div class="card-icon-row">
+                <div class="card-icon purple"><i class="fas fa-file-excel"></i></div>
+                <span class="card-badge badge-available">Available</span>
+            </div>
+            <div class="card-title">📋 Sheet Templates</div>
+            <div class="card-desc">Browse and use pre-built Google Sheet templates for all hubs.</div>
+            <div class="card-arrow"><i class="fas fa-arrow-right"></i></div>
+        </a>
     </div>
 
     <!-- Platform Management Section -->
@@ -346,6 +384,44 @@
     let selectedTenant = '';
     let tenantPlan = 'free';
     let tenantFeatures = {};
+    let tenantLimits = {};
+
+    // ============ TIER DEFINITIONS ============
+    const tierConfig = {
+        free: {
+            hubs: ['emh', 'erh'],           // Only Sales & Resource Hub
+            maxSheets: 5,
+            maxUsers: 3,
+            ekaziLimit: 3,                  // 3 assignments per day
+            ekaziLabel: '3 assignments/day',
+            branding: false,
+            apiAccess: false,
+            allHubs: false,
+            integrations: false
+        },
+        pro: {
+            hubs: ['emh', 'erh', 'efh', 'efs', 'talents'],  // All 5 hubs
+            maxSheets: Infinity,
+            maxUsers: 15,
+            ekaziLimit: 25,
+            ekaziLabel: '25 assignments/day',
+            branding: true,
+            apiAccess: false,
+            allHubs: true,
+            integrations: false
+        },
+        enterprise: {
+            hubs: ['emh', 'erh', 'efh', 'efs', 'talents'],  // All 5 + custom
+            maxSheets: Infinity,
+            maxUsers: Infinity,
+            ekaziLimit: Infinity,
+            ekaziLabel: 'Unlimited assignments',
+            branding: true,
+            apiAccess: true,
+            allHubs: true,
+            integrations: true
+        }
+    };
 
     window.toggleDropdown = () => {
         const dd = document.getElementById('userDropdown');
@@ -358,27 +434,50 @@
     });
     window.handleSignOut = async () => { await signOut(auth); window.location.href = 'index.html'; };
 
-    function showToast(msg) { const t = document.getElementById('toast'); document.getElementById('toastMessage').textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 3000); }
+    function showToast(msg) {
+        const t = document.getElementById('toast');
+        document.getElementById('toastMessage').textContent = msg;
+        t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 3000);
+    }
 
     async function loadData() {
         if (!selectedTenant) return;
+
         const subSnap = await get(ref(db, `tenants/${selectedTenant}/subscription`));
         const sub = subSnap.val() || {};
         tenantPlan = sub.plan || 'free';
         tenantFeatures = sub.limits?.features || {};
+        tenantLimits = sub.limits || {};
+
+        const config = tierConfig[tenantPlan] || tierConfig.free;
 
         // Update plan badge
         const badge = document.getElementById('planBadge');
         badge.textContent = tenantPlan.toUpperCase();
         badge.className = `plan-badge plan-${tenantPlan}`;
 
+        // Update plan limits display
+        document.getElementById('limitHubs').textContent = config.hubs.length;
+        document.getElementById('limitSheets').textContent = config.maxSheets === Infinity ? 'Unlimited' : config.maxSheets;
+        document.getElementById('limitUsers').textContent = config.maxUsers === Infinity ? 'Unlimited' : config.maxUsers;
+        document.getElementById('limitEkazi').textContent = config.ekaziLabel;
+
+        // Update E-KAZI card
+        document.getElementById('ekaziLimit').textContent = config.ekaziLabel;
+
         // Show upgrade banner for free users
-        if (tenantPlan === 'free') document.getElementById('upgradeBanner').style.display = 'flex';
+        if (tenantPlan === 'free') {
+            document.getElementById('upgradeBanner').style.display = 'flex';
+        } else {
+            document.getElementById('upgradeBanner').style.display = 'none';
+        }
 
         // Update branding card
-        if (tenantPlan === 'free') {
+        if (!config.branding) {
             document.getElementById('brandingCard').classList.add('locked');
             document.getElementById('brandingBadge').textContent = 'Pro+';
+            document.getElementById('brandingBadge').className = 'card-badge badge-upgrade';
         } else {
             document.getElementById('brandingCard').classList.remove('locked');
             document.getElementById('brandingBadge').textContent = 'Available';
@@ -387,12 +486,12 @@
 
         // Stats
         const membersSnap = await get(ref(db, `tenants/${selectedTenant}/members`));
-        document.getElementById('statMembers').textContent = Object.keys(membersSnap.val()||{}).length;
+        const memberCount = Object.keys(membersSnap.val() || {}).length;
+        document.getElementById('statMembers').textContent = memberCount;
 
         // Count tools
         let totalTools = 0, totalSheets = 0;
-        const apps = ['ehub','erh','efh','efs','talents'];
-        for (const app of apps) {
+        for (const app of config.hubs) {
             const toolsSnap = await get(ref(db, `tenants/${selectedTenant}/apps/${app}/tools`));
             if (toolsSnap.exists()) {
                 for (const section of Object.values(toolsSnap.val())) {
@@ -404,14 +503,17 @@
         }
         document.getElementById('statTools').textContent = totalTools;
         document.getElementById('statSheets').textContent = totalSheets;
-        document.getElementById('statHubs').textContent = tenantFeatures.allHubs ? 5 : 2;
+        document.getElementById('statHubs').textContent = config.hubs.length;
+
+        // E-KAZI stats (placeholder for now)
+        document.getElementById('statEkazi').textContent = '0/' + config.ekaziLabel.split(' ')[0];
 
         // Hub cards
-        renderHubCards();
+        renderHubCards(config);
     }
 
-    function renderHubCards() {
-        const hubs = [
+    function renderHubCards(config) {
+        const allHubs = [
             { id: 'emh', name: 'Sales Hub', icon: 'fa-store', color: 'purple', desc: 'POS, transactions, sales analytics.' },
             { id: 'erh', name: 'Resource Hub', icon: 'fa-users-cog', color: 'pink', desc: 'HR, asset tracking, projects.' },
             { id: 'efh', name: 'Finance Hub', icon: 'fa-chart-pie', color: 'yellow', desc: 'Accounting, reports, budgets.' },
@@ -419,16 +521,19 @@
             { id: 'talents', name: 'Talents Hub', icon: 'fa-graduation-cap', color: 'orange', desc: 'HR, learning & development.' }
         ];
 
-        document.getElementById('hubCards').innerHTML = hubs.map(hub => {
-            const hasAccess = tenantPlan === 'enterprise' || tenantFeatures[hub.id] === true || (tenantPlan === 'pro' && hub.id === 'emh');
-            const locked = !hasAccess && tenantPlan === 'free';
+        document.getElementById('hubCards').innerHTML = allHubs.map(hub => {
+            const hasAccess = config.hubs.includes(hub.id);
+            const locked = !hasAccess;
+
             return `
                 <a href="${hasAccess ? `admin-${hub.id}.html?tenant=${selectedTenant}` : '#'}" 
                    class="admin-card ${locked ? 'locked' : ''}"
-                   ${locked ? `onclick="showToast('${hub.name} requires Pro or Enterprise plan'); return false;"` : ''}>
+                   ${locked ? `onclick="showToast('${hub.name} requires Pro plan (KSh 850/mo) or Enterprise (KSh 1,200/mo)'); return false;"` : ''}>
                     <div class="card-icon-row">
                         <div class="card-icon ${hub.color}"><i class="fas ${hub.icon}"></i></div>
-                        <span class="card-badge ${hasAccess ? 'badge-available' : 'badge-upgrade'}">${hasAccess ? 'Configure' : 'Upgrade'}</span>
+                        <span class="card-badge ${hasAccess ? 'badge-available' : 'badge-upgrade'}">
+                            ${hasAccess ? 'Configure' : (tenantPlan === 'free' ? 'Upgrade to Pro' : 'Upgrade')}
+                        </span>
                     </div>
                     <div class="card-title">${hub.name}</div>
                     <div class="card-desc">${hub.desc}</div>
@@ -439,7 +544,7 @@
 
     onAuthStateChanged(auth, async (user) => {
         if (!user) { window.location.href = 'index.html'; return; }
-        document.getElementById('avatarInitials').textContent = (user.displayName||user.email||'U').substring(0,2).toUpperCase();
+        document.getElementById('avatarInitials').textContent = (user.displayName || user.email || 'U').substring(0, 2).toUpperCase();
         document.getElementById('dropdownName').textContent = user.displayName || user.email;
         document.getElementById('dropdownEmail').textContent = user.email;
         document.getElementById('userName').textContent = user.displayName?.split(' ')[0] || 'User';
