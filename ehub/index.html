@@ -1396,6 +1396,7 @@
     }
 
     // ✅ SIGN UP - Redirects to workspace.html
+    // ✅ FIXED SIGN UP - Step by step with error logging
     window.handleSignup = async (e) => {
         e.preventDefault();
         const name = document.getElementById('signupName').value.trim();
@@ -1405,10 +1406,10 @@
         const btn = document.getElementById('signupBtn');
         const errorDiv = document.getElementById('signupError');
         const successDiv = document.getElementById('signupSuccess');
-
+    
         errorDiv.style.display = 'none';
         successDiv.style.display = 'none';
-
+    
         if (!name || !email || !orgName || !password) {
             errorDiv.textContent = 'All fields are required';
             errorDiv.style.display = 'block';
@@ -1419,54 +1420,123 @@
             errorDiv.style.display = 'block';
             return;
         }
-
+    
         btn.disabled = true;
         btn.innerHTML = '<span class="spinner"></span> Creating account...';
-
+    
         try {
+            // Step 1: Create auth user
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
+            
+            console.log('✅ Auth user created:', user.uid);
+            
+            // Step 2: Update profile
             await updateProfile(user, { displayName: name });
-
+            console.log('✅ Profile updated');
+    
+            // Step 3: Generate tenant ID
             const tenantId = generateSlug(orgName) + '-' + Date.now().toString(36);
-            const updates = {};
-
-            updates[`tenants/${tenantId}/info`] = {
-                name: orgName, slug: tenantId, type: 'business', plan: 'free',
-                createdAt: new Date().toISOString(), createdBy: user.uid,
-                status: 'active', contactEmail: email,
-                settings: { timezone: 'Africa/Nairobi', currency: 'KES', language: 'en' }
-            };
-
-            updates[`tenants/${tenantId}/members/${user.uid}`] = {
-                role: 'owner', joinedAt: new Date().toISOString(),
-                permissions: { emh: true, erh: true, efh: true, efs: true, talents: true }
-            };
-
-            updates[`tenants/${tenantId}/subscription`] = {
-                plan: 'free', status: 'active', startedAt: new Date().toISOString(),
-                limits: { maxUsers: 3, maxSheets: 5, features: { allHubs: false, customBranding: false, apiAccess: false } }
-            };
-
-            updates[`users/${user.uid}/profile`] = { displayName: name, email, createdAt: new Date().toISOString() };
-            updates[`users/${user.uid}/tenants`] = { [tenantId]: 'owner' };
-
-            await update(ref(db), updates);
-
-            successDiv.textContent = 'Account created! Redirecting to your workspace...';
-            successDiv.style.display = 'block';
-            btn.innerHTML = '<i class="fas fa-check"></i> Created!';
-
-            // ✅ REDIRECT TO workspace.html
-            setTimeout(() => { 
-                window.location.href = `workspace.html?tenant=${tenantId}`; 
-            }, 1500);
-
-        } catch (error) {
+            console.log('✅ Tenant ID:', tenantId);
+    
+            // Step 4: Write to database - ONE AT A TIME for better debugging
+            try {
+                // Write tenant info
+                await set(ref(db, `tenants/${tenantId}/info`), {
+                    name: orgName,
+                    slug: tenantId,
+                    type: 'business',
+                    plan: 'free',
+                    createdAt: new Date().toISOString(),
+                    createdBy: user.uid,
+                    status: 'active',
+                    contactEmail: email,
+                    settings: {
+                        timezone: 'Africa/Nairobi',
+                        currency: 'KES',
+                        language: 'en'
+                    }
+                });
+                console.log('✅ Tenant info written');
+    
+                // Write member
+                await set(ref(db, `tenants/${tenantId}/members/${user.uid}`), {
+                    role: 'owner',
+                    joinedAt: new Date().toISOString(),
+                    permissions: {
+                        emh: true,
+                        erh: true,
+                        efh: true,
+                        efs: true,
+                        talents: true
+                    }
+                });
+                console.log('✅ Member written');
+    
+                // Write subscription
+                await set(ref(db, `tenants/${tenantId}/subscription`), {
+                    plan: 'free',
+                    status: 'active',
+                    startedAt: new Date().toISOString(),
+                    limits: {
+                        maxUsers: 3,
+                        maxSheets: 5,
+                        features: {
+                            allHubs: false,
+                            customBranding: false,
+                            apiAccess: false
+                        }
+                    }
+                });
+                console.log('✅ Subscription written');
+    
+                // Write user profile
+                await set(ref(db, `users/${user.uid}/profile`), {
+                    displayName: name,
+                    email: email,
+                    createdAt: new Date().toISOString()
+                });
+                console.log('✅ User profile written');
+    
+                // Write user tenants
+                await set(ref(db, `users/${user.uid}/tenants`), {
+                    [tenantId]: 'owner'
+                });
+                console.log('✅ User tenants written');
+    
+                // Success!
+                successDiv.textContent = 'Account created! Redirecting to your workspace...';
+                successDiv.style.display = 'block';
+                btn.innerHTML = '<i class="fas fa-check"></i> Created!';
+    
+                // Redirect to workspace
+                setTimeout(() => {
+                    window.location.href = `workspace.html?tenant=${tenantId}`;
+                }, 1500);
+    
+            } catch (dbError) {
+                console.error('❌ Database write error:', dbError);
+                console.error('Error code:', dbError.code);
+                console.error('Error message:', dbError.message);
+                
+                // Show specific error
+                errorDiv.textContent = `Database error: ${dbError.message}. Please check Firebase rules.`;
+                errorDiv.style.display = 'block';
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-rocket"></i> Create Free Account';
+            }
+    
+        } catch (authError) {
+            console.error('❌ Auth error:', authError);
+            
             let message = 'Something went wrong. Please try again.';
-            if (error.code === 'auth/email-already-in-use') message = 'This email is already registered. Please sign in instead.';
-            else if (error.code === 'auth/weak-password') message = 'Password is too weak. Use a stronger password.';
-            else if (error.code === 'auth/invalid-email') message = 'Please enter a valid email address.';
+            if (authError.code === 'auth/email-already-in-use') {
+                message = 'This email is already registered. Please sign in instead.';
+            } else if (authError.code === 'auth/weak-password') {
+                message = 'Password is too weak. Use a stronger password.';
+            } else if (authError.code === 'auth/invalid-email') {
+                message = 'Please enter a valid email address.';
+            }
             
             errorDiv.textContent = message;
             errorDiv.style.display = 'block';
