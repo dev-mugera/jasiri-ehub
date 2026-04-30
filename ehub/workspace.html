@@ -5,440 +5,230 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jasiri Suite | Workspace</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            --purple-900: #1a0a2e; --purple-800: #2d1154; --purple-700: #3d1a6e;
             --purple-600: #6B3BC2; --purple-500: #8B5CF6; --purple-400: #A78BFA;
-            --purple-300: #C4B5FD; --purple-200: #DDD6FE; --purple-100: #EDE9FE;
-            --purple-50: #F5F3FF; --white: #FFFFFF; --gray-50: #FAFAFA;
-            --gray-100: #F5F5F5; --gray-200: #E5E5E5; --gray-300: #D4D4D4;
-            --gray-400: #A3A3A3; --gray-500: #737373; --gray-600: #525252;
-            --gray-700: #404040; --gray-800: #262626; --gray-900: #171717;
+            --purple-100: #EDE9FE; --purple-50: #F5F3FF; --white: #FFFFFF;
+            --gray-50: #FAFAFA; --gray-100: #F5F5F5; --gray-200: #E5E5E5;
+            --gray-300: #D4D4D4; --gray-400: #A3A3A3; --gray-500: #737373;
+            --gray-600: #525252; --gray-700: #404040; --gray-900: #171717;
             --success: #10B981; --warning: #F59E0B; --danger: #EF4444;
-            --pink: #EC4899; --orange: #F97316; --teal: #14B8A6; --blue: #3B82F6;
             --gradient-primary: linear-gradient(135deg, #6B3BC2 0%, #8B5CF6 100%);
-            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
-            --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
-            --shadow-lg: 0 10px 30px rgba(0,0,0,0.12);
-            --shadow-xl: 0 20px 50px rgba(0,0,0,0.15);
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.06);
+            --shadow-lg: 0 10px 30px rgba(0,0,0,0.10);
+            --shadow-xl: 0 20px 50px rgba(0,0,0,0.12);
         }
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Inter',sans-serif;background:#FAFBFC;color:var(--gray-900);min-height:100vh}
+        
+        .topbar{background:var(--white);border-bottom:1px solid var(--gray-200);padding:0 1.5rem;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+        .topbar-left{display:flex;align-items:center;gap:1rem}
+        .logo{display:flex;align-items:center;gap:.5rem;text-decoration:none}
+        .logo-icon{width:32px;height:32px;background:var(--gradient-primary);border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:.9rem}
+        .logo-text{font-size:1.1rem;font-weight:700;color:var(--gray-900)}
+        .tenant-badge{font-size:.7rem;font-weight:600;color:var(--purple-600);background:var(--purple-50);padding:.2rem .7rem;border-radius:50px;border:1px solid var(--purple-100)}
+        .topbar-right{display:flex;align-items:center;gap:.8rem}
+        .plan-badge{padding:4px 12px;border-radius:20px;font-size:10px;font-weight:700}
+        .plan-free{background:var(--gray-100);color:var(--gray-600)}
+        .plan-pro{background:#EDE9FE;color:#5B21B6}
+        .plan-enterprise{background:var(--gradient-primary);color:white}
+        .user-avatar{width:34px;height:34px;border-radius:50%;background:var(--gradient-primary);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:.8rem;cursor:pointer}
+        .user-avatar:hover{transform:scale(1.05);box-shadow:0 2px 8px rgba(107,59,194,0.3)}
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        .greeting-section{padding:1.5rem 2rem .5rem;max-width:1280px;margin:0 auto}
+        .greeting{font-size:1.4rem;font-weight:700;color:var(--gray-900)}
+        .greeting-sub{font-size:.85rem;color:var(--gray-500)}
 
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #FAFBFC; color: var(--gray-900); min-height: 100vh; overflow-x: hidden;
-        }
+        .apps-container{max-width:1280px;margin:0 auto;padding:1rem 2rem}
+        .section-label{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gray-400);margin-bottom:.8rem}
+        .apps-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.8rem}
+        .app-tile{background:var(--white);border-radius:16px;padding:1.4rem 1.1rem;text-decoration:none;color:var(--gray-900);border:1px solid var(--gray-200);transition:all .25s ease;cursor:pointer;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;text-align:center}
+        .app-tile::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;transition:height .25s ease}
+        .app-tile:hover{transform:translateY(-5px);box-shadow:var(--shadow-xl);border-color:transparent}
+        .app-tile:hover::before{height:4px}
+        .app-tile.locked{opacity:.4;cursor:not-allowed;filter:grayscale(20%)}
+        .app-tile.locked:hover{transform:none;box-shadow:none;border-color:var(--gray-200)}
+        .app-tile.locked:hover::before{height:3px}
+        .app-tile.emh::before{background:linear-gradient(90deg,#6B3BC2,#A78BFA)}
+        .app-tile.erh::before{background:linear-gradient(90deg,#EC4899,#F472B6)}
+        .app-tile.efh::before{background:linear-gradient(90deg,#F59E0B,#FBBF24)}
+        .app-tile.efs::before{background:linear-gradient(90deg,#10B981,#34D399)}
+        .app-tile.talents::before{background:linear-gradient(90deg,#F97316,#FB923C)}
+        .app-tile.ekazi::before{background:linear-gradient(90deg,#3B82F6,#60A5FA)}
+        .app-tile.emh:hover{box-shadow:0 12px 35px rgba(107,59,194,0.18)}
+        .app-tile.erh:hover{box-shadow:0 12px 35px rgba(236,72,153,0.18)}
+        .app-tile.efh:hover{box-shadow:0 12px 35px rgba(245,158,11,0.18)}
+        .app-tile.efs:hover{box-shadow:0 12px 35px rgba(16,185,129,0.18)}
+        .app-tile.talents:hover{box-shadow:0 12px 35px rgba(249,115,22,0.18)}
+        .app-tile.ekazi:hover{box-shadow:0 12px 35px rgba(59,130,246,0.18)}
+        .app-icon-wrapper{width:64px;height:64px;border-radius:16px;display:flex;align-items:center;justify-content:center;margin-bottom:.8rem;transition:all .25s ease;background:var(--gray-50);padding:10px}
+        .app-tile:hover .app-icon-wrapper{transform:scale(1.06)}
+        .app-icon-wrapper img{width:100%;height:100%;object-fit:contain}
+        .app-tile h3{font-size:.9rem;font-weight:700;margin-bottom:.2rem}
+        .app-tile p{font-size:.7rem;color:var(--gray-500);line-height:1.3}
+        .app-status{display:inline-flex;align-items:center;gap:.25rem;font-size:.6rem;font-weight:600;color:var(--success);margin-top:.6rem;background:#D1FAE5;padding:.15rem .5rem;border-radius:50px}
+        .app-status .dot{width:4px;height:4px;background:var(--success);border-radius:50%;animation:pulse 2s infinite}
+        .app-status.locked-status{color:var(--gray-500);background:var(--gray-100)}
+        @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
 
-        /* ===== TOP BAR ===== */
-        .topbar {
-            background: var(--white); border-bottom: 1px solid var(--gray-200);
-            padding: 0 1.5rem; height: 56px; display: flex;
-            align-items: center; justify-content: space-between;
-            position: sticky; top: 0; z-index: 100;
-        }
-        .topbar-left { display: flex; align-items: center; gap: 1rem; }
-        .logo { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; }
-        .logo-icon {
-            width: 32px; height: 32px; background: var(--gradient-primary);
-            border-radius: 8px; display: flex; align-items: center; justify-content: center;
-            color: white; font-weight: 800; font-size: 0.9rem;
-        }
-        .logo-text { font-size: 1.1rem; font-weight: 700; color: var(--gray-900); }
-        .tenant-badge {
-            font-size: 0.7rem; font-weight: 600; color: var(--purple-600);
-            background: var(--purple-50); padding: 0.2rem 0.7rem;
-            border-radius: 50px; border: 1px solid var(--purple-100);
-        }
-        .topbar-right { display: flex; align-items: center; gap: 0.8rem; }
-        .plan-badge {
-            padding: 4px 12px; border-radius: 20px; font-size: 10px; font-weight: 700;
-        }
-        .plan-free { background: var(--gray-100); color: var(--gray-600); }
-        .plan-pro { background: #EDE9FE; color: #5B21B6; }
-        .plan-enterprise { background: var(--gradient-primary); color: white; }
-        .user-avatar {
-            width: 34px; height: 34px; border-radius: 50%;
-            background: var(--gradient-primary); display: flex; align-items: center;
-            justify-content: center; color: white; font-weight: 700; font-size: 0.8rem;
-            cursor: pointer; transition: all 0.2s;
-        }
-        .user-avatar:hover { transform: scale(1.05); box-shadow: 0 2px 8px rgba(107, 59, 194, 0.3); }
+        .recent-section{max-width:1280px;margin:0 auto;padding:0 2rem 2rem}
+        .recent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:.6rem}
+        .recent-card{background:white;border-radius:10px;padding:.8rem 1rem;border:1px solid var(--gray-200);display:flex;align-items:center;gap:.7rem;cursor:pointer;transition:all .15s;text-decoration:none;color:var(--gray-900)}
+        .recent-card:hover{border-color:var(--purple-300);background:var(--purple-50)}
+        .recent-dot{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0}
+        .recent-info{flex:1;min-width:0}
+        .recent-info h4{font-size:.8rem;font-weight:600}
+        .recent-info p{font-size:.65rem;color:var(--gray-500);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        .recent-time{font-size:.6rem;color:var(--gray-400);white-space:nowrap}
 
-        /* ===== GREETING ===== */
-        .greeting-section { padding: 2rem 2rem 1rem 2rem; max-width: 1280px; margin: 0 auto; }
-        .greeting { font-size: 1.5rem; font-weight: 700; color: var(--gray-900); margin-bottom: 0.3rem; }
-        .greeting-sub { font-size: 0.9rem; color: var(--gray-500); }
+        .workspace-footer{text-align:center;padding:1.5rem;color:var(--gray-400);font-size:.7rem;border-top:1px solid var(--gray-100);max-width:1280px;margin:0 auto}
 
-        /* ===== APPS GRID ===== */
-        .apps-container { max-width: 1280px; margin: 0 auto; padding: 1.5rem 2rem 1.5rem 2rem; }
-        .section-label {
-            font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
-            letter-spacing: 1px; color: var(--gray-400); margin-bottom: 1rem;
-        }
-        .apps-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 1rem; }
-        .app-tile {
-            background: var(--white); border-radius: 18px; padding: 1.6rem 1.3rem;
-            text-decoration: none; color: var(--gray-900);
-            border: 1px solid var(--gray-200);
-            transition: all 0.3s cubic-bezier(0.2, 0.8, 0.4, 1);
-            cursor: pointer; position: relative; overflow: hidden;
-            display: flex; flex-direction: column; align-items: center; text-align: center;
-        }
-        .app-tile::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0;
-            height: 3px; transition: height 0.3s ease;
-        }
-        .app-tile:hover { transform: translateY(-6px); box-shadow: var(--shadow-xl); border-color: transparent; }
-        .app-tile:hover::before { height: 5px; }
-        .app-tile.locked { opacity: 0.45; cursor: not-allowed; filter: grayscale(30%); }
-        .app-tile.locked:hover { transform: none; box-shadow: none; border-color: var(--gray-200); }
-        .app-tile.locked:hover::before { height: 3px; }
+        .user-menu{position:relative}
+        .dropdown{position:absolute;top:100%;right:0;margin-top:.5rem;background:white;border-radius:14px;box-shadow:var(--shadow-xl);border:1px solid var(--gray-200);min-width:220px;padding:.4rem;display:none;z-index:200}
+        .dropdown.active{display:block;animation:fadeDown .15s ease}
+        @keyframes fadeDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+        .dropdown-header{padding:.8rem 1rem;border-bottom:1px solid var(--gray-100);margin-bottom:.3rem}
+        .dropdown-header .name{font-weight:700;font-size:.85rem}
+        .dropdown-header .email{font-size:.7rem;color:var(--gray-500)}
+        .dropdown-item{display:flex;align-items:center;gap:.6rem;padding:.6rem 1rem;color:var(--gray-700);text-decoration:none;font-size:.8rem;border-radius:8px;transition:all .15s;cursor:pointer;border:none;background:none;width:100%;text-align:left;font-family:'Inter',sans-serif}
+        .dropdown-item:hover{background:var(--gray-50);color:var(--gray-900)}
+        .dropdown-item.signout{color:var(--danger);border-top:1px solid var(--gray-100);margin-top:.3rem;padding-top:.7rem}
+        .dropdown-item.signout:hover{background:#FEF2F2}
 
-        .app-tile.emh::before { background: linear-gradient(90deg, #6B3BC2, #A78BFA); }
-        .app-tile.erh::before { background: linear-gradient(90deg, #EC4899, #F472B6); }
-        .app-tile.efh::before { background: linear-gradient(90deg, #F59E0B, #FBBF24); }
-        .app-tile.efs::before { background: linear-gradient(90deg, #10B981, #34D399); }
-        .app-tile.talents::before { background: linear-gradient(90deg, #F97316, #FB923C); }
-        .app-tile.ekazi::before { background: linear-gradient(90deg, #3B82F6, #60A5FA); }
+        .upgrade-banner{background:var(--gradient-primary);color:white;text-align:center;padding:.7rem 2rem;font-size:.8rem;font-weight:500}
+        .upgrade-banner a{color:white;font-weight:700;text-decoration:underline}
 
-        .app-tile.emh:hover { box-shadow: 0 15px 40px rgba(107, 59, 194, 0.2); }
-        .app-tile.erh:hover { box-shadow: 0 15px 40px rgba(236, 72, 153, 0.2); }
-        .app-tile.efh:hover { box-shadow: 0 15px 40px rgba(245, 158, 11, 0.2); }
-        .app-tile.efs:hover { box-shadow: 0 15px 40px rgba(16, 185, 129, 0.2); }
-        .app-tile.talents:hover { box-shadow: 0 15px 40px rgba(249, 115, 22, 0.2); }
-        .app-tile.ekazi:hover { box-shadow: 0 15px 40px rgba(59, 130, 246, 0.2); }
-
-        .app-icon-wrapper {
-            width: 72px; height: 72px; border-radius: 18px;
-            display: flex; align-items: center; justify-content: center;
-            margin-bottom: 1rem; transition: all 0.3s ease;
-            background: var(--gray-50); padding: 12px;
-        }
-        .app-tile:hover .app-icon-wrapper { transform: scale(1.08); }
-        .app-icon-wrapper img { width: 100%; height: 100%; object-fit: contain; }
-
-        .app-tile h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.3rem; color: var(--gray-900); }
-        .app-tile p { font-size: 0.73rem; color: var(--gray-500); line-height: 1.4; }
-        .app-status {
-            display: inline-flex; align-items: center; gap: 0.3rem;
-            font-size: 0.62rem; font-weight: 600; color: var(--success);
-            margin-top: 0.7rem; background: #D1FAE5;
-            padding: 0.2rem 0.6rem; border-radius: 50px;
-        }
-        .app-status .dot { width: 4px; height: 4px; background: var(--success); border-radius: 50%; animation: pulse 2s infinite; }
-        .app-status.locked-status { color: var(--gray-500); background: var(--gray-100); }
-        .app-status.locked-status .dot { background: var(--gray-400); }
-        .lock-icon { margin-top: 0.7rem; color: var(--gray-400); font-size: 0.65rem; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-
-        /* ===== RECENT WORK ===== */
-        .recent-section { max-width: 1280px; margin: 0 auto; padding: 0 2rem 2rem 2rem; }
-        .recent-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.8rem; }
-        .recent-card {
-            background: white; border-radius: 12px; padding: 1rem 1.2rem;
-            border: 1px solid var(--gray-200); display: flex; align-items: center;
-            gap: 0.8rem; cursor: pointer; transition: all 0.2s; text-decoration: none; color: var(--gray-900);
-        }
-        .recent-card:hover { border-color: var(--purple-300); background: var(--purple-50); }
-        .recent-dot {
-            width: 36px; height: 36px; border-radius: 10px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 0.9rem; flex-shrink: 0;
-        }
-        .recent-info { flex: 1; min-width: 0; }
-        .recent-info h4 { font-size: 0.85rem; font-weight: 600; }
-        .recent-info p { font-size: 0.7rem; color: var(--gray-500); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .recent-time { font-size: 0.65rem; color: var(--gray-400); white-space: nowrap; }
-
-        /* ===== FOOTER ===== */
-        .workspace-footer {
-            text-align: center; padding: 2rem; color: var(--gray-400);
-            font-size: 0.75rem; border-top: 1px solid var(--gray-100);
-            max-width: 1280px; margin: 0 auto;
-        }
-
-        /* ===== USER DROPDOWN ===== */
-        .user-menu { position: relative; }
-        .dropdown {
-            position: absolute; top: 100%; right: 0; margin-top: 0.5rem;
-            background: white; border-radius: 14px; box-shadow: var(--shadow-xl);
-            border: 1px solid var(--gray-200); min-width: 240px; padding: 0.5rem;
-            display: none; z-index: 200;
-        }
-        .dropdown.active { display: block; animation: fadeDown 0.2s ease; }
-        @keyframes fadeDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-        .dropdown-header { padding: 1rem; border-bottom: 1px solid var(--gray-100); margin-bottom: 0.5rem; }
-        .dropdown-header .name { font-weight: 700; font-size: 0.9rem; }
-        .dropdown-header .email { font-size: 0.75rem; color: var(--gray-500); }
-        .dropdown-item {
-            display: flex; align-items: center; gap: 0.7rem;
-            padding: 0.7rem 1rem; color: var(--gray-700); text-decoration: none;
-            font-size: 0.85rem; border-radius: 8px; transition: all 0.2s;
-            cursor: pointer; border: none; background: none; width: 100%;
-            text-align: left; font-family: 'Inter', sans-serif;
-        }
-        .dropdown-item:hover { background: var(--gray-50); color: var(--gray-900); }
-        .dropdown-item.signout { color: var(--danger); border-top: 1px solid var(--gray-100); margin-top: 0.5rem; padding-top: 0.8rem; }
-        .dropdown-item.signout:hover { background: #FEF2F2; }
-
-        /* ===== UPGRADE BANNER ===== */
-        .upgrade-banner {
-            background: var(--gradient-primary); color: white;
-            text-align: center; padding: 0.8rem 2rem; font-size: 0.85rem; font-weight: 500;
-        }
-        .upgrade-banner a { color: white; font-weight: 700; text-decoration: underline; }
-
-        @media (max-width: 768px) {
-            .apps-grid { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
-            .app-tile { padding: 1.2rem 1rem; }
-            .app-icon-wrapper { width: 56px; height: 56px; padding: 8px; border-radius: 14px; }
-            .app-tile h3 { font-size: 0.82rem; }
-            .app-tile p { font-size: 0.68rem; }
-            .greeting { font-size: 1.2rem; }
-            .tenant-badge { display: none; }
-            .recent-grid { grid-template-columns: 1fr; }
-        }
-        @media (max-width: 480px) {
-            .apps-grid { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
-            .apps-container, .greeting-section, .recent-section { padding-left: 1rem; padding-right: 1rem; }
+        @media(max-width:768px){
+            .apps-grid{grid-template-columns:repeat(2,1fr);gap:.6rem}
+            .app-tile{padding:1.1rem .8rem}
+            .app-icon-wrapper{width:50px;height:50px;padding:7px;border-radius:12px}
+            .app-tile h3{font-size:.78rem}
+            .app-tile p{font-size:.65rem}
+            .greeting{font-size:1.2rem}
+            .tenant-badge{display:none}
+            .recent-grid{grid-template-columns:1fr}
+            .greeting-section,.apps-container,.recent-section{padding-left:1rem;padding-right:1rem}
         }
     </style>
 </head>
 <body>
 
-<!-- Upgrade Banner (Free users) -->
-<div class="upgrade-banner" id="upgradeBanner" style="display: none;">
-    🚀 You're on the <strong>Free</strong> plan. 
-    <a href="billing.html">Upgrade to Pro</a> for all 5 hubs + E-KAZI — only KSh 850/month
+<div class="upgrade-banner" id="upgradeBanner" style="display:none">
+    🚀 Free plan • <a href="billing.html">Upgrade to Pro</a> for all 5 hubs + E-KAZI — KSh 850/month
 </div>
 
-<!-- Top Bar -->
 <header class="topbar">
     <div class="topbar-left">
-        <a href="/" class="logo">
-            <div class="logo-icon">J</div>
-            <span class="logo-text">Jasiri</span>
-        </a>
-        <span class="tenant-badge" id="tenantBadge">My Workspace</span>
+        <a href="/" class="logo"><div class="logo-icon">J</div><span class="logo-text">Jasiri</span></a>
+        <span class="tenant-badge" id="tenantBadge">Loading...</span>
     </div>
     <div class="topbar-right">
         <span class="plan-badge plan-free" id="planBadge">FREE</span>
         <div class="user-menu">
-            <div class="user-avatar" id="userAvatar" onclick="toggleDropdown()">
-                <span id="avatarInitials">U</span>
-            </div>
+            <div class="user-avatar" id="userAvatar" onclick="toggleDropdown()"><span id="avatarInitials">U</span></div>
             <div class="dropdown" id="userDropdown">
-                <div class="dropdown-header">
-                    <div class="name" id="dropdownName">User</div>
-                    <div class="email" id="dropdownEmail">user@email.com</div>
-                </div>
+                <div class="dropdown-header"><div class="name" id="dropdownName">User</div><div class="email" id="dropdownEmail">email</div></div>
                 <a href="admin.html" class="dropdown-item"><i class="fas fa-cog"></i> Admin Hub</a>
                 <a href="manage-team.html" class="dropdown-item"><i class="fas fa-users"></i> Manage Team</a>
                 <a href="templates.html" class="dropdown-item"><i class="fas fa-file-excel"></i> Templates</a>
-                <a href="settings.html" class="dropdown-item"><i class="fas fa-sliders-h"></i> Settings</a>
                 <button class="dropdown-item signout" onclick="handleSignOut()"><i class="fas fa-sign-out-alt"></i> Sign Out</button>
             </div>
         </div>
     </div>
 </header>
 
-<!-- Greeting -->
 <div class="greeting-section">
     <h1 class="greeting" id="greetingText">Good morning</h1>
     <p class="greeting-sub">Choose a hub to start working</p>
 </div>
 
-<!-- Apps Grid -->
 <div class="apps-container">
     <div class="section-label">Your Business Hubs</div>
-    <div class="apps-grid" id="appsGrid">
-        <!-- Dynamically populated based on tier -->
-    </div>
+    <div class="apps-grid" id="appsGrid"></div>
 </div>
 
-<!-- Recent Work -->
-<div class="recent-section" id="recentSection">
-    <div class="section-label">Recent Work</div>
-    <div class="recent-grid" id="recentGrid">
-        <div class="recent-card" style="opacity:0.5;">
-            <div class="recent-dot" style="background:var(--purple-50);"><i class="fas fa-clock" style="color:var(--gray-400);"></i></div>
-            <div class="recent-info"><h4>No recent activity</h4><p>Open a hub to get started</p></div>
-        </div>
-    </div>
+<div class="recent-section">
+    <div class="section-label">Quick Access</div>
+    <div class="recent-grid" id="recentGrid"></div>
 </div>
 
-<!-- Footer -->
-<div class="workspace-footer">
-    <p>&copy; 2026 Jasiri Suite. All rights reserved.</p>
-</div>
+<div class="workspace-footer"><p>&copy; 2026 Jasiri Suite.</p></div>
 
 <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-    import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import{getAuth,onAuthStateChanged,signOut}from"https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import{getDatabase,ref,get}from"https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyC4GYjju0-ckHraZ3H5qR3MkID_BWoYQXk",
-        authDomain: "jasiri-suite.firebaseapp.com",
-        databaseURL: "https://jasiri-suite-default-rtdb.europe-west1.firebasedatabase.app",
-        projectId: "jasiri-suite",
-        storageBucket: "jasiri-suite.firebasestorage.app",
-        messagingSenderId: "414625239065",
-        appId: "1:414625239065:web:8cc055fd20d3d66a8e5a88"
-    };
+const fc={apiKey:"AIzaSyC4GYjju0-ckHraZ3H5qR3MkID_BWoYQXk",authDomain:"jasiri-suite.firebaseapp.com",databaseURL:"https://jasiri-suite-default-rtdb.europe-west1.firebasedatabase.app",projectId:"jasiri-suite",storageBucket:"jasiri-suite.firebasestorage.app",messagingSenderId:"414625239065",appId:"1:414625239065:web:8cc055fd20d3d66a8e5a88"};
+const app=initializeApp(fc),auth=getAuth(app),db=getDatabase(app);
+const up=new URLSearchParams(location.search),urlTenant=up.get('tenant');
+let activeTenant=urlTenant||'',tenantPlan='free';
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getDatabase(app);
+const tierCfg={free:{hubs:['emh','erh'],ekaziLimit:'3/day'},pro:{hubs:['emh','erh','efh','efs','talents'],ekaziLimit:'25/day'},enterprise:{hubs:['emh','erh','efh','efs','talents'],ekaziLimit:'Unlimited'}};
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const tenantId = urlParams.get('tenant');
-    let tenantPlan = 'free';
+const allHubs=[
+{id:'emh',name:'Sales Hub',desc:'Sales, POS & Analytics',icon:'https://i.postimg.cc/BbZ5c1Tv/20260119-1500-Image-Generation-remix-01kfb1znpceyc8d9dztq9ea0y3-1-removebg-preview-1.png',cc:'emh',fi:'fa-store',ic:'#6B3BC2'},
+{id:'erh',name:'Resource Hub',desc:'HR, Assets & Projects',icon:'https://i.postimg.cc/3rFrpW8P/20260112-1839-Image-Generation-remix-01kesdpw6ce8s88amr0e92g276-removebg-preview-removebg-preview.png',cc:'erh',fi:'fa-users-cog',ic:'#EC4899'},
+{id:'efh',name:'Finance Hub',desc:'Accounting & Budgets',icon:'https://i.postimg.cc/nLkCKS3J/20260119-1502-Image-Generation-remix-01kfb24hnje88t8jgrmchg3m4w-1-removebg-preview.png',cc:'efh',fi:'fa-chart-pie',ic:'#F59E0B'},
+{id:'efs',name:'Fleet Hub',desc:'Logistics & Shipping',icon:'https://i.postimg.cc/MTYB3K5P/20260119-1531-Image-Generation-remix-01kfb3rnfzfzxt9rhe0336w04w-1-removebg-preview.png',cc:'efs',fi:'fa-truck',ic:'#10B981'},
+{id:'talents',name:'Talents Hub',desc:'HR & Learning',icon:'https://i.postimg.cc/wvFVykC1/20260119-1539-Image-Generation-remix-01kfb488qbfhz9a354vdfwrwva-1-removebg-preview.png',cc:'talents',fi:'fa-graduation-cap',ic:'#F97316'}
+];
+const ekazi={id:'ekazi',name:'E-KAZI',desc:'Freelance Tasks',icon:'https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png',cc:'ekazi',fi:'fa-tasks',ic:'#3B82F6'};
 
-    // ============ TIER DEFINITIONS ============
-    const tierConfig = {
-        free: { hubs: ['emh', 'erh'], ekazi: true, ekaziLimit: '3/day' },
-        pro: { hubs: ['emh', 'erh', 'efh', 'efs', 'talents'], ekazi: true, ekaziLimit: '25/day' },
-        enterprise: { hubs: ['emh', 'erh', 'efh', 'efs', 'talents'], ekazi: true, ekaziLimit: 'Unlimited' }
-    };
+function sg(n){const h=new Date().getHours();let g='Good ';if(h<12)g+='morning';else if(h<17)g+='afternoon';else g+='evening';document.getElementById('greetingText').textContent=n?`${g}, ${n}`:g}
+window.toggleDropdown=()=>document.getElementById('userDropdown').classList.toggle('active');
+document.addEventListener('click',e=>{const d=document.getElementById('userDropdown'),a=document.getElementById('userAvatar');if(d&&a&&!a.contains(e.target)&&!d.contains(e.target))d.classList.remove('active')});
+window.handleSignOut=async()=>{await signOut(auth);location.href='index.html'};
 
-    // ============ ALL HUBS ============
-    const allHubs = [
-        { id: 'emh', name: 'Sales Hub', desc: 'Sales, POS & Analytics', icon: 'https://i.postimg.cc/BbZ5c1Tv/20260119-1500-Image-Generation-remix-01kfb1znpceyc8d9dztq9ea0y3-1-removebg-preview-1.png', colorClass: 'emh', iconFallback: 'fa-store', iconColor: '#6B3BC2' },
-        { id: 'erh', name: 'Resource Hub', desc: 'HR, Assets & Projects', icon: 'https://i.postimg.cc/3rFrpW8P/20260112-1839-Image-Generation-remix-01kesdpw6ce8s88amr0e92g276-removebg-preview-removebg-preview.png', colorClass: 'erh', iconFallback: 'fa-users-cog', iconColor: '#EC4899' },
-        { id: 'efh', name: 'Finance Hub', desc: 'Accounting & Budgets', icon: 'https://i.postimg.cc/nLkCKS3J/20260119-1502-Image-Generation-remix-01kfb24hnje88t8jgrmchg3m4w-1-removebg-preview.png', colorClass: 'efh', iconFallback: 'fa-chart-pie', iconColor: '#F59E0B' },
-        { id: 'efs', name: 'Fleet Hub', desc: 'Logistics & Shipping', icon: 'https://i.postimg.cc/MTYB3K5P/20260119-1531-Image-Generation-remix-01kfb3rnfzfzxt9rhe0336w04w-1-removebg-preview.png', colorClass: 'efs', iconFallback: 'fa-truck', iconColor: '#10B981' },
-        { id: 'talents', name: 'Talents Hub', desc: 'HR & Learning Development', icon: 'https://i.postimg.cc/wvFVykC1/20260119-1539-Image-Generation-remix-01kfb488qbfhz9a354vdfwrwva-1-removebg-preview.png', colorClass: 'talents', iconFallback: 'fa-graduation-cap', iconColor: '#F97316' }
-    ];
-
-    const ekaziHub = {
-        id: 'ekazi', name: 'E-KAZI', desc: 'Freelance Task Platform', 
-        icon: 'https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png', 
-        colorClass: 'ekazi', iconFallback: 'fa-tasks', iconColor: '#3B82F6'
-    };
-
-    function setGreeting(name) {
-        const hour = new Date().getHours();
-        let g = 'Good ';
-        if (hour < 12) g += 'morning';
-        else if (hour < 17) g += 'afternoon';
-        else g += 'evening';
-        document.getElementById('greetingText').textContent = name ? `${g}, ${name}` : g;
-    }
-
-    window.toggleDropdown = () => {
-        document.getElementById('userDropdown').classList.toggle('active');
-    };
-    document.addEventListener('click', (e) => {
-        const dd = document.getElementById('userDropdown');
-        const av = document.getElementById('userAvatar');
-        if (dd && av && !av.contains(e.target) && !dd.contains(e.target)) dd.classList.remove('active');
+function renderApps(cfg,tid){
+    const g=document.getElementById('appsGrid');
+    let h='';
+    allHubs.forEach(hub=>{
+        const has=cfg.hubs.includes(hub.id),locked=!has;
+        h+=`<a href="${has?`${hub.id}-workspace.html?tenant=${tid}`:'#'}" class="app-tile ${hub.cc}${locked?' locked':''}"${locked?` onclick="alert('${hub.name} requires Pro (KSh 850/mo) or Enterprise');return false"`:''}>
+            <div class="app-icon-wrapper"><img src="${hub.icon}" alt="${hub.name}" onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\\'fas ${hub.fi}\\' style=\\'font-size:1.6rem;color:${hub.ic}\\'></i>'"></div>
+            <h3>${hub.name}</h3><p>${hub.desc}</p>
+            ${locked?'<div class="app-status locked-status"><i class="fas fa-lock"></i> Pro Only</div>':'<div class="app-status"><span class="dot"></span> Live</div>'}
+        </a>`;
     });
+    h+=`<a href="ekazi-workspace.html?tenant=${tid}" class="app-tile ekazi">
+        <div class="app-icon-wrapper"><img src="${ekazi.icon}" alt="${ekazi.name}" onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\\'fas ${ekazi.fi}\\' style=\\'font-size:1.6rem;color:${ekazi.ic}\\'></i>'"></div>
+        <h3>${ekazi.name}</h3><p>${ekazi.desc} • ${cfg.ekaziLimit}</p>
+        <div class="app-status"><span class="dot"></span> Available</div>
+    </a>`;
+    g.innerHTML=h;
+}
 
-    window.handleSignOut = async () => {
-        await signOut(auth);
-        window.location.href = 'index.html';
-    };
+function renderRecent(tid){
+    document.getElementById('recentGrid').innerHTML=`
+    <a href="emh-workspace.html?tenant=${tid}" class="recent-card"><div class="recent-dot" style="background:#EDE9FE"><i class="fas fa-store" style="color:#6B3BC2"></i></div><div class="recent-info"><h4>Sales Hub</h4><p>Point of Sale & Analytics</p></div><span class="recent-time">→</span></a>
+    <a href="erh-workspace.html?tenant=${tid}" class="recent-card"><div class="recent-dot" style="background:#FCE7F3"><i class="fas fa-users-cog" style="color:#EC4899"></i></div><div class="recent-info"><h4>Resource Hub</h4><p>HR & Asset Management</p></div><span class="recent-time">→</span></a>
+    <a href="templates.html?tenant=${tid}" class="recent-card"><div class="recent-dot" style="background:#D1FAE5"><i class="fas fa-file-excel" style="color:#10B981"></i></div><div class="recent-info"><h4>Sheet Templates</h4><p>Ready-to-use templates</p></div><span class="recent-time">→</span></a>`;
+}
 
-    function renderApps(config) {
-        const grid = document.getElementById('appsGrid');
-        let html = '';
+onAuthStateChanged(auth,async user=>{
+    if(!user){location.href='index.html';return}
+    const dn=user.displayName||user.email?.split('@')[0]||'User';
+    document.getElementById('avatarInitials').textContent=dn.substring(0,2).toUpperCase();
+    document.getElementById('dropdownName').textContent=dn;
+    document.getElementById('dropdownEmail').textContent=user.email;
+    sg(dn.split(' ')[0]);
 
-        // Render 5 business hubs
-        allHubs.forEach(hub => {
-            const hasAccess = config.hubs.includes(hub.id);
-            const locked = !hasAccess;
-            html += `
-                <a href="${hasAccess ? `${hub.id}-workspace.html?tenant=${tenantId}` : '#'}" 
-                   class="app-tile ${hub.colorClass} ${locked ? 'locked' : ''}"
-                   ${locked ? `onclick="alert('${hub.name} requires Pro plan (KSh 850/mo) or Enterprise (KSh 1,200/mo)'); return false;"` : ''}>
-                    <div class="app-icon-wrapper">
-                        <img src="${hub.icon}" alt="${hub.name}" 
-                             onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\\'fas ${hub.iconFallback}\\' style=\\'font-size:1.8rem;color:${hub.iconColor};\\'></i>'">
-                    </div>
-                    <h3>${hub.name}</h3>
-                    <p>${hub.desc}</p>
-                    ${locked ? 
-                        '<div class="app-status locked-status"><i class="fas fa-lock"></i> Pro Only</div>' : 
-                        '<div class="app-status"><span class="dot"></span> Live</div>'}
-                </a>`;
-        });
-
-        // Render E-KAZI (available on all tiers)
-        html += `
-            <a href="ekazi-workspace.html?tenant=${tenantId}" class="app-tile ekazi">
-                <div class="app-icon-wrapper">
-                    <img src="${ekaziHub.icon}" alt="${ekaziHub.name}" 
-                         onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\\'fas ${ekaziHub.iconFallback}\\' style=\\'font-size:1.8rem;color:${ekaziHub.iconColor};\\'></i>'">
-                </div>
-                <h3>${ekaziHub.name}</h3>
-                <p>${ekaziHub.desc} • ${config.ekaziLimit}</p>
-                <div class="app-status"><span class="dot"></span> Available</div>
-            </a>`;
-
-        grid.innerHTML = html;
+    if(!activeTenant){const us=await get(ref(db,`users/${user.uid}/tenants`));if(us.exists())activeTenant=Object.keys(us.val())[0]}
+    if(activeTenant){
+        const ts=await get(ref(db,`tenants/${activeTenant}/info`));
+        document.getElementById('tenantBadge').textContent=ts.exists()?ts.val().name:'My Workspace';
+        const ss=await get(ref(db,`tenants/${activeTenant}/subscription`));
+        if(ss.exists()){tenantPlan=ss.val().plan||'free';const b=document.getElementById('planBadge');b.textContent=tenantPlan.toUpperCase();b.className=`plan-badge plan-${tenantPlan}`;if(tenantPlan==='free')document.getElementById('upgradeBanner').style.display='block'}
+        const cfg=tierCfg[tenantPlan]||tierCfg.free;
+        renderApps(cfg,activeTenant);
+        renderRecent(activeTenant);
     }
-
-    function renderRecentWork() {
-        // Simple recent work display - can be enhanced later
-        const recentGrid = document.getElementById('recentGrid');
-        recentGrid.innerHTML = `
-            <div class="recent-card" onclick="window.location.href='emh-workspace.html?tenant=${tenantId}'">
-                <div class="recent-dot" style="background:#EDE9FE;"><i class="fas fa-store" style="color:#6B3BC2;"></i></div>
-                <div class="recent-info"><h4>Sales Hub</h4><p>Point of Sale & Analytics</p></div>
-                <div class="recent-time">Just now</div>
-            </div>
-            <div class="recent-card" onclick="window.location.href='erh-workspace.html?tenant=${tenantId}'">
-                <div class="recent-dot" style="background:#FCE7F3;"><i class="fas fa-users-cog" style="color:#EC4899;"></i></div>
-                <div class="recent-info"><h4>Resource Hub</h4><p>HR & Asset Management</p></div>
-                <div class="recent-time">Just now</div>
-            </div>
-            <div class="recent-card" onclick="window.location.href='templates.html?tenant=${tenantId}'">
-                <div class="recent-dot" style="background:#D1FAE5;"><i class="fas fa-file-excel" style="color:#10B981;"></i></div>
-                <div class="recent-info"><h4>Sheet Templates</h4><p>Browse ready-to-use templates</p></div>
-                <div class="recent-time">Available</div>
-            </div>`;
-    }
-
-    onAuthStateChanged(auth, async (user) => {
-        if (!user) { window.location.href = 'index.html'; return; }
-
-        const displayName = user.displayName || user.email?.split('@')[0] || 'User';
-        document.getElementById('avatarInitials').textContent = displayName.substring(0, 2).toUpperCase();
-        document.getElementById('dropdownName').textContent = displayName;
-        document.getElementById('dropdownEmail').textContent = user.email;
-        setGreeting(displayName.split(' ')[0]);
-
-        let activeTenant = tenantId;
-        if (!activeTenant) {
-            const us = await get(ref(db, `users/${user.uid}/tenants`));
-            if (us.exists()) activeTenant = Object.keys(us.val())[0];
-        }
-
-        if (activeTenant) {
-            const ts = await get(ref(db, `tenants/${activeTenant}/info`));
-            document.getElementById('tenantBadge').textContent = ts.exists() ? ts.val().name : 'My Workspace';
-
-            const subSnap = await get(ref(db, `tenants/${activeTenant}/subscription`));
-            if (subSnap.exists()) {
-                tenantPlan = subSnap.val().plan || 'free';
-                const badge = document.getElementById('planBadge');
-                badge.textContent = tenantPlan.toUpperCase();
-                badge.className = `plan-badge plan-${tenantPlan}`;
-                if (tenantPlan === 'free') {
-                    document.getElementById('upgradeBanner').style.display = 'block';
-                }
-            }
-
-            const config = tierConfig[tenantPlan] || tierConfig.free;
-            renderApps(config);
-            renderRecentWork();
-        }
-    });
+});
 </script>
 </body>
 </html>
