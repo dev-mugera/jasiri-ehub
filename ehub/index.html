@@ -1499,7 +1499,7 @@
             
             if (userSnap.exists()) {
                 const tenantId = Object.keys(userSnap.val())[0];
-                window.location.href = `/dashboard?tenant=${tenantId}`;
+                window.location.href = `/workspace?tenant=${tenantId}`;
             } else {
                 const adminSnap = await get(ref(db, `admins/${userCredential.user.uid}`));
                 if (adminSnap.exists()) {
