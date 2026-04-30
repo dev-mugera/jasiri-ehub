@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jasiri Suite | Enterprise Business Management Platform</title>
     
-    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -45,11 +44,7 @@
             --shadow-xl: 0 20px 60px rgba(107, 59, 194, 0.22);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -59,932 +54,339 @@
             line-height: 1.6;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
+        html { scroll-behavior: smooth; }
 
         /* ===== NAVIGATION ===== */
         .nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
             background: rgba(255, 255, 255, 0.97);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--purple-100);
             transition: all 0.3s ease;
         }
-
-        .nav.scrolled {
-            box-shadow: var(--shadow-sm);
-        }
-
+        .nav.scrolled { box-shadow: var(--shadow-sm); }
         .nav-container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0.9rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            max-width: 1280px; margin: 0 auto; padding: 0.9rem 2rem;
+            display: flex; justify-content: space-between; align-items: center;
         }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            text-decoration: none;
-        }
-
+        .logo { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
         .logo-icon {
-            width: 38px;
-            height: 38px;
-            background: var(--gradient-primary);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.1rem;
-            font-weight: 800;
-            box-shadow: var(--shadow-sm);
+            width: 38px; height: 38px; background: var(--gradient-primary);
+            border-radius: 10px; display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 1.1rem; font-weight: 800; box-shadow: var(--shadow-sm);
         }
-
         .logo-text {
-            font-size: 1.3rem;
-            font-weight: 800;
+            font-size: 1.3rem; font-weight: 800;
             background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            -webkit-background-clip: text; background-clip: text; color: transparent;
             letter-spacing: -0.3px;
         }
-
         .logo-badge {
-            font-size: 0.6rem;
-            font-weight: 600;
-            background: var(--purple-100);
-            color: var(--purple-600);
-            padding: 0.15rem 0.6rem;
-            border-radius: 50px;
+            font-size: 0.6rem; font-weight: 600; background: var(--purple-100);
+            color: var(--purple-600); padding: 0.15rem 0.6rem; border-radius: 50px;
             letter-spacing: 0.5px;
         }
-
-        .nav-links {
-            display: flex;
-            gap: 1.5rem;
-            align-items: center;
-        }
-
+        .nav-links { display: flex; gap: 1.5rem; align-items: center; }
         .nav-link {
-            text-decoration: none;
-            color: var(--gray-700);
-            font-weight: 500;
-            font-size: 0.88rem;
-            transition: color 0.2s;
+            text-decoration: none; color: var(--gray-700); font-weight: 500;
+            font-size: 0.88rem; transition: color 0.2s;
         }
-
-        .nav-link:hover {
-            color: var(--purple-600);
-        }
-
+        .nav-link:hover { color: var(--purple-600); }
         .btn {
-            padding: 0.65rem 1.4rem;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: none;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-family: 'Inter', sans-serif;
+            padding: 0.65rem 1.4rem; border-radius: 50px; font-weight: 600;
+            font-size: 0.85rem; cursor: pointer; transition: all 0.3s ease;
+            border: none; text-decoration: none; display: inline-flex;
+            align-items: center; gap: 0.5rem; font-family: 'Inter', sans-serif;
         }
-
         .btn-primary {
-            background: var(--gradient-primary);
-            color: white;
-            box-shadow: var(--shadow-sm);
+            background: var(--gradient-primary); color: white; box-shadow: var(--shadow-sm);
         }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
-
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
         .btn-outline {
-            background: transparent;
-            border: 2px solid var(--purple-200);
-            color: var(--purple-600);
+            background: transparent; border: 2px solid var(--purple-200); color: var(--purple-600);
         }
-
-        .btn-outline:hover {
-            background: var(--purple-50);
-            border-color: var(--purple-400);
-        }
-
-        .btn-white {
-            background: white;
-            color: var(--purple-600);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .btn-white:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .btn-lg {
-            padding: 0.9rem 2rem;
-            font-size: 0.95rem;
-        }
+        .btn-outline:hover { background: var(--purple-50); border-color: var(--purple-400); }
+        .btn-white { background: white; color: var(--purple-600); box-shadow: var(--shadow-sm); }
+        .btn-white:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+        .btn-lg { padding: 0.9rem 2rem; font-size: 0.95rem; }
 
         /* ===== HERO ===== */
         .hero {
             padding: 7rem 2rem 4rem 2rem;
             background: linear-gradient(180deg, var(--purple-50) 0%, var(--white) 100%);
-            position: relative;
-            overflow: hidden;
+            position: relative; overflow: hidden;
         }
-
         .hero::before {
-            content: '';
-            position: absolute;
-            top: -40%;
-            right: -15%;
-            width: 700px;
-            height: 700px;
+            content: ''; position: absolute; top: -40%; right: -15%;
+            width: 700px; height: 700px;
             background: radial-gradient(circle, rgba(107, 59, 194, 0.06) 0%, transparent 70%);
             pointer-events: none;
         }
-
         .hero-container {
-            max-width: 1280px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-            position: relative;
-            z-index: 1;
+            max-width: 1280px; margin: 0 auto; display: grid;
+            grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;
+            position: relative; z-index: 1;
         }
-
         .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: white;
-            padding: 0.35rem 1rem;
-            border-radius: 50px;
-            font-size: 0.78rem;
-            font-weight: 600;
-            color: var(--purple-600);
-            box-shadow: var(--shadow-sm);
-            margin-bottom: 1.5rem;
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            background: white; padding: 0.35rem 1rem; border-radius: 50px;
+            font-size: 0.78rem; font-weight: 600; color: var(--purple-600);
+            box-shadow: var(--shadow-sm); margin-bottom: 1.5rem;
             border: 1px solid var(--purple-100);
         }
-
         .hero-badge .dot {
-            width: 7px;
-            height: 7px;
-            background: var(--success);
-            border-radius: 50%;
-            animation: pulse 2s infinite;
+            width: 7px; height: 7px; background: var(--success);
+            border-radius: 50%; animation: pulse 2s infinite;
         }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.4; }
-        }
-
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
         .hero-title {
-            font-size: 3.2rem;
-            font-weight: 900;
-            line-height: 1.15;
-            margin-bottom: 1.2rem;
+            font-size: 3.2rem; font-weight: 900; line-height: 1.15; margin-bottom: 1.2rem;
             background: var(--gradient-dark);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            -webkit-background-clip: text; background-clip: text; color: transparent;
         }
-
         .hero-title span {
             background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            -webkit-background-clip: text; background-clip: text; color: transparent;
         }
-
         .hero-description {
-            font-size: 1.05rem;
-            color: var(--gray-600);
-            margin-bottom: 2rem;
-            line-height: 1.7;
-            max-width: 520px;
+            font-size: 1.05rem; color: var(--gray-600); margin-bottom: 2rem;
+            line-height: 1.7; max-width: 520px;
         }
-
-        .hero-actions {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .hero-visual {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
+        .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .hero-visual { display: flex; justify-content: center; align-items: center; }
         .hero-app-showcase {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.8rem;
-            max-width: 450px;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; max-width: 450px;
         }
-
         .hero-app-mini {
-            background: white;
-            padding: 1rem;
-            border-radius: 14px;
-            box-shadow: var(--shadow-sm);
-            border: 1px solid var(--purple-100);
-            display: flex;
-            align-items: center;
-            gap: 0.7rem;
-            transition: all 0.3s ease;
+            background: white; padding: 1rem; border-radius: 14px;
+            box-shadow: var(--shadow-sm); border: 1px solid var(--purple-100);
+            display: flex; align-items: center; gap: 0.7rem; transition: all 0.3s ease;
         }
-
         .hero-app-mini:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-            border-color: var(--purple-300);
+            transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--purple-300);
         }
-
-        .hero-app-mini img {
-            width: 32px;
-            height: 32px;
-            object-fit: contain;
-            border-radius: 6px;
-        }
-
-        .hero-app-mini h4 {
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--gray-900);
-        }
-
-        .hero-app-mini p {
-            font-size: 0.65rem;
-            color: var(--gray-500);
-        }
+        .hero-app-mini img { width: 32px; height: 32px; object-fit: contain; border-radius: 6px; }
+        .hero-app-mini h4 { font-size: 0.75rem; font-weight: 700; color: var(--gray-900); }
+        .hero-app-mini p { font-size: 0.65rem; color: var(--gray-500); }
 
         /* ===== APPS SECTION ===== */
-        .apps-section {
-            padding: 5rem 2rem;
-            background: var(--white);
-        }
-
-        .section-container {
-            max-width: 1280px;
-            margin: 0 auto;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
+        .apps-section { padding: 5rem 2rem; background: var(--white); }
+        .section-container { max-width: 1280px; margin: 0 auto; }
+        .section-header { text-align: center; margin-bottom: 3rem; }
         .section-label {
-            display: inline-block;
-            background: var(--purple-100);
-            color: var(--purple-600);
-            font-size: 0.75rem;
-            font-weight: 700;
-            padding: 0.3rem 1rem;
-            border-radius: 50px;
-            margin-bottom: 1rem;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
+            display: inline-block; background: var(--purple-100); color: var(--purple-600);
+            font-size: 0.75rem; font-weight: 700; padding: 0.3rem 1rem; border-radius: 50px;
+            margin-bottom: 1rem; letter-spacing: 0.5px; text-transform: uppercase;
         }
-
         .section-header h2 {
-            font-size: 2.3rem;
-            font-weight: 800;
-            margin-bottom: 0.8rem;
+            font-size: 2.3rem; font-weight: 800; margin-bottom: 0.8rem;
             background: var(--gradient-dark);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            -webkit-background-clip: text; background-clip: text; color: transparent;
         }
-
         .section-header p {
-            font-size: 1rem;
-            color: var(--gray-600);
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.6;
+            font-size: 1rem; color: var(--gray-600); max-width: 600px;
+            margin: 0 auto; line-height: 1.6;
         }
-
         .apps-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 1.5rem;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1.5rem;
         }
-
         .app-card {
-            background: white;
-            border-radius: 20px;
-            padding: 2rem;
+            background: white; border-radius: 20px; padding: 2rem;
             border: 1px solid var(--gray-200);
             transition: all 0.4s cubic-bezier(0.2, 0.8, 0.4, 1);
-            position: relative;
-            overflow: hidden;
+            position: relative; overflow: hidden;
         }
-
         .app-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            opacity: 0;
-            transition: opacity 0.3s;
+            content: ''; position: absolute; top: 0; left: 0; right: 0;
+            height: 4px; opacity: 0; transition: opacity 0.3s;
         }
-
-        .app-card:hover::before {
-            opacity: 1;
-        }
-
-        .app-card:hover {
-            transform: translateY(-6px);
-            box-shadow: var(--shadow-xl);
-            border-color: transparent;
-        }
-
-        .app-card:nth-child(1):hover::before { 
-            background: linear-gradient(90deg, #6B3BC2, #A78BFA); 
-        }
-        .app-card:nth-child(2):hover::before { 
-            background: linear-gradient(90deg, #EC4899, #F472B6); 
-        }
-        .app-card:nth-child(3):hover::before { 
-            background: linear-gradient(90deg, #F59E0B, #FBBF24); 
-        }
-        .app-card:nth-child(4):hover::before { 
-            background: linear-gradient(90deg, #10B981, #34D399); 
-        }
-        .app-card:nth-child(5):hover::before { 
-            background: linear-gradient(90deg, #F97316, #FB923C); 
-        }
-
+        .app-card:hover::before { opacity: 1; }
+        .app-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-xl); border-color: transparent; }
+        .app-card:nth-child(1):hover::before { background: linear-gradient(90deg, #6B3BC2, #A78BFA); }
+        .app-card:nth-child(2):hover::before { background: linear-gradient(90deg, #EC4899, #F472B6); }
+        .app-card:nth-child(3):hover::before { background: linear-gradient(90deg, #F59E0B, #FBBF24); }
+        .app-card:nth-child(4):hover::before { background: linear-gradient(90deg, #10B981, #34D399); }
+        .app-card:nth-child(5):hover::before { background: linear-gradient(90deg, #F97316, #FB923C); }
         .app-card-icon {
-            width: 72px;
-            height: 72px;
-            border-radius: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1.5rem;
-            transition: all 0.3s ease;
-            background: var(--purple-50);
-            padding: 12px;
+            width: 72px; height: 72px; border-radius: 18px; display: flex;
+            align-items: center; justify-content: center; margin-bottom: 1.5rem;
+            transition: all 0.3s ease; background: var(--purple-50); padding: 12px;
         }
-
-        .app-card:hover .app-card-icon {
-            transform: scale(1.08);
-            box-shadow: var(--shadow-md);
-        }
-
-        .app-card-icon img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            border-radius: 12px;
-        }
-
-        .app-card h3 {
-            font-size: 1.15rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: var(--gray-900);
-        }
-
+        .app-card:hover .app-card-icon { transform: scale(1.08); box-shadow: var(--shadow-md); }
+        .app-card-icon img { width: 100%; height: 100%; object-fit: contain; border-radius: 12px; }
+        .app-card h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--gray-900); }
         .app-card .app-status {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            font-size: 0.72rem;
-            font-weight: 600;
-            color: var(--success);
-            margin-bottom: 1rem;
-            background: #D1FAE5;
-            padding: 0.25rem 0.8rem;
-            border-radius: 50px;
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            font-size: 0.72rem; font-weight: 600; color: var(--success);
+            margin-bottom: 1rem; background: #D1FAE5;
+            padding: 0.25rem 0.8rem; border-radius: 50px;
         }
-
         .app-card .app-status .dot {
-            width: 5px;
-            height: 5px;
-            background: var(--success);
-            border-radius: 50%;
-            animation: pulse 2s infinite;
+            width: 5px; height: 5px; background: var(--success);
+            border-radius: 50%; animation: pulse 2s infinite;
         }
-
-        .app-card p {
-            font-size: 0.88rem;
-            color: var(--gray-600);
-            line-height: 1.6;
-            margin-bottom: 1.5rem;
-        }
-
+        .app-card p { font-size: 0.88rem; color: var(--gray-600); line-height: 1.6; margin-bottom: 1.5rem; }
         .app-card .app-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            color: var(--purple-600);
-            font-weight: 600;
-            font-size: 0.85rem;
-            text-decoration: none;
-            transition: gap 0.3s;
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            color: var(--purple-600); font-weight: 600; font-size: 0.85rem;
+            text-decoration: none; transition: gap 0.3s;
         }
-
-        .app-card .app-link:hover {
-            gap: 0.7rem;
-        }
+        .app-card .app-link:hover { gap: 0.7rem; }
 
         /* ===== INTEGRATIONS ===== */
         .integrations {
-            text-align: center;
-            padding: 4rem 2rem;
-            background: var(--purple-50);
-            border-top: 1px solid var(--purple-100);
-            border-bottom: 1px solid var(--purple-100);
+            text-align: center; padding: 4rem 2rem; background: var(--purple-50);
+            border-top: 1px solid var(--purple-100); border-bottom: 1px solid var(--purple-100);
         }
-
-        .integrations p {
-            font-size: 0.9rem;
-            color: var(--gray-600);
-            margin-bottom: 1.5rem;
-            font-weight: 500;
-        }
-
-        .integration-logos {
-            display: flex;
-            justify-content: center;
-            gap: 3rem;
-            flex-wrap: wrap;
-        }
-
+        .integrations p { font-size: 0.9rem; color: var(--gray-600); margin-bottom: 1.5rem; font-weight: 500; }
+        .integration-logos { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; }
         .integration-logos i {
-            font-size: 2.2rem;
-            color: var(--gray-400);
-            transition: all 0.3s;
+            font-size: 2.2rem; color: var(--gray-400); transition: all 0.3s;
         }
-
-        .integration-logos i:hover {
-            color: var(--purple-500);
-            transform: scale(1.1);
-        }
+        .integration-logos i:hover { color: var(--purple-500); transform: scale(1.1); }
 
         /* ===== PRICING ===== */
-        .pricing {
-            padding: 5rem 2rem;
-            background: var(--white);
-        }
-
+        .pricing { padding: 5rem 2rem; background: var(--white); }
         .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            max-width: 1000px;
-            margin: 0 auto;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem; max-width: 1000px; margin: 0 auto;
         }
-
         .pricing-card {
-            background: white;
-            padding: 2.5rem;
-            border-radius: 20px;
-            border: 1px solid var(--gray-200);
-            position: relative;
-            transition: all 0.4s ease;
+            background: white; padding: 2.5rem; border-radius: 20px;
+            border: 1px solid var(--gray-200); position: relative; transition: all 0.4s ease;
         }
-
-        .pricing-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
-            border-color: var(--purple-200);
-        }
-
-        .pricing-card.popular {
-            border: 2px solid var(--purple-500);
-            box-shadow: var(--shadow-lg);
-        }
-
+        .pricing-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--purple-200); }
+        .pricing-card.popular { border: 2px solid var(--purple-500); box-shadow: var(--shadow-lg); }
         .popular-badge {
-            position: absolute;
-            top: -14px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--gradient-primary);
-            color: white;
-            padding: 0.35rem 1.2rem;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            white-space: nowrap;
-            box-shadow: var(--shadow-md);
+            position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+            background: var(--gradient-primary); color: white; padding: 0.35rem 1.2rem;
+            border-radius: 50px; font-size: 0.75rem; font-weight: 700;
+            white-space: nowrap; box-shadow: var(--shadow-md);
         }
-
-        .pricing-plan {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: var(--gray-900);
-        }
-
-        .pricing-price {
-            font-size: 2.5rem;
-            font-weight: 900;
-            color: var(--purple-600);
-            margin-bottom: 0.3rem;
-        }
-
-        .pricing-price span {
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: var(--gray-500);
-        }
-
-        .pricing-desc {
-            font-size: 0.8rem;
-            color: var(--gray-500);
-            margin-bottom: 1.5rem;
-        }
-
-        .pricing-features {
-            list-style: none;
-            margin: 1.5rem 0;
-        }
-
+        .pricing-plan { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--gray-900); }
+        .pricing-price { font-size: 2.5rem; font-weight: 900; color: var(--purple-600); margin-bottom: 0.3rem; }
+        .pricing-price span { font-size: 0.9rem; font-weight: 500; color: var(--gray-500); }
+        .pricing-desc { font-size: 0.8rem; color: var(--gray-500); margin-bottom: 1.5rem; }
+        .pricing-features { list-style: none; margin: 1.5rem 0; }
         .pricing-features li {
-            padding: 0.45rem 0;
-            color: var(--gray-700);
-            font-size: 0.88rem;
-            display: flex;
-            align-items: flex-start;
-            gap: 0.5rem;
+            padding: 0.45rem 0; color: var(--gray-700); font-size: 0.88rem;
+            display: flex; align-items: flex-start; gap: 0.5rem;
         }
-
-        .pricing-features li i {
-            color: var(--success);
-            margin-top: 3px;
-            flex-shrink: 0;
-        }
-
-        .pricing-features li.disabled {
-            color: var(--gray-400);
-        }
-
-        .pricing-features li.disabled i {
-            color: var(--gray-300);
-        }
-
-        .pricing-note {
-            text-align: center;
-            margin-top: 2rem;
-            font-size: 0.8rem;
-            color: var(--gray-500);
-        }
-
-        .pricing-note i {
-            color: var(--purple-500);
-            margin-right: 0.3rem;
-        }
+        .pricing-features li i { color: var(--success); margin-top: 3px; flex-shrink: 0; }
+        .pricing-features li.disabled { color: var(--gray-400); }
+        .pricing-features li.disabled i { color: var(--gray-300); }
+        .pricing-note { text-align: center; margin-top: 2rem; font-size: 0.8rem; color: var(--gray-500); }
+        .pricing-note i { color: var(--purple-500); margin-right: 0.3rem; }
 
         /* ===== CTA ===== */
-        .cta {
-            padding: 4rem 2rem;
-            background: var(--gradient-dark);
-            text-align: center;
-            color: white;
-        }
-
-        .cta h2 {
-            font-size: 2rem;
-            font-weight: 800;
-            margin-bottom: 0.8rem;
-        }
-
-        .cta p {
-            font-size: 1rem;
-            color: var(--purple-200);
-            margin-bottom: 2rem;
-        }
-
+        .cta { padding: 4rem 2rem; background: var(--gradient-dark); text-align: center; color: white; }
+        .cta h2 { font-size: 2rem; font-weight: 800; margin-bottom: 0.8rem; }
+        .cta p { font-size: 1rem; color: var(--purple-200); margin-bottom: 2rem; }
         .cta .early-access {
-            display: inline-block;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            padding: 0.4rem 1.2rem;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            margin-top: 1.5rem;
-            color: var(--purple-200);
+            display: inline-block; background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2); padding: 0.4rem 1.2rem;
+            border-radius: 50px; font-size: 0.8rem; margin-top: 1.5rem; color: var(--purple-200);
         }
 
         /* ===== FOOTER ===== */
-        .footer {
-            background: var(--purple-900);
-            color: var(--purple-200);
-            padding: 4rem 2rem 2rem;
-        }
-
+        .footer { background: var(--purple-900); color: var(--purple-200); padding: 4rem 2rem 2rem; }
         .footer-grid {
-            max-width: 1280px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 3rem;
-            margin-bottom: 3rem;
+            max-width: 1280px; margin: 0 auto; display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 3rem; margin-bottom: 3rem;
         }
-
-        .footer-column h4 {
-            color: white;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            font-size: 0.9rem;
-        }
-
+        .footer-column h4 { color: white; font-weight: 700; margin-bottom: 1rem; font-size: 0.9rem; }
         .footer-column a {
-            display: block;
-            color: var(--purple-300);
-            text-decoration: none;
-            font-size: 0.82rem;
-            padding: 0.3rem 0;
-            transition: color 0.2s;
+            display: block; color: var(--purple-300); text-decoration: none;
+            font-size: 0.82rem; padding: 0.3rem 0; transition: color 0.2s;
         }
-
-        .footer-column a:hover {
-            color: white;
-        }
-
+        .footer-column a:hover { color: white; }
         .footer-bottom {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding-top: 2rem;
-            border-top: 1px solid var(--purple-700);
-            text-align: center;
-            font-size: 0.8rem;
-            color: var(--purple-300);
+            max-width: 1280px; margin: 0 auto; padding-top: 2rem;
+            border-top: 1px solid var(--purple-700); text-align: center;
+            font-size: 0.8rem; color: var(--purple-300);
         }
 
         /* ===== MODALS ===== */
         .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(6px);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(6px);
+            z-index: 2000; justify-content: center; align-items: center;
         }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
+        .modal-overlay.active { display: flex; }
         .modal {
-            background: white;
-            border-radius: 24px;
-            padding: 2.5rem;
-            max-width: 440px;
-            width: 90%;
-            position: relative;
-            animation: slideUp 0.3s ease;
-            max-height: 90vh;
-            overflow-y: auto;
+            background: white; border-radius: 24px; padding: 2.5rem;
+            max-width: 440px; width: 90%; position: relative;
+            animation: slideUp 0.3s ease; max-height: 90vh; overflow-y: auto;
         }
-
         @keyframes slideUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
         .modal-close {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: none;
-            border: none;
-            font-size: 1.2rem;
-            cursor: pointer;
-            color: var(--gray-500);
-            padding: 0.3rem;
+            position: absolute; top: 1rem; right: 1rem; background: none;
+            border: none; font-size: 1.2rem; cursor: pointer; color: var(--gray-500); padding: 0.3rem;
         }
-
-        .modal-close:hover {
-            color: var(--gray-800);
-        }
-
+        .modal-close:hover { color: var(--gray-800); }
         .modal-icon {
-            width: 56px;
-            height: 56px;
-            background: var(--gradient-primary);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.4rem;
-            margin: 0 auto 1.2rem;
+            width: 56px; height: 56px; background: var(--gradient-primary);
+            border-radius: 16px; display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 1.4rem; margin: 0 auto 1.2rem;
         }
-
-        .modal h2 {
-            text-align: center;
-            font-size: 1.4rem;
-            font-weight: 800;
-            margin-bottom: 0.3rem;
-        }
-
-        .modal > p {
-            text-align: center;
-            color: var(--gray-500);
-            font-size: 0.85rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group {
-            margin-bottom: 1rem;
-        }
-
+        .modal h2 { text-align: center; font-size: 1.4rem; font-weight: 800; margin-bottom: 0.3rem; }
+        .modal > p { text-align: center; color: var(--gray-500); font-size: 0.85rem; margin-bottom: 1.5rem; }
+        .form-group { margin-bottom: 1rem; }
         .form-group label {
-            display: block;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-bottom: 0.3rem;
-            color: var(--gray-700);
+            display: block; font-size: 0.8rem; font-weight: 600;
+            margin-bottom: 0.3rem; color: var(--gray-700);
         }
-
         .form-group input {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border: 2px solid var(--gray-200);
-            border-radius: 12px;
-            font-size: 0.9rem;
-            font-family: 'Inter', sans-serif;
-            transition: border-color 0.2s;
-            outline: none;
+            width: 100%; padding: 0.75rem 1rem; border: 2px solid var(--gray-200);
+            border-radius: 12px; font-size: 0.9rem; font-family: 'Inter', sans-serif;
+            transition: border-color 0.2s; outline: none;
         }
-
-        .form-group input:focus {
-            border-color: var(--purple-400);
-        }
-
+        .form-group input:focus { border-color: var(--purple-400); }
         .form-submit {
-            width: 100%;
-            padding: 0.85rem;
-            background: var(--gradient-primary);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 0.95rem;
-            font-weight: 700;
-            cursor: pointer;
-            margin-top: 0.5rem;
-            font-family: 'Inter', sans-serif;
-            transition: all 0.2s;
+            width: 100%; padding: 0.85rem; background: var(--gradient-primary);
+            color: white; border: none; border-radius: 12px; font-size: 0.95rem;
+            font-weight: 700; cursor: pointer; margin-top: 0.5rem;
+            font-family: 'Inter', sans-serif; transition: all 0.2s;
         }
-
-        .form-submit:hover {
-            transform: translateY(-1px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .form-submit:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .modal-footer {
-            text-align: center;
-            margin-top: 1.2rem;
-            font-size: 0.82rem;
-            color: var(--gray-500);
-        }
-
-        .modal-footer a {
-            color: var(--purple-600);
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-        }
-
-        .modal-footer a:hover {
-            text-decoration: underline;
-        }
-
+        .form-submit:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); }
+        .form-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+        .modal-footer { text-align: center; margin-top: 1.2rem; font-size: 0.82rem; color: var(--gray-500); }
+        .modal-footer a { color: var(--purple-600); font-weight: 600; cursor: pointer; text-decoration: none; }
+        .modal-footer a:hover { text-decoration: underline; }
         .error-message {
-            background: #FEE2E2;
-            color: var(--danger);
-            padding: 0.7rem;
-            border-radius: 8px;
-            font-size: 0.78rem;
-            margin-top: 0.8rem;
-            display: none;
+            background: #FEE2E2; color: var(--danger); padding: 0.7rem;
+            border-radius: 8px; font-size: 0.78rem; margin-top: 0.8rem; display: none;
         }
-
         .success-message {
-            background: #D1FAE5;
-            color: #065F46;
-            padding: 0.7rem;
-            border-radius: 8px;
-            font-size: 0.78rem;
-            margin-top: 0.8rem;
-            display: none;
-            text-align: center;
+            background: #D1FAE5; color: #065F46; padding: 0.7rem;
+            border-radius: 8px; font-size: 0.78rem; margin-top: 0.8rem; display: none; text-align: center;
         }
-
         .spinner {
-            display: inline-block;
-            width: 16px;
-            height: 16px;
-            border: 2px solid rgba(255,255,255,0.3);
-            border-top-color: white;
-            border-radius: 50%;
-            animation: spin 0.6s linear infinite;
+            display: inline-block; width: 16px; height: 16px;
+            border: 2px solid rgba(255,255,255,0.3); border-top-color: white;
+            border-radius: 50%; animation: spin 0.6s linear infinite;
         }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* ===== RESPONSIVE ===== */
         @media (max-width: 900px) {
-            .hero-container {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-
-            .hero-title {
-                font-size: 2.3rem;
-            }
-
-            .hero-description {
-                max-width: 100%;
-            }
-
-            .hero-actions {
-                justify-content: center;
-            }
-
-            .hero-visual {
-                order: -1;
-            }
-
-            .hero-app-showcase {
-                max-width: 350px;
-                margin: 0 auto;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .apps-grid {
-                grid-template-columns: 1fr;
-            }
+            .hero-container { grid-template-columns: 1fr; text-align: center; }
+            .hero-title { font-size: 2.3rem; }
+            .hero-description { max-width: 100%; }
+            .hero-actions { justify-content: center; }
+            .hero-visual { order: -1; }
+            .hero-app-showcase { max-width: 350px; margin: 0 auto; }
+            .nav-links { display: none; }
+            .apps-grid { grid-template-columns: 1fr; }
         }
-
         @media (max-width: 600px) {
-            .hero-title {
-                font-size: 1.9rem;
-            }
-
-            .hero-actions {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .hero-actions .btn {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .section-header h2 {
-                font-size: 1.8rem;
-            }
-
-            .pricing-grid {
-                grid-template-columns: 1fr;
-            }
+            .hero-title { font-size: 1.9rem; }
+            .hero-actions { flex-direction: column; align-items: center; }
+            .hero-actions .btn { width: 100%; justify-content: center; }
+            .section-header h2 { font-size: 1.8rem; }
+            .pricing-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -1001,7 +403,6 @@
         <div class="nav-links">
             <a href="#apps" class="nav-link">Solutions</a>
             <a href="#pricing" class="nav-link">Pricing</a>
-            <a href="#integrations" class="nav-link">Integrations</a>
             <button class="btn btn-outline" onclick="openModal('loginModal')">Sign In</button>
             <button class="btn btn-primary" onclick="openModal('signupModal')">Get Early Access</button>
         </div>
@@ -1012,16 +413,11 @@
 <section class="hero">
     <div class="hero-container">
         <div class="hero-content">
-            <div class="hero-badge">
-                <span class="dot"></span> Early Access — Join our founding members
-            </div>
-            <h1 class="hero-title">
-                Business Management<br><span>Built on Google Sheets</span>
-            </h1>
+            <div class="hero-badge"><span class="dot"></span> Early Access — Join our founding members</div>
+            <h1 class="hero-title">Business Management<br><span>Built on Google Sheets</span></h1>
             <p class="hero-description">
                 Jasiri Suite brings enterprise-grade business management to your Google Workspace. 
-                Manage sales, HR, finances, fleet, and talent — all powered by the spreadsheets 
-                you already use and trust.
+                Manage sales, HR, finances, fleet, and talent — all powered by the spreadsheets you already use and trust.
             </p>
             <div class="hero-actions">
                 <button class="btn btn-primary btn-lg" onclick="openModal('signupModal')">
@@ -1034,117 +430,67 @@
         </div>
         <div class="hero-visual">
             <div class="hero-app-showcase">
-                <div class="hero-app-mini">
-                    <img src="https://i.postimg.cc/BbZ5c1Tv/20260119-1500-Image-Generation-remix-01kfb1znpceyc8d9dztq9ea0y3-1-removebg-preview-1.png" alt="Sales Hub">
-                    <div>
-                        <h4>Sales Hub</h4>
-                        <p>POS & Analytics</p>
-                    </div>
-                </div>
-                <div class="hero-app-mini">
-                    <img src="https://i.postimg.cc/3rFrpW8P/20260112-1839-Image-Generation-remix-01kesdpw6ce8s88amr0e92g276-removebg-preview-removebg-preview.png" alt="Resource Hub">
-                    <div>
-                        <h4>Resource Hub</h4>
-                        <p>HR & Assets</p>
-                    </div>
-                </div>
-                <div class="hero-app-mini">
-                    <img src="https://i.postimg.cc/nLkCKS3J/20260119-1502-Image-Generation-remix-01kfb24hnje88t8jgrmchg3m4w-1-removebg-preview.png" alt="Finance Hub">
-                    <div>
-                        <h4>Finance Hub</h4>
-                        <p>Accounting</p>
-                    </div>
-                </div>
-                <div class="hero-app-mini">
-                    <img src="https://i.postimg.cc/MTYB3K5P/20260119-1531-Image-Generation-remix-01kfb3rnfzfzxt9rhe0336w04w-1-removebg-preview.png" alt="Fleet Hub">
-                    <div>
-                        <h4>Fleet Hub</h4>
-                        <p>Logistics</p>
-                    </div>
-                </div>
-                <div class="hero-app-mini" style="grid-column: span 2;">
-                    <img src="https://i.postimg.cc/wvFVykC1/20260119-1539-Image-Generation-remix-01kfb488qbfhz9a354vdfwrwva-1-removebg-preview.png" alt="Talents Hub">
-                    <div>
-                        <h4>Talents Hub</h4>
-                        <p>HR & Learning Development</p>
-                    </div>
-                </div>
+                <div class="hero-app-mini"><img src="https://i.postimg.cc/BbZ5c1Tv/20260119-1500-Image-Generation-remix-01kfb1znpceyc8d9dztq9ea0y3-1-removebg-preview-1.png" alt="Sales Hub"><div><h4>Sales Hub</h4><p>POS & Analytics</p></div></div>
+                <div class="hero-app-mini"><img src="https://i.postimg.cc/3rFrpW8P/20260112-1839-Image-Generation-remix-01kesdpw6ce8s88amr0e92g276-removebg-preview-removebg-preview.png" alt="Resource Hub"><div><h4>Resource Hub</h4><p>HR & Assets</p></div></div>
+                <div class="hero-app-mini"><img src="https://i.postimg.cc/nLkCKS3J/20260119-1502-Image-Generation-remix-01kfb24hnje88t8jgrmchg3m4w-1-removebg-preview.png" alt="Finance Hub"><div><h4>Finance Hub</h4><p>Accounting</p></div></div>
+                <div class="hero-app-mini"><img src="https://i.postimg.cc/MTYB3K5P/20260119-1531-Image-Generation-remix-01kfb3rnfzfzxt9rhe0336w04w-1-removebg-preview.png" alt="Fleet Hub"><div><h4>Fleet Hub</h4><p>Logistics</p></div></div>
+                <div class="hero-app-mini" style="grid-column: span 2;"><img src="https://i.postimg.cc/wvFVykC1/20260119-1539-Image-Generation-remix-01kfb488qbfhz9a354vdfwrwva-1-removebg-preview.png" alt="Talents Hub"><div><h4>Talents Hub</h4><p>HR & Learning Development</p></div></div>
             </div>
         </div>
     </div>
 </section>
 
 <!-- INTEGRATIONS -->
-<section class="integrations" id="integrations">
+<section class="integrations">
     <p>Powered by Google Workspace integration</p>
     <div class="integration-logos">
-        <i class="fab fa-google" title="Google"></i>
-        <i class="fas fa-file-excel" title="Google Sheets"></i>
-        <i class="fas fa-file-word" title="Google Docs"></i>
-        <i class="fas fa-file-powerpoint" title="Google Slides"></i>
-        <i class="fas fa-calendar-alt" title="Google Calendar"></i>
-        <i class="fas fa-envelope" title="Gmail"></i>
+        <i class="fab fa-google"></i>
+        <i class="fas fa-file-excel"></i>
+        <i class="fas fa-file-word"></i>
+        <i class="fas fa-calendar-alt"></i>
+        <i class="fas fa-envelope"></i>
     </div>
 </section>
 
-<!-- APPS / SOLUTIONS -->
+<!-- APPS -->
 <section class="apps-section" id="apps">
     <div class="section-container">
         <div class="section-header">
             <span class="section-label">Our Solutions</span>
             <h2>Five Powerful Hubs for Your Business</h2>
-            <p>Each hub is purpose-built and fully integrated with Google Sheets for seamless data management</p>
+            <p>Each hub is purpose-built and fully integrated with Google Sheets</p>
         </div>
         <div class="apps-grid">
-            <!-- Sales Hub -->
             <div class="app-card">
-                <div class="app-card-icon">
-                    <img src="https://i.postimg.cc/BbZ5c1Tv/20260119-1500-Image-Generation-remix-01kfb1znpceyc8d9dztq9ea0y3-1-removebg-preview-1.png" alt="Sales Hub">
-                </div>
+                <div class="app-card-icon"><img src="https://i.postimg.cc/BbZ5c1Tv/20260119-1500-Image-Generation-remix-01kfb1znpceyc8d9dztq9ea0y3-1-removebg-preview-1.png" alt="Sales Hub"></div>
                 <h3>Sales Hub</h3>
                 <div class="app-status"><span class="dot"></span> Live data streaming</div>
-                <p>Complete point-of-sale, sales operations, and real-time analytics. Manage transactions, track performance, and generate insights — all synced with Google Sheets.</p>
+                <p>Complete point-of-sale, sales operations, and real-time analytics. Manage transactions, track performance, and generate insights.</p>
                 <a href="workspace.html" class="app-link">Open Workspace <i class="fas fa-arrow-right"></i></a>
             </div>
-            
-            <!-- Resource Hub -->
             <div class="app-card">
-                <div class="app-card-icon">
-                    <img src="https://i.postimg.cc/3rFrpW8P/20260112-1839-Image-Generation-remix-01kesdpw6ce8s88amr0e92g276-removebg-preview-removebg-preview.png" alt="Resource Hub">
-                </div>
+                <div class="app-card-icon"><img src="https://i.postimg.cc/3rFrpW8P/20260112-1839-Image-Generation-remix-01kesdpw6ce8s88amr0e92g276-removebg-preview-removebg-preview.png" alt="Resource Hub"></div>
                 <h3>Resource Hub</h3>
                 <div class="app-status"><span class="dot"></span> Active resources</div>
-                <p>Human resource management, asset tracking, and project coordination. Keep your team organized and your resources optimally allocated.</p>
+                <p>Human resource management, asset tracking, and project coordination. Keep your team organized and resources optimally allocated.</p>
                 <a href="workspace.html" class="app-link">Open Workspace <i class="fas fa-arrow-right"></i></a>
             </div>
-            
-            <!-- Finance Hub -->
             <div class="app-card">
-                <div class="app-card-icon">
-                    <img src="https://i.postimg.cc/nLkCKS3J/20260119-1502-Image-Generation-remix-01kfb24hnje88t8jgrmchg3m4w-1-removebg-preview.png" alt="Finance Hub">
-                </div>
+                <div class="app-card-icon"><img src="https://i.postimg.cc/nLkCKS3J/20260119-1502-Image-Generation-remix-01kfb24hnje88t8jgrmchg3m4w-1-removebg-preview.png" alt="Finance Hub"></div>
                 <h3>Finance Hub</h3>
                 <div class="app-status"><span class="dot"></span> Financial Management</div>
                 <p>Accounting, financial reporting, and budget management. Track expenses, generate financial statements, and maintain fiscal discipline.</p>
                 <a href="workspace.html" class="app-link">Open Workspace <i class="fas fa-arrow-right"></i></a>
             </div>
-            
-            <!-- Fleet Hub -->
             <div class="app-card">
-                <div class="app-card-icon">
-                    <img src="https://i.postimg.cc/MTYB3K5P/20260119-1531-Image-Generation-remix-01kfb3rnfzfzxt9rhe0336w04w-1-removebg-preview.png" alt="Fleet Hub">
-                </div>
+                <div class="app-card-icon"><img src="https://i.postimg.cc/MTYB3K5P/20260119-1531-Image-Generation-remix-01kfb3rnfzfzxt9rhe0336w04w-1-removebg-preview.png" alt="Fleet Hub"></div>
                 <h3>Fleet Hub</h3>
                 <div class="app-status"><span class="dot"></span> Active operations</div>
                 <p>Logistics, courier, shipping, and fleet management. Monitor deliveries, track vehicles, and optimize your supply chain operations.</p>
                 <a href="workspace.html" class="app-link">Open Workspace <i class="fas fa-arrow-right"></i></a>
             </div>
-            
-            <!-- Talents Hub -->
             <div class="app-card">
-                <div class="app-card-icon">
-                    <img src="https://i.postimg.cc/wvFVykC1/20260119-1539-Image-Generation-remix-01kfb488qbfhz9a354vdfwrwva-1-removebg-preview.png" alt="Talents Hub">
-                </div>
+                <div class="app-card-icon"><img src="https://i.postimg.cc/wvFVykC1/20260119-1539-Image-Generation-remix-01kfb488qbfhz9a354vdfwrwva-1-removebg-preview.png" alt="Talents Hub"></div>
                 <h3>Talents Hub</h3>
                 <div class="app-status"><span class="dot"></span> Talent Management</div>
                 <p>Human resources and learning & development. Manage recruitment, employee growth, training programs, and performance evaluations.</p>
@@ -1171,14 +517,10 @@
                     <li><i class="fas fa-check"></i> Up to 3 team members</li>
                     <li><i class="fas fa-check"></i> 5 Google Sheets connections</li>
                     <li><i class="fas fa-check"></i> Access to 2 hubs of choice</li>
-                    <li><i class="fas fa-check"></i> Basic analytics</li>
                     <li><i class="fas fa-check"></i> Community support</li>
-                    <li class="disabled"><i class="fas fa-times"></i> Custom branding</li>
-                    <li class="disabled"><i class="fas fa-times"></i> Priority support</li>
                 </ul>
-                <button class="btn btn-outline" style="width: 100%;" onclick="openModal('signupModal')">Get Started</button>
+                <button class="btn btn-outline" style="width:100%;" onclick="openModal('signupModal')">Get Started</button>
             </div>
-            
             <div class="pricing-card popular">
                 <div class="popular-badge">Most Popular</div>
                 <div class="pricing-plan">Professional</div>
@@ -1188,33 +530,24 @@
                     <li><i class="fas fa-check"></i> Up to 15 team members</li>
                     <li><i class="fas fa-check"></i> Unlimited Google Sheets</li>
                     <li><i class="fas fa-check"></i> All 5 hubs included</li>
-                    <li><i class="fas fa-check"></i> Advanced analytics</li>
-                    <li><i class="fas fa-check"></i> Custom branding</li>
                     <li><i class="fas fa-check"></i> Priority email support</li>
-                    <li class="disabled"><i class="fas fa-times"></i> API access</li>
                 </ul>
-                <button class="btn btn-primary" style="width: 100%;" onclick="openModal('signupModal')">Start Free Trial</button>
+                <button class="btn btn-primary" style="width:100%;" onclick="openModal('signupModal')">Start Free Trial</button>
             </div>
-            
             <div class="pricing-card">
                 <div class="pricing-plan">Enterprise</div>
                 <div class="pricing-price">KSh 1,200<span>/month</span></div>
                 <p class="pricing-desc">For organizations that need full power</p>
                 <ul class="pricing-features">
                     <li><i class="fas fa-check"></i> Unlimited team members</li>
-                    <li><i class="fas fa-check"></i> Unlimited Google Sheets</li>
                     <li><i class="fas fa-check"></i> All 5 hubs + custom hubs</li>
-                    <li><i class="fas fa-check"></i> Advanced analytics & reports</li>
-                    <li><i class="fas fa-check"></i> Full custom branding</li>
                     <li><i class="fas fa-check"></i> API access & integrations</li>
                     <li><i class="fas fa-check"></i> Dedicated support & SLA</li>
                 </ul>
-                <button class="btn btn-outline" style="width: 100%;" onclick="openModal('signupModal')">Contact Us</button>
+                <button class="btn btn-outline" style="width:100%;" onclick="openModal('signupModal')">Contact Us</button>
             </div>
         </div>
-        <p class="pricing-note">
-            <i class="fas fa-shield-alt"></i> All plans include SSL encryption and regular backups. Cancel anytime.
-        </p>
+        <p class="pricing-note"><i class="fas fa-shield-alt"></i> Cancel anytime. All plans include SSL encryption.</p>
     </div>
 </section>
 
@@ -1225,124 +558,66 @@
     <button class="btn btn-white btn-lg" onclick="openModal('signupModal')">
         <i class="fas fa-rocket"></i> Get Early Access — It's Free
     </button>
-    <div class="early-access">
-        <i class="fas fa-users"></i> Founding members get lifetime discount
-    </div>
+    <div class="early-access"><i class="fas fa-users"></i> Founding members get lifetime discount</div>
 </section>
 
 <!-- FOOTER -->
 <footer class="footer">
     <div class="footer-grid">
-        <div class="footer-column">
-            <h4>Jasiri Suite</h4>
-            <a href="#">About Us</a>
-            <a href="#">Blog</a>
-            <a href="#">Roadmap</a>
-            <a href="#">Contact</a>
-        </div>
-        <div class="footer-column">
-            <h4>Solutions</h4>
-            <a href="#">Sales Hub</a>
-            <a href="#">Resource Hub</a>
-            <a href="#">Finance Hub</a>
-            <a href="#">Fleet Hub</a>
-            <a href="#">Talents Hub</a>
-        </div>
-        <div class="footer-column">
-            <h4>Resources</h4>
-            <a href="#">Documentation</a>
-            <a href="#">Help Center</a>
-            <a href="#">Community</a>
-            <a href="#">Status</a>
-        </div>
-        <div class="footer-column">
-            <h4>Legal</h4>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
-            <a href="#">Cookie Policy</a>
-        </div>
+        <div class="footer-column"><h4>Jasiri Suite</h4><a href="#">About</a><a href="#">Blog</a><a href="#">Contact</a></div>
+        <div class="footer-column"><h4>Solutions</h4><a href="#">Sales Hub</a><a href="#">Resource Hub</a><a href="#">Finance Hub</a><a href="#">Fleet Hub</a><a href="#">Talents Hub</a></div>
+        <div class="footer-column"><h4>Resources</h4><a href="#">Documentation</a><a href="#">Help Center</a><a href="#">Status</a></div>
+        <div class="footer-column"><h4>Legal</h4><a href="#">Privacy</a><a href="#">Terms</a></div>
     </div>
-    <div class="footer-bottom">
-        <p>&copy; 2026 Jasiri Suite. Built with 💜 in Kenya. All rights reserved.</p>
-    </div>
+    <div class="footer-bottom"><p>&copy; 2026 Jasiri Suite. Built with 💜 in Kenya.</p></div>
 </footer>
 
 <!-- SIGN UP MODAL -->
 <div class="modal-overlay" id="signupModal">
     <div class="modal">
-        <button class="modal-close" onclick="closeModal('signupModal')">
-            <i class="fas fa-times"></i>
-        </button>
-        <div class="modal-icon">
-            <i class="fas fa-user-plus"></i>
-        </div>
+        <button class="modal-close" onclick="closeModal('signupModal')"><i class="fas fa-times"></i></button>
+        <div class="modal-icon"><i class="fas fa-user-plus"></i></div>
         <h2>Create Your Account</h2>
         <p>Get early access — completely free</p>
-        <form id="signupForm" onsubmit="handleSignup(event)">
-            <div class="form-group">
-                <label>Full Name</label>
-                <input type="text" id="signupName" placeholder="John Doe" required>
-            </div>
-            <div class="form-group">
-                <label>Work Email</label>
-                <input type="email" id="signupEmail" placeholder="you@company.com" required>
-            </div>
-            <div class="form-group">
-                <label>Company or Organization</label>
-                <input type="text" id="signupOrg" placeholder="Acme Corp" required>
-            </div>
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password" id="signupPassword" placeholder="Min 8 characters" minlength="8" required>
-            </div>
-            <button type="submit" class="form-submit" id="signupBtn">
+        <form id="signupForm" onsubmit="return false;">
+            <div class="form-group"><label>Full Name</label><input type="text" id="signupName" placeholder="John Doe" required></div>
+            <div class="form-group"><label>Work Email</label><input type="email" id="signupEmail" placeholder="you@company.com" required></div>
+            <div class="form-group"><label>Company / Organization</label><input type="text" id="signupOrg" placeholder="Acme Corp" required></div>
+            <div class="form-group"><label>Password</label><input type="password" id="signupPassword" placeholder="Min 8 characters" minlength="8" required></div>
+            <button type="submit" class="form-submit" id="signupBtn" onclick="handleSignup()">
                 <i class="fas fa-rocket"></i> Create Free Account
             </button>
             <div class="error-message" id="signupError"></div>
             <div class="success-message" id="signupSuccess"></div>
         </form>
-        <div class="modal-footer">
-            Already have an account? <a onclick="switchModal('signupModal', 'loginModal')">Sign In</a>
-        </div>
+        <div class="modal-footer">Already have an account? <a onclick="switchModal('signupModal','loginModal')">Sign In</a></div>
     </div>
 </div>
 
 <!-- SIGN IN MODAL -->
 <div class="modal-overlay" id="loginModal">
     <div class="modal">
-        <button class="modal-close" onclick="closeModal('loginModal')">
-            <i class="fas fa-times"></i>
-        </button>
-        <div class="modal-icon">
-            <i class="fas fa-sign-in-alt"></i>
-        </div>
+        <button class="modal-close" onclick="closeModal('loginModal')"><i class="fas fa-times"></i></button>
+        <div class="modal-icon"><i class="fas fa-sign-in-alt"></i></div>
         <h2>Welcome Back</h2>
         <p>Sign in to your workspace</p>
-        <form id="loginForm" onsubmit="handleLogin(event)">
-            <div class="form-group">
-                <label>Email</label>
-                <input type="email" id="loginEmail" placeholder="you@company.com" required>
-            </div>
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password" id="loginPassword" placeholder="Your password" required>
-            </div>
-            <button type="submit" class="form-submit" id="loginBtn">
+        <form id="loginForm" onsubmit="return false;">
+            <div class="form-group"><label>Email</label><input type="email" id="loginEmail" placeholder="you@company.com" required></div>
+            <div class="form-group"><label>Password</label><input type="password" id="loginPassword" placeholder="Your password" required></div>
+            <button type="submit" class="form-submit" id="loginBtn" onclick="handleLogin()">
                 <i class="fas fa-sign-in-alt"></i> Sign In
             </button>
             <div class="error-message" id="loginError"></div>
         </form>
-        <div class="modal-footer">
-            Don't have an account? <a onclick="switchModal('signupModal', 'loginModal')">Sign Up Free</a>
-        </div>
+        <div class="modal-footer">Don't have an account? <a onclick="switchModal('signupModal','loginModal')">Sign Up Free</a></div>
     </div>
 </div>
 
 <!-- Firebase -->
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-    import { getDatabase, ref, set, get, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyC4GYjju0-ckHraZ3H5qR3MkID_BWoYQXk",
@@ -1359,28 +634,16 @@
     const db = getDatabase(app);
 
     // Modal functions
-    window.openModal = (id) => {
-        document.getElementById(id).classList.add('active');
-        document.body.style.overflow = 'hidden';
-    };
-    window.closeModal = (id) => {
-        document.getElementById(id).classList.remove('active');
-        document.body.style.overflow = '';
-    };
-    window.switchModal = (from, to) => {
-        closeModal(from);
-        setTimeout(() => openModal(to), 200);
-    };
+    window.openModal = (id) => { document.getElementById(id).classList.add('active'); document.body.style.overflow = 'hidden'; };
+    window.closeModal = (id) => { document.getElementById(id).classList.remove('active'); document.body.style.overflow = ''; };
+    window.switchModal = (from, to) => { closeModal(from); setTimeout(() => openModal(to), 200); };
 
-    // Close on overlay click
     document.addEventListener('click', (e) => {
         if (e.target.classList.contains('modal-overlay')) {
             e.target.classList.remove('active');
             document.body.style.overflow = '';
         }
     });
-
-    // ESC to close
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             document.querySelectorAll('.modal-overlay.active').forEach(m => {
@@ -1390,15 +653,12 @@
         }
     });
 
-    // Generate slug
     function generateSlug(name) {
         return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').substring(0, 50);
     }
 
-    // ✅ SIGN UP - Redirects to workspace.html
-    // ✅ FIXED SIGN UP - Step by step with error logging
-    window.handleSignup = async (e) => {
-        e.preventDefault();
+    // ============ SIGN UP ============
+    window.handleSignup = async () => {
         const name = document.getElementById('signupName').value.trim();
         const email = document.getElementById('signupEmail').value.trim();
         const orgName = document.getElementById('signupOrg').value.trim();
@@ -1406,10 +666,10 @@
         const btn = document.getElementById('signupBtn');
         const errorDiv = document.getElementById('signupError');
         const successDiv = document.getElementById('signupSuccess');
-    
+
         errorDiv.style.display = 'none';
         successDiv.style.display = 'none';
-    
+
         if (!name || !email || !orgName || !password) {
             errorDiv.textContent = 'All fields are required';
             errorDiv.style.display = 'block';
@@ -1420,124 +680,47 @@
             errorDiv.style.display = 'block';
             return;
         }
-    
+
         btn.disabled = true;
         btn.innerHTML = '<span class="spinner"></span> Creating account...';
-    
+
         try {
-            // Step 1: Create auth user
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
-            
-            console.log('✅ Auth user created:', user.uid);
-            
-            // Step 2: Update profile
             await updateProfile(user, { displayName: name });
-            console.log('✅ Profile updated');
-    
-            // Step 3: Generate tenant ID
+
             const tenantId = generateSlug(orgName) + '-' + Date.now().toString(36);
-            console.log('✅ Tenant ID:', tenantId);
-    
-            // Step 4: Write to database - ONE AT A TIME for better debugging
-            try {
-                // Write tenant info
-                await set(ref(db, `tenants/${tenantId}/info`), {
-                    name: orgName,
-                    slug: tenantId,
-                    type: 'business',
-                    plan: 'free',
-                    createdAt: new Date().toISOString(),
-                    createdBy: user.uid,
-                    status: 'active',
-                    contactEmail: email,
-                    settings: {
-                        timezone: 'Africa/Nairobi',
-                        currency: 'KES',
-                        language: 'en'
-                    }
-                });
-                console.log('✅ Tenant info written');
-    
-                // Write member
-                await set(ref(db, `tenants/${tenantId}/members/${user.uid}`), {
-                    role: 'owner',
-                    joinedAt: new Date().toISOString(),
-                    permissions: {
-                        emh: true,
-                        erh: true,
-                        efh: true,
-                        efs: true,
-                        talents: true
-                    }
-                });
-                console.log('✅ Member written');
-    
-                // Write subscription
-                await set(ref(db, `tenants/${tenantId}/subscription`), {
-                    plan: 'free',
-                    status: 'active',
-                    startedAt: new Date().toISOString(),
-                    limits: {
-                        maxUsers: 3,
-                        maxSheets: 5,
-                        features: {
-                            allHubs: false,
-                            customBranding: false,
-                            apiAccess: false
-                        }
-                    }
-                });
-                console.log('✅ Subscription written');
-    
-                // Write user profile
-                await set(ref(db, `users/${user.uid}/profile`), {
-                    displayName: name,
-                    email: email,
-                    createdAt: new Date().toISOString()
-                });
-                console.log('✅ User profile written');
-    
-                // Write user tenants
-                await set(ref(db, `users/${user.uid}/tenants`), {
-                    [tenantId]: 'owner'
-                });
-                console.log('✅ User tenants written');
-    
-                // Success!
-                successDiv.textContent = 'Account created! Redirecting to your workspace...';
-                successDiv.style.display = 'block';
-                btn.innerHTML = '<i class="fas fa-check"></i> Created!';
-    
-                // Redirect to workspace
-                setTimeout(() => {
-                    window.location.href = `workspace.html?tenant=${tenantId}`;
-                }, 1500);
-    
-            } catch (dbError) {
-                console.error('❌ Database write error:', dbError);
-                console.error('Error code:', dbError.code);
-                console.error('Error message:', dbError.message);
-                
-                // Show specific error
-                errorDiv.textContent = `Database error: ${dbError.message}. Please check Firebase rules.`;
-                errorDiv.style.display = 'block';
-                btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-rocket"></i> Create Free Account';
-            }
-    
-        } catch (authError) {
-            console.error('❌ Auth error:', authError);
-            
-            let message = 'Something went wrong. Please try again.';
-            if (authError.code === 'auth/email-already-in-use') {
-                message = 'This email is already registered. Please sign in instead.';
-            } else if (authError.code === 'auth/weak-password') {
-                message = 'Password is too weak. Use a stronger password.';
-            } else if (authError.code === 'auth/invalid-email') {
-                message = 'Please enter a valid email address.';
-            }
-            
+            const now = new Date().toISOString();
+
+            // Write all data
+            await set(ref(db, `tenants/${tenantId}/info`), {
+                name: orgName, slug: tenantId, type: 'business', plan: 'free',
+                createdAt: now, createdBy: user.uid, status: 'active', contactEmail: email,
+                settings: { timezone: 'Africa/Nairobi', currency: 'KES', language: 'en' }
+            });
+            await set(ref(db, `tenants/${tenantId}/members/${user.uid}`), {
+                role: 'owner', joinedAt: now,
+                permissions: { emh: true, erh: true, efh: true, efs: true, talents: true }
+            });
+            await set(ref(db, `tenants/${tenantId}/subscription`), {
+                plan: 'free', status: 'active', startedAt: now,
+                limits: { maxUsers: 3, maxSheets: 5, features: { allHubs: false } }
+            });
+            await set(ref(db, `users/${user.uid}/profile`), {
+                displayName: name, email: email, createdAt: now
+            });
+            await set(ref(db, `users/${user.uid}/tenants`), { [tenantId]: 'owner' });
+
+            successDiv.textContent = 'Account created! Redirecting...';
+            successDiv.style.display = 'block';
+            btn.innerHTML = '<i class="fas fa-check"></i> Created!';
+
+            setTimeout(() => { window.location.href = `workspace.html?tenant=${tenantId}`; }, 1500);
+
+        } catch (error) {
+            console.error('Signup error:', error);
+            let message = error.message || 'Something went wrong. Please try again.';
+            if (error.code === 'auth/email-already-in-use') message = 'This email is already registered. Please sign in.';
             errorDiv.textContent = message;
             errorDiv.style.display = 'block';
             btn.disabled = false;
@@ -1545,15 +728,15 @@
         }
     };
 
-    // ✅ SIGN IN - Redirects to workspace.html
-    window.handleLogin = async (e) => {
-        e.preventDefault();
+    // ============ SIGN IN ============
+    window.handleLogin = async () => {
         const email = document.getElementById('loginEmail').value.trim();
         const password = document.getElementById('loginPassword').value;
         const btn = document.getElementById('loginBtn');
         const errorDiv = document.getElementById('loginError');
 
         errorDiv.style.display = 'none';
+
         if (!email || !password) {
             errorDiv.textContent = 'Please enter email and password';
             errorDiv.style.display = 'block';
@@ -1565,24 +748,34 @@
 
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            const userSnap = await get(ref(db, `users/${userCredential.user.uid}/tenants`));
+            const user = userCredential.user;
+
+            // Get user's tenant
+            const userSnap = await get(ref(db, `users/${user.uid}/tenants`));
             
             if (userSnap.exists()) {
-                const tenantId = Object.keys(userSnap.val())[0];
-                // ✅ REDIRECT TO workspace.html
+                const tenants = userSnap.val();
+                const tenantId = Object.keys(tenants)[0];
                 window.location.href = `workspace.html?tenant=${tenantId}`;
             } else {
-                const adminSnap = await get(ref(db, `admins/${userCredential.user.uid}`));
+                // Check if admin
+                const adminSnap = await get(ref(db, `admins/${user.uid}`));
                 if (adminSnap.exists()) {
                     window.location.href = 'admin.html';
                 } else {
-                    throw new Error('No workspace found');
+                    errorDiv.textContent = 'No workspace found. Please create an account first.';
+                    errorDiv.style.display = 'block';
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In';
                 }
             }
         } catch (error) {
+            console.error('Login error:', error);
             let message = 'Invalid email or password';
             if (error.code === 'auth/user-not-found') message = 'No account found with this email';
             else if (error.code === 'auth/wrong-password') message = 'Incorrect password';
+            else if (error.code === 'auth/invalid-email') message = 'Please enter a valid email';
+            else if (error.code === 'auth/too-many-requests') message = 'Too many attempts. Try again later.';
             
             errorDiv.textContent = message;
             errorDiv.style.display = 'block';
@@ -1591,17 +784,12 @@
         }
     };
 
-    // Nav scroll
+    // Nav scroll effect
     window.addEventListener('scroll', () => {
         document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
     });
 
-    // On auth state
-    onAuthStateChanged(auth, (user) => {
-        if (user) console.log('Signed in:', user.email);
-    });
-
-    console.log('🚀 Jasiri Suite — Redirects to workspace.html');
+    console.log('🚀 Jasiri Suite Ready');
 </script>
 </body>
 </html>
