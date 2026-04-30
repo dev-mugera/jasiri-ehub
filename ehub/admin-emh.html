@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jasiri Suite | Sales Hub Admin</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --purple-900: #1a0a2e;
+            --purple-800: #2d1154;
+            --purple-700: #3d1a6e;
+            --purple-600: #6B3BC2;
+            --purple-500: #8B5CF6;
+            --purple-400: #A78BFA;
+            --purple-300: #C4B5FD;
+            --purple-200: #DDD6FE;
+            --purple-100: #EDE9FE;
+            --purple-50: #F5F3FF;
+            --white: #FFFFFF;
+            --gray-50: #FAFAFA;
+            --gray-100: #F5F5F5;
+            --gray-200: #E5E5E5;
+            --gray-300: #D4D4D4;
+            --gray-400: #A3A3A3;
+            --gray-500: #737373;
+            --gray-600: #525252;
+            --gray-700: #404040;
+            --gray-800: #262626;
+            --gray-900: #171717;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --gradient-primary: linear-gradient(135deg, #6B3BC2 0%, #8B5CF6 100%);
+            --gradient-dark: linear-gradient(135deg, #1a0a2e 0%, #2d1154 50%, #3d1a6e 100%);
+            --shadow-sm: 0 1px 3px rgba(107, 59, 194, 0.08);
+            --shadow-md: 0 4px 16px rgba(107, 59, 194, 0.12);
+            --shadow-lg: 0 12px 40px rgba(107, 59, 194, 0.18);
+            --shadow-xl: 0 20px 60px rgba(107, 59, 194, 0.22);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(180deg, var(--purple-50) 0%, var(--white) 100%);
+            color: var(--gray-900);
+            min-height: 100vh;
+        }
+
+        .container { max-width: 1400px; margin: 0 auto; padding: 24px; }
+
+        /* Login Overlay */
+        .login-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(26, 10, 46, 0.95);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 2000;
+        }
+
+        .login-card {
+            background: white; border-radius: 20px; padding: 40px;
+            max-width: 420px; width: 90%; text-align: center;
+            box-shadow: var(--shadow-xl);
+        }
+
+        .login-icon {
+            width: 64px; height: 64px;
+            background: var(--gradient-primary); border-radius: 16px;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 20px; font-size: 28px; color: white;
+        }
+
+        .login-card h2 { font-size: 22px; font-weight: 800; margin-bottom: 6px; color: var(--gray-900); }
+        .login-card > p { font-size: 13px; color: var(--gray-600); margin-bottom: 28px; }
+
+        .form-group { margin-bottom: 16px; text-align: left; }
+        .form-group label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 6px; color: var(--gray-700); }
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%; padding: 12px 16px;
+            border: 2px solid var(--purple-100); border-radius: 10px;
+            font-size: 14px; font-family: 'Inter', sans-serif; outline: none;
+            transition: border-color 0.2s; background: white;
+        }
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--purple-500); }
+        .form-group textarea { min-height: 80px; resize: vertical; }
+
+        .login-btn {
+            width: 100%; padding: 13px;
+            background: var(--gradient-primary); color: white;
+            border: none; border-radius: 10px;
+            font-size: 15px; font-weight: 700; cursor: pointer;
+            transition: all 0.2s; margin-top: 8px;
+            font-family: 'Inter', sans-serif;
+        }
+        .login-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        .login-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+        .login-error { background: #FEE2E2; color: var(--danger); font-size: 12px; padding: 10px; border-radius: 8px; margin-top: 14px; display: none; }
+
+        .spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.6s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Header */
+        .admin-header {
+            background: white; border-radius: 16px; padding: 24px 28px;
+            margin-bottom: 24px; border: 1px solid var(--purple-100);
+            box-shadow: var(--shadow-sm);
+            display: flex; justify-content: space-between; align-items: center;
+            flex-wrap: wrap; gap: 16px;
+        }
+
+        .header-title { display: flex; align-items: center; gap: 14px; }
+        .header-icon { width: 48px; height: 48px; background: var(--gradient-primary); border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 22px; color: white; }
+        .header-title h1 { font-size: 24px; font-weight: 800; }
+        .header-subtitle { font-size: 12px; color: var(--gray-600); margin-top: 3px; }
+        .header-actions { display: flex; gap: 10px; align-items: center; }
+
+        .btn {
+            padding: 9px 16px; border-radius: 10px;
+            border: 1px solid var(--purple-100); background: white;
+            color: var(--gray-700); font-size: 13px; font-weight: 600;
+            cursor: pointer; transition: all 0.2s ease;
+            display: flex; align-items: center; gap: 7px;
+            text-decoration: none; font-family: 'Inter', sans-serif;
+        }
+        .btn:hover { background: var(--purple-50); border-color: var(--purple-300); }
+        .btn-primary { background: var(--gradient-primary); color: white; border-color: transparent; }
+        .btn-primary:hover { background: var(--purple-500); box-shadow: var(--shadow-md); }
+        .btn-success { background: var(--success); color: white; border-color: transparent; }
+        .btn-success:hover { opacity: 0.9; }
+        .btn-warning { background: var(--warning); color: white; border-color: transparent; }
+        .btn-danger { background: white; border-color: #FECACA; color: var(--danger); }
+        .btn-danger:hover { background: #FEF2F2; border-color: var(--danger); }
+
+        /* Stats */
+        .stats-bar { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; margin-bottom: 24px; }
+        .stat-card { background: white; border-radius: 14px; padding: 18px; border: 1px solid var(--purple-100); display: flex; align-items: center; gap: 12px; box-shadow: var(--shadow-sm); }
+        .stat-icon { width: 42px; height: 42px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 17px; background: var(--purple-50); color: var(--purple-600); }
+        .stat-info h3 { font-size: 20px; font-weight: 800; }
+        .stat-info p { font-size: 11px; color: var(--gray-600); margin-top: 2px; }
+
+        /* Section Tabs */
+        .section-tabs { display: flex; gap: 6px; margin-bottom: 20px; flex-wrap: wrap; background: white; padding: 8px; border-radius: 14px; border: 1px solid var(--purple-100); }
+        .section-tab { padding: 10px 18px; border-radius: 10px; background: transparent; border: none; color: var(--gray-600); font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 8px; font-family: 'Inter', sans-serif; }
+        .section-tab:hover { background: var(--purple-50); color: var(--purple-600); }
+        .section-tab.active { background: var(--purple-100); color: var(--purple-700); font-weight: 700; }
+        .section-tab .count { background: var(--purple-200); color: var(--purple-700); padding: 2px 8px; border-radius: 12px; font-size: 11px; }
+
+        /* Tools Grid */
+        .tools-grid-admin { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 16px; }
+        .tool-card-admin { background: white; border-radius: 16px; padding: 20px; border: 1px solid var(--purple-100); transition: all 0.3s ease; }
+        .tool-card-admin:hover { box-shadow: var(--shadow-lg); border-color: var(--purple-300); }
+        .tool-card-admin.modified { border-left: 4px solid var(--warning); }
+        .tool-header-admin { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px; }
+        .tool-icon-admin { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; background: var(--purple-50); color: var(--purple-600); }
+        .tool-info-admin { flex: 1; min-width: 0; }
+        .tool-info-admin h3 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+        .tool-badge-admin { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 10px; font-weight: 700; background: #D1FAE5; color: #065F46; }
+        .tool-category { font-size: 11px; color: var(--gray-500); margin-bottom: 6px; }
+        .tool-description-admin { font-size: 13px; color: var(--gray-600); margin-bottom: 14px; line-height: 1.5; }
+        .url-display { background: var(--purple-50); padding: 8px 12px; border-radius: 8px; font-size: 11px; font-family: monospace; word-break: break-all; margin-bottom: 14px; color: var(--gray-700); }
+        .tool-actions-admin { display: flex; gap: 8px; justify-content: flex-end; }
+        .tool-actions-admin .btn { padding: 6px 12px; font-size: 12px; }
+
+        /* Modal */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); justify-content: center; align-items: center; z-index: 1000; }
+        .modal-overlay.active { display: flex; }
+        .modal { background: white; border-radius: 20px; padding: 32px; max-width: 550px; width: 90%; max-height: 85vh; overflow-y: auto; box-shadow: var(--shadow-xl); animation: slideUp 0.3s ease; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+        .modal-header h2 { font-size: 20px; font-weight: 800; }
+        .modal-close { background: none; border: none; font-size: 20px; cursor: pointer; color: var(--gray-500); }
+        .modal-close:hover { color: var(--danger); }
+        .modal-actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 24px; }
+        .icon-preview { display: flex; align-items: center; gap: 12px; margin-top: 8px; }
+        .icon-preview i { font-size: 24px; color: var(--purple-600); }
+
+        /* Toast */
+        .toast { position: fixed; bottom: 24px; right: 24px; background: white; border: 1px solid var(--purple-100); border-radius: 10px; padding: 14px 22px; display: flex; align-items: center; gap: 10px; box-shadow: var(--shadow-lg); transform: translateX(120%); transition: transform 0.3s ease; z-index: 2000; }
+        .toast.show { transform: translateX(0); }
+        .toast.success { border-left: 4px solid var(--success); }
+        .toast.success i { color: var(--success); }
+        .toast.error { border-left: 4px solid var(--danger); }
+        .toast.error i { color: var(--danger); }
+        .toast.warning { border-left: 4px solid var(--warning); }
+        .toast.warning i { color: var(--warning); }
+        .toast i { font-size: 18px; }
+
+        .loading-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.9); justify-content: center; align-items: center; z-index: 3000; flex-direction: column; gap: 16px; }
+        .loading-overlay.active { display: flex; }
+        .loader { width: 40px; height: 40px; border: 4px solid var(--purple-100); border-top-color: var(--purple-600); border-radius: 50%; animation: spin 0.8s linear infinite; }
+
+        .empty-state { text-align: center; padding: 60px 20px; grid-column: 1 / -1; color: var(--gray-500); }
+        .empty-state i { font-size: 48px; margin-bottom: 16px; opacity: 0.4; }
+
+        @media (max-width: 768px) {
+            .container { padding: 16px; }
+            .tools-grid-admin { grid-template-columns: 1fr; }
+            .admin-header { flex-direction: column; align-items: flex-start; }
+            .header-actions { width: 100%; flex-wrap: wrap; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Login Overlay -->
+<div class="login-overlay" id="loginOverlay">
+    <div class="login-card">
+        <div class="login-icon"><i class="fas fa-store"></i></div>
+        <h2>Sales Hub Admin</h2>
+        <p>Sign in to manage your tools and sheets</p>
+        <form id="loginForm" onsubmit="return false;">
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="loginEmail" placeholder="you@company.com" required>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="loginPassword" placeholder="••••••••" required>
+            </div>
+            <button type="submit" class="login-btn" id="loginBtn" onclick="handleLogin()">
+                <i class="fas fa-lock"></i> Sign In
+            </button>
+            <div class="login-error" id="loginError"></div>
+        </form>
+    </div>
+</div>
+
+<!-- Loading -->
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="loader"></div>
+    <p id="loadingMessage">Loading...</p>
+</div>
+
+<!-- Main Content -->
+<div class="container" id="mainContent" style="display: none;">
+    <!-- Header -->
+    <div class="admin-header">
+        <div class="header-title">
+            <div class="header-icon"><i class="fas fa-store"></i></div>
+            <div>
+                <h1>Sales Hub Admin Panel</h1>
+                <p class="header-subtitle" id="headerSubtitle">Manage tools, sections & sheets</p>
+            </div>
+        </div>
+        <div class="header-actions">
+            <a href="admin.html" class="btn"><i class="fas fa-arrow-left"></i> Admin Hub</a>
+            <a href="emh-workspace.html" class="btn"><i class="fas fa-eye"></i> View Hub</a>
+            <button class="btn" onclick="openSectionModal()"><i class="fas fa-folder-plus"></i> New Section</button>
+            <button class="btn btn-primary" onclick="openAddToolModal()"><i class="fas fa-plus"></i> Add Tool</button>
+            <button class="btn btn-success" onclick="publishChanges()"><i class="fas fa-cloud-upload-alt"></i> Publish</button>
+            <button class="btn btn-danger" onclick="handleLogout()"><i class="fas fa-sign-out-alt"></i> Sign Out</button>
+        </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-bar">
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-folder"></i></div>
+            <div class="stat-info"><h3 id="totalSections">0</h3><p>Sections</p></div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-tools"></i></div>
+            <div class="stat-info"><h3 id="totalTools">0</h3><p>Tools</p></div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-link"></i></div>
+            <div class="stat-info"><h3 id="validUrls">0</h3><p>Valid URLs</p></div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-clock"></i></div>
+            <div class="stat-info"><h3 id="pendingCount">0</h3><p>Pending</p></div>
+        </div>
+    </div>
+
+    <!-- Section Tabs -->
+    <div class="section-tabs" id="sectionTabs"></div>
+
+    <!-- Tools Grid -->
+    <div class="tools-grid-admin" id="toolsGrid"></div>
+</div>
+
+<!-- Add/Edit Tool Modal -->
+<div class="modal-overlay" id="toolModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h2 id="toolModalTitle">Add Tool</h2>
+            <button class="modal-close" onclick="closeToolModal()"><i class="fas fa-times"></i></button>
+        </div>
+        <form onsubmit="return false;">
+            <input type="hidden" id="editSectionId">
+            <input type="hidden" id="editToolId">
+            <div class="form-group">
+                <label>Section</label>
+                <select id="toolSection" required></select>
+            </div>
+            <div class="form-group">
+                <label>Tool Name</label>
+                <input type="text" id="toolName" placeholder="e.g., Daily Sales Report" required>
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea id="toolDescription" placeholder="What does this tool do?"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Icon (Font Awesome)</label>
+                <input type="text" id="toolIcon" placeholder="fas fa-chart-line" value="fas fa-tools" required>
+                <div class="icon-preview">
+                    <i id="iconPreview" class="fas fa-tools"></i>
+                    <span style="font-size:12px;color:var(--gray-500);">Preview</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Badge</label>
+                <input type="text" id="toolBadge" placeholder="Active" value="Active">
+            </div>
+            <div class="form-group">
+                <label>Google Sheets URL</label>
+                <textarea id="toolSheetUrl" placeholder="https://docs.google.com/spreadsheets/d/..." required></textarea>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn" onclick="closeToolModal()">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="saveTool()">Save Tool</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Section Modal -->
+<div class="modal-overlay" id="sectionModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h2>Manage Sections</h2>
+            <button class="modal-close" onclick="closeSectionModal()"><i class="fas fa-times"></i></button>
+        </div>
+        <div id="sectionList" style="margin-bottom:20px;"></div>
+        <div style="border-top:1px solid var(--purple-100);padding-top:20px;">
+            <h3 style="font-size:14px;margin-bottom:14px;">Add New Section</h3>
+            <div class="form-group">
+                <label>Section ID</label>
+                <input type="text" id="newSectionId" placeholder="e.g., daily-reports" style="font-family:monospace;">
+            </div>
+            <div class="form-group">
+                <label>Section Title</label>
+                <input type="text" id="newSectionTitle" placeholder="e.g., Daily Reports">
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea id="newSectionDesc" placeholder="Section description"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Category</label>
+                <select id="newSectionCategory">
+                    <option value="">Select Category...</option>
+                    <option value="Sales Operations">Sales Operations</option>
+                    <option value="Customer Management">Customer Management</option>
+                    <option value="Product Information">Product Information</option>
+                    <option value="Inventory">Inventory</option>
+                    <option value="Sales Analytics">Sales Analytics</option>
+                </select>
+            </div>
+            <button class="btn btn-primary" onclick="addSection()" style="width:100%;justify-content:center;">
+                <i class="fas fa-plus"></i> Add Section
+            </button>
+        </div>
+        <div class="modal-actions" style="margin-top:20px;">
+            <button type="button" class="btn" onclick="closeSectionModal()">Close</button>
+        </div>
+    </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+    <i class="fas fa-check-circle"></i>
+    <span id="toastMessage"></span>
+</div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getDatabase, ref, get, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyC4GYjju0-ckHraZ3H5qR3MkID_BWoYQXk",
+        authDomain: "jasiri-suite.firebaseapp.com",
+        databaseURL: "https://jasiri-suite-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "jasiri-suite",
+        storageBucket: "jasiri-suite.firebasestorage.app",
+        messagingSenderId: "414625239065",
+        appId: "1:414625239065:web:8cc055fd20d3d66a8e5a88"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getDatabase(app);
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlTenant = urlParams.get('tenant');
+
+    let selectedTenant = '';
+    let currentUser = null;
+    let userRole = '';
+    let moduleData = {};
+    let sectionCategories = {};
+    let pendingChanges = {};
+    let currentSection = '';
+    let editingToolId = null;
+    let editingSectionId = null;
+
+    // ============ LOGIN ============
+    window.handleLogin = async () => {
+        const email = document.getElementById('loginEmail').value.trim();
+        const password = document.getElementById('loginPassword').value;
+        const btn = document.getElementById('loginBtn');
+        const errorDiv = document.getElementById('loginError');
+        
+        errorDiv.style.display = 'none';
+        if (!email || !password) {
+            errorDiv.textContent = 'Please enter email and password';
+            errorDiv.style.display = 'block';
+            return;
+        }
+
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner"></span> Signing in...';
+
+        try {
+            await signInWithEmailAndPassword(auth, email, password);
+        } catch (error) {
+            let message = 'Invalid credentials';
+            if (error.code === 'auth/user-not-found') message = 'No account found';
+            else if (error.code === 'auth/wrong-password') message = 'Incorrect password';
+            else if (error.code === 'auth/too-many-requests') message = 'Too many attempts. Try later.';
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-lock"></i> Sign In';
+        }
+    };
+
+    window.handleLogout = async () => {
+        await signOut(auth);
+        window.location.href = 'index.html';
+    };
+
+    // ============ LOAD DATA ============
+    async function loadData() {
+        if (!selectedTenant) return;
+        showLoading('Loading tools...');
+        
+        try {
+            const sectionsSnap = await get(ref(db, `tenants/${selectedTenant}/apps/ehub/sections`));
+            const catsSnap = await get(ref(db, `tenants/${selectedTenant}/apps/ehub/categories`));
+            
+            sectionCategories = catsSnap.val() || {};
+            moduleData = {};
+            const sections = sectionsSnap.val() || {};
+            const promises = [];
+            
+            for (const [sid, section] of Object.entries(sections)) {
+                moduleData[sid] = {
+                    title: section.title || sid,
+                    description: section.description || '',
+                    tools: []
+                };
+                promises.push(
+                    get(ref(db, `tenants/${selectedTenant}/apps/ehub/tools/${sid}`)).then(snap => {
+                        if (snap.exists()) {
+                            moduleData[sid].tools = Object.values(snap.val());
+                        }
+                    })
+                );
+            }
+            
+            await Promise.all(promises);
+            hideLoading();
+            renderAll();
+        } catch (error) {
+            hideLoading();
+            console.error('Load error:', error);
+            showToast('Error loading data', 'error');
+        }
+    }
+
+    function renderAll() {
+        updateStats();
+        renderSectionTabs();
+        renderTools();
+    }
+
+    function updateStats() {
+        let tools = 0, valid = 0;
+        Object.values(moduleData).forEach(s => {
+            if (s.tools) {
+                tools += s.tools.length;
+                s.tools.forEach(t => { if (isValidUrl(t.sheetUrl)) valid++; });
+            }
+        });
+        document.getElementById('totalSections').textContent = Object.keys(moduleData).length;
+        document.getElementById('totalTools').textContent = tools;
+        document.getElementById('validUrls').textContent = valid;
+        document.getElementById('pendingCount').textContent = Object.keys(pendingChanges).length;
+    }
+
+    function isValidUrl(url) {
+        return url && url.includes('docs.google.com/spreadsheets/d/');
+    }
+
+    function renderSectionTabs() {
+        const container = document.getElementById('sectionTabs');
+        let html = `<button class="section-tab ${!currentSection?'active':''}" onclick="filterBySection('')">
+            <i class="fas fa-th-large"></i> All <span class="count">${getTotalTools()}</span></button>`;
+        
+        for (const [sid, s] of Object.entries(moduleData)) {
+            html += `<button class="section-tab ${currentSection===sid?'active':''}" onclick="filterBySection('${sid}')">
+                <i class="fas fa-folder"></i> ${s.title} <span class="count">${(s.tools||[]).length}</span></button>`;
+        }
+        container.innerHTML = html;
+
+        const sel = document.getElementById('toolSection');
+        sel.innerHTML = '';
+        for (const [sid, s] of Object.entries(moduleData)) {
+            sel.innerHTML += `<option value="${sid}">${s.title}</option>`;
+        }
+    }
+
+    function getTotalTools() {
+        let t = 0;
+        Object.values(moduleData).forEach(s => { t += (s.tools||[]).length; });
+        return t;
+    }
+
+    window.filterBySection = (sid) => {
+        currentSection = sid;
+        renderSectionTabs();
+        renderTools();
+    };
+
+    function renderTools() {
+        const grid = document.getElementById('toolsGrid');
+        let html = '';
+        let hasTools = false;
+        
+        for (const [sid, s] of Object.entries(moduleData)) {
+            if (currentSection && currentSection !== sid) continue;
+            if (s.tools) {
+                s.tools.forEach(t => {
+                    hasTools = true;
+                    const modified = Object.keys(pendingChanges).some(k => k.includes(`tools/${sid}/${t.id}`));
+                    html += `
+                    <div class="tool-card-admin ${modified?'modified':''}">
+                        <div class="tool-header-admin">
+                            <div class="tool-icon-admin"><i class="${t.icon||'fas fa-tools'}"></i></div>
+                            <div class="tool-info-admin">
+                                <h3>${t.name} <span class="tool-badge-admin">${t.badge||'Active'}</span></h3>
+                                <div class="tool-category">${s.title} ${modified?'• <span style="color:var(--warning);">Pending</span>':''}</div>
+                            </div>
+                        </div>
+                        <p class="tool-description-admin">${t.description||'No description'}</p>
+                        <div class="url-display">${t.sheetUrl||'No URL'}</div>
+                        <div class="tool-actions-admin">
+                            <button class="btn" onclick="testSheet('${t.sheetUrl}')"><i class="fas fa-external-link-alt"></i> Test</button>
+                            <button class="btn" onclick="editTool('${sid}','${t.id}')"><i class="fas fa-edit"></i> Edit</button>
+                            <button class="btn btn-danger" onclick="deleteTool('${sid}','${t.id}')"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>`;
+                });
+            }
+        }
+        
+        grid.innerHTML = hasTools ? html : 
+            `<div class="empty-state"><i class="fas fa-tools"></i><h3>No tools yet</h3><p>Add your first tool to get started</p></div>`;
+    }
+
+    // ============ TOOL CRUD ============
+    window.openAddToolModal = () => {
+        editingToolId = null;
+        editingSectionId = null;
+        document.getElementById('toolModalTitle').textContent = 'Add New Tool';
+        document.getElementById('toolName').value = '';
+        document.getElementById('toolDescription').value = '';
+        document.getElementById('toolIcon').value = 'fas fa-tools';
+        document.getElementById('toolBadge').value = 'Active';
+        document.getElementById('toolSheetUrl').value = '';
+        document.getElementById('editSectionId').value = '';
+        document.getElementById('editToolId').value = '';
+        updateIconPreview();
+        document.getElementById('toolModal').classList.add('active');
+    };
+
+    window.editTool = (sid, tid) => {
+        const tool = moduleData[sid]?.tools?.find(t => t.id === tid);
+        if (!tool) return;
+        editingToolId = tid;
+        editingSectionId = sid;
+        document.getElementById('toolModalTitle').textContent = 'Edit Tool';
+        document.getElementById('toolSection').value = sid;
+        document.getElementById('toolName').value = tool.name || '';
+        document.getElementById('toolDescription').value = tool.description || '';
+        document.getElementById('toolIcon').value = tool.icon || 'fas fa-tools';
+        document.getElementById('toolBadge').value = tool.badge || 'Active';
+        document.getElementById('toolSheetUrl').value = tool.sheetUrl || '';
+        document.getElementById('editSectionId').value = sid;
+        document.getElementById('editToolId').value = tid;
+        updateIconPreview();
+        document.getElementById('toolModal').classList.add('active');
+    };
+
+    window.saveTool = () => {
+        const sid = editingSectionId || document.getElementById('toolSection').value;
+        const tid = editingToolId || 'tool_' + Date.now().toString(36);
+        const tool = {
+            id: tid,
+            name: document.getElementById('toolName').value.trim(),
+            description: document.getElementById('toolDescription').value.trim(),
+            icon: document.getElementById('toolIcon').value.trim(),
+            badge: document.getElementById('toolBadge').value.trim(),
+            sheetUrl: document.getElementById('toolSheetUrl').value.trim()
+        };
+        
+        if (!tool.name || !tool.sheetUrl) {
+            showToast('Name and URL are required', 'error');
+            return;
+        }
+        
+        if (!tool.sheetUrl.includes('docs.google.com/spreadsheets')) {
+            showToast('Please enter a valid Google Sheets URL', 'error');
+            return;
+        }
+        
+        const path = `tenants/${selectedTenant}/apps/ehub/tools/${sid}/${tid}`;
+        pendingChanges[path] = tool;
+        
+        if (!moduleData[sid]) {
+            moduleData[sid] = { title: sid, description: '', tools: [] };
+        }
+        
+        const idx = moduleData[sid].tools.findIndex(t => t.id === tid);
+        if (idx >= 0) {
+            moduleData[sid].tools[idx] = tool;
+        } else {
+            moduleData[sid].tools.push(tool);
+        }
+        
+        closeToolModal();
+        renderAll();
+        showToast('Tool saved (pending publish)', 'warning');
+    };
+
+    window.deleteTool = (sid, tid) => {
+        if (!confirm('Delete this tool permanently?')) return;
+        const path = `tenants/${selectedTenant}/apps/ehub/tools/${sid}/${tid}`;
+        pendingChanges[path] = null;
+        if (moduleData[sid]) {
+            moduleData[sid].tools = moduleData[sid].tools.filter(t => t.id !== tid);
+        }
+        renderAll();
+        showToast('Tool marked for deletion', 'warning');
+    };
+
+    window.testSheet = (url) => {
+        if (url && url.includes('docs.google.com')) {
+            window.open(url, '_blank');
+        } else {
+            showToast('No valid URL to test', 'error');
+        }
+    };
+
+    window.closeToolModal = () => {
+        document.getElementById('toolModal').classList.remove('active');
+    };
+
+    document.getElementById('toolIcon').addEventListener('input', updateIconPreview);
+    
+    function updateIconPreview() {
+        const iconClass = document.getElementById('toolIcon').value || 'fas fa-tools';
+        document.getElementById('iconPreview').className = iconClass;
+    }
+
+    // ============ SECTION CRUD ============
+    window.openSectionModal = () => {
+        document.getElementById('newSectionId').value = '';
+        document.getElementById('newSectionTitle').value = '';
+        document.getElementById('newSectionDesc').value = '';
+        document.getElementById('newSectionCategory').value = '';
+        renderSectionList();
+        document.getElementById('sectionModal').classList.add('active');
+    };
+
+    window.closeSectionModal = () => {
+        document.getElementById('sectionModal').classList.remove('active');
+    };
+
+    function renderSectionList() {
+        const list = document.getElementById('sectionList');
+        let html = '';
+        for (const [sid, s] of Object.entries(moduleData)) {
+            const cat = sectionCategories[sid] || '';
+            html += `
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--purple-50);border-radius:8px;margin-bottom:8px;">
+                <div>
+                    <strong>${s.title}</strong><br>
+                    <small style="color:var(--gray-500);">ID: ${sid} ${cat ? '• ' + cat : ''} • ${(s.tools||[]).length} tools</small>
+                </div>
+                <button class="btn btn-danger" onclick="deleteSection('${sid}')" style="padding:4px 10px;"><i class="fas fa-trash"></i></button>
+            </div>`;
+        }
+        list.innerHTML = html || '<p style="color:var(--gray-500);text-align:center;">No sections yet</p>';
+    }
+
+    window.addSection = () => {
+        const sid = document.getElementById('newSectionId').value.toLowerCase().replace(/[^a-z0-9-]/g, '-');
+        const title = document.getElementById('newSectionTitle').value.trim();
+        const desc = document.getElementById('newSectionDesc').value.trim();
+        const cat = document.getElementById('newSectionCategory').value;
+        
+        if (!sid || !title) {
+            showToast('Section ID and Title are required', 'error');
+            return;
+        }
+        
+        pendingChanges[`tenants/${selectedTenant}/apps/ehub/sections/${sid}`] = { title, description: desc };
+        if (cat) {
+            pendingChanges[`tenants/${selectedTenant}/apps/ehub/categories/${sid}`] = cat;
+            sectionCategories[sid] = cat;
+        }
+        
+        moduleData[sid] = { title, description: desc, tools: [] };
+        closeSectionModal();
+        renderAll();
+        showToast('Section added (pending publish)', 'warning');
+    };
+
+    window.deleteSection = (sid) => {
+        if (!confirm(`Delete section "${sid}" and ALL its tools? This cannot be undone.`)) return;
+        pendingChanges[`tenants/${selectedTenant}/apps/ehub/sections/${sid}`] = null;
+        pendingChanges[`tenants/${selectedTenant}/apps/ehub/categories/${sid}`] = null;
+        pendingChanges[`tenants/${selectedTenant}/apps/ehub/tools/${sid}`] = null;
+        delete moduleData[sid];
+        closeSectionModal();
+        currentSection = '';
+        renderAll();
+        showToast('Section marked for deletion', 'warning');
+    };
+
+    // ============ PUBLISH ============
+    window.publishChanges = async () => {
+        if (Object.keys(pendingChanges).length === 0) {
+            showToast('No changes to publish', 'warning');
+            return;
+        }
+        
+        showLoading('Publishing changes...');
+        
+        try {
+            await update(ref(db), pendingChanges);
+            pendingChanges = {};
+            hideLoading();
+            renderAll();
+            showToast('Changes published successfully!', 'success');
+        } catch (error) {
+            hideLoading();
+            console.error('Publish error:', error);
+            showToast('Publish failed: ' + error.message, 'error');
+        }
+    };
+
+    // ============ UI HELPERS ============
+    function showToast(message, type = 'success') {
+        const toast = document.getElementById('toast');
+        document.getElementById('toastMessage').textContent = message;
+        toast.className = `toast ${type} show`;
+        setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    function showLoading(message = 'Loading...') {
+        document.getElementById('loadingMessage').textContent = message;
+        document.getElementById('loadingOverlay').classList.add('active');
+    }
+
+    function hideLoading() {
+        document.getElementById('loadingOverlay').classList.remove('active');
+    }
+
+    // Close modals on overlay click
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('modal-overlay')) {
+            e.target.classList.remove('active');
+        }
+    });
+
+    // ============ AUTH & TENANT CHECK ============
+    onAuthStateChanged(auth, async (user) => {
+        if (!user) {
+            document.getElementById('loginOverlay').style.display = 'flex';
+            document.getElementById('mainContent').style.display = 'none';
+            return;
+        }
+
+        currentUser = user;
+        document.getElementById('loginOverlay').style.display = 'none';
+        document.getElementById('mainContent').style.display = 'block';
+
+        // Determine tenant
+        if (urlTenant) {
+            selectedTenant = urlTenant;
+        } else {
+            // Get user's first tenant
+            const userSnap = await get(ref(db, `users/${user.uid}/tenants`));
+            if (userSnap.exists()) {
+                selectedTenant = Object.keys(userSnap.val())[0];
+            }
+        }
+
+        if (!selectedTenant) {
+            showToast('No workspace found. Please create an account first.', 'error');
+            document.getElementById('toolsGrid').innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-building"></i>
+                    <h3>No Workspace</h3>
+                    <p>Please sign up on the landing page first.</p>
+                    <a href="index.html" class="btn btn-primary" style="display:inline-flex;margin-top:1rem;text-decoration:none;">Go to Landing Page</a>
+                </div>`;
+            return;
+        }
+
+        // Check if user is a member of this tenant
+        const memberSnap = await get(ref(db, `tenants/${selectedTenant}/members/${user.uid}`));
+        
+        if (!memberSnap.exists()) {
+            // Check if super admin
+            const adminSnap = await get(ref(db, `admins/${user.uid}`));
+            if (!adminSnap.exists()) {
+                showToast('You are not a member of this organization', 'error');
+                document.getElementById('toolsGrid').innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-lock"></i>
+                        <h3>Access Denied</h3>
+                        <p>You don't have permission to manage this workspace.</p>
+                        <a href="workspace.html" class="btn btn-primary" style="display:inline-flex;margin-top:1rem;text-decoration:none;">Go to Workspace</a>
+                    </div>`;
+                return;
+            }
+            userRole = 'super_admin';
+            document.getElementById('headerSubtitle').textContent = `Super Admin • Managing: ${selectedTenant}`;
+        } else {
+            const memberData = memberSnap.val();
+            userRole = memberData.role || 'member';
+            
+            // Check if user has admin privileges for this tenant
+            if (userRole !== 'owner' && userRole !== 'admin') {
+                showToast('Admin access required to manage tools', 'error');
+                document.getElementById('toolsGrid').innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-lock"></i>
+                        <h3>Admin Access Required</h3>
+                        <p>Only owners and admins can manage tools. Your role: ${userRole}</p>
+                        <a href="emh-workspace.html?tenant=${selectedTenant}" class="btn btn-primary" style="display:inline-flex;margin-top:1rem;text-decoration:none;">View Sales Hub</a>
+                    </div>`;
+                return;
+            }
+            
+            // Get tenant name
+            const tenantSnap = await get(ref(db, `tenants/${selectedTenant}/info`));
+            const tenantName = tenantSnap.exists() ? tenantSnap.val().name : selectedTenant;
+            document.getElementById('headerSubtitle').textContent = `Managing: ${tenantName} • Role: ${userRole}`;
+        }
+
+        // Load data
+        loadData();
+    });
+
+    // Initial state
+    document.getElementById('loginOverlay').style.display = 'flex';
+    document.getElementById('mainContent').style.display = 'none';
+</script>
+</body>
+</html>
