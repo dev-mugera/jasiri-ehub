@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jasiri Suite | Manage Team</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --purple-900: #1a0a2e;
+            --purple-800: #2d1154;
+            --purple-700: #3d1a6e;
+            --purple-600: #6B3BC2;
+            --purple-500: #8B5CF6;
+            --purple-400: #A78BFA;
+            --purple-300: #C4B5FD;
+            --purple-200: #DDD6FE;
+            --purple-100: #EDE9FE;
+            --purple-50: #F5F3FF;
+            --white: #FFFFFF;
+            --gray-50: #FAFAFA;
+            --gray-100: #F5F5F5;
+            --gray-200: #E5E5E5;
+            --gray-300: #D4D4D4;
+            --gray-500: #737373;
+            --gray-600: #525252;
+            --gray-700: #404040;
+            --gray-900: #171717;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --pink: #EC4899;
+            --orange: #F97316;
+            --gradient-primary: linear-gradient(135deg, #6B3BC2 0%, #8B5CF6 100%);
+            --shadow-sm: 0 1px 3px rgba(107, 59, 194, 0.08);
+            --shadow-md: 0 4px 16px rgba(107, 59, 194, 0.12);
+            --shadow-lg: 0 12px 40px rgba(107, 59, 194, 0.18);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+        body {
+            background: linear-gradient(180deg, var(--purple-50) 0%, var(--white) 100%);
+            color: var(--gray-900);
+            min-height: 100vh;
+        }
+
+        .container { max-width: 1000px; margin: 0 auto; padding: 24px; }
+
+        /* Top Bar */
+        .topbar {
+            background: white; border-bottom: 1px solid var(--purple-100);
+            padding: 0 1.5rem; height: 56px; display: flex;
+            align-items: center; justify-content: space-between;
+            position: sticky; top: 0; z-index: 100;
+        }
+        .topbar-left { display: flex; align-items: center; gap: 1rem; }
+        .back-btn {
+            width: 34px; height: 34px; border-radius: 50%;
+            border: 1px solid var(--purple-100); background: white;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            color: var(--gray-700); transition: all 0.2s; text-decoration: none;
+        }
+        .back-btn:hover { background: var(--purple-50); border-color: var(--purple-300); color: var(--purple-600); }
+        .app-title { display: flex; align-items: center; gap: 0.6rem; }
+        .app-icon {
+            width: 32px; height: 32px; background: var(--gradient-primary);
+            border-radius: 8px; display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 0.9rem;
+        }
+        .app-title h1 { font-size: 1rem; font-weight: 700; }
+        .tenant-badge {
+            font-size: 0.7rem; font-weight: 600; color: var(--purple-600);
+            background: var(--purple-50); padding: 0.2rem 0.7rem;
+            border-radius: 50px; border: 1px solid var(--purple-100);
+        }
+        .topbar-right { display: flex; align-items: center; gap: 0.8rem; }
+        .user-avatar {
+            width: 34px; height: 34px; border-radius: 50%;
+            background: var(--gradient-primary); display: flex; align-items: center;
+            justify-content: center; color: white; font-weight: 700; font-size: 0.8rem; cursor: pointer;
+        }
+
+        /* Header */
+        .page-header {
+            background: white; border-radius: 16px; padding: 28px;
+            margin-bottom: 24px; border: 1px solid var(--purple-100); box-shadow: var(--shadow-sm);
+        }
+        .page-header h2 { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+        .page-header p { font-size: 13px; color: var(--gray-600); }
+        .plan-info {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: var(--purple-50); padding: 6px 14px; border-radius: 20px;
+            font-size: 12px; font-weight: 600; color: var(--purple-600); margin-top: 10px;
+        }
+
+        .btn {
+            padding: 9px 16px; border-radius: 10px; border: 1px solid var(--purple-100);
+            background: white; color: var(--gray-700); font-size: 13px; font-weight: 600;
+            cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 7px;
+            text-decoration: none; font-family: 'Inter', sans-serif;
+        }
+        .btn:hover { background: var(--purple-50); border-color: var(--purple-300); }
+        .btn-primary { background: var(--gradient-primary); color: white; border-color: transparent; }
+        .btn-primary:hover { background: var(--purple-500); box-shadow: var(--shadow-md); }
+        .btn-danger { background: white; border-color: #FECACA; color: var(--danger); }
+        .btn-danger:hover { background: #FEF2F2; border-color: var(--danger); }
+        .btn-success { background: var(--success); color: white; border-color: transparent; }
+        .btn-sm { padding: 5px 10px; font-size: 11px; border-radius: 6px; }
+
+        /* Invite Section */
+        .invite-section {
+            background: white; border-radius: 16px; padding: 24px;
+            margin-bottom: 24px; border: 1px solid var(--purple-100); box-shadow: var(--shadow-sm);
+        }
+        .invite-section h3 { font-size: 16px; font-weight: 700; margin-bottom: 14px; }
+        .invite-form { display: flex; gap: 10px; flex-wrap: wrap; }
+        .invite-form input, .invite-form select {
+            padding: 10px 14px; border: 2px solid var(--purple-100);
+            border-radius: 10px; font-size: 13px; font-family: 'Inter', sans-serif; outline: none;
+        }
+        .invite-form input { flex: 2; min-width: 200px; }
+        .invite-form select { flex: 1; min-width: 140px; }
+        .invite-form input:focus, .invite-form select:focus { border-color: var(--purple-400); }
+
+        /* Members List */
+        .members-section {
+            background: white; border-radius: 16px; padding: 24px;
+            border: 1px solid var(--purple-100); box-shadow: var(--shadow-sm);
+        }
+        .members-section h3 { font-size: 16px; font-weight: 700; margin-bottom: 14px; }
+        .member-card {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 14px; border-radius: 12px; margin-bottom: 8px;
+            border: 1px solid var(--purple-50); transition: all 0.2s;
+        }
+        .member-card:hover { background: var(--purple-50); }
+        .member-left { display: flex; align-items: center; gap: 12px; }
+        .member-avatar {
+            width: 40px; height: 40px; border-radius: 50%;
+            background: var(--gradient-primary); display: flex; align-items: center;
+            justify-content: center; color: white; font-weight: 700; font-size: 14px;
+        }
+        .member-info h4 { font-size: 14px; font-weight: 700; }
+        .member-info p { font-size: 11px; color: var(--gray-500); }
+        .member-right { display: flex; align-items: center; gap: 10px; }
+        .role-badge {
+            padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700;
+        }
+        .role-owner { background: #EDE9FE; color: #5B21B6; }
+        .role-admin { background: #FCE7F3; color: #9D174D; }
+        .role-manager { background: #FEF3C7; color: #92400E; }
+        .role-member { background: #D1FAE5; color: #065F46; }
+        .role-viewer { background: var(--gray-100); color: var(--gray-600); }
+        .you-badge { background: var(--purple-50); color: var(--purple-600); padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 600; }
+
+        /* Modal */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); justify-content: center; align-items: center; z-index: 1000; }
+        .modal-overlay.active { display: flex; }
+        .modal { background: white; border-radius: 20px; padding: 28px; max-width: 440px; width: 90%; box-shadow: 0 20px 60px rgba(0,0,0,0.2); animation: slideUp 0.3s ease; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .modal h3 { font-size: 18px; font-weight: 800; margin-bottom: 20px; }
+        .modal .form-group { margin-bottom: 14px; }
+        .modal .form-group label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 5px; color: var(--gray-700); }
+        .modal .form-group select { width: 100%; padding: 10px 14px; border: 2px solid var(--purple-100); border-radius: 10px; font-size: 14px; font-family: 'Inter', sans-serif; outline: none; }
+        .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
+
+        .toast { position: fixed; bottom: 24px; right: 24px; background: white; border: 1px solid var(--purple-100); border-radius: 10px; padding: 14px 22px; display: flex; align-items: center; gap: 10px; box-shadow: var(--shadow-lg); transform: translateX(120%); transition: transform 0.3s ease; z-index: 2000; }
+        .toast.show { transform: translateX(0); }
+        .toast.success { border-left: 4px solid var(--success); }
+        .toast.success i { color: var(--success); }
+        .toast.error { border-left: 4px solid var(--danger); }
+        .toast.error i { color: var(--danger); }
+        .toast i { font-size: 18px; }
+
+        .loading-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.9); justify-content: center; align-items: center; z-index: 3000; flex-direction: column; gap: 16px; }
+        .loading-overlay.active { display: flex; }
+        .loader { width: 40px; height: 40px; border: 4px solid var(--purple-100); border-top-color: var(--purple-600); border-radius: 50%; animation: spin 0.8s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .empty-state { text-align: center; padding: 40px; color: var(--gray-500); }
+
+        @media (max-width: 768px) {
+            .container { padding: 16px; }
+            .invite-form { flex-direction: column; }
+            .member-card { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .member-right { width: 100%; justify-content: space-between; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Top Bar -->
+<header class="topbar">
+    <div class="topbar-left">
+        <a href="workspace.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+        <div class="app-title">
+            <div class="app-icon"><i class="fas fa-users"></i></div>
+            <h1>Manage Team</h1>
+        </div>
+        <span class="tenant-badge" id="tenantBadge">Loading...</span>
+    </div>
+    <div class="topbar-right">
+        <div class="user-avatar" id="userAvatar" onclick="toggleDropdown()"><span id="avatarInitials">U</span></div>
+        <div id="userDropdown" style="display:none;position:absolute;top:56px;right:16px;background:white;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.15);border:1px solid var(--purple-100);min-width:200px;padding:8px;z-index:200;">
+            <div style="padding:10px 14px;border-bottom:1px solid var(--purple-50);margin-bottom:4px;">
+                <div style="font-weight:700;font-size:13px;" id="dropdownName">User</div>
+                <div style="font-size:11px;color:var(--gray-500);" id="dropdownEmail">email</div>
+            </div>
+            <a href="workspace.html" class="btn" style="border:none;width:100%;justify-content:flex-start;">🏠 Workspace</a>
+            <button onclick="handleSignOut()" class="btn btn-danger" style="border:none;width:100%;justify-content:flex-start;margin-top:4px;">🚪 Sign Out</button>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <!-- Header -->
+    <div class="page-header">
+        <h2>👥 Team Management</h2>
+        <p>Invite members, manage roles, and control permissions</p>
+        <div class="plan-info" id="planInfo">Loading plan info...</div>
+    </div>
+
+    <!-- Invite Section -->
+    <div class="invite-section" id="inviteSection">
+        <h3>📨 Invite Team Member</h3>
+        <div class="invite-form">
+            <input type="email" id="inviteEmail" placeholder="colleague@company.com">
+            <select id="inviteRole">
+                <option value="admin">Admin - Can manage tools</option>
+                <option value="manager">Manager - Can edit tools</option>
+                <option value="member" selected>Member - View only</option>
+                <option value="viewer">Viewer - Read only</option>
+            </select>
+            <button class="btn btn-primary" onclick="inviteMember()"><i class="fas fa-paper-plane"></i> Send Invite</button>
+        </div>
+        <p style="font-size:11px;color:var(--gray-500);margin-top:8px;">⚠️ Only owners can invite new members. Invited users must have an existing Jasiri account.</p>
+    </div>
+
+    <!-- Members List -->
+    <div class="members-section">
+        <h3>👥 Current Members (<span id="memberCount">0</span>)</h3>
+        <div id="membersList">
+            <div class="empty-state"><div class="loader"></div><p>Loading members...</p></div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Role Modal -->
+<div class="modal-overlay" id="editRoleModal">
+    <div class="modal">
+        <h3>Change Role</h3>
+        <div class="form-group">
+            <label>New Role for <strong id="editMemberName"></strong></label>
+            <select id="editRoleSelect">
+                <option value="admin">Admin - Can manage tools</option>
+                <option value="manager">Manager - Can edit tools</option>
+                <option value="member">Member - View only</option>
+                <option value="viewer">Viewer - Read only</option>
+            </select>
+        </div>
+        <div class="modal-actions">
+            <button class="btn" onclick="closeModal('editRoleModal')">Cancel</button>
+            <button class="btn btn-primary" onclick="saveRoleChange()">Save Changes</button>
+        </div>
+    </div>
+</div>
+
+<!-- Confirm Remove Modal -->
+<div class="modal-overlay" id="confirmRemoveModal">
+    <div class="modal">
+        <h3>Remove Member</h3>
+        <p style="color:var(--gray-600);margin-bottom:16px;">Are you sure you want to remove <strong id="removeMemberName"></strong> from this workspace?</p>
+        <div class="modal-actions">
+            <button class="btn" onclick="closeModal('confirmRemoveModal')">Cancel</button>
+            <button class="btn btn-danger" onclick="confirmRemoveMember()">Remove Member</button>
+        </div>
+    </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"><i class="fas fa-check-circle"></i><span id="toastMessage"></span></div>
+
+<!-- Loading -->
+<div class="loading-overlay" id="loadingOverlay"><div class="loader"></div><p id="loadingMessage">Processing...</p></div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getDatabase, ref, get, set, update, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyC4GYjju0-ckHraZ3H5qR3MkID_BWoYQXk",
+        authDomain: "jasiri-suite.firebaseapp.com",
+        databaseURL: "https://jasiri-suite-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "jasiri-suite",
+        storageBucket: "jasiri-suite.firebasestorage.app",
+        messagingSenderId: "414625239065",
+        appId: "1:414625239065:web:8cc055fd20d3d66a8e5a88"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getDatabase(app);
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlTenant = urlParams.get('tenant');
+
+    let currentUser = null;
+    let selectedTenant = '';
+    let userRole = '';
+    let tenantSubscription = null;
+    let membersData = {};
+    let memberToRemove = null;
+
+    // Dropdown
+    window.toggleDropdown = () => {
+        const dd = document.getElementById('userDropdown');
+        dd.style.display = dd.style.display === 'none' ? 'block' : 'none';
+    };
+    document.addEventListener('click', (e) => {
+        const dd = document.getElementById('userDropdown');
+        const av = document.getElementById('userAvatar');
+        if (dd && av && !av.contains(e.target) && !dd.contains(e.target)) dd.style.display = 'none';
+    });
+
+    window.handleSignOut = async () => { await signOut(auth); window.location.href = 'index.html'; };
+    window.closeModal = (id) => { document.getElementById(id).classList.remove('active'); };
+
+    // Load data
+    async function loadTeamData() {
+        if (!selectedTenant) return;
+        showLoading('Loading team...');
+        try {
+            const membersSnap = await get(ref(db, `tenants/${selectedTenant}/members`));
+            membersData = membersSnap.val() || {};
+            const subSnap = await get(ref(db, `tenants/${selectedTenant}/subscription`));
+            tenantSubscription = subSnap.val() || { plan: 'free', limits: { maxUsers: 3 } };
+            const infoSnap = await get(ref(db, `tenants/${selectedTenant}/info`));
+            const info = infoSnap.val() || {};
+            document.getElementById('tenantBadge').textContent = info.name || selectedTenant;
+            document.getElementById('planInfo').innerHTML = `📋 Plan: <strong>${(tenantSubscription.plan||'free').toUpperCase()}</strong> • Max Members: <strong>${tenantSubscription.limits?.maxUsers || 3}</strong> • Current: <strong>${Object.keys(membersData).length}</strong>`;
+            hideLoading();
+            renderMembers();
+        } catch (e) {
+            hideLoading();
+            console.error(e);
+        }
+    }
+
+    function renderMembers() {
+        const list = document.getElementById('membersList');
+        const memberIds = Object.keys(membersData);
+        document.getElementById('memberCount').textContent = memberIds.length;
+
+        if (memberIds.length === 0) {
+            list.innerHTML = '<div class="empty-state"><i class="fas fa-users" style="font-size:36px;opacity:0.3;"></i><p>No members yet</p></div>';
+            return;
+        }
+
+        let html = '';
+        for (const [uid, member] of Object.entries(membersData)) {
+            const role = member.role || 'member';
+            const isYou = uid === currentUser?.uid;
+            html += `
+            <div class="member-card">
+                <div class="member-left">
+                    <div class="member-avatar">${(member.displayName || 'U').substring(0,2).toUpperCase()}</div>
+                    <div class="member-info">
+                        <h4>${member.displayName || member.email || 'Unknown'} ${isYou ? '<span class="you-badge">You</span>' : ''}</h4>
+                        <p>${member.email || uid} • Joined ${member.joinedAt ? new Date(member.joinedAt).toLocaleDateString() : 'N/A'}</p>
+                    </div>
+                </div>
+                <div class="member-right">
+                    <span class="role-badge role-${role}">${role.toUpperCase()}</span>
+                    ${userRole === 'owner' && !isYou ? `
+                        <button class="btn btn-sm" onclick="openEditRole('${uid}','${member.displayName||'Member'}','${role}')"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-sm btn-danger" onclick="openRemoveMember('${uid}','${member.displayName||'Member'}')"><i class="fas fa-trash"></i></button>
+                    ` : ''}
+                </div>
+            </div>`;
+        }
+        list.innerHTML = html;
+    }
+
+    // Invite
+    window.inviteMember = async () => {
+        if (userRole !== 'owner') { showToast('Only owners can invite members', 'error'); return; }
+        const maxUsers = tenantSubscription?.limits?.maxUsers || 3;
+        if (Object.keys(membersData).length >= maxUsers) { showToast(`Max ${maxUsers} members on ${tenantSubscription.plan} plan. Upgrade to add more.`, 'error'); return; }
+        const email = document.getElementById('inviteEmail').value.trim();
+        const role = document.getElementById('inviteRole').value;
+        if (!email) { showToast('Please enter an email', 'error'); return; }
+
+        showLoading('Sending invite...');
+        try {
+            const usersSnap = await get(ref(db, 'users'));
+            const users = usersSnap.val() || {};
+            let foundUid = null;
+            for (const [uid, u] of Object.entries(users)) {
+                if (u.profile?.email === email) { foundUid = uid; break; }
+            }
+            if (!foundUid) { hideLoading(); showToast('User not found. They must create a Jasiri account first.', 'error'); return; }
+            if (membersData[foundUid]) { hideLoading(); showToast('User is already a member', 'error'); return; }
+
+            await set(ref(db, `tenants/${selectedTenant}/members/${foundUid}`), {
+                role, joinedAt: new Date().toISOString(), email, displayName: users[foundUid]?.profile?.displayName || email
+            });
+            await set(ref(db, `users/${foundUid}/tenants/${selectedTenant}`), role);
+            hideLoading();
+            showToast('Member added successfully!', 'success');
+            document.getElementById('inviteEmail').value = '';
+            loadTeamData();
+        } catch (e) { hideLoading(); showToast('Error: ' + e.message, 'error'); }
+    };
+
+    // Edit role
+    window.openEditRole = (uid, name, role) => {
+        document.getElementById('editMemberName').textContent = name;
+        document.getElementById('editRoleSelect').value = role;
+        document.getElementById('editRoleModal').dataset.uid = uid;
+        document.getElementById('editRoleModal').classList.add('active');
+    };
+    window.saveRoleChange = async () => {
+        const uid = document.getElementById('editRoleModal').dataset.uid;
+        const role = document.getElementById('editRoleSelect').value;
+        showLoading('Updating role...');
+        try {
+            await update(ref(db, `tenants/${selectedTenant}/members/${uid}`), { role });
+            await update(ref(db, `users/${uid}/tenants`), { [selectedTenant]: role });
+            hideLoading();
+            closeModal('editRoleModal');
+            showToast('Role updated!', 'success');
+            loadTeamData();
+        } catch (e) { hideLoading(); showToast('Error: ' + e.message, 'error'); }
+    };
+
+    // Remove member
+    window.openRemoveMember = (uid, name) => {
+        memberToRemove = uid;
+        document.getElementById('removeMemberName').textContent = name;
+        document.getElementById('confirmRemoveModal').classList.add('active');
+    };
+    window.confirmRemoveMember = async () => {
+        if (!memberToRemove) return;
+        showLoading('Removing member...');
+        try {
+            await remove(ref(db, `tenants/${selectedTenant}/members/${memberToRemove}`));
+            await remove(ref(db, `users/${memberToRemove}/tenants/${selectedTenant}`));
+            memberToRemove = null;
+            hideLoading();
+            closeModal('confirmRemoveModal');
+            showToast('Member removed', 'success');
+            loadTeamData();
+        } catch (e) { hideLoading(); showToast('Error: ' + e.message, 'error'); }
+    };
+
+    function showToast(msg, type = 'success') {
+        const t = document.getElementById('toast');
+        document.getElementById('toastMessage').textContent = msg;
+        t.className = `toast ${type} show`;
+        setTimeout(() => t.classList.remove('show'), 3000);
+    }
+    function showLoading(msg = 'Loading...') { document.getElementById('loadingMessage').textContent = msg; document.getElementById('loadingOverlay').classList.add('active'); }
+    function hideLoading() { document.getElementById('loadingOverlay').classList.remove('active'); }
+
+    // Close modals on overlay click
+    document.addEventListener('click', (e) => { if (e.target.classList.contains('modal-overlay')) e.target.classList.remove('active'); });
+
+    // Auth
+    onAuthStateChanged(auth, async (user) => {
+        if (!user) { window.location.href = 'index.html'; return; }
+        currentUser = user;
+        document.getElementById('avatarInitials').textContent = (user.displayName||user.email||'U').substring(0,2).toUpperCase();
+        document.getElementById('dropdownName').textContent = user.displayName || user.email;
+        document.getElementById('dropdownEmail').textContent = user.email;
+
+        if (urlTenant) selectedTenant = urlTenant;
+        else {
+            const us = await get(ref(db, `users/${user.uid}/tenants`));
+            if (us.exists()) selectedTenant = Object.keys(us.val())[0];
+        }
+        if (selectedTenant) {
+            const ms = await get(ref(db, `tenants/${selectedTenant}/members/${user.uid}`));
+            userRole = ms.exists() ? ms.val().role : 'member';
+            if (userRole !== 'owner' && userRole !== 'admin') {
+                document.getElementById('inviteSection').style.display = 'none';
+            }
+            loadTeamData();
+        }
+    });
+</script>
+</body>
+</html>
