@@ -37,7 +37,7 @@
             --pink: #EC4899;
             --orange: #F97316;
             --teal: #14B8A6;
-            --gradient-primary: linear-gradient(135deg, #6B3BC2 0%, #8B5CF6 50%, #A78BFA 100%);
+            --gradient-primary: linear-gradient(135deg, #6B3BC2 0%, #8B5CF6 100%);
             --gradient-dark: linear-gradient(135deg, #1a0a2e 0%, #2d1154 50%, #3d1a6e 100%);
             --shadow-sm: 0 1px 3px rgba(107, 59, 194, 0.08);
             --shadow-md: 0 4px 16px rgba(107, 59, 194, 0.12);
@@ -1104,7 +1104,7 @@
                 <h3>Sales Hub</h3>
                 <div class="app-status"><span class="dot"></span> Live data streaming</div>
                 <p>Complete point-of-sale, sales operations, and real-time analytics. Manage transactions, track performance, and generate insights — all synced with Google Sheets.</p>
-                <a href="emh-workspace.html" class="app-link">Open Sales Hub <i class="fas fa-arrow-right"></i></a>
+                <a href="workspace.html" class="app-link">Open Workspace <i class="fas fa-arrow-right"></i></a>
             </div>
             
             <!-- Resource Hub -->
@@ -1115,7 +1115,7 @@
                 <h3>Resource Hub</h3>
                 <div class="app-status"><span class="dot"></span> Active resources</div>
                 <p>Human resource management, asset tracking, and project coordination. Keep your team organized and your resources optimally allocated.</p>
-                <a href="erh-workspace.html" class="app-link">Open Resource Hub <i class="fas fa-arrow-right"></i></a>
+                <a href="workspace.html" class="app-link">Open Workspace <i class="fas fa-arrow-right"></i></a>
             </div>
             
             <!-- Finance Hub -->
@@ -1126,7 +1126,7 @@
                 <h3>Finance Hub</h3>
                 <div class="app-status"><span class="dot"></span> Financial Management</div>
                 <p>Accounting, financial reporting, and budget management. Track expenses, generate financial statements, and maintain fiscal discipline.</p>
-                <a href="efh-workspace.html" class="app-link">Open Finance Hub <i class="fas fa-arrow-right"></i></a>
+                <a href="workspace.html" class="app-link">Open Workspace <i class="fas fa-arrow-right"></i></a>
             </div>
             
             <!-- Fleet Hub -->
@@ -1137,7 +1137,7 @@
                 <h3>Fleet Hub</h3>
                 <div class="app-status"><span class="dot"></span> Active operations</div>
                 <p>Logistics, courier, shipping, and fleet management. Monitor deliveries, track vehicles, and optimize your supply chain operations.</p>
-                <a href="efs-workspace.html" class="app-link">Open Fleet Hub <i class="fas fa-arrow-right"></i></a>
+                <a href="workspace.html" class="app-link">Open Workspace <i class="fas fa-arrow-right"></i></a>
             </div>
             
             <!-- Talents Hub -->
@@ -1148,7 +1148,7 @@
                 <h3>Talents Hub</h3>
                 <div class="app-status"><span class="dot"></span> Talent Management</div>
                 <p>Human resources and learning & development. Manage recruitment, employee growth, training programs, and performance evaluations.</p>
-                <a href="talents-workspace.html" class="app-link">Open Talents Hub <i class="fas fa-arrow-right"></i></a>
+                <a href="workspace.html" class="app-link">Open Workspace <i class="fas fa-arrow-right"></i></a>
             </div>
         </div>
     </div>
@@ -1163,7 +1163,6 @@
             <p>Transparent pricing in Kenyan Shillings. No hidden fees.</p>
         </div>
         <div class="pricing-grid">
-            <!-- Free -->
             <div class="pricing-card">
                 <div class="pricing-plan">Starter</div>
                 <div class="pricing-price">Free<span>/forever</span></div>
@@ -1180,7 +1179,6 @@
                 <button class="btn btn-outline" style="width: 100%;" onclick="openModal('signupModal')">Get Started</button>
             </div>
             
-            <!-- Professional -->
             <div class="pricing-card popular">
                 <div class="popular-badge">Most Popular</div>
                 <div class="pricing-plan">Professional</div>
@@ -1198,7 +1196,6 @@
                 <button class="btn btn-primary" style="width: 100%;" onclick="openModal('signupModal')">Start Free Trial</button>
             </div>
             
-            <!-- Enterprise -->
             <div class="pricing-card">
                 <div class="pricing-plan">Enterprise</div>
                 <div class="pricing-price">KSh 1,200<span>/month</span></div>
@@ -1398,7 +1395,7 @@
         return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').substring(0, 50);
     }
 
-    // Sign Up
+    // ✅ SIGN UP - Redirects to workspace.html
     window.handleSignup = async (e) => {
         e.preventDefault();
         const name = document.getElementById('signupName').value.trim();
@@ -1456,11 +1453,14 @@
 
             await update(ref(db), updates);
 
-            successDiv.textContent = 'Account created! Redirecting...';
+            successDiv.textContent = 'Account created! Redirecting to your workspace...';
             successDiv.style.display = 'block';
             btn.innerHTML = '<i class="fas fa-check"></i> Created!';
 
-            setTimeout(() => { window.location.href = `/dashboard?tenant=${tenantId}`; }, 1500);
+            // ✅ REDIRECT TO workspace.html
+            setTimeout(() => { 
+                window.location.href = `workspace.html?tenant=${tenantId}`; 
+            }, 1500);
 
         } catch (error) {
             let message = 'Something went wrong. Please try again.';
@@ -1475,7 +1475,7 @@
         }
     };
 
-    // Sign In
+    // ✅ SIGN IN - Redirects to workspace.html
     window.handleLogin = async (e) => {
         e.preventDefault();
         const email = document.getElementById('loginEmail').value.trim();
@@ -1499,11 +1499,12 @@
             
             if (userSnap.exists()) {
                 const tenantId = Object.keys(userSnap.val())[0];
-                window.location.href = `/workspace?tenant=${tenantId}`;
+                // ✅ REDIRECT TO workspace.html
+                window.location.href = `workspace.html?tenant=${tenantId}`;
             } else {
                 const adminSnap = await get(ref(db, `admins/${userCredential.user.uid}`));
                 if (adminSnap.exists()) {
-                    window.location.href = '/admin';
+                    window.location.href = 'admin.html';
                 } else {
                     throw new Error('No workspace found');
                 }
@@ -1530,7 +1531,7 @@
         if (user) console.log('Signed in:', user.email);
     });
 
-    console.log('🚀 Jasiri Suite — Production Ready');
+    console.log('🚀 Jasiri Suite — Redirects to workspace.html');
 </script>
 </body>
 </html>
