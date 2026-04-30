@@ -15,14 +15,17 @@
             --purple-300: #C4B5FD; --purple-200: #DDD6FE; --purple-100: #EDE9FE;
             --purple-50: #F5F3FF; --white: #FFFFFF; --gray-50: #FAFAFA;
             --gray-100: #F5F5F5; --gray-200: #E5E5E5; --gray-300: #D4D4D4;
-            --gray-500: #737373; --gray-600: #525252; --gray-700: #404040;
-            --gray-900: #171717; --success: #10B981; --warning: #F59E0B;
-            --danger: #EF4444; --pink: #EC4899; --orange: #F97316; --teal: #14B8A6;
+            --gray-400: #A3A3A3; --gray-500: #737373; --gray-600: #525252;
+            --gray-700: #404040; --gray-900: #171717;
+            --success: #10B981; --warning: #F59E0B; --danger: #EF4444;
+            --pink: #EC4899; --orange: #F97316; --teal: #14B8A6;
             --gradient-primary: linear-gradient(135deg, #6B3BC2 0%, #8B5CF6 100%);
-            --shadow-sm: 0 1px 3px rgba(107, 59, 194, 0.08);
-            --shadow-md: 0 4px 16px rgba(107, 59, 194, 0.12);
-            --shadow-lg: 0 12px 40px rgba(107, 59, 194, 0.18);
-            --shadow-xl: 0 20px 60px rgba(107, 59, 194, 0.22);
+            --gradient-dark: linear-gradient(135deg, #1a0a2e 0%, #3d1a6e 100%);
+            --shadow-sm: 0 1px 3px rgba(107, 59, 194, 0.06);
+            --shadow-md: 0 4px 16px rgba(107, 59, 194, 0.10);
+            --shadow-lg: 0 12px 40px rgba(107, 59, 194, 0.15);
+            --shadow-xl: 0 24px 60px rgba(107, 59, 194, 0.20);
+            --card-width: 360px;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
@@ -32,28 +35,41 @@
             color: var(--gray-900); min-height: 100vh;
         }
 
-        /* Top Bar */
+        /* ---- TOP BAR ---- */
         .topbar {
-            background: white; border-bottom: 1px solid var(--purple-100);
-            padding: 0 1.5rem; height: 56px; display: flex;
+            background: rgba(255,255,255,0.97); backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--purple-100);
+            padding: 0 1.5rem; height: 60px; display: flex;
             align-items: center; justify-content: space-between;
             position: sticky; top: 0; z-index: 100;
         }
         .topbar-left { display: flex; align-items: center; gap: 1rem; }
         .back-btn {
-            width: 34px; height: 34px; border-radius: 50%;
+            width: 36px; height: 36px; border-radius: 50%;
             border: 1px solid var(--purple-100); background: white;
             cursor: pointer; display: flex; align-items: center; justify-content: center;
             color: var(--gray-700); transition: all 0.2s; text-decoration: none;
         }
         .back-btn:hover { background: var(--purple-50); border-color: var(--purple-300); color: var(--purple-600); }
+        .app-title { display: flex; align-items: center; gap: 0.5rem; }
+        .app-icon {
+            width: 32px; height: 32px; background: var(--gradient-primary);
+            border-radius: 8px; display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 0.85rem;
+        }
         .app-title h1 { font-size: 1rem; font-weight: 700; }
         .tenant-badge {
             font-size: 0.7rem; font-weight: 600; color: var(--purple-600);
-            background: var(--purple-50); padding: 0.2rem 0.7rem;
+            background: var(--purple-50); padding: 0.25rem 0.8rem;
             border-radius: 50px; border: 1px solid var(--purple-100);
         }
         .topbar-right { display: flex; align-items: center; gap: 0.8rem; }
+        .plan-badge {
+            padding: 5px 14px; border-radius: 20px; font-size: 11px; font-weight: 700;
+        }
+        .plan-free { background: var(--gray-100); color: var(--gray-600); }
+        .plan-pro { background: #EDE9FE; color: #5B21B6; }
+        .plan-enterprise { background: var(--gradient-primary); color: white; }
         .user-avatar {
             width: 34px; height: 34px; border-radius: 50%;
             background: var(--gradient-primary); display: flex; align-items: center;
@@ -62,195 +78,359 @@
 
         .container { max-width: 1280px; margin: 0 auto; padding: 24px; }
 
-        /* Hero Banner */
+        /* ---- HERO ---- */
         .hero-banner {
-            background: var(--gradient-primary); color: white;
-            border-radius: 20px; padding: 40px; margin-bottom: 28px;
-            text-align: center; box-shadow: var(--shadow-lg);
+            background: var(--gradient-dark); color: white;
+            border-radius: 24px; padding: 48px 40px; margin-bottom: 28px;
+            text-align: center; position: relative; overflow: hidden;
         }
-        .hero-banner h2 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
-        .hero-banner p { font-size: 14px; opacity: 0.9; max-width: 600px; margin: 0 auto; }
+        .hero-banner::before {
+            content: ''; position: absolute; top: -30%; right: -10%;
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(139,92,246,0.35) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .hero-banner::after {
+            content: ''; position: absolute; bottom: -40%; left: -5%;
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, rgba(167,139,250,0.25) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .hero-banner h2 { font-size: 32px; font-weight: 900; margin-bottom: 8px; position: relative; }
+        .hero-banner p { font-size: 15px; opacity: 0.9; max-width: 600px; margin: 0 auto; position: relative; }
+        .hero-stats {
+            display: flex; justify-content: center; gap: 40px;
+            margin-top: 24px; position: relative;
+        }
+        .hero-stat { text-align: center; }
+        .hero-stat .number { font-size: 28px; font-weight: 900; }
+        .hero-stat .label { font-size: 11px; opacity: 0.7; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* App Filter Tabs */
-        .filter-tabs {
-            display: flex; gap: 6px; margin-bottom: 20px;
-            flex-wrap: wrap; background: white; padding: 6px;
-            border-radius: 14px; border: 1px solid var(--purple-100);
+        /* ---- FILTERS ---- */
+        .filters-container {
+            background: white; border-radius: 18px; padding: 16px 20px;
+            margin-bottom: 24px; border: 1px solid var(--purple-100);
             box-shadow: var(--shadow-sm);
         }
-        .filter-tab {
-            padding: 10px 18px; border-radius: 10px; background: transparent;
-            border: none; color: var(--gray-600); font-size: 13px; font-weight: 600;
-            cursor: pointer; transition: all 0.2s; display: flex; align-items: center;
-            gap: 8px; font-family: 'Inter', sans-serif;
+        .filter-row {
+            display: flex; gap: 18px; align-items: center; flex-wrap: wrap;
         }
-        .filter-tab:hover { background: var(--purple-50); color: var(--purple-600); }
-        .filter-tab.active { background: var(--purple-100); color: var(--purple-700); font-weight: 700; }
-        .filter-tab .count {
-            background: var(--purple-200); color: var(--purple-700);
-            padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600;
+        .filter-label {
+            font-size: 12px; font-weight: 700; color: var(--gray-500);
+            text-transform: uppercase; letter-spacing: 0.8px; white-space: nowrap;
         }
+        .filter-pills { display: flex; gap: 6px; flex-wrap: wrap; }
+        .filter-pill {
+            padding: 7px 16px; border-radius: 20px; border: 1.5px solid var(--purple-100);
+            background: white; color: var(--gray-600); font-size: 12px; font-weight: 600;
+            cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 6px;
+            font-family: 'Inter', sans-serif; white-space: nowrap;
+        }
+        .filter-pill:hover { border-color: var(--purple-300); background: var(--purple-50); }
+        .filter-pill.active { background: var(--purple-600); color: white; border-color: var(--purple-600); }
+        .filter-pill.free.active { background: var(--success); border-color: var(--success); }
+        .filter-pill.pro.active { background: var(--purple-600); border-color: var(--purple-600); }
+        .filter-pill.enterprise.active { background: var(--warning); border-color: var(--warning); }
+        .filter-pill .count {
+            background: rgba(0,0,0,0.08); padding: 2px 8px; border-radius: 10px; font-size: 10px;
+        }
+        .filter-pill.active .count { background: rgba(255,255,255,0.2); }
 
-        /* Search */
         .search-box {
-            display: flex; align-items: center; background: white;
-            border: 1px solid var(--purple-100); border-radius: 12px;
-            padding: 0 16px; margin-bottom: 20px; box-shadow: var(--shadow-sm);
+            display: flex; align-items: center; background: var(--purple-50);
+            border: 2px solid transparent; border-radius: 12px;
+            padding: 0 14px; transition: all 0.2s; flex: 1; min-width: 200px;
         }
-        .search-box i { color: var(--gray-500); }
+        .search-box:focus-within { border-color: var(--purple-400); background: white; }
+        .search-box i { color: var(--gray-400); font-size: 15px; }
         .search-box input {
-            width: 100%; padding: 12px 16px; border: none;
-            font-size: 14px; font-family: 'Inter', sans-serif; outline: none;
+            width: 100%; padding: 10px 12px; border: none;
+            font-size: 13px; font-family: 'Inter', sans-serif; outline: none; background: transparent;
         }
+        .search-box input::placeholder { color: var(--gray-400); }
 
-        /* Templates Grid */
+        /* ---- TEMPLATES GRID ---- */
         .templates-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 18px;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 22px;
         }
         .template-card {
-            background: white; border-radius: 16px; overflow: hidden;
-            border: 1px solid var(--purple-100); transition: all 0.3s ease;
+            background: white; border-radius: 20px; overflow: hidden;
+            border: 1px solid var(--purple-100); transition: all 0.35s cubic-bezier(0.2, 0.8, 0.4, 1);
             box-shadow: var(--shadow-sm); display: flex; flex-direction: column;
+            position: relative;
         }
         .template-card:hover {
-            transform: translateY(-6px); box-shadow: var(--shadow-xl);
+            transform: translateY(-8px); box-shadow: var(--shadow-xl);
             border-color: var(--purple-300);
         }
-        .template-preview {
-            height: 160px; display: flex; align-items: center; justify-content: center;
-            position: relative; overflow: hidden;
-        }
-        .template-preview.emh { background: linear-gradient(135deg, #EDE9FE, #C4B5FD); }
-        .template-preview.erh { background: linear-gradient(135deg, #FCE7F3, #FBCFE8); }
-        .template-preview.efh { background: linear-gradient(135deg, #FEF3C7, #FDE68A); }
-        .template-preview.efs { background: linear-gradient(135deg, #D1FAE5, #A7F3D0); }
-        .template-preview.talents { background: linear-gradient(135deg, #FFEDD5, #FED7AA); }
-        .template-preview i { font-size: 48px; opacity: 0.8; }
-        .template-preview.emh i { color: #6B3BC2; }
-        .template-preview.erh i { color: #EC4899; }
-        .template-preview.efh i { color: #F59E0B; }
-        .template-preview.efs i { color: #10B981; }
-        .template-preview.talents i { color: #F97316; }
 
-        .template-badge {
-            position: absolute; top: 12px; right: 12px;
-            padding: 4px 12px; border-radius: 20px; font-size: 10px;
-            font-weight: 700; letter-spacing: 0.3px; text-transform: uppercase;
+        /* Template Image */
+        .template-image {
+            height: 200px; position: relative; overflow: hidden;
+            background: var(--gray-50); cursor: pointer;
         }
-        .badge-emh { background: #EDE9FE; color: #5B21B6; }
-        .badge-erh { background: #FCE7F3; color: #9D174D; }
-        .badge-efh { background: #FEF3C7; color: #92400E; }
-        .badge-efs { background: #D1FAE5; color: #065F46; }
-        .badge-talents { background: #FFEDD5; color: #9A3412; }
+        .template-image img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .template-card:hover .template-image img { transform: scale(1.06); }
+        .template-image .image-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(0deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.05) 40%, transparent 60%);
+            transition: opacity 0.3s;
+        }
+        .template-card:hover .image-overlay { opacity: 0.7; }
 
-        .template-body { padding: 18px 20px; flex: 1; display: flex; flex-direction: column; }
-        .template-body h3 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
-        .template-body p { font-size: 12px; color: var(--gray-600); line-height: 1.5; margin-bottom: 14px; flex: 1; }
+        /* Badges on image */
+        .template-image .tier-badge {
+            position: absolute; top: 14px; left: 14px;
+            padding: 5px 14px; border-radius: 20px; font-size: 10px;
+            font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase;
+            backdrop-filter: blur(12px); z-index: 2;
+        }
+        .tier-free { background: rgba(16,185,129,0.9); color: white; }
+        .tier-pro { background: rgba(107,59,194,0.9); color: white; }
+        .tier-enterprise { background: rgba(245,158,11,0.9); color: white; }
+
+        .template-image .app-badge {
+            position: absolute; top: 14px; right: 14px;
+            padding: 5px 12px; border-radius: 20px; font-size: 10px;
+            font-weight: 700; backdrop-filter: blur(12px); z-index: 2;
+            display: flex; align-items: center; gap: 5px;
+        }
+        .app-badge-emh { background: rgba(237,233,254,0.9); color: #5B21B6; }
+        .app-badge-erh { background: rgba(252,231,243,0.9); color: #9D174D; }
+        .app-badge-efh { background: rgba(254,243,199,0.9); color: #92400E; }
+        .app-badge-efs { background: rgba(209,250,229,0.9); color: #065F46; }
+        .app-badge-talents { background: rgba(255,237,213,0.9); color: #9A3412; }
+
+        .template-image .quick-preview-btn {
+            position: absolute; bottom: 14px; right: 14px; z-index: 2;
+            width: 42px; height: 42px; border-radius: 50%;
+            background: white; border: none; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--purple-600); font-size: 16px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+            transition: all 0.3s ease;
+            opacity: 0; transform: translateY(12px);
+        }
+        .template-card:hover .quick-preview-btn {
+            opacity: 1; transform: translateY(0);
+        }
+        .quick-preview-btn:hover {
+            background: var(--purple-600); color: white; transform: scale(1.1);
+        }
+
+        .template-image .image-placeholder {
+            width: 100%; height: 100%; display: flex;
+            align-items: center; justify-content: center; font-size: 64px;
+        }
+
+        /* Template Body */
+        .template-body { padding: 18px 22px 20px; flex: 1; display: flex; flex-direction: column; }
+        .template-body h3 { font-size: 16px; font-weight: 700; margin-bottom: 6px; line-height: 1.3; }
+        .template-body p { font-size: 12px; color: var(--gray-600); line-height: 1.55; margin-bottom: 14px; flex: 1; }
+        .template-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+        .template-tag {
+            padding: 4px 10px; border-radius: 6px; font-size: 10px; font-weight: 600;
+            background: var(--purple-50); color: var(--purple-600);
+        }
         .template-meta {
             display: flex; justify-content: space-between; align-items: center;
             font-size: 11px; color: var(--gray-500);
-            padding-top: 12px; border-top: 1px solid var(--purple-50);
+            padding-top: 14px; border-top: 1px solid var(--purple-50); margin-bottom: 14px;
         }
         .template-meta span { display: flex; align-items: center; gap: 5px; }
-        .template-actions { display: flex; gap: 8px; margin-top: 12px; }
+        .template-actions { display: flex; gap: 8px; }
         .btn {
-            padding: 8px 16px; border-radius: 8px; font-size: 12px; font-weight: 600;
+            padding: 9px 16px; border-radius: 10px; font-size: 12px; font-weight: 600;
             cursor: pointer; transition: all 0.2s; border: none; text-decoration: none;
             display: inline-flex; align-items: center; gap: 6px; font-family: 'Inter', sans-serif;
             white-space: nowrap;
         }
         .btn-primary { background: var(--gradient-primary); color: white; flex: 1; justify-content: center; }
-        .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
-        .btn-outline { background: white; border: 1px solid var(--purple-100); color: var(--gray-700); }
-        .btn-outline:hover { background: var(--purple-50); }
-
-        .empty-state { text-align: center; padding: 60px; grid-column: 1/-1; color: var(--gray-500); }
-        .empty-state i { font-size: 48px; margin-bottom: 16px; opacity: 0.3; }
-
-        /* Preview Modal */
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(6px); justify-content: center; align-items: center; z-index: 1000; }
-        .modal-overlay.active { display: flex; }
-        .modal {
-            background: white; border-radius: 20px; padding: 0; max-width: 700px;
-            width: 90%; max-height: 85vh; overflow: hidden; box-shadow: var(--shadow-xl);
-            animation: slideUp 0.3s ease; display: flex; flex-direction: column;
+        .btn-primary:hover { opacity: 0.92; transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        .btn-outline {
+            background: white; border: 1.5px solid var(--purple-100); color: var(--gray-700);
         }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .modal-header {
-            padding: 20px 24px; border-bottom: 1px solid var(--purple-100);
-            display: flex; justify-content: space-between; align-items: center;
+        .btn-outline:hover { background: var(--purple-50); border-color: var(--purple-300); }
+        .btn-locked {
+            background: var(--gray-100); color: var(--gray-500); cursor: not-allowed; flex: 1; justify-content: center;
+            border: 1.5px solid var(--gray-200);
         }
-        .modal-header h3 { font-size: 18px; font-weight: 800; }
-        .modal-close { background: none; border: none; font-size: 20px; cursor: pointer; color: var(--gray-500); }
-        .modal-close:hover { color: var(--danger); }
-        .modal-body { padding: 24px; overflow-y: auto; flex: 1; }
-        .modal-body iframe { width: 100%; height: 400px; border: 1px solid var(--purple-100); border-radius: 12px; }
-        .modal-footer { padding: 16px 24px; border-top: 1px solid var(--purple-100); display: flex; gap: 10px; justify-content: flex-end; }
+        .btn-locked:hover { background: var(--gray-100); transform: none; box-shadow: none; }
 
-        .toast { position: fixed; bottom: 24px; right: 24px; background: white; border: 1px solid var(--purple-100); border-radius: 10px; padding: 14px 22px; display: flex; align-items: center; gap: 10px; box-shadow: var(--shadow-lg); transform: translateX(120%); transition: transform 0.3s ease; z-index: 2000; }
-        .toast.show { transform: translateX(0); }
-        .toast.success { border-left: 4px solid var(--success); }
-        .toast i { font-size: 18px; color: var(--success); }
+        /* ---- EMPTY STATE ---- */
+        .empty-state {
+            text-align: center; padding: 80px 20px; grid-column: 1/-1;
+            color: var(--gray-500);
+        }
+        .empty-state i { font-size: 56px; margin-bottom: 16px; opacity: 0.25; }
+        .empty-state h3 { font-size: 18px; font-weight: 700; margin-bottom: 6px; color: var(--gray-700); }
+        .empty-state p { font-size: 13px; max-width: 400px; margin: 0 auto; }
 
-        .loading-state { display: flex; justify-content: center; align-items: center; padding: 60px; gap: 12px; color: var(--purple-600); grid-column: 1/-1; }
-        .loader { width: 32px; height: 32px; border: 3px solid var(--purple-100); border-top-color: var(--purple-600); border-radius: 50%; animation: spin 0.8s linear infinite; }
+        .loading-state {
+            display: flex; justify-content: center; align-items: center;
+            padding: 80px 20px; gap: 14px; color: var(--purple-600); grid-column: 1/-1;
+        }
+        .loader {
+            width: 40px; height: 40px;
+            border: 3px solid var(--purple-100); border-top-color: var(--purple-600);
+            border-radius: 50%; animation: spin 0.8s linear infinite;
+        }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        @media (max-width: 768px) {
+        /* ---- PREVIEW MODAL ---- */
+        .modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.65); backdrop-filter: blur(8px);
+            justify-content: center; align-items: center; z-index: 1000;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal {
+            background: white; border-radius: 24px; padding: 0;
+            max-width: 800px; width: 92%; max-height: 88vh;
+            overflow: hidden; box-shadow: var(--shadow-xl);
+            animation: modalIn 0.35s cubic-bezier(0.2, 0.8, 0.4, 1);
+            display: flex; flex-direction: column;
+        }
+        @keyframes modalIn {
+            from { opacity: 0; transform: translateY(30px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .modal-header {
+            padding: 22px 28px; border-bottom: 1px solid var(--purple-100);
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .modal-header h3 { font-size: 19px; font-weight: 800; display: flex; align-items: center; gap: 10px; }
+        .modal-close {
+            background: var(--gray-100); border: none; width: 36px; height: 36px;
+            border-radius: 50%; cursor: pointer; color: var(--gray-600); font-size: 16px;
+            display: flex; align-items: center; justify-content: center; transition: all 0.2s;
+        }
+        .modal-close:hover { background: #FEE2E2; color: var(--danger); }
+        .modal-body { padding: 24px 28px; overflow-y: auto; flex: 1; }
+        .modal-body .info-row {
+            display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 20px;
+        }
+        .modal-body .info-pill {
+            padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600;
+            display: flex; align-items: center; gap: 6px;
+        }
+        .modal-body iframe {
+            width: 100%; height: 450px; border: 1px solid var(--purple-100);
+            border-radius: 14px; background: white;
+        }
+        .modal-footer {
+            padding: 18px 28px; border-top: 1px solid var(--purple-100);
+            display: flex; gap: 10px; justify-content: flex-end; background: var(--gray-50);
+        }
+
+        /* ---- TOAST ---- */
+        .toast {
+            position: fixed; bottom: 28px; right: 28px;
+            background: white; border: 1px solid var(--purple-100);
+            border-radius: 14px; padding: 16px 24px;
+            display: flex; align-items: center; gap: 10px;
+            box-shadow: var(--shadow-lg); transform: translateX(120%);
+            transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.4, 1); z-index: 2000;
+        }
+        .toast.show { transform: translateX(0); }
+        .toast.success { border-left: 4px solid var(--success); }
+        .toast.success i { color: var(--success); }
+        .toast.error { border-left: 4px solid var(--danger); }
+        .toast.error i { color: var(--danger); }
+        .toast i { font-size: 20px; }
+
+        /* ---- RESPONSIVE ---- */
+        @media (max-width: 900px) {
             .container { padding: 16px; }
-            .hero-banner { padding: 24px; }
-            .hero-banner h2 { font-size: 22px; }
+            .hero-banner { padding: 32px 24px; }
+            .hero-banner h2 { font-size: 24px; }
+            .hero-stats { gap: 24px; }
+            .hero-stat .number { font-size: 22px; }
             .templates-grid { grid-template-columns: 1fr; }
-            .filter-tabs { overflow-x: auto; flex-wrap: nowrap; }
+            .filter-row { flex-direction: column; gap: 10px; align-items: stretch; }
+            .search-box { min-width: auto; }
+            .modal-body iframe { height: 300px; }
+        }
+        @media (max-width: 500px) {
+            .template-image { height: 160px; }
+            .hero-stats { flex-direction: column; gap: 12px; }
+            .filter-pills { overflow-x: auto; flex-wrap: nowrap; padding-bottom: 4px; }
         }
     </style>
 </head>
 <body>
 
-<!-- Top Bar -->
+<!-- ==== TOP BAR ==== -->
 <header class="topbar">
     <div class="topbar-left">
         <a href="workspace.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
-        <div class="app-title"><h1>📋 Sheet Templates</h1></div>
+        <div class="app-title">
+            <div class="app-icon"><i class="fas fa-file-excel"></i></div>
+            <h1>Sheet Templates</h1>
+        </div>
         <span class="tenant-badge" id="tenantBadge">Loading...</span>
     </div>
     <div class="topbar-right">
-        <div class="user-avatar" id="userAvatar" onclick="toggleDropdown()"><span id="avatarInitials">U</span></div>
-        <div id="userDropdown" style="display:none;position:absolute;top:56px;right:16px;background:white;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.15);border:1px solid var(--purple-100);min-width:200px;padding:8px;z-index:200;">
+        <span class="plan-badge plan-free" id="planBadge">FREE</span>
+        <div class="user-avatar" id="userAvatar" onclick="toggleDropdown()">
+            <span id="avatarInitials">U</span>
+        </div>
+        <div id="userDropdown" style="display:none;position:absolute;top:60px;right:16px;background:white;border-radius:14px;box-shadow:0 10px 40px rgba(0,0,0,0.18);border:1px solid var(--purple-100);min-width:210px;padding:8px;z-index:200;">
             <div style="padding:10px 14px;border-bottom:1px solid var(--purple-50);margin-bottom:4px;">
                 <div style="font-weight:700;font-size:13px;" id="dropdownName">User</div>
                 <div style="font-size:11px;color:var(--gray-500);" id="dropdownEmail">email</div>
             </div>
-            <a href="workspace.html" style="display:flex;align-items:center;gap:8px;padding:8px 14px;color:var(--gray-700);text-decoration:none;font-size:13px;border-radius:8px;">🏠 Workspace</a>
-            <a href="admin-templates.html" style="display:flex;align-items:center;gap:8px;padding:8px 14px;color:var(--gray-700);text-decoration:none;font-size:13px;border-radius:8px;">⚙️ Manage Templates</a>
-            <button onclick="handleSignOut()" style="display:flex;align-items:center;gap:8px;padding:8px 14px;color:var(--danger);background:none;border:none;width:100%;text-align:left;font-size:13px;cursor:pointer;border-radius:8px;margin-top:4px;border-top:1px solid var(--purple-50);font-family:'Inter',sans-serif;">🚪 Sign Out</button>
+            <a href="workspace.html" style="display:flex;align-items:center;gap:8px;padding:9px 14px;color:var(--gray-700);text-decoration:none;font-size:13px;border-radius:8px;">🏠 Workspace</a>
+            <a href="admin-templates.html" style="display:flex;align-items:center;gap:8px;padding:9px 14px;color:var(--gray-700);text-decoration:none;font-size:13px;border-radius:8px;">⚙️ Manage Templates</a>
+            <button onclick="handleSignOut()" style="display:flex;align-items:center;gap:8px;padding:9px 14px;color:var(--danger);background:none;border:none;width:100%;text-align:left;font-size:13px;cursor:pointer;border-radius:8px;margin-top:4px;border-top:1px solid var(--purple-50);font-family:'Inter',sans-serif;">🚪 Sign Out</button>
         </div>
     </div>
 </header>
 
+<!-- ==== MAIN CONTENT ==== -->
 <div class="container">
     <!-- Hero -->
     <div class="hero-banner">
-        <h2>🚀 Ready-to-Use Google Sheet Templates</h2>
-        <p>Pick a template, copy it to your Google Drive, and start managing your business instantly. No setup required.</p>
+        <h2>🚀 Ready-to-Use Sheet Templates</h2>
+        <p>Browse professionally designed Google Sheet templates. Each one is ready to copy and customize for your business.</p>
+        <div class="hero-stats">
+            <div class="hero-stat"><div class="number" id="heroTotal">0</div><div class="label">Templates</div></div>
+            <div class="hero-stat"><div class="number">5</div><div class="label">Business Hubs</div></div>
+            <div class="hero-stat"><div class="number">100%</div><div class="label">Free to Start</div></div>
+        </div>
     </div>
 
-    <!-- Filter Tabs -->
-    <div class="filter-tabs" id="filterTabs">
-        <button class="filter-tab active" data-app="all"><i class="fas fa-th-large"></i> All Templates <span class="count" id="countAll">0</span></button>
-        <button class="filter-tab" data-app="emh"><i class="fas fa-store"></i> Sales Hub <span class="count" id="countEmh">0</span></button>
-        <button class="filter-tab" data-app="erh"><i class="fas fa-users-cog"></i> Resource Hub <span class="count" id="countErh">0</span></button>
-        <button class="filter-tab" data-app="efh"><i class="fas fa-chart-pie"></i> Finance Hub <span class="count" id="countEfh">0</span></button>
-        <button class="filter-tab" data-app="efs"><i class="fas fa-truck"></i> Fleet Hub <span class="count" id="countEfs">0</span></button>
-        <button class="filter-tab" data-app="talents"><i class="fas fa-graduation-cap"></i> Talents Hub <span class="count" id="countTalents">0</span></button>
-    </div>
-
-    <!-- Search -->
-    <div class="search-box">
-        <i class="fas fa-search"></i>
-        <input type="text" id="searchInput" placeholder="Search templates by name, description, or category..." oninput="filterTemplates()">
+    <!-- Filters -->
+    <div class="filters-container">
+        <div class="filter-row">
+            <span class="filter-label">Tier</span>
+            <div class="filter-pills" id="tierPills">
+                <button class="filter-pill active" data-tier="all"><i class="fas fa-th-large"></i> All <span class="count" id="countAll">0</span></button>
+                <button class="filter-pill free" data-tier="free"><i class="fas fa-gift"></i> Free <span class="count" id="countFree">0</span></button>
+                <button class="filter-pill pro" data-tier="pro"><i class="fas fa-star"></i> Pro <span class="count" id="countPro">0</span></button>
+                <button class="filter-pill enterprise" data-tier="enterprise"><i class="fas fa-crown"></i> Enterprise <span class="count" id="countEnt">0</span></button>
+            </div>
+            <span class="filter-label">App</span>
+            <div class="filter-pills" id="appPills">
+                <button class="filter-pill active" data-app="all"><i class="fas fa-th-large"></i> All <span class="count" id="countAppAll">0</span></button>
+                <button class="filter-pill" data-app="emh"><i class="fas fa-store"></i> Sales <span class="count" id="countAppEmh">0</span></button>
+                <button class="filter-pill" data-app="erh"><i class="fas fa-users-cog"></i> Resource <span class="count" id="countAppErh">0</span></button>
+                <button class="filter-pill" data-app="efh"><i class="fas fa-chart-pie"></i> Finance <span class="count" id="countAppEfh">0</span></button>
+                <button class="filter-pill" data-app="efs"><i class="fas fa-truck"></i> Fleet <span class="count" id="countAppEfs">0</span></button>
+                <button class="filter-pill" data-app="talents"><i class="fas fa-graduation-cap"></i> Talents <span class="count" id="countAppTalents">0</span></button>
+            </div>
+        </div>
+        <div class="filter-row" style="margin-top:12px;">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search templates by name, description, or category..." oninput="applyFilters()">
+            </div>
+        </div>
     </div>
 
     <!-- Templates Grid -->
@@ -259,7 +439,7 @@
     </div>
 </div>
 
-<!-- Preview Modal -->
+<!-- ==== PREVIEW MODAL ==== -->
 <div class="modal-overlay" id="previewModal">
     <div class="modal">
         <div class="modal-header">
@@ -267,21 +447,22 @@
             <button class="modal-close" onclick="closePreview()"><i class="fas fa-times"></i></button>
         </div>
         <div class="modal-body">
-            <p id="previewDesc" style="margin-bottom:16px;color:var(--gray-600);"></p>
-            <iframe id="previewIframe" src="" frameborder="0"></iframe>
+            <div class="info-row" id="previewInfo"></div>
+            <iframe id="previewIframe" src="" frameborder="0" title="Template Preview"></iframe>
         </div>
         <div class="modal-footer">
             <button class="btn btn-outline" onclick="closePreview()">Close</button>
-            <button class="btn btn-primary" id="copyTemplateBtn" onclick="copyTemplate()">
-                <i class="fas fa-copy"></i> Make a Copy
+            <button class="btn btn-primary" onclick="copyTemplate()">
+                <i class="fas fa-copy"></i> Make a Copy in Google Drive
             </button>
         </div>
     </div>
 </div>
 
-<!-- Toast -->
+<!-- ==== TOAST ==== -->
 <div class="toast" id="toast"><i class="fas fa-check-circle"></i><span id="toastMessage"></span></div>
 
+<!-- ==== SCRIPTS ==== -->
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
@@ -302,9 +483,12 @@
     const db = getDatabase(app);
 
     let allTemplates = [];
-    let currentFilter = 'all';
+    let currentTier = 'all';
+    let currentApp = 'all';
     let selectedTemplate = null;
+    let userPlan = 'free';
 
+    // ============ DROPDOWN ============
     window.toggleDropdown = () => {
         const dd = document.getElementById('userDropdown');
         dd.style.display = dd.style.display === 'none' ? 'block' : 'none';
@@ -316,8 +500,38 @@
     });
     window.handleSignOut = async () => { await signOut(auth); window.location.href = 'index.html'; };
 
-    function showToast(msg) { const t = document.getElementById('toast'); document.getElementById('toastMessage').textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 3000); }
+    // ============ TOAST ============
+    function showToast(msg, type = 'success') {
+        const t = document.getElementById('toast');
+        document.getElementById('toastMessage').textContent = msg;
+        t.className = `toast ${type} show`;
+        setTimeout(() => t.classList.remove('show'), 3000);
+    }
 
+    // ============ EXTRACT SHEET ID ============
+    function extractSheetId(url) {
+        if (!url) return null;
+        const match = url.match(/\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/);
+        return match ? match[1] : null;
+    }
+
+    // ============ GET TEMPLATE IMAGE ============
+    function getTemplateImage(template) {
+        // 1. Custom image URL from admin
+        if (template.imageUrl && template.imageUrl.trim() !== '') {
+            return template.imageUrl;
+        }
+        // 2. Auto-generate Google Sheets thumbnail
+        if (template.sheetUrl) {
+            const sheetId = extractSheetId(template.sheetUrl);
+            if (sheetId) {
+                return `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=png&size=600x400&gid=0`;
+            }
+        }
+        return null;
+    }
+
+    // ============ LOAD TEMPLATES ============
     async function loadTemplates() {
         const grid = document.getElementById('templatesGrid');
         grid.innerHTML = '<div class="loading-state"><div class="loader"></div><span>Loading templates...</span></div>';
@@ -325,84 +539,164 @@
         try {
             const snap = await get(ref(db, 'templates/sheets'));
             allTemplates = snap.exists() ? Object.values(snap.val()) : [];
-            
-            // Update counts
-            const counts = { all: allTemplates.length, emh: 0, erh: 0, efh: 0, efs: 0, talents: 0 };
-            allTemplates.forEach(t => { if (counts[t.app] !== undefined) counts[t.app]++; });
-            document.getElementById('countAll').textContent = counts.all;
-            document.getElementById('countEmh').textContent = counts.emh;
-            document.getElementById('countErh').textContent = counts.erh;
-            document.getElementById('countEfh').textContent = counts.efh;
-            document.getElementById('countEfs').textContent = counts.efs;
-            document.getElementById('countTalents').textContent = counts.talents;
-
-            filterTemplates();
+            updateCounts();
+            document.getElementById('heroTotal').textContent = allTemplates.length;
+            applyFilters();
         } catch (e) {
-            grid.innerHTML = '<div class="empty-state"><i class="fas fa-exclamation-triangle"></i><p>Error loading templates</p></div>';
+            console.error('Load error:', e);
+            grid.innerHTML = '<div class="empty-state"><i class="fas fa-exclamation-triangle"></i><h3>Error Loading</h3><p>Please refresh the page to try again.</p></div>';
         }
     }
 
-    window.filterTemplates = () => {
+    function updateCounts() {
+        const tiers = { all: 0, free: 0, pro: 0, enterprise: 0 };
+        const apps = { all: 0, emh: 0, erh: 0, efh: 0, efs: 0, talents: 0 };
+        allTemplates.forEach(t => {
+            tiers.all++; apps.all++;
+            if (t.tier) tiers[t.tier] = (tiers[t.tier] || 0) + 1;
+            if (t.app) apps[t.app] = (apps[t.app] || 0) + 1;
+        });
+        document.getElementById('countAll').textContent = tiers.all;
+        document.getElementById('countFree').textContent = tiers.free;
+        document.getElementById('countPro').textContent = tiers.pro;
+        document.getElementById('countEnt').textContent = tiers.enterprise;
+        document.getElementById('countAppAll').textContent = apps.all;
+        document.getElementById('countAppEmh').textContent = apps.emh;
+        document.getElementById('countAppErh').textContent = apps.erh;
+        document.getElementById('countAppEfh').textContent = apps.efh;
+        document.getElementById('countAppEfs').textContent = apps.efs;
+        document.getElementById('countAppTalents').textContent = apps.talents;
+    }
+
+    // ============ FILTERS ============
+    window.applyFilters = () => {
         const search = document.getElementById('searchInput').value.toLowerCase();
         let filtered = allTemplates;
-
-        if (currentFilter !== 'all') {
-            filtered = filtered.filter(t => t.app === currentFilter);
-        }
+        if (currentTier !== 'all') filtered = filtered.filter(t => t.tier === currentTier);
+        if (currentApp !== 'all') filtered = filtered.filter(t => t.app === currentApp);
         if (search) {
-            filtered = filtered.filter(t => 
-                (t.name||'').toLowerCase().includes(search) ||
-                (t.description||'').toLowerCase().includes(search) ||
-                (t.category||'').toLowerCase().includes(search)
+            filtered = filtered.filter(t =>
+                (t.name || '').toLowerCase().includes(search) ||
+                (t.description || '').toLowerCase().includes(search) ||
+                (t.category || '').toLowerCase().includes(search)
             );
         }
-
         renderTemplates(filtered);
     };
 
+    // Tier pill clicks
+    document.getElementById('tierPills').addEventListener('click', (e) => {
+        const pill = e.target.closest('.filter-pill');
+        if (!pill) return;
+        document.querySelectorAll('#tierPills .filter-pill').forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        currentTier = pill.dataset.tier;
+        applyFilters();
+    });
+
+    // App pill clicks
+    document.getElementById('appPills').addEventListener('click', (e) => {
+        const pill = e.target.closest('.filter-pill');
+        if (!pill) return;
+        document.querySelectorAll('#appPills .filter-pill').forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        currentApp = pill.dataset.app;
+        applyFilters();
+    });
+
+    // ============ RENDER ============
     function renderTemplates(templates) {
         const grid = document.getElementById('templatesGrid');
-        
         if (templates.length === 0) {
-            grid.innerHTML = '<div class="empty-state"><i class="fas fa-file-excel"></i><h3>No templates found</h3><p>Try a different filter or search term</p></div>';
+            grid.innerHTML = `<div class="empty-state"><i class="fas fa-file-excel"></i><h3>No templates found</h3><p>Try adjusting your filters or search term</p></div>`;
             return;
         }
 
         const appNames = { emh: 'Sales Hub', erh: 'Resource Hub', efh: 'Finance Hub', efs: 'Fleet Hub', talents: 'Talents Hub' };
         const appIcons = { emh: 'fa-store', erh: 'fa-users-cog', efh: 'fa-chart-pie', efs: 'fa-truck', talents: 'fa-graduation-cap' };
+        const tierNames = { free: 'Free', pro: 'Pro', enterprise: 'Enterprise' };
+        const appGradients = {
+            emh: 'linear-gradient(135deg, #EDE9FE, #C4B5FD)',
+            erh: 'linear-gradient(135deg, #FCE7F3, #FBCFE8)',
+            efh: 'linear-gradient(135deg, #FEF3C7, #FDE68A)',
+            efs: 'linear-gradient(135deg, #D1FAE5, #A7F3D0)',
+            talents: 'linear-gradient(135deg, #FFEDD5, #FED7AA)'
+        };
 
-        grid.innerHTML = templates.map(t => `
+        grid.innerHTML = templates.map(t => {
+            const isLocked = t.tier !== 'free' && userPlan === 'free';
+            const imageUrl = getTemplateImage(t);
+            const hasCustomImage = t.imageUrl && t.imageUrl.trim() !== '';
+
+            return `
             <div class="template-card">
-                <div class="template-preview ${t.app || 'emh'}">
-                    <i class="fas ${appIcons[t.app] || 'fa-file-excel'}"></i>
-                    <span class="template-badge badge-${t.app || 'emh'}">${appNames[t.app] || t.app}</span>
+                <div class="template-image" onclick="previewTemplate('${t.id}')">
+                    ${imageUrl ? `
+                        <img src="${imageUrl}" alt="${t.name}" 
+                             onerror="this.style.display='none';this.parentElement.querySelector('.image-placeholder').style.display='flex';">
+                    ` : ''}
+                    <div class="image-placeholder" style="display:${imageUrl ? 'none' : 'flex'};background:${appGradients[t.app]};width:100%;height:100%;align-items:center;justify-content:center;">
+                        <i class="fas ${appIcons[t.app]}" style="font-size:64px;opacity:0.35;color:${t.app==='emh'?'#6B3BC2':t.app==='erh'?'#EC4899':t.app==='efh'?'#F59E0B':t.app==='efs'?'#10B981':'#F97316'};"></i>
+                    </div>
+                    <div class="image-overlay"></div>
+                    <span class="tier-badge tier-${t.tier || 'free'}">${tierNames[t.tier] || 'Free'}</span>
+                    <span class="app-badge app-badge-${t.app || 'emh'}">
+                        <i class="fas ${appIcons[t.app]}"></i> ${appNames[t.app]}
+                    </span>
+                    <button class="quick-preview-btn" onclick="event.stopPropagation();previewTemplate('${t.id}')" title="Quick Preview">
+                        <i class="fas fa-eye"></i>
+                    </button>
                 </div>
                 <div class="template-body">
-                    <h3>${t.name || 'Untitled Template'}</h3>
+                    <h3>${t.name || 'Untitled'}</h3>
                     <p>${t.description || 'No description available.'}</p>
+                    <div class="template-tags">
+                        <span class="template-tag">${t.category || 'General'}</span>
+                        ${t.tier !== 'free' ? `<span class="template-tag">${tierNames[t.tier]}</span>` : ''}
+                    </div>
                     <div class="template-meta">
-                        <span><i class="fas fa-tag"></i> ${t.category || 'General'}</span>
-                        <span><i class="fas fa-eye"></i> ${t.views || 0} views</span>
+                        <span><i class="far fa-clock"></i> ${t.updatedAt ? new Date(t.updatedAt).toLocaleDateString() : 'Recently'}</span>
+                        <span><i class="fas fa-download"></i> ${t.views || 0} uses</span>
                     </div>
                     <div class="template-actions">
                         <button class="btn btn-outline" onclick="previewTemplate('${t.id}')">
                             <i class="fas fa-eye"></i> Preview
                         </button>
-                        <button class="btn btn-primary" onclick="useTemplate('${t.id}')">
-                            <i class="fas fa-copy"></i> Use Template
-                        </button>
+                        ${isLocked ? `
+                            <button class="btn btn-locked" onclick="showToast('${tierNames[t.tier]} template — upgrade from Free to access', 'error')">
+                                <i class="fas fa-lock"></i> Upgrade
+                            </button>
+                        ` : `
+                            <button class="btn btn-primary" onclick="useTemplate('${t.id}')">
+                                <i class="fas fa-copy"></i> Use Template
+                            </button>
+                        `}
                     </div>
                 </div>
-            </div>
-        `).join('');
+            </div>`;
+        }).join('');
     }
 
+    // ============ PREVIEW MODAL ============
     window.previewTemplate = (id) => {
         selectedTemplate = allTemplates.find(t => t.id === id);
         if (!selectedTemplate) return;
-        document.getElementById('previewTitle').textContent = selectedTemplate.name;
-        document.getElementById('previewDesc').textContent = selectedTemplate.description;
-        document.getElementById('previewIframe').src = selectedTemplate.sheetUrl?.replace('/edit', '/preview') || '';
+
+        const tierNames = { free: 'Free', pro: 'Pro', enterprise: 'Enterprise' };
+        const appNames = { emh: 'Sales Hub', erh: 'Resource Hub', efh: 'Finance Hub', efs: 'Fleet Hub', talents: 'Talents Hub' };
+
+        document.getElementById('previewTitle').textContent = selectedTemplate.name || 'Template Preview';
+        document.getElementById('previewInfo').innerHTML = `
+            <span class="info-pill tier-${selectedTemplate.tier || 'free'}" style="color:white;">${tierNames[selectedTemplate.tier] || 'Free'}</span>
+            <span class="info-pill app-badge-${selectedTemplate.app}" style="background:var(--purple-50);">${appNames[selectedTemplate.app]}</span>
+            <span class="info-pill" style="background:var(--gray-100);">${selectedTemplate.category || 'General'}</span>
+            <span class="info-pill" style="background:var(--gray-100);"><i class="fas fa-download"></i> ${selectedTemplate.views || 0} uses</span>
+        `;
+
+        const sheetId = extractSheetId(selectedTemplate.sheetUrl);
+        if (sheetId) {
+            document.getElementById('previewIframe').src = `https://docs.google.com/spreadsheets/d/${sheetId}/preview`;
+        }
         document.getElementById('previewModal').classList.add('active');
     };
 
@@ -416,7 +710,7 @@
         if (!selectedTemplate?.sheetUrl) return;
         const copyUrl = selectedTemplate.sheetUrl.replace('/edit', '/copy');
         window.open(copyUrl, '_blank');
-        showToast('Opening template copy link...');
+        showToast('Opening copy link in Google Sheets...');
         closePreview();
     };
 
@@ -428,25 +722,16 @@
         showToast('Template opened! Make a copy to your Google Drive.');
     };
 
-    // Filter tab clicks
-    document.getElementById('filterTabs').addEventListener('click', (e) => {
-        const tab = e.target.closest('.filter-tab');
-        if (!tab) return;
-        document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        currentFilter = tab.dataset.app;
-        filterTemplates();
-    });
-
     // Close modal on overlay click
     document.addEventListener('click', (e) => {
         if (e.target.classList.contains('modal-overlay')) closePreview();
     });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closePreview(); });
 
-    // Auth
+    // ============ AUTH ============
     onAuthStateChanged(auth, async (user) => {
         if (!user) { window.location.href = 'index.html'; return; }
-        document.getElementById('avatarInitials').textContent = (user.displayName||user.email||'U').substring(0,2).toUpperCase();
+        document.getElementById('avatarInitials').textContent = (user.displayName || user.email || 'U').substring(0, 2).toUpperCase();
         document.getElementById('dropdownName').textContent = user.displayName || user.email;
         document.getElementById('dropdownEmail').textContent = user.email;
 
@@ -454,9 +739,16 @@
         const tenantId = urlParams.get('tenant');
         if (tenantId) {
             const ts = await get(ref(db, `tenants/${tenantId}/info`));
-            document.getElementById('tenantBadge').textContent = ts.exists() ? ts.val().name : tenantId;
-        }
+            if (ts.exists()) document.getElementById('tenantBadge').textContent = ts.val().name;
 
+            const subSnap = await get(ref(db, `tenants/${tenantId}/subscription`));
+            if (subSnap.exists()) {
+                userPlan = subSnap.val().plan || 'free';
+                const badge = document.getElementById('planBadge');
+                badge.textContent = userPlan.toUpperCase();
+                badge.className = `plan-badge plan-${userPlan}`;
+            }
+        }
         loadTemplates();
     });
 </script>
