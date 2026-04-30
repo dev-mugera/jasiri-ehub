@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jasiri Suite | Workspace</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --purple-900: #1a0a2e;
+            --purple-800: #2d1154;
+            --purple-700: #3d1a6e;
+            --purple-600: #6B3BC2;
+            --purple-500: #8B5CF6;
+            --purple-400: #A78BFA;
+            --purple-300: #C4B5FD;
+            --purple-200: #DDD6FE;
+            --purple-100: #EDE9FE;
+            --purple-50: #F5F3FF;
+            --white: #FFFFFF;
+            --gray-50: #FAFAFA;
+            --gray-100: #F5F5F5;
+            --gray-200: #E5E5E5;
+            --gray-300: #D4D4D4;
+            --gray-400: #A3A3A3;
+            --gray-500: #737373;
+            --gray-600: #525252;
+            --gray-700: #404040;
+            --gray-800: #262626;
+            --gray-900: #171717;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --pink: #EC4899;
+            --orange: #F97316;
+            --teal: #14B8A6;
+            --blue: #3B82F6;
+            --gradient-primary: linear-gradient(135deg, #6B3BC2 0%, #8B5CF6 100%);
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+            --shadow-lg: 0 10px 30px rgba(0,0,0,0.12);
+            --shadow-xl: 0 20px 50px rgba(0,0,0,0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #FAFBFC;
+            color: var(--gray-900);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ===== TOP BAR ===== */
+        .topbar {
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-200);
+            padding: 0 1.5rem;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .topbar-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--gradient-primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 800;
+            font-size: 0.9rem;
+        }
+
+        .logo-text {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .tenant-badge {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--purple-600);
+            background: var(--purple-50);
+            padding: 0.2rem 0.7rem;
+            border-radius: 50px;
+            border: 1px solid var(--purple-100);
+        }
+
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .topbar-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray-600);
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+
+        .topbar-btn:hover {
+            background: var(--gray-100);
+            color: var(--gray-900);
+        }
+
+        .user-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .user-avatar:hover {
+            transform: scale(1.05);
+            box-shadow: 0 2px 8px rgba(107, 59, 194, 0.3);
+        }
+
+        /* ===== GREETING ===== */
+        .greeting-section {
+            padding: 2rem 2rem 1rem 2rem;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .greeting {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 0.3rem;
+        }
+
+        .greeting-sub {
+            font-size: 0.9rem;
+            color: var(--gray-500);
+        }
+
+        /* ===== APPS GRID ===== */
+        .apps-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem 3rem 2rem;
+        }
+
+        .section-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--gray-500);
+            margin-bottom: 1.2rem;
+        }
+
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1rem;
+        }
+
+        .app-tile {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 1.8rem 1.5rem;
+            text-decoration: none;
+            color: var(--gray-900);
+            border: 1px solid var(--gray-200);
+            transition: all 0.3s cubic-bezier(0.2, 0.8, 0.4, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .app-tile::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            transition: height 0.3s ease;
+        }
+
+        .app-tile:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-xl);
+            border-color: transparent;
+        }
+
+        .app-tile:hover::before {
+            height: 5px;
+        }
+
+        /* App-specific accent colors */
+        .app-tile.emh::before { background: linear-gradient(90deg, #6B3BC2, #A78BFA); }
+        .app-tile.erh::before { background: linear-gradient(90deg, #EC4899, #F472B6); }
+        .app-tile.efh::before { background: linear-gradient(90deg, #F59E0B, #FBBF24); }
+        .app-tile.efs::before { background: linear-gradient(90deg, #10B981, #34D399); }
+        .app-tile.talents::before { background: linear-gradient(90deg, #F97316, #FB923C); }
+
+        .app-tile.emh:hover { box-shadow: 0 15px 40px rgba(107, 59, 194, 0.2); }
+        .app-tile.erh:hover { box-shadow: 0 15px 40px rgba(236, 72, 153, 0.2); }
+        .app-tile.efh:hover { box-shadow: 0 15px 40px rgba(245, 158, 11, 0.2); }
+        .app-tile.efs:hover { box-shadow: 0 15px 40px rgba(16, 185, 129, 0.2); }
+        .app-tile.talents:hover { box-shadow: 0 15px 40px rgba(249, 115, 22, 0.2); }
+
+        .app-icon-wrapper {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.2rem;
+            transition: all 0.3s ease;
+            background: var(--gray-50);
+            padding: 14px;
+        }
+
+        .app-tile:hover .app-icon-wrapper {
+            transform: scale(1.08);
+        }
+
+        .app-icon-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .app-tile h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+            color: var(--gray-900);
+        }
+
+        .app-tile p {
+            font-size: 0.78rem;
+            color: var(--gray-500);
+            line-height: 1.4;
+        }
+
+        .app-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: var(--success);
+            margin-top: 0.8rem;
+            background: #D1FAE5;
+            padding: 0.2rem 0.6rem;
+            border-radius: 50px;
+        }
+
+        .app-status .dot {
+            width: 4px;
+            height: 4px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* ===== QUICK ACTIONS ===== */
+        .quick-actions {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem 2rem 2rem;
+        }
+
+        .actions-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .action-card {
+            flex: 1;
+            min-width: 200px;
+            background: var(--white);
+            border-radius: 14px;
+            padding: 1.2rem 1.5rem;
+            border: 1px solid var(--gray-200);
+            text-decoration: none;
+            color: var(--gray-700);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.2s;
+        }
+
+        .action-card:hover {
+            border-color: var(--purple-300);
+            background: var(--purple-50);
+            color: var(--purple-700);
+        }
+
+        .action-card i {
+            font-size: 1.3rem;
+            color: var(--purple-500);
+        }
+
+        .action-card h4 {
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .action-card p {
+            font-size: 0.7rem;
+            color: var(--gray-500);
+        }
+
+        /* ===== FOOTER ===== */
+        .workspace-footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--gray-400);
+            font-size: 0.75rem;
+            border-top: 1px solid var(--gray-100);
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        /* ===== USER DROPDOWN ===== */
+        .user-menu {
+            position: relative;
+        }
+
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 0.5rem;
+            background: white;
+            border-radius: 14px;
+            box-shadow: var(--shadow-xl);
+            border: 1px solid var(--gray-200);
+            min-width: 240px;
+            padding: 0.5rem;
+            display: none;
+            z-index: 200;
+        }
+
+        .dropdown.active {
+            display: block;
+            animation: fadeDown 0.2s ease;
+        }
+
+        @keyframes fadeDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dropdown-header {
+            padding: 1rem;
+            border-bottom: 1px solid var(--gray-100);
+            margin-bottom: 0.5rem;
+        }
+
+        .dropdown-header .name {
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .dropdown-header .email {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            padding: 0.7rem 1rem;
+            color: var(--gray-700);
+            text-decoration: none;
+            font-size: 0.85rem;
+            border-radius: 8px;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .dropdown-item:hover {
+            background: var(--gray-50);
+            color: var(--gray-900);
+        }
+
+        .dropdown-item.signout {
+            color: var(--danger);
+            border-top: 1px solid var(--gray-100);
+            margin-top: 0.5rem;
+            padding-top: 0.8rem;
+        }
+
+        .dropdown-item.signout:hover {
+            background: #FEF2F2;
+        }
+
+        /* ===== UPGRADE BANNER (Free users) ===== */
+        .upgrade-banner {
+            background: var(--gradient-primary);
+            color: white;
+            text-align: center;
+            padding: 0.8rem 2rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .upgrade-banner a {
+            color: white;
+            font-weight: 700;
+            text-decoration: underline;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .apps-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.8rem;
+            }
+
+            .app-tile {
+                padding: 1.2rem 1rem;
+            }
+
+            .app-icon-wrapper {
+                width: 60px;
+                height: 60px;
+                padding: 10px;
+                border-radius: 16px;
+            }
+
+            .app-tile h3 {
+                font-size: 0.85rem;
+            }
+
+            .app-tile p {
+                font-size: 0.7rem;
+            }
+
+            .greeting {
+                font-size: 1.2rem;
+            }
+
+            .tenant-badge {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .apps-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.6rem;
+            }
+
+            .apps-container,
+            .greeting-section,
+            .quick-actions {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Upgrade Banner (shown for free users) -->
+<div class="upgrade-banner" id="upgradeBanner" style="display: none;">
+    🚀 You're on the <strong>Free</strong> plan. 
+    <a href="/pricing">Upgrade to Pro</a> for all 5 hubs — only KSh 850/month
+</div>
+
+<!-- Top Bar -->
+<header class="topbar">
+    <div class="topbar-left">
+        <a href="/" class="logo">
+            <div class="logo-icon">J</div>
+            <span class="logo-text">Jasiri</span>
+        </a>
+        <span class="tenant-badge" id="tenantBadge">My Workspace</span>
+    </div>
+    <div class="topbar-right">
+        <button class="topbar-btn" title="Notifications">
+            <i class="far fa-bell"></i>
+        </button>
+        <button class="topbar-btn" title="Help">
+            <i class="far fa-question-circle"></i>
+        </button>
+        <div class="user-menu">
+            <div class="user-avatar" id="userAvatar" onclick="toggleDropdown()">
+                <span id="avatarInitials">U</span>
+            </div>
+            <div class="dropdown" id="userDropdown">
+                <div class="dropdown-header">
+                    <div class="name" id="dropdownName">User</div>
+                    <div class="email" id="dropdownEmail">user@email.com</div>
+                </div>
+                <button class="dropdown-item">
+                    <i class="fas fa-user"></i> My Profile
+                </button>
+                <button class="dropdown-item">
+                    <i class="fas fa-cog"></i> Settings
+                </button>
+                <button class="dropdown-item">
+                    <i class="fas fa-building"></i> Manage Team
+                </button>
+                <button class="dropdown-item signout" onclick="handleSignOut()">
+                    <i class="fas fa-sign-out-alt"></i> Sign Out
+                </button>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Greeting -->
+<div class="greeting-section">
+    <h1 class="greeting" id="greetingText">Good morning</h1>
+    <p class="greeting-sub">Choose a hub to start working</p>
+</div>
+
+<!-- Apps Grid -->
+<div class="apps-container">
+    <div class="section-label">Your Apps</div>
+    <div class="apps-grid">
+        <!-- Sales Hub -->
+        <a href="emh-workspace.html" class="app-tile emh">
+            <div class="app-icon-wrapper">
+                <img src="https://i.postimg.cc/BbZ5c1Tv/20260119-1500-Image-Generation-remix-01kfb1znpceyc8d9dztq9ea0y3-1-removebg-preview-1.png" alt="Sales Hub" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'fas fa-store\' style=\'font-size:2rem;color:#6B3BC2;\'></i>'">
+            </div>
+            <h3>Sales Hub</h3>
+            <p>Sales, POS & Analytics</p>
+            <div class="app-status"><span class="dot"></span> Live</div>
+        </a>
+
+        <!-- Resource Hub -->
+        <a href="erh-workspace.html" class="app-tile erh">
+            <div class="app-icon-wrapper">
+                <img src="https://i.postimg.cc/3rFrpW8P/20260112-1839-Image-Generation-remix-01kesdpw6ce8s88amr0e92g276-removebg-preview-removebg-preview.png" alt="Resource Hub" onerror="this.parentElement.innerHTML='<i class=\'fas fa-users-cog\' style=\'font-size:2rem;color:#EC4899;\'></i>'">
+            </div>
+            <h3>Resource Hub</h3>
+            <p>HR, Assets & Projects</p>
+            <div class="app-status"><span class="dot"></span> Live</div>
+        </a>
+
+        <!-- Finance Hub -->
+        <a href="efh-workspace.html" class="app-tile efh">
+            <div class="app-icon-wrapper">
+                <img src="https://i.postimg.cc/nLkCKS3J/20260119-1502-Image-Generation-remix-01kfb24hnje88t8jgrmchg3m4w-1-removebg-preview.png" alt="Finance Hub" onerror="this.parentElement.innerHTML='<i class=\'fas fa-chart-pie\' style=\'font-size:2rem;color:#F59E0B;\'></i>'">
+            </div>
+            <h3>Finance Hub</h3>
+            <p>Accounting & Budgets</p>
+            <div class="app-status"><span class="dot"></span> Live</div>
+        </a>
+
+        <!-- Fleet Hub -->
+        <a href="efs-workspace.html" class="app-tile efs">
+            <div class="app-icon-wrapper">
+                <img src="https://i.postimg.cc/MTYB3K5P/20260119-1531-Image-Generation-remix-01kfb3rnfzfzxt9rhe0336w04w-1-removebg-preview.png" alt="Fleet Hub" onerror="this.parentElement.innerHTML='<i class=\'fas fa-truck\' style=\'font-size:2rem;color:#10B981;\'></i>'">
+            </div>
+            <h3>Fleet Hub</h3>
+            <p>Logistics & Shipping</p>
+            <div class="app-status"><span class="dot"></span> Live</div>
+        </a>
+
+        <!-- Talents Hub -->
+        <a href="talents-workspace.html" class="app-tile talents">
+            <div class="app-icon-wrapper">
+                <img src="https://i.postimg.cc/wvFVykC1/20260119-1539-Image-Generation-remix-01kfb488qbfhz9a354vdfwrwva-1-removebg-preview.png" alt="Talents Hub" onerror="this.parentElement.innerHTML='<i class=\'fas fa-graduation-cap\' style=\'font-size:2rem;color:#F97316;\'></i>'">
+            </div>
+            <h3>Talents Hub</h3>
+            <p>HR & Learning Development</p>
+            <div class="app-status"><span class="dot"></span> Live</div>
+        </a>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="quick-actions">
+    <div class="section-label">Quick Actions</div>
+    <div class="actions-row">
+        <a href="/settings" class="action-card">
+            <i class="fas fa-user-plus"></i>
+            <div>
+                <h4>Invite Team</h4>
+                <p>Add members to your workspace</p>
+            </div>
+        </a>
+        <a href="/settings" class="action-card">
+            <i class="fas fa-plug"></i>
+            <div>
+                <h4>Connect Sheets</h4>
+                <p>Link your Google Sheets</p>
+            </div>
+        </a>
+        <a href="/pricing" class="action-card">
+            <i class="fas fa-arrow-up"></i>
+            <div>
+                <h4>Upgrade Plan</h4>
+                <p>Unlock all features</p>
+            </div>
+        </a>
+    </div>
+</div>
+
+<!-- Footer -->
+<div class="workspace-footer">
+    <p>&copy; 2026 Jasiri Suite. All rights reserved.</p>
+</div>
+
+<!-- Firebase -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyC4GYjju0-ckHraZ3H5qR3MkID_BWoYQXk",
+        authDomain: "jasiri-suite.firebaseapp.com",
+        databaseURL: "https://jasiri-suite-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "jasiri-suite",
+        storageBucket: "jasiri-suite.firebasestorage.app",
+        messagingSenderId: "414625239065",
+        appId: "1:414625239065:web:8cc055fd20d3d66a8e5a88"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getDatabase(app);
+
+    // Get tenant from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const tenantId = urlParams.get('tenant');
+
+    // Set greeting based on time
+    function setGreeting(name) {
+        const hour = new Date().getHours();
+        let greeting = 'Good ';
+        if (hour < 12) greeting += 'morning';
+        else if (hour < 17) greeting += 'afternoon';
+        else greeting += 'evening';
+        
+        document.getElementById('greetingText').textContent = 
+            name ? `${greeting}, ${name}` : greeting;
+    }
+
+    // Toggle user dropdown
+    window.toggleDropdown = function() {
+        document.getElementById('userDropdown').classList.toggle('active');
+    };
+
+    // Close dropdown on outside click
+    document.addEventListener('click', (e) => {
+        const dropdown = document.getElementById('userDropdown');
+        const avatar = document.getElementById('userAvatar');
+        if (dropdown && avatar && !avatar.contains(e.target) && !dropdown.contains(e.target)) {
+            dropdown.classList.remove('active');
+        }
+    });
+
+    // Sign out
+    window.handleSignOut = async function() {
+        try {
+            await signOut(auth);
+            window.location.href = '/';
+        } catch (error) {
+            console.error('Sign out error:', error);
+        }
+    };
+
+    // Auth state observer
+    onAuthStateChanged(auth, async (user) => {
+        if (!user) {
+            // Not signed in - redirect to landing
+            window.location.href = '/';
+            return;
+        }
+
+        // Update UI with user info
+        const displayName = user.displayName || user.email?.split('@')[0] || 'User';
+        const initials = displayName.substring(0, 2).toUpperCase();
+        
+        document.getElementById('avatarInitials').textContent = initials;
+        document.getElementById('dropdownName').textContent = displayName;
+        document.getElementById('dropdownEmail').textContent = user.email;
+        setGreeting(displayName.split(' ')[0]);
+
+        // Load tenant info
+        if (tenantId) {
+            try {
+                const tenantSnap = await get(ref(db, `tenants/${tenantId}/info`));
+                if (tenantSnap.exists()) {
+                    const info = tenantSnap.val();
+                    document.getElementById('tenantBadge').textContent = info.name || 'My Workspace';
+                }
+
+                // Check subscription
+                const subSnap = await get(ref(db, `tenants/${tenantId}/subscription`));
+                if (subSnap.exists()) {
+                    const sub = subSnap.val();
+                    if (sub.plan === 'free') {
+                        document.getElementById('upgradeBanner').style.display = 'block';
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading tenant:', error);
+            }
+        }
+    });
+</script>
+</body>
+</html>
