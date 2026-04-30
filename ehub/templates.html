@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jasiri Suite | Sheet Templates Gallery</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --purple-900: #1a0a2e; --purple-800: #2d1154; --purple-700: #3d1a6e;
+            --purple-600: #6B3BC2; --purple-500: #8B5CF6; --purple-400: #A78BFA;
+            --purple-300: #C4B5FD; --purple-200: #DDD6FE; --purple-100: #EDE9FE;
+            --purple-50: #F5F3FF; --white: #FFFFFF; --gray-50: #FAFAFA;
+            --gray-100: #F5F5F5; --gray-200: #E5E5E5; --gray-300: #D4D4D4;
+            --gray-500: #737373; --gray-600: #525252; --gray-700: #404040;
+            --gray-900: #171717; --success: #10B981; --warning: #F59E0B;
+            --danger: #EF4444; --pink: #EC4899; --orange: #F97316; --teal: #14B8A6;
+            --gradient-primary: linear-gradient(135deg, #6B3BC2 0%, #8B5CF6 100%);
+            --shadow-sm: 0 1px 3px rgba(107, 59, 194, 0.08);
+            --shadow-md: 0 4px 16px rgba(107, 59, 194, 0.12);
+            --shadow-lg: 0 12px 40px rgba(107, 59, 194, 0.18);
+            --shadow-xl: 0 20px 60px rgba(107, 59, 194, 0.22);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+        body {
+            background: linear-gradient(180deg, var(--purple-50) 0%, var(--white) 100%);
+            color: var(--gray-900); min-height: 100vh;
+        }
+
+        /* Top Bar */
+        .topbar {
+            background: white; border-bottom: 1px solid var(--purple-100);
+            padding: 0 1.5rem; height: 56px; display: flex;
+            align-items: center; justify-content: space-between;
+            position: sticky; top: 0; z-index: 100;
+        }
+        .topbar-left { display: flex; align-items: center; gap: 1rem; }
+        .back-btn {
+            width: 34px; height: 34px; border-radius: 50%;
+            border: 1px solid var(--purple-100); background: white;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            color: var(--gray-700); transition: all 0.2s; text-decoration: none;
+        }
+        .back-btn:hover { background: var(--purple-50); border-color: var(--purple-300); color: var(--purple-600); }
+        .app-title h1 { font-size: 1rem; font-weight: 700; }
+        .tenant-badge {
+            font-size: 0.7rem; font-weight: 600; color: var(--purple-600);
+            background: var(--purple-50); padding: 0.2rem 0.7rem;
+            border-radius: 50px; border: 1px solid var(--purple-100);
+        }
+        .topbar-right { display: flex; align-items: center; gap: 0.8rem; }
+        .user-avatar {
+            width: 34px; height: 34px; border-radius: 50%;
+            background: var(--gradient-primary); display: flex; align-items: center;
+            justify-content: center; color: white; font-weight: 700; font-size: 0.8rem; cursor: pointer;
+        }
+
+        .container { max-width: 1280px; margin: 0 auto; padding: 24px; }
+
+        /* Hero Banner */
+        .hero-banner {
+            background: var(--gradient-primary); color: white;
+            border-radius: 20px; padding: 40px; margin-bottom: 28px;
+            text-align: center; box-shadow: var(--shadow-lg);
+        }
+        .hero-banner h2 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+        .hero-banner p { font-size: 14px; opacity: 0.9; max-width: 600px; margin: 0 auto; }
+
+        /* App Filter Tabs */
+        .filter-tabs {
+            display: flex; gap: 6px; margin-bottom: 20px;
+            flex-wrap: wrap; background: white; padding: 6px;
+            border-radius: 14px; border: 1px solid var(--purple-100);
+            box-shadow: var(--shadow-sm);
+        }
+        .filter-tab {
+            padding: 10px 18px; border-radius: 10px; background: transparent;
+            border: none; color: var(--gray-600); font-size: 13px; font-weight: 600;
+            cursor: pointer; transition: all 0.2s; display: flex; align-items: center;
+            gap: 8px; font-family: 'Inter', sans-serif;
+        }
+        .filter-tab:hover { background: var(--purple-50); color: var(--purple-600); }
+        .filter-tab.active { background: var(--purple-100); color: var(--purple-700); font-weight: 700; }
+        .filter-tab .count {
+            background: var(--purple-200); color: var(--purple-700);
+            padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600;
+        }
+
+        /* Search */
+        .search-box {
+            display: flex; align-items: center; background: white;
+            border: 1px solid var(--purple-100); border-radius: 12px;
+            padding: 0 16px; margin-bottom: 20px; box-shadow: var(--shadow-sm);
+        }
+        .search-box i { color: var(--gray-500); }
+        .search-box input {
+            width: 100%; padding: 12px 16px; border: none;
+            font-size: 14px; font-family: 'Inter', sans-serif; outline: none;
+        }
+
+        /* Templates Grid */
+        .templates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 18px;
+        }
+        .template-card {
+            background: white; border-radius: 16px; overflow: hidden;
+            border: 1px solid var(--purple-100); transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm); display: flex; flex-direction: column;
+        }
+        .template-card:hover {
+            transform: translateY(-6px); box-shadow: var(--shadow-xl);
+            border-color: var(--purple-300);
+        }
+        .template-preview {
+            height: 160px; display: flex; align-items: center; justify-content: center;
+            position: relative; overflow: hidden;
+        }
+        .template-preview.emh { background: linear-gradient(135deg, #EDE9FE, #C4B5FD); }
+        .template-preview.erh { background: linear-gradient(135deg, #FCE7F3, #FBCFE8); }
+        .template-preview.efh { background: linear-gradient(135deg, #FEF3C7, #FDE68A); }
+        .template-preview.efs { background: linear-gradient(135deg, #D1FAE5, #A7F3D0); }
+        .template-preview.talents { background: linear-gradient(135deg, #FFEDD5, #FED7AA); }
+        .template-preview i { font-size: 48px; opacity: 0.8; }
+        .template-preview.emh i { color: #6B3BC2; }
+        .template-preview.erh i { color: #EC4899; }
+        .template-preview.efh i { color: #F59E0B; }
+        .template-preview.efs i { color: #10B981; }
+        .template-preview.talents i { color: #F97316; }
+
+        .template-badge {
+            position: absolute; top: 12px; right: 12px;
+            padding: 4px 12px; border-radius: 20px; font-size: 10px;
+            font-weight: 700; letter-spacing: 0.3px; text-transform: uppercase;
+        }
+        .badge-emh { background: #EDE9FE; color: #5B21B6; }
+        .badge-erh { background: #FCE7F3; color: #9D174D; }
+        .badge-efh { background: #FEF3C7; color: #92400E; }
+        .badge-efs { background: #D1FAE5; color: #065F46; }
+        .badge-talents { background: #FFEDD5; color: #9A3412; }
+
+        .template-body { padding: 18px 20px; flex: 1; display: flex; flex-direction: column; }
+        .template-body h3 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+        .template-body p { font-size: 12px; color: var(--gray-600); line-height: 1.5; margin-bottom: 14px; flex: 1; }
+        .template-meta {
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 11px; color: var(--gray-500);
+            padding-top: 12px; border-top: 1px solid var(--purple-50);
+        }
+        .template-meta span { display: flex; align-items: center; gap: 5px; }
+        .template-actions { display: flex; gap: 8px; margin-top: 12px; }
+        .btn {
+            padding: 8px 16px; border-radius: 8px; font-size: 12px; font-weight: 600;
+            cursor: pointer; transition: all 0.2s; border: none; text-decoration: none;
+            display: inline-flex; align-items: center; gap: 6px; font-family: 'Inter', sans-serif;
+            white-space: nowrap;
+        }
+        .btn-primary { background: var(--gradient-primary); color: white; flex: 1; justify-content: center; }
+        .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+        .btn-outline { background: white; border: 1px solid var(--purple-100); color: var(--gray-700); }
+        .btn-outline:hover { background: var(--purple-50); }
+
+        .empty-state { text-align: center; padding: 60px; grid-column: 1/-1; color: var(--gray-500); }
+        .empty-state i { font-size: 48px; margin-bottom: 16px; opacity: 0.3; }
+
+        /* Preview Modal */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(6px); justify-content: center; align-items: center; z-index: 1000; }
+        .modal-overlay.active { display: flex; }
+        .modal {
+            background: white; border-radius: 20px; padding: 0; max-width: 700px;
+            width: 90%; max-height: 85vh; overflow: hidden; box-shadow: var(--shadow-xl);
+            animation: slideUp 0.3s ease; display: flex; flex-direction: column;
+        }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .modal-header {
+            padding: 20px 24px; border-bottom: 1px solid var(--purple-100);
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .modal-header h3 { font-size: 18px; font-weight: 800; }
+        .modal-close { background: none; border: none; font-size: 20px; cursor: pointer; color: var(--gray-500); }
+        .modal-close:hover { color: var(--danger); }
+        .modal-body { padding: 24px; overflow-y: auto; flex: 1; }
+        .modal-body iframe { width: 100%; height: 400px; border: 1px solid var(--purple-100); border-radius: 12px; }
+        .modal-footer { padding: 16px 24px; border-top: 1px solid var(--purple-100); display: flex; gap: 10px; justify-content: flex-end; }
+
+        .toast { position: fixed; bottom: 24px; right: 24px; background: white; border: 1px solid var(--purple-100); border-radius: 10px; padding: 14px 22px; display: flex; align-items: center; gap: 10px; box-shadow: var(--shadow-lg); transform: translateX(120%); transition: transform 0.3s ease; z-index: 2000; }
+        .toast.show { transform: translateX(0); }
+        .toast.success { border-left: 4px solid var(--success); }
+        .toast i { font-size: 18px; color: var(--success); }
+
+        .loading-state { display: flex; justify-content: center; align-items: center; padding: 60px; gap: 12px; color: var(--purple-600); grid-column: 1/-1; }
+        .loader { width: 32px; height: 32px; border: 3px solid var(--purple-100); border-top-color: var(--purple-600); border-radius: 50%; animation: spin 0.8s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        @media (max-width: 768px) {
+            .container { padding: 16px; }
+            .hero-banner { padding: 24px; }
+            .hero-banner h2 { font-size: 22px; }
+            .templates-grid { grid-template-columns: 1fr; }
+            .filter-tabs { overflow-x: auto; flex-wrap: nowrap; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Top Bar -->
+<header class="topbar">
+    <div class="topbar-left">
+        <a href="workspace.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+        <div class="app-title"><h1>📋 Sheet Templates</h1></div>
+        <span class="tenant-badge" id="tenantBadge">Loading...</span>
+    </div>
+    <div class="topbar-right">
+        <div class="user-avatar" id="userAvatar" onclick="toggleDropdown()"><span id="avatarInitials">U</span></div>
+        <div id="userDropdown" style="display:none;position:absolute;top:56px;right:16px;background:white;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.15);border:1px solid var(--purple-100);min-width:200px;padding:8px;z-index:200;">
+            <div style="padding:10px 14px;border-bottom:1px solid var(--purple-50);margin-bottom:4px;">
+                <div style="font-weight:700;font-size:13px;" id="dropdownName">User</div>
+                <div style="font-size:11px;color:var(--gray-500);" id="dropdownEmail">email</div>
+            </div>
+            <a href="workspace.html" style="display:flex;align-items:center;gap:8px;padding:8px 14px;color:var(--gray-700);text-decoration:none;font-size:13px;border-radius:8px;">🏠 Workspace</a>
+            <a href="admin-templates.html" style="display:flex;align-items:center;gap:8px;padding:8px 14px;color:var(--gray-700);text-decoration:none;font-size:13px;border-radius:8px;">⚙️ Manage Templates</a>
+            <button onclick="handleSignOut()" style="display:flex;align-items:center;gap:8px;padding:8px 14px;color:var(--danger);background:none;border:none;width:100%;text-align:left;font-size:13px;cursor:pointer;border-radius:8px;margin-top:4px;border-top:1px solid var(--purple-50);font-family:'Inter',sans-serif;">🚪 Sign Out</button>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <!-- Hero -->
+    <div class="hero-banner">
+        <h2>🚀 Ready-to-Use Google Sheet Templates</h2>
+        <p>Pick a template, copy it to your Google Drive, and start managing your business instantly. No setup required.</p>
+    </div>
+
+    <!-- Filter Tabs -->
+    <div class="filter-tabs" id="filterTabs">
+        <button class="filter-tab active" data-app="all"><i class="fas fa-th-large"></i> All Templates <span class="count" id="countAll">0</span></button>
+        <button class="filter-tab" data-app="emh"><i class="fas fa-store"></i> Sales Hub <span class="count" id="countEmh">0</span></button>
+        <button class="filter-tab" data-app="erh"><i class="fas fa-users-cog"></i> Resource Hub <span class="count" id="countErh">0</span></button>
+        <button class="filter-tab" data-app="efh"><i class="fas fa-chart-pie"></i> Finance Hub <span class="count" id="countEfh">0</span></button>
+        <button class="filter-tab" data-app="efs"><i class="fas fa-truck"></i> Fleet Hub <span class="count" id="countEfs">0</span></button>
+        <button class="filter-tab" data-app="talents"><i class="fas fa-graduation-cap"></i> Talents Hub <span class="count" id="countTalents">0</span></button>
+    </div>
+
+    <!-- Search -->
+    <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" id="searchInput" placeholder="Search templates by name, description, or category..." oninput="filterTemplates()">
+    </div>
+
+    <!-- Templates Grid -->
+    <div class="templates-grid" id="templatesGrid">
+        <div class="loading-state"><div class="loader"></div><span>Loading templates...</span></div>
+    </div>
+</div>
+
+<!-- Preview Modal -->
+<div class="modal-overlay" id="previewModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h3 id="previewTitle">Template Preview</h3>
+            <button class="modal-close" onclick="closePreview()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+            <p id="previewDesc" style="margin-bottom:16px;color:var(--gray-600);"></p>
+            <iframe id="previewIframe" src="" frameborder="0"></iframe>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-outline" onclick="closePreview()">Close</button>
+            <button class="btn btn-primary" id="copyTemplateBtn" onclick="copyTemplate()">
+                <i class="fas fa-copy"></i> Make a Copy
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"><i class="fas fa-check-circle"></i><span id="toastMessage"></span></div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyC4GYjju0-ckHraZ3H5qR3MkID_BWoYQXk",
+        authDomain: "jasiri-suite.firebaseapp.com",
+        databaseURL: "https://jasiri-suite-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "jasiri-suite",
+        storageBucket: "jasiri-suite.firebasestorage.app",
+        messagingSenderId: "414625239065",
+        appId: "1:414625239065:web:8cc055fd20d3d66a8e5a88"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getDatabase(app);
+
+    let allTemplates = [];
+    let currentFilter = 'all';
+    let selectedTemplate = null;
+
+    window.toggleDropdown = () => {
+        const dd = document.getElementById('userDropdown');
+        dd.style.display = dd.style.display === 'none' ? 'block' : 'none';
+    };
+    document.addEventListener('click', (e) => {
+        const dd = document.getElementById('userDropdown');
+        const av = document.getElementById('userAvatar');
+        if (dd && av && !av.contains(e.target) && !dd.contains(e.target)) dd.style.display = 'none';
+    });
+    window.handleSignOut = async () => { await signOut(auth); window.location.href = 'index.html'; };
+
+    function showToast(msg) { const t = document.getElementById('toast'); document.getElementById('toastMessage').textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 3000); }
+
+    async function loadTemplates() {
+        const grid = document.getElementById('templatesGrid');
+        grid.innerHTML = '<div class="loading-state"><div class="loader"></div><span>Loading templates...</span></div>';
+
+        try {
+            const snap = await get(ref(db, 'templates/sheets'));
+            allTemplates = snap.exists() ? Object.values(snap.val()) : [];
+            
+            // Update counts
+            const counts = { all: allTemplates.length, emh: 0, erh: 0, efh: 0, efs: 0, talents: 0 };
+            allTemplates.forEach(t => { if (counts[t.app] !== undefined) counts[t.app]++; });
+            document.getElementById('countAll').textContent = counts.all;
+            document.getElementById('countEmh').textContent = counts.emh;
+            document.getElementById('countErh').textContent = counts.erh;
+            document.getElementById('countEfh').textContent = counts.efh;
+            document.getElementById('countEfs').textContent = counts.efs;
+            document.getElementById('countTalents').textContent = counts.talents;
+
+            filterTemplates();
+        } catch (e) {
+            grid.innerHTML = '<div class="empty-state"><i class="fas fa-exclamation-triangle"></i><p>Error loading templates</p></div>';
+        }
+    }
+
+    window.filterTemplates = () => {
+        const search = document.getElementById('searchInput').value.toLowerCase();
+        let filtered = allTemplates;
+
+        if (currentFilter !== 'all') {
+            filtered = filtered.filter(t => t.app === currentFilter);
+        }
+        if (search) {
+            filtered = filtered.filter(t => 
+                (t.name||'').toLowerCase().includes(search) ||
+                (t.description||'').toLowerCase().includes(search) ||
+                (t.category||'').toLowerCase().includes(search)
+            );
+        }
+
+        renderTemplates(filtered);
+    };
+
+    function renderTemplates(templates) {
+        const grid = document.getElementById('templatesGrid');
+        
+        if (templates.length === 0) {
+            grid.innerHTML = '<div class="empty-state"><i class="fas fa-file-excel"></i><h3>No templates found</h3><p>Try a different filter or search term</p></div>';
+            return;
+        }
+
+        const appNames = { emh: 'Sales Hub', erh: 'Resource Hub', efh: 'Finance Hub', efs: 'Fleet Hub', talents: 'Talents Hub' };
+        const appIcons = { emh: 'fa-store', erh: 'fa-users-cog', efh: 'fa-chart-pie', efs: 'fa-truck', talents: 'fa-graduation-cap' };
+
+        grid.innerHTML = templates.map(t => `
+            <div class="template-card">
+                <div class="template-preview ${t.app || 'emh'}">
+                    <i class="fas ${appIcons[t.app] || 'fa-file-excel'}"></i>
+                    <span class="template-badge badge-${t.app || 'emh'}">${appNames[t.app] || t.app}</span>
+                </div>
+                <div class="template-body">
+                    <h3>${t.name || 'Untitled Template'}</h3>
+                    <p>${t.description || 'No description available.'}</p>
+                    <div class="template-meta">
+                        <span><i class="fas fa-tag"></i> ${t.category || 'General'}</span>
+                        <span><i class="fas fa-eye"></i> ${t.views || 0} views</span>
+                    </div>
+                    <div class="template-actions">
+                        <button class="btn btn-outline" onclick="previewTemplate('${t.id}')">
+                            <i class="fas fa-eye"></i> Preview
+                        </button>
+                        <button class="btn btn-primary" onclick="useTemplate('${t.id}')">
+                            <i class="fas fa-copy"></i> Use Template
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    window.previewTemplate = (id) => {
+        selectedTemplate = allTemplates.find(t => t.id === id);
+        if (!selectedTemplate) return;
+        document.getElementById('previewTitle').textContent = selectedTemplate.name;
+        document.getElementById('previewDesc').textContent = selectedTemplate.description;
+        document.getElementById('previewIframe').src = selectedTemplate.sheetUrl?.replace('/edit', '/preview') || '';
+        document.getElementById('previewModal').classList.add('active');
+    };
+
+    window.closePreview = () => {
+        document.getElementById('previewModal').classList.remove('active');
+        document.getElementById('previewIframe').src = '';
+        selectedTemplate = null;
+    };
+
+    window.copyTemplate = () => {
+        if (!selectedTemplate?.sheetUrl) return;
+        const copyUrl = selectedTemplate.sheetUrl.replace('/edit', '/copy');
+        window.open(copyUrl, '_blank');
+        showToast('Opening template copy link...');
+        closePreview();
+    };
+
+    window.useTemplate = (id) => {
+        const template = allTemplates.find(t => t.id === id);
+        if (!template?.sheetUrl) return;
+        const copyUrl = template.sheetUrl.replace('/edit', '/copy');
+        window.open(copyUrl, '_blank');
+        showToast('Template opened! Make a copy to your Google Drive.');
+    };
+
+    // Filter tab clicks
+    document.getElementById('filterTabs').addEventListener('click', (e) => {
+        const tab = e.target.closest('.filter-tab');
+        if (!tab) return;
+        document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        currentFilter = tab.dataset.app;
+        filterTemplates();
+    });
+
+    // Close modal on overlay click
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('modal-overlay')) closePreview();
+    });
+
+    // Auth
+    onAuthStateChanged(auth, async (user) => {
+        if (!user) { window.location.href = 'index.html'; return; }
+        document.getElementById('avatarInitials').textContent = (user.displayName||user.email||'U').substring(0,2).toUpperCase();
+        document.getElementById('dropdownName').textContent = user.displayName || user.email;
+        document.getElementById('dropdownEmail').textContent = user.email;
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const tenantId = urlParams.get('tenant');
+        if (tenantId) {
+            const ts = await get(ref(db, `tenants/${tenantId}/info`));
+            document.getElementById('tenantBadge').textContent = ts.exists() ? ts.val().name : tenantId;
+        }
+
+        loadTemplates();
+    });
+</script>
+</body>
+</html>
