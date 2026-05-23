@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jasiri Suite | Admin Hub</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -63,12 +63,6 @@
             background: var(--gradient-primary); display: flex; align-items: center;
             justify-content: center; color: white; font-weight: 700; font-size: 0.8rem; cursor: pointer;
         }
-        .plan-badge {
-            padding: 5px 14px; border-radius: 20px; font-size: 11px; font-weight: 700;
-        }
-        .plan-free { background: var(--gray-100); color: var(--gray-600); }
-        .plan-pro { background: #EDE9FE; color: #5B21B6; }
-        .plan-enterprise { background: var(--gradient-primary); color: white; }
 
         /* Header */
         .page-header {
@@ -114,8 +108,6 @@
             flex-direction: column; box-shadow: var(--shadow-sm); cursor: pointer;
         }
         .admin-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--purple-300); }
-        .admin-card.locked { opacity: 0.55; cursor: not-allowed; }
-        .admin-card.locked:hover { transform: none; box-shadow: var(--shadow-sm); border-color: var(--purple-100); }
         .card-icon-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
         .card-icon {
             width: 42px; height: 42px; border-radius: 12px; display: flex;
@@ -136,40 +128,14 @@
             font-size: 10px; font-weight: 700; letter-spacing: 0.3px;
         }
         .badge-available { background: #D1FAE5; color: #065F46; }
-        .badge-upgrade { background: #FEF3C7; color: #92400E; }
-        .badge-free-tier { background: #DBEAFE; color: #1E40AF; }
         .badge-coming { background: var(--gray-100); color: var(--gray-600); }
         .card-arrow { text-align: right; color: var(--purple-400); font-size: 14px; }
 
-        /* Plan Limits Bar */
-        .plan-limits {
-            background: white; border-radius: 14px; padding: 14px 20px;
-            margin-bottom: 20px; border: 1px solid var(--purple-100);
-            display: flex; gap: 24px; flex-wrap: wrap; box-shadow: var(--shadow-sm);
-        }
-        .plan-limit-item {
-            display: flex; align-items: center; gap: 8px; font-size: 12px;
-        }
-        .plan-limit-item i { color: var(--purple-500); }
-        .plan-limit-item strong { color: var(--gray-900); }
-        .plan-limit-item .used { color: var(--warning); font-weight: 600; }
-
-        /* Upgrade Banner */
-        .upgrade-banner {
-            background: var(--gradient-primary); color: white;
-            border-radius: 14px; padding: 20px 24px; margin-bottom: 24px;
-            display: flex; justify-content: space-between; align-items: center;
-            box-shadow: var(--shadow-md);
-        }
-        .upgrade-banner h3 { font-size: 16px; font-weight: 700; }
-        .upgrade-banner p { font-size: 12px; opacity: 0.9; margin-top: 4px; }
         .btn {
             padding: 9px 18px; border-radius: 10px; font-size: 13px; font-weight: 600;
             cursor: pointer; transition: all 0.2s; border: none; text-decoration: none;
             display: inline-flex; align-items: center; gap: 6px; font-family: 'Inter', sans-serif;
         }
-        .btn-white { background: white; color: var(--purple-600); }
-        .btn-white:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
         .btn-outline { background: transparent; border: 1px solid var(--purple-100); color: var(--gray-700); }
         .btn-outline:hover { background: var(--purple-50); }
         .btn-danger { background: white; border: 1px solid #FECACA; color: var(--danger); }
@@ -183,8 +149,6 @@
         @media (max-width: 768px) {
             .container { padding: 16px; }
             .cards-grid { grid-template-columns: 1fr; }
-            .upgrade-banner { flex-direction: column; text-align: center; gap: 12px; }
-            .plan-limits { flex-direction: column; gap: 8px; }
         }
     </style>
 </head>
@@ -198,7 +162,6 @@
         <span class="tenant-badge" id="tenantBadge">Loading...</span>
     </div>
     <div class="topbar-right">
-        <span class="plan-badge plan-free" id="planBadge">FREE</span>
         <div class="user-avatar" id="userAvatar" onclick="toggleDropdown()"><span id="avatarInitials">U</span></div>
         <div id="userDropdown" style="display:none;position:absolute;top:56px;right:16px;background:white;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.15);border:1px solid var(--purple-100);min-width:200px;padding:8px;z-index:200;">
             <div style="padding:10px 14px;border-bottom:1px solid var(--purple-50);margin-bottom:4px;">
@@ -218,23 +181,6 @@
         <p>Manage your Jasiri Suite platform, team, and settings from here.</p>
     </div>
 
-    <!-- Upgrade Banner (Free users) -->
-    <div class="upgrade-banner" id="upgradeBanner" style="display:none;">
-        <div>
-            <h3>🚀 Upgrade to Pro — Unlock All 5 Hubs</h3>
-            <p>Get unlimited sheets, custom branding, and all business hubs for only KSh 850/month.</p>
-        </div>
-        <a href="billing.html" class="btn btn-white">Upgrade Now</a>
-    </div>
-
-    <!-- Plan Limits -->
-    <div class="plan-limits" id="planLimits">
-        <div class="plan-limit-item"><i class="fas fa-layer-group"></i> <strong id="limitHubs">2</strong> Active Hubs</div>
-        <div class="plan-limit-item"><i class="fas fa-link"></i> <strong id="limitSheets">5</strong> Sheet Connections</div>
-        <div class="plan-limit-item"><i class="fas fa-users"></i> <strong id="limitUsers">3</strong> Team Members</div>
-        <div class="plan-limit-item"><i class="fas fa-tasks"></i> <strong>E-KAZI:</strong> <span id="limitEkazi">3 assignments/day</span></div>
-    </div>
-
     <!-- Stats -->
     <div class="stats-row">
         <div class="stat-card">
@@ -251,11 +197,7 @@
         </div>
         <div class="stat-card">
             <div class="stat-icon"><i class="fas fa-layer-group"></i></div>
-            <div class="stat-info"><h3 id="statHubs">-</h3><p>Active Hubs</p></div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-icon"><i class="fas fa-tasks"></i></div>
-            <div class="stat-info"><h3 id="statEkazi">-</h3><p>E-KAZI Tasks</p></div>
+            <div class="stat-info"><h3 id="statHubs">6</h3><p>Active Hubs</p></div>
         </div>
     </div>
 
@@ -265,21 +207,19 @@
         <!-- Dynamically populated -->
     </div>
 
-    <!-- E-KAZI & Other Tools -->
+    <!-- Additional Platforms -->
     <div class="section-label">🔧 Additional Platforms</div>
     <div class="cards-grid">
-        <!-- E-KAZI -->
-        <a href="ekazi-workspace.html" class="admin-card" id="ekaziCard">
+        <a href="ekazi-workspace.html" class="admin-card">
             <div class="card-icon-row">
                 <div class="card-icon blue"><i class="fas fa-tasks"></i></div>
-                <span class="card-badge badge-free-tier" id="ekaziBadge">Free Tier</span>
+                <span class="card-badge badge-available">Available</span>
             </div>
             <div class="card-title">🔷 E-KAZI Platform</div>
-            <div class="card-desc">Assign tasks to freelancers. Up to <strong id="ekaziLimit">3 assignments/day</strong> on Free plan.</div>
+            <div class="card-desc">Assign tasks to freelancers and manage assignments.</div>
             <div class="card-arrow"><i class="fas fa-arrow-right"></i></div>
         </a>
 
-        <!-- Templates -->
         <a href="templates.html" class="admin-card">
             <div class="card-icon-row">
                 <div class="card-icon purple"><i class="fas fa-file-excel"></i></div>
@@ -304,27 +244,17 @@
             <div class="card-arrow"><i class="fas fa-arrow-right"></i></div>
         </a>
 
-        <a href="branding.html" class="admin-card" id="brandingCard">
+        <a href="branding.html" class="admin-card">
             <div class="card-icon-row">
                 <div class="card-icon pink"><i class="fas fa-palette"></i></div>
-                <span class="card-badge badge-upgrade" id="brandingBadge">Pro+</span>
+                <span class="card-badge badge-available">Available</span>
             </div>
             <div class="card-title">🎨 Branding & Customization</div>
             <div class="card-desc">Custom logo, colors, domain, and white-label options.</div>
             <div class="card-arrow"><i class="fas fa-arrow-right"></i></div>
         </a>
 
-        <a href="billing.html" class="admin-card">
-            <div class="card-icon-row">
-                <div class="card-icon yellow"><i class="fas fa-credit-card"></i></div>
-                <span class="card-badge badge-available">Available</span>
-            </div>
-            <div class="card-title">💳 Subscription & Billing</div>
-            <div class="card-desc">Manage plan, payment methods, invoices, and upgrade.</div>
-            <div class="card-arrow"><i class="fas fa-arrow-right"></i></div>
-        </a>
-
-        <a href="integrations.html" class="admin-card" id="integrationsCard">
+        <a href="integrations.html" class="admin-card">
             <div class="card-icon-row">
                 <div class="card-icon green"><i class="fas fa-plug"></i></div>
                 <span class="card-badge badge-coming">Coming Soon</span>
@@ -382,46 +312,15 @@
     const urlTenant = urlParams.get('tenant');
 
     let selectedTenant = '';
-    let tenantPlan = 'free';
-    let tenantFeatures = {};
-    let tenantLimits = {};
 
-    // ============ TIER DEFINITIONS ============
-    const tierConfig = {
-        free: {
-            hubs: ['emh', 'erh'],           // Only Sales & Resource Hub
-            maxSheets: 5,
-            maxUsers: 3,
-            ekaziLimit: 3,                  // 3 assignments per day
-            ekaziLabel: '3 assignments/day',
-            branding: false,
-            apiAccess: false,
-            allHubs: false,
-            integrations: false
-        },
-        pro: {
-            hubs: ['emh', 'erh', 'efh', 'efs', 'talents'],  // All 5 hubs
-            maxSheets: Infinity,
-            maxUsers: 15,
-            ekaziLimit: 25,
-            ekaziLabel: '25 assignments/day',
-            branding: true,
-            apiAccess: false,
-            allHubs: true,
-            integrations: false
-        },
-        enterprise: {
-            hubs: ['emh', 'erh', 'efh', 'efs', 'talents'],  // All 5 + custom
-            maxSheets: Infinity,
-            maxUsers: Infinity,
-            ekaziLimit: Infinity,
-            ekaziLabel: 'Unlimited assignments',
-            branding: true,
-            apiAccess: true,
-            allHubs: true,
-            integrations: true
-        }
-    };
+    // ALL hubs unlocked
+    const allHubs = [
+        { id: 'emh', name: 'Sales Hub', icon: 'fa-store', color: 'purple', desc: 'POS, transactions, sales analytics.', url: 'admin-emh.html' },
+        { id: 'erh', name: 'Resource Hub', icon: 'fa-users-cog', color: 'pink', desc: 'HR, asset tracking, projects.', url: 'admin-erh.html' },
+        { id: 'efh', name: 'Finance Hub', icon: 'fa-chart-pie', color: 'yellow', desc: 'Accounting, reports, budgets.', url: 'admin-efh.html' },
+        { id: 'efs', name: 'Fleet Hub', icon: 'fa-truck', color: 'green', desc: 'Logistics, courier, shipping.', url: 'admin-efs.html' },
+        { id: 'talents', name: 'Talents Hub', icon: 'fa-graduation-cap', color: 'orange', desc: 'HR, learning & development.', url: 'admin-talents.html' }
+    ];
 
     window.toggleDropdown = () => {
         const dd = document.getElementById('userDropdown');
@@ -444,55 +343,14 @@
     async function loadData() {
         if (!selectedTenant) return;
 
-        const subSnap = await get(ref(db, `tenants/${selectedTenant}/subscription`));
-        const sub = subSnap.val() || {};
-        tenantPlan = sub.plan || 'free';
-        tenantFeatures = sub.limits?.features || {};
-        tenantLimits = sub.limits || {};
-
-        const config = tierConfig[tenantPlan] || tierConfig.free;
-
-        // Update plan badge
-        const badge = document.getElementById('planBadge');
-        badge.textContent = tenantPlan.toUpperCase();
-        badge.className = `plan-badge plan-${tenantPlan}`;
-
-        // Update plan limits display
-        document.getElementById('limitHubs').textContent = config.hubs.length;
-        document.getElementById('limitSheets').textContent = config.maxSheets === Infinity ? 'Unlimited' : config.maxSheets;
-        document.getElementById('limitUsers').textContent = config.maxUsers === Infinity ? 'Unlimited' : config.maxUsers;
-        document.getElementById('limitEkazi').textContent = config.ekaziLabel;
-
-        // Update E-KAZI card
-        document.getElementById('ekaziLimit').textContent = config.ekaziLabel;
-
-        // Show upgrade banner for free users
-        if (tenantPlan === 'free') {
-            document.getElementById('upgradeBanner').style.display = 'flex';
-        } else {
-            document.getElementById('upgradeBanner').style.display = 'none';
-        }
-
-        // Update branding card
-        if (!config.branding) {
-            document.getElementById('brandingCard').classList.add('locked');
-            document.getElementById('brandingBadge').textContent = 'Pro+';
-            document.getElementById('brandingBadge').className = 'card-badge badge-upgrade';
-        } else {
-            document.getElementById('brandingCard').classList.remove('locked');
-            document.getElementById('brandingBadge').textContent = 'Available';
-            document.getElementById('brandingBadge').className = 'card-badge badge-available';
-        }
-
         // Stats
         const membersSnap = await get(ref(db, `tenants/${selectedTenant}/members`));
         const memberCount = Object.keys(membersSnap.val() || {}).length;
         document.getElementById('statMembers').textContent = memberCount;
 
-        // Count tools
         let totalTools = 0, totalSheets = 0;
-        for (const app of config.hubs) {
-            const toolsSnap = await get(ref(db, `tenants/${selectedTenant}/apps/${app}/tools`));
+        for (const hub of allHubs) {
+            const toolsSnap = await get(ref(db, `tenants/${selectedTenant}/apps/${hub.id}/tools`));
             if (toolsSnap.exists()) {
                 for (const section of Object.values(toolsSnap.val())) {
                     const tools = Object.values(section);
@@ -503,43 +361,24 @@
         }
         document.getElementById('statTools').textContent = totalTools;
         document.getElementById('statSheets').textContent = totalSheets;
-        document.getElementById('statHubs').textContent = config.hubs.length;
+        document.getElementById('statHubs').textContent = '6';
 
-        // E-KAZI stats (placeholder for now)
-        document.getElementById('statEkazi').textContent = '0/' + config.ekaziLabel.split(' ')[0];
-
-        // Hub cards
-        renderHubCards(config);
+        // Render all hub cards - ALL UNLOCKED
+        renderHubCards();
     }
 
-    function renderHubCards(config) {
-        const allHubs = [
-            { id: 'emh', name: 'Sales Hub', icon: 'fa-store', color: 'purple', desc: 'POS, transactions, sales analytics.' },
-            { id: 'erh', name: 'Resource Hub', icon: 'fa-users-cog', color: 'pink', desc: 'HR, asset tracking, projects.' },
-            { id: 'efh', name: 'Finance Hub', icon: 'fa-chart-pie', color: 'yellow', desc: 'Accounting, reports, budgets.' },
-            { id: 'efs', name: 'Fleet Hub', icon: 'fa-truck', color: 'green', desc: 'Logistics, courier, shipping.' },
-            { id: 'talents', name: 'Talents Hub', icon: 'fa-graduation-cap', color: 'orange', desc: 'HR, learning & development.' }
-        ];
-
-        document.getElementById('hubCards').innerHTML = allHubs.map(hub => {
-            const hasAccess = config.hubs.includes(hub.id);
-            const locked = !hasAccess;
-
-            return `
-                <a href="${hasAccess ? `admin-${hub.id}.html?tenant=${selectedTenant}` : '#'}" 
-                   class="admin-card ${locked ? 'locked' : ''}"
-                   ${locked ? `onclick="showToast('${hub.name} requires Pro plan (KSh 850/mo) or Enterprise (KSh 1,200/mo)'); return false;"` : ''}>
-                    <div class="card-icon-row">
-                        <div class="card-icon ${hub.color}"><i class="fas ${hub.icon}"></i></div>
-                        <span class="card-badge ${hasAccess ? 'badge-available' : 'badge-upgrade'}">
-                            ${hasAccess ? 'Configure' : (tenantPlan === 'free' ? 'Upgrade to Pro' : 'Upgrade')}
-                        </span>
-                    </div>
-                    <div class="card-title">${hub.name}</div>
-                    <div class="card-desc">${hub.desc}</div>
-                    <div class="card-arrow"><i class="fas fa-${locked ? 'lock' : 'arrow-right'}"></i></div>
-                </a>`;
-        }).join('');
+    function renderHubCards() {
+        document.getElementById('hubCards').innerHTML = allHubs.map(hub => `
+            <a href="${hub.url}?tenant=${selectedTenant}" class="admin-card">
+                <div class="card-icon-row">
+                    <div class="card-icon ${hub.color}"><i class="fas ${hub.icon}"></i></div>
+                    <span class="card-badge badge-available">Configure</span>
+                </div>
+                <div class="card-title">${hub.name}</div>
+                <div class="card-desc">${hub.desc}</div>
+                <div class="card-arrow"><i class="fas fa-arrow-right"></i></div>
+            </a>
+        `).join('');
     }
 
     onAuthStateChanged(auth, async (user) => {
