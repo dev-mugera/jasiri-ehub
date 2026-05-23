@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jasiri Suite | Enterprise Business Management Platform</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Jasiri Suite | Internal Team Workspace</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -56,7 +56,6 @@
 
         html { scroll-behavior: smooth; }
 
-        /* ===== NAVIGATION ===== */
         .nav {
             position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
             background: rgba(255, 255, 255, 0.97);
@@ -110,7 +109,6 @@
         .btn-white:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
         .btn-lg { padding: 0.9rem 2rem; font-size: 0.95rem; }
 
-        /* ===== HERO ===== */
         .hero {
             padding: 7rem 2rem 4rem 2rem;
             background: linear-gradient(180deg, var(--purple-50) 0%, var(--white) 100%);
@@ -169,7 +167,6 @@
         .hero-app-mini h4 { font-size: 0.75rem; font-weight: 700; color: var(--gray-900); }
         .hero-app-mini p { font-size: 0.65rem; color: var(--gray-500); }
 
-        /* ===== APPS SECTION ===== */
         .apps-section { padding: 5rem 2rem; background: var(--white); }
         .section-container { max-width: 1280px; margin: 0 auto; }
         .section-header { text-align: center; margin-bottom: 3rem; }
@@ -233,7 +230,6 @@
         }
         .app-card .app-link:hover { gap: 0.7rem; }
 
-        /* ===== INTEGRATIONS ===== */
         .integrations {
             text-align: center; padding: 4rem 2rem; background: var(--purple-50);
             border-top: 1px solid var(--purple-100); border-bottom: 1px solid var(--purple-100);
@@ -245,40 +241,6 @@
         }
         .integration-logos i:hover { color: var(--purple-500); transform: scale(1.1); }
 
-        /* ===== PRICING ===== */
-        .pricing { padding: 5rem 2rem; background: var(--white); }
-        .pricing-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem; max-width: 1000px; margin: 0 auto;
-        }
-        .pricing-card {
-            background: white; padding: 2.5rem; border-radius: 20px;
-            border: 1px solid var(--gray-200); position: relative; transition: all 0.4s ease;
-        }
-        .pricing-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--purple-200); }
-        .pricing-card.popular { border: 2px solid var(--purple-500); box-shadow: var(--shadow-lg); }
-        .popular-badge {
-            position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
-            background: var(--gradient-primary); color: white; padding: 0.35rem 1.2rem;
-            border-radius: 50px; font-size: 0.75rem; font-weight: 700;
-            white-space: nowrap; box-shadow: var(--shadow-md);
-        }
-        .pricing-plan { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--gray-900); }
-        .pricing-price { font-size: 2.5rem; font-weight: 900; color: var(--purple-600); margin-bottom: 0.3rem; }
-        .pricing-price span { font-size: 0.9rem; font-weight: 500; color: var(--gray-500); }
-        .pricing-desc { font-size: 0.8rem; color: var(--gray-500); margin-bottom: 1.5rem; }
-        .pricing-features { list-style: none; margin: 1.5rem 0; }
-        .pricing-features li {
-            padding: 0.45rem 0; color: var(--gray-700); font-size: 0.88rem;
-            display: flex; align-items: flex-start; gap: 0.5rem;
-        }
-        .pricing-features li i { color: var(--success); margin-top: 3px; flex-shrink: 0; }
-        .pricing-features li.disabled { color: var(--gray-400); }
-        .pricing-features li.disabled i { color: var(--gray-300); }
-        .pricing-note { text-align: center; margin-top: 2rem; font-size: 0.8rem; color: var(--gray-500); }
-        .pricing-note i { color: var(--purple-500); margin-right: 0.3rem; }
-
-        /* ===== CTA ===== */
         .cta { padding: 4rem 2rem; background: var(--gradient-dark); text-align: center; color: white; }
         .cta h2 { font-size: 2rem; font-weight: 800; margin-bottom: 0.8rem; }
         .cta p { font-size: 1rem; color: var(--purple-200); margin-bottom: 2rem; }
@@ -288,7 +250,6 @@
             border-radius: 50px; font-size: 0.8rem; margin-top: 1.5rem; color: var(--purple-200);
         }
 
-        /* ===== FOOTER ===== */
         .footer { background: var(--purple-900); color: var(--purple-200); padding: 4rem 2rem 2rem; }
         .footer-grid {
             max-width: 1280px; margin: 0 auto; display: grid;
@@ -306,7 +267,7 @@
             font-size: 0.8rem; color: var(--purple-300);
         }
 
-        /* ===== MODALS ===== */
+        /* Modals */
         .modal-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(6px);
@@ -386,42 +347,38 @@
             .hero-actions { flex-direction: column; align-items: center; }
             .hero-actions .btn { width: 100%; justify-content: center; }
             .section-header h2 { font-size: 1.8rem; }
-            .pricing-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
-<!-- NAVIGATION -->
 <nav class="nav" id="nav">
     <div class="nav-container">
         <a href="#" class="logo">
             <div class="logo-icon">J</div>
             <span class="logo-text">Jasiri Suite</span>
-            <span class="logo-badge">BETA</span>
+            <span class="logo-badge">INTERNAL</span>
         </a>
         <div class="nav-links">
             <a href="#apps" class="nav-link">Solutions</a>
-            <a href="#pricing" class="nav-link">Pricing</a>
             <button class="btn btn-outline" onclick="openModal('loginModal')">Sign In</button>
-            <button class="btn btn-primary" onclick="openModal('signupModal')">Get Early Access</button>
+            <button class="btn btn-primary" onclick="openModal('signupModal')">Request Access</button>
         </div>
     </div>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
     <div class="hero-container">
         <div class="hero-content">
-            <div class="hero-badge"><span class="dot"></span> Early Access — Join our founding members</div>
+            <div class="hero-badge"><span class="dot"></span> Internal Team Workspace</div>
             <h1 class="hero-title">Project Management<br><span>Built on Google Workspace</span></h1>
             <p class="hero-description">
-                Jasiri Suite brings enterprise-grade project management to your Google Workspace. 
-                Manage sales, HR, finances, fleet, and talent — all powered by the spreadsheets you already use and trust.
+                Jasiri Suite empowers internal teams with enterprise-grade project management. 
+                Manage sales, HR, finances, fleet, and talent — all powered by the spreadsheets you already use.
             </p>
             <div class="hero-actions">
                 <button class="btn btn-primary btn-lg" onclick="openModal('signupModal')">
-                    <i class="fas fa-rocket"></i> Start Free
+                    <i class="fas fa-rocket"></i> Join Your Team
                 </button>
                 <button class="btn btn-outline btn-lg" onclick="openModal('loginModal')">
                     <i class="fas fa-sign-in-alt"></i> Sign In
@@ -440,7 +397,6 @@
     </div>
 </section>
 
-<!-- INTEGRATIONS -->
 <section class="integrations">
     <p>Powered by Google Workspace integration</p>
     <div class="integration-logos">
@@ -452,12 +408,11 @@
     </div>
 </section>
 
-<!-- APPS -->
 <section class="apps-section" id="apps">
     <div class="section-container">
         <div class="section-header">
-            <span class="section-label">Our Solutions</span>
-            <h2>Five Powerful Hubs for Your Business</h2>
+            <span class="section-label">Internal Tools</span>
+            <h2>Five Powerful Hubs for Your Team</h2>
             <p>Each hub is purpose-built and fully integrated with Google Sheets</p>
         </div>
         <div class="apps-grid">
@@ -465,111 +420,58 @@
                 <div class="app-card-icon"><img src="https://i.postimg.cc/BbZ5c1Tv/20260119-1500-Image-Generation-remix-01kfb1znpceyc8d9dztq9ea0y3-1-removebg-preview-1.png" alt="Sales Hub"></div>
                 <h3>Sales Hub</h3>
                 <div class="app-status"><span class="dot"></span> Live data streaming</div>
-                <p>Complete point-of-sale, sales operations, and real-time analytics. Manage transactions, track performance, and generate insights.</p>
+                <p>Complete point-of-sale, sales operations, and real-time analytics. Manage transactions and track performance.</p>
                 <a href="workspace.html" class="app-link">Open Workspace <i class="fas fa-arrow-right"></i></a>
             </div>
             <div class="app-card">
                 <div class="app-card-icon"><img src="https://i.postimg.cc/3rFrpW8P/20260112-1839-Image-Generation-remix-01kesdpw6ce8s88amr0e92g276-removebg-preview-removebg-preview.png" alt="Resource Hub"></div>
                 <h3>Resource Hub</h3>
                 <div class="app-status"><span class="dot"></span> Active resources</div>
-                <p>Human resource management, asset tracking, and project coordination. Keep your team organized and resources optimally allocated.</p>
+                <p>Human resource management, asset tracking, and project coordination. Keep your team organized.</p>
                 <a href="workspace.html" class="app-link">Open Workspace <i class="fas fa-arrow-right"></i></a>
             </div>
             <div class="app-card">
                 <div class="app-card-icon"><img src="https://i.postimg.cc/nLkCKS3J/20260119-1502-Image-Generation-remix-01kfb24hnje88t8jgrmchg3m4w-1-removebg-preview.png" alt="Finance Hub"></div>
                 <h3>Finance Hub</h3>
                 <div class="app-status"><span class="dot"></span> Financial Management</div>
-                <p>Accounting, financial reporting, and budget management. Track expenses, generate financial statements, and maintain fiscal discipline.</p>
+                <p>Accounting, financial reporting, and budget management. Track expenses and generate statements.</p>
                 <a href="workspace.html" class="app-link">Open Workspace <i class="fas fa-arrow-right"></i></a>
             </div>
             <div class="app-card">
                 <div class="app-card-icon"><img src="https://i.postimg.cc/MTYB3K5P/20260119-1531-Image-Generation-remix-01kfb3rnfzfzxt9rhe0336w04w-1-removebg-preview.png" alt="Fleet Hub"></div>
                 <h3>Fleet Hub</h3>
                 <div class="app-status"><span class="dot"></span> Active operations</div>
-                <p>Logistics, courier, shipping, and fleet management. Monitor deliveries, track vehicles, and optimize your supply chain operations.</p>
+                <p>Logistics, courier, shipping, and fleet management. Monitor deliveries and optimize supply chain.</p>
                 <a href="workspace.html" class="app-link">Open Workspace <i class="fas fa-arrow-right"></i></a>
             </div>
             <div class="app-card">
                 <div class="app-card-icon"><img src="https://i.postimg.cc/wvFVykC1/20260119-1539-Image-Generation-remix-01kfb488qbfhz9a354vdfwrwva-1-removebg-preview.png" alt="Talents Hub"></div>
                 <h3>Talents Hub</h3>
                 <div class="app-status"><span class="dot"></span> Talent Management</div>
-                <p>Human resources and learning & development. Manage recruitment, employee growth, training programs, and performance evaluations.</p>
+                <p>Human resources and learning & development. Manage recruitment, training, and performance.</p>
                 <a href="workspace.html" class="app-link">Open Workspace <i class="fas fa-arrow-right"></i></a>
             </div>
         </div>
     </div>
 </section>
 
-<!-- PRICING -->
-<section class="pricing" id="pricing">
-    <div class="section-container">
-        <div class="section-header">
-            <span class="section-label">Simple Pricing</span>
-            <h2>Choose Your Plan</h2>
-            <p>Transparent pricing in Kenyan Shillings. No hidden fees.</p>
-        </div>
-        <div class="pricing-grid">
-            <div class="pricing-card">
-                <div class="pricing-plan">Starter</div>
-                <div class="pricing-price">Free<span>/forever</span></div>
-                <p class="pricing-desc">Perfect for individuals and small teams</p>
-                <ul class="pricing-features">
-                    <li><i class="fas fa-check"></i> Up to 3 team members</li>
-                    <li><i class="fas fa-check"></i> 5 Google Sheets connections</li>
-                    <li><i class="fas fa-check"></i> Access to 2 hubs of choice</li>
-                    <li><i class="fas fa-check"></i> Community support</li>
-                </ul>
-                <button class="btn btn-outline" style="width:100%;" onclick="openModal('signupModal')">Get Started</button>
-            </div>
-            <div class="pricing-card popular">
-                <div class="popular-badge">Most Popular</div>
-                <div class="pricing-plan">Professional</div>
-                <div class="pricing-price">KSh 850<span>/month</span></div>
-                <p class="pricing-desc">For growing businesses and teams</p>
-                <ul class="pricing-features">
-                    <li><i class="fas fa-check"></i> Up to 15 team members</li>
-                    <li><i class="fas fa-check"></i> Unlimited Google Sheets</li>
-                    <li><i class="fas fa-check"></i> All 5 hubs included</li>
-                    <li><i class="fas fa-check"></i> Priority email support</li>
-                </ul>
-                <button class="btn btn-primary" style="width:100%;" onclick="openModal('signupModal')">Start Free Trial</button>
-            </div>
-            <div class="pricing-card">
-                <div class="pricing-plan">Enterprise</div>
-                <div class="pricing-price">KSh 1,200<span>/month</span></div>
-                <p class="pricing-desc">For organizations that need full power</p>
-                <ul class="pricing-features">
-                    <li><i class="fas fa-check"></i> Unlimited team members</li>
-                    <li><i class="fas fa-check"></i> All 5 hubs + custom hubs</li>
-                    <li><i class="fas fa-check"></i> API access & integrations</li>
-                    <li><i class="fas fa-check"></i> Dedicated support & SLA</li>
-                </ul>
-                <button class="btn btn-outline" style="width:100%;" onclick="openModal('signupModal')">Contact Us</button>
-            </div>
-        </div>
-        <p class="pricing-note"><i class="fas fa-shield-alt"></i> Cancel anytime. All plans include SSL encryption.</p>
-    </div>
-</section>
-
-<!-- CTA -->
 <section class="cta">
-    <h2>Ready to Streamline Your Business?</h2>
-    <p>Join our early access program and shape the future of Jasiri Suite</p>
+    <h2>Ready to Collaborate Smarter?</h2>
+    <p>Access your team's internal tools and drive productivity</p>
     <button class="btn btn-white btn-lg" onclick="openModal('signupModal')">
-        <i class="fas fa-rocket"></i> Get Early Access — It's Free
+        <i class="fas fa-rocket"></i> Request Team Access
     </button>
-    <div class="early-access"><i class="fas fa-users"></i> Founding members get lifetime discount</div>
+    <div class="early-access"><i class="fas fa-users"></i> Internal use only · authorized members</div>
 </section>
 
-<!-- FOOTER -->
 <footer class="footer">
     <div class="footer-grid">
-        <div class="footer-column"><h4>Jasiri Suite</h4><a href="#">About</a><a href="#">Blog</a><a href="#">Contact</a></div>
+        <div class="footer-column"><h4>Jasiri Suite</h4><a href="#">About</a><a href="#">Internal Wiki</a><a href="#">Contact IT</a></div>
         <div class="footer-column"><h4>Solutions</h4><a href="#">Sales Hub</a><a href="#">Resource Hub</a><a href="#">Finance Hub</a><a href="#">Fleet Hub</a><a href="#">Talents Hub</a></div>
-        <div class="footer-column"><h4>Resources</h4><a href="#">Documentation</a><a href="#">Help Center</a><a href="#">Status</a></div>
+        <div class="footer-column"><h4>Resources</h4><a href="#">Documentation</a><a href="#">Help Center</a><a href="#">System Status</a></div>
         <div class="footer-column"><h4>Legal</h4><a href="#">Privacy</a><a href="#">Terms</a></div>
     </div>
-    <div class="footer-bottom"><p>&copy; 2026 Jasiri Suite. Built with 💜 in Kenya.</p></div>
+    <div class="footer-bottom"><p>&copy; 2026 Jasiri Suite. Internal tool · Built with 💜 in Kenya.</p></div>
 </footer>
 
 <!-- SIGN UP MODAL -->
@@ -577,15 +479,15 @@
     <div class="modal">
         <button class="modal-close" onclick="closeModal('signupModal')"><i class="fas fa-times"></i></button>
         <div class="modal-icon"><i class="fas fa-user-plus"></i></div>
-        <h2>Create Your Account</h2>
-        <p>Get early access — completely free</p>
+        <h2>Request Team Access</h2>
+        <p>Create your internal account</p>
         <form id="signupForm" onsubmit="return false;">
             <div class="form-group"><label>Full Name</label><input type="text" id="signupName" placeholder="John Doe" required></div>
             <div class="form-group"><label>Work Email</label><input type="email" id="signupEmail" placeholder="you@company.com" required></div>
-            <div class="form-group"><label>Company / Organization</label><input type="text" id="signupOrg" placeholder="Acme Corp" required></div>
+            <div class="form-group"><label>Department / Team</label><input type="text" id="signupOrg" placeholder="Engineering" required></div>
             <div class="form-group"><label>Password</label><input type="password" id="signupPassword" placeholder="Min 8 characters" minlength="8" required></div>
             <button type="submit" class="form-submit" id="signupBtn" onclick="handleSignup()">
-                <i class="fas fa-rocket"></i> Create Free Account
+                <i class="fas fa-rocket"></i> Create Account
             </button>
             <div class="error-message" id="signupError"></div>
             <div class="success-message" id="signupSuccess"></div>
@@ -609,14 +511,43 @@
             </button>
             <div class="error-message" id="loginError"></div>
         </form>
-        <div class="modal-footer">Don't have an account? <a onclick="switchModal('signupModal','loginModal')">Sign Up Free</a></div>
+        <div class="modal-footer">
+            <a onclick="switchModal('loginModal','forgotModal')">Forgot password?</a>
+            <span style="margin:0 0.5rem;">·</span>
+            <a onclick="switchModal('signupModal','loginModal')">Request access</a>
+        </div>
+    </div>
+</div>
+
+<!-- FORGOT PASSWORD MODAL -->
+<div class="modal-overlay" id="forgotModal">
+    <div class="modal">
+        <button class="modal-close" onclick="closeModal('forgotModal')"><i class="fas fa-times"></i></button>
+        <div class="modal-icon"><i class="fas fa-lock"></i></div>
+        <h2>Reset Password</h2>
+        <p>Enter your email to receive a reset link</p>
+        <form id="forgotForm" onsubmit="return false;">
+            <div class="form-group"><label>Work Email</label><input type="email" id="forgotEmail" placeholder="you@company.com" required></div>
+            <button type="submit" class="form-submit" id="forgotBtn" onclick="handleForgotPassword()">
+                <i class="fas fa-paper-plane"></i> Send Reset Link
+            </button>
+            <div class="error-message" id="forgotError"></div>
+            <div class="success-message" id="forgotSuccess"></div>
+        </form>
+        <div class="modal-footer"><a onclick="switchModal('forgotModal','loginModal')">Back to Sign In</a></div>
     </div>
 </div>
 
 <!-- Firebase -->
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { 
+        getAuth, 
+        createUserWithEmailAndPassword, 
+        signInWithEmailAndPassword, 
+        updateProfile, 
+        sendPasswordResetEmail 
+    } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
     import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
     const firebaseConfig = {
@@ -633,10 +564,19 @@
     const auth = getAuth(app);
     const db = getDatabase(app);
 
-    // Modal functions
-    window.openModal = (id) => { document.getElementById(id).classList.add('active'); document.body.style.overflow = 'hidden'; };
-    window.closeModal = (id) => { document.getElementById(id).classList.remove('active'); document.body.style.overflow = ''; };
-    window.switchModal = (from, to) => { closeModal(from); setTimeout(() => openModal(to), 200); };
+    // Modal helpers
+    window.openModal = (id) => { 
+        document.getElementById(id).classList.add('active'); 
+        document.body.style.overflow = 'hidden'; 
+    };
+    window.closeModal = (id) => { 
+        document.getElementById(id).classList.remove('active'); 
+        document.body.style.overflow = ''; 
+    };
+    window.switchModal = (from, to) => { 
+        closeModal(from); 
+        setTimeout(() => openModal(to), 200); 
+    };
 
     document.addEventListener('click', (e) => {
         if (e.target.classList.contains('modal-overlay')) {
@@ -656,6 +596,50 @@
     function generateSlug(name) {
         return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').substring(0, 50);
     }
+
+    // ============ FORGOT PASSWORD ============
+    window.handleForgotPassword = async () => {
+        const email = document.getElementById('forgotEmail').value.trim();
+        const btn = document.getElementById('forgotBtn');
+        const errorDiv = document.getElementById('forgotError');
+        const successDiv = document.getElementById('forgotSuccess');
+
+        errorDiv.style.display = 'none';
+        successDiv.style.display = 'none';
+
+        if (!email) {
+            errorDiv.textContent = 'Please enter your email address';
+            errorDiv.style.display = 'block';
+            return;
+        }
+
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner"></span> Sending...';
+
+        try {
+            await sendPasswordResetEmail(auth, email);
+            successDiv.textContent = 'Password reset email sent! Check your inbox.';
+            successDiv.style.display = 'block';
+            btn.innerHTML = '<i class="fas fa-check"></i> Sent!';
+            setTimeout(() => {
+                closeModal('forgotModal');
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Reset Link';
+                successDiv.style.display = 'none';
+                document.getElementById('forgotEmail').value = '';
+            }, 3000);
+        } catch (error) {
+            console.error('Password reset error:', error);
+            let message = 'Failed to send reset email.';
+            if (error.code === 'auth/user-not-found') message = 'No account found with this email.';
+            else if (error.code === 'auth/invalid-email') message = 'Please enter a valid email address.';
+            else if (error.code === 'auth/too-many-requests') message = 'Too many attempts. Try again later.';
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Reset Link';
+        }
+    };
 
     // ============ SIGN UP ============
     window.handleSignup = async () => {
@@ -692,24 +676,23 @@
             const tenantId = generateSlug(orgName) + '-' + Date.now().toString(36);
             const now = new Date().toISOString();
 
-            // Write all data
             await set(ref(db, `tenants/${tenantId}/info`), {
-                name: orgName, slug: tenantId, type: 'business', plan: 'free',
+                name: orgName, slug: tenantId, type: 'internal', plan: 'team',
                 createdAt: now, createdBy: user.uid, status: 'active', contactEmail: email,
                 settings: { timezone: 'Africa/Nairobi', currency: 'KES', language: 'en' }
             });
             await set(ref(db, `tenants/${tenantId}/members/${user.uid}`), {
-                role: 'owner', joinedAt: now,
+                role: 'member', joinedAt: now,
                 permissions: { emh: true, erh: true, efh: true, efs: true, talents: true }
             });
             await set(ref(db, `tenants/${tenantId}/subscription`), {
-                plan: 'free', status: 'active', startedAt: now,
-                limits: { maxUsers: 3, maxSheets: 5, features: { allHubs: false } }
+                plan: 'internal', status: 'active', startedAt: now,
+                limits: { maxUsers: 50, maxSheets: 100, features: { allHubs: true } }
             });
             await set(ref(db, `users/${user.uid}/profile`), {
                 displayName: name, email: email, createdAt: now
             });
-            await set(ref(db, `users/${user.uid}/tenants`), { [tenantId]: 'owner' });
+            await set(ref(db, `users/${user.uid}/tenants`), { [tenantId]: 'member' });
 
             successDiv.textContent = 'Account created! Redirecting...';
             successDiv.style.display = 'block';
@@ -719,12 +702,12 @@
 
         } catch (error) {
             console.error('Signup error:', error);
-            let message = error.message || 'Something went wrong. Please try again.';
-            if (error.code === 'auth/email-already-in-use') message = 'This email is already registered. Please sign in.';
+            let message = error.message || 'Something went wrong.';
+            if (error.code === 'auth/email-already-in-use') message = 'This email is already registered.';
             errorDiv.textContent = message;
             errorDiv.style.display = 'block';
             btn.disabled = false;
-            btn.innerHTML = '<i class="fas fa-rocket"></i> Create Free Account';
+            btn.innerHTML = '<i class="fas fa-rocket"></i> Create Account';
         }
     };
 
@@ -749,8 +732,6 @@
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
-
-            // Get user's tenant
             const userSnap = await get(ref(db, `users/${user.uid}/tenants`));
             
             if (userSnap.exists()) {
@@ -758,12 +739,11 @@
                 const tenantId = Object.keys(tenants)[0];
                 window.location.href = `workspace.html?tenant=${tenantId}`;
             } else {
-                // Check if admin
                 const adminSnap = await get(ref(db, `admins/${user.uid}`));
                 if (adminSnap.exists()) {
                     window.location.href = 'admin.html';
                 } else {
-                    errorDiv.textContent = 'No workspace found. Please create an account first.';
+                    errorDiv.textContent = 'No workspace found. Please request access.';
                     errorDiv.style.display = 'block';
                     btn.disabled = false;
                     btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In';
@@ -784,12 +764,11 @@
         }
     };
 
-    // Nav scroll effect
     window.addEventListener('scroll', () => {
         document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
     });
 
-    console.log('🚀 Jasiri Suite Ready');
+    console.log('🚀 Jasiri Suite Internal Ready');
 </script>
 </body>
 </html>
