@@ -59,12 +59,20 @@
         .app-tile.efs::before{background:linear-gradient(90deg,#10B981,#34D399)}
         .app-tile.talents::before{background:linear-gradient(90deg,#F97316,#FB923C)}
         .app-tile.ekazi::before{background:linear-gradient(90deg,#3B82F6,#60A5FA)}
+        .app-tile.gmail::before{background:linear-gradient(90deg,#EA4335,#F4B400)}
+        .app-tile.chat::before{background:linear-gradient(90deg,#34A853,#4285F4)}
+        .app-tile.meet::before{background:linear-gradient(90deg,#00832D,#1A73E8)}
+        .app-tile.drive::before{background:linear-gradient(90deg,#FFD04F,#34A853)}
         .app-tile.emh:hover{box-shadow:0 12px 35px rgba(107,59,194,0.18)}
         .app-tile.erh:hover{box-shadow:0 12px 35px rgba(236,72,153,0.18)}
         .app-tile.efh:hover{box-shadow:0 12px 35px rgba(245,158,11,0.18)}
         .app-tile.efs:hover{box-shadow:0 12px 35px rgba(16,185,129,0.18)}
         .app-tile.talents:hover{box-shadow:0 12px 35px rgba(249,115,22,0.18)}
         .app-tile.ekazi:hover{box-shadow:0 12px 35px rgba(59,130,246,0.18)}
+        .app-tile.gmail:hover{box-shadow:0 12px 35px rgba(234,67,53,0.18)}
+        .app-tile.chat:hover{box-shadow:0 12px 35px rgba(52,168,83,0.18)}
+        .app-tile.meet:hover{box-shadow:0 12px 35px rgba(26,115,232,0.18)}
+        .app-tile.drive:hover{box-shadow:0 12px 35px rgba(255,208,79,0.18)}
         .app-icon-wrapper{width:64px;height:64px;border-radius:16px;display:flex;align-items:center;justify-content:center;margin-bottom:.8rem;transition:all .25s ease;background:var(--gray-50);padding:10px}
         .app-tile:hover .app-icon-wrapper{transform:scale(1.06)}
         .app-icon-wrapper img{width:100%;height:100%;object-fit:contain}
@@ -73,6 +81,7 @@
         .app-status{display:inline-flex;align-items:center;gap:.25rem;font-size:.6rem;font-weight:600;color:var(--success);margin-top:.6rem;background:#D1FAE5;padding:.15rem .5rem;border-radius:50px}
         .app-status .dot{width:4px;height:4px;background:var(--success);border-radius:50%;animation:pulse 2s infinite}
         .app-status.locked-status{color:var(--gray-500);background:var(--gray-100)}
+        .app-status.external{color:#1A73E8;background:#DBEAFE}
         @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
 
         .recent-section{max-width:1280px;margin:0 auto;padding:0 2rem 2rem}
@@ -151,6 +160,11 @@
     <div class="apps-grid" id="appsGrid"></div>
 </div>
 
+<div class="apps-container">
+    <div class="section-label">Google Workspace Tools</div>
+    <div class="apps-grid" id="googleAppsGrid"></div>
+</div>
+
 <div class="recent-section">
     <div class="section-label">Quick Access</div>
     <div class="recent-grid" id="recentGrid"></div>
@@ -179,6 +193,14 @@ const allHubs=[
 ];
 const ekazi={id:'ekazi',name:'E-KAZI',desc:'Freelance Tasks',icon:'https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png',cc:'ekazi',fi:'fa-tasks',ic:'#3B82F6'};
 
+// Google Workspace tools - always available, open in new tab
+const googleTools=[
+{id:'gmail',name:'Gmail',desc:'Email & Communications',icon:'https://i.postimg.cc/ZqPwy2Vr/gmail.webp',cc:'gmail',url:'https://mail.google.com'},
+{id:'chat',name:'Google Chat',desc:'Team Messaging',icon:'https://i.postimg.cc/C5nDbfSs/Google-Chat-icon-2023-svg.webp',cc:'chat',url:'https://chat.google.com'},
+{id:'meet',name:'Google Meet',desc:'Video Meetings',icon:'https://i.postimg.cc/c1tXRv9x/meet.webp',cc:'meet',url:'https://meet.google.com'},
+{id:'drive',name:'Google Drive',desc:'Cloud Storage & Files',icon:'https://i.postimg.cc/9QLd5286/google-drive.webp',cc:'drive',url:'https://drive.google.com'}
+];
+
 function sg(n){const h=new Date().getHours();let g='Good ';if(h<12)g+='morning';else if(h<17)g+='afternoon';else g+='evening';document.getElementById('greetingText').textContent=n?`${g}, ${n}`:g}
 window.toggleDropdown=()=>document.getElementById('userDropdown').classList.toggle('active');
 document.addEventListener('click',e=>{const d=document.getElementById('userDropdown'),a=document.getElementById('userAvatar');if(d&&a&&!a.contains(e.target)&&!d.contains(e.target))d.classList.remove('active')});
@@ -201,6 +223,16 @@ function renderApps(cfg,tid){
         <div class="app-status"><span class="dot"></span> Available</div>
     </a>`;
     g.innerHTML=h;
+    
+    // Render Google Workspace tools
+    const gg=document.getElementById('googleAppsGrid');
+    gg.innerHTML=googleTools.map(t=>`
+        <a href="${t.url}" target="_blank" rel="noopener" class="app-tile ${t.cc}">
+            <div class="app-icon-wrapper"><img src="${t.icon}" alt="${t.name}" onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\\'fas fa-external-link-alt\\' style=\\'font-size:1.6rem;color:#4285F4\\'></i>'"></div>
+            <h3>${t.name}</h3><p>${t.desc}</p>
+            <div class="app-status external"><i class="fas fa-external-link-alt"></i> Open</div>
+        </a>
+    `).join('');
 }
 
 function renderRecent(tid){
@@ -227,6 +259,10 @@ onAuthStateChanged(auth,async user=>{
         const cfg=tierCfg[tenantPlan]||tierCfg.free;
         renderApps(cfg,activeTenant);
         renderRecent(activeTenant);
+    }else{
+        // If no tenant, still render Google tools
+        renderApps(tierCfg.free,'');
+        renderRecent('');
     }
 });
 </script>
