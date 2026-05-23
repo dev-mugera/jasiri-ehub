@@ -32,10 +32,6 @@
         .logo-text{font-size:1.1rem;font-weight:700;color:var(--gray-900)}
         .tenant-badge{font-size:.7rem;font-weight:600;color:var(--purple-600);background:var(--purple-50);padding:.2rem .7rem;border-radius:50px;border:1px solid var(--purple-100)}
         .topbar-right{display:flex;align-items:center;gap:.8rem}
-        .plan-badge{padding:4px 12px;border-radius:20px;font-size:10px;font-weight:700}
-        .plan-free{background:var(--gray-100);color:var(--gray-600)}
-        .plan-pro{background:#EDE9FE;color:#5B21B6}
-        .plan-enterprise{background:var(--gradient-primary);color:white}
         .user-avatar{width:34px;height:34px;border-radius:50%;background:var(--gradient-primary);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:.8rem;cursor:pointer}
         .user-avatar:hover{transform:scale(1.05);box-shadow:0 2px 8px rgba(107,59,194,0.3)}
 
@@ -50,9 +46,6 @@
         .app-tile::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;transition:height .25s ease}
         .app-tile:hover{transform:translateY(-5px);box-shadow:var(--shadow-xl);border-color:transparent}
         .app-tile:hover::before{height:4px}
-        .app-tile.locked{opacity:.4;cursor:not-allowed;filter:grayscale(20%)}
-        .app-tile.locked:hover{transform:none;box-shadow:none;border-color:var(--gray-200)}
-        .app-tile.locked:hover::before{height:3px}
         .app-tile.emh::before{background:linear-gradient(90deg,#6B3BC2,#A78BFA)}
         .app-tile.erh::before{background:linear-gradient(90deg,#EC4899,#F472B6)}
         .app-tile.efh::before{background:linear-gradient(90deg,#F59E0B,#FBBF24)}
@@ -80,7 +73,6 @@
         .app-tile p{font-size:.7rem;color:var(--gray-500);line-height:1.3}
         .app-status{display:inline-flex;align-items:center;gap:.25rem;font-size:.6rem;font-weight:600;color:var(--success);margin-top:.6rem;background:#D1FAE5;padding:.15rem .5rem;border-radius:50px}
         .app-status .dot{width:4px;height:4px;background:var(--success);border-radius:50%;animation:pulse 2s infinite}
-        .app-status.locked-status{color:var(--gray-500);background:var(--gray-100)}
         .app-status.external{color:#1A73E8;background:#DBEAFE}
         @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
 
@@ -108,9 +100,6 @@
         .dropdown-item.signout{color:var(--danger);border-top:1px solid var(--gray-100);margin-top:.3rem;padding-top:.7rem}
         .dropdown-item.signout:hover{background:#FEF2F2}
 
-        .upgrade-banner{background:var(--gradient-primary);color:white;text-align:center;padding:.7rem 2rem;font-size:.8rem;font-weight:500}
-        .upgrade-banner a{color:white;font-weight:700;text-decoration:underline}
-
         @media(max-width:768px){
             .apps-grid{grid-template-columns:repeat(2,1fr);gap:.6rem}
             .app-tile{padding:1.1rem .8rem}
@@ -126,17 +115,12 @@
 </head>
 <body>
 
-<div class="upgrade-banner" id="upgradeBanner" style="display:none">
-    🚀 Free plan • <a href="billing.html">Upgrade to Pro</a> for all 5 hubs + E-KAZI — KSh 850/month
-</div>
-
 <header class="topbar">
     <div class="topbar-left">
         <a href="/" class="logo"><div class="logo-icon">J</div><span class="logo-text">Jasiri</span></a>
         <span class="tenant-badge" id="tenantBadge">Loading...</span>
     </div>
     <div class="topbar-right">
-        <span class="plan-badge plan-free" id="planBadge">FREE</span>
         <div class="user-menu">
             <div class="user-avatar" id="userAvatar" onclick="toggleDropdown()"><span id="avatarInitials">U</span></div>
             <div class="dropdown" id="userDropdown">
@@ -155,16 +139,19 @@
     <p class="greeting-sub">Choose a hub to start working</p>
 </div>
 
+<!-- Business Hubs - ALL UNLOCKED -->
 <div class="apps-container">
     <div class="section-label">Your Business Hubs</div>
     <div class="apps-grid" id="appsGrid"></div>
 </div>
 
+<!-- Google Workspace Tools -->
 <div class="apps-container">
     <div class="section-label">Google Workspace Tools</div>
     <div class="apps-grid" id="googleAppsGrid"></div>
 </div>
 
+<!-- Quick Access -->
 <div class="recent-section">
     <div class="section-label">Quick Access</div>
     <div class="recent-grid" id="recentGrid"></div>
@@ -180,20 +167,18 @@ import{getDatabase,ref,get}from"https://www.gstatic.com/firebasejs/10.7.1/fireba
 const fc={apiKey:"AIzaSyC4GYjju0-ckHraZ3H5qR3MkID_BWoYQXk",authDomain:"jasiri-suite.firebaseapp.com",databaseURL:"https://jasiri-suite-default-rtdb.europe-west1.firebasedatabase.app",projectId:"jasiri-suite",storageBucket:"jasiri-suite.firebasestorage.app",messagingSenderId:"414625239065",appId:"1:414625239065:web:8cc055fd20d3d66a8e5a88"};
 const app=initializeApp(fc),auth=getAuth(app),db=getDatabase(app);
 const up=new URLSearchParams(location.search),urlTenant=up.get('tenant');
-let activeTenant=urlTenant||'',tenantPlan='free';
+let activeTenant=urlTenant||'';
 
-const tierCfg={free:{hubs:['emh','erh'],ekaziLimit:'3/day'},pro:{hubs:['emh','erh','efh','efs','talents'],ekaziLimit:'25/day'},enterprise:{hubs:['emh','erh','efh','efs','talents'],ekaziLimit:'Unlimited'}};
-
+// ALL hubs unlocked for everyone
 const allHubs=[
-{id:'emh',name:'Sales Hub',desc:'Sales, POS & Analytics',icon:'https://i.postimg.cc/BbZ5c1Tv/20260119-1500-Image-Generation-remix-01kfb1znpceyc8d9dztq9ea0y3-1-removebg-preview-1.png',cc:'emh',fi:'fa-store',ic:'#6B3BC2'},
-{id:'erh',name:'Resource Hub',desc:'HR, Assets & Projects',icon:'https://i.postimg.cc/3rFrpW8P/20260112-1839-Image-Generation-remix-01kesdpw6ce8s88amr0e92g276-removebg-preview-removebg-preview.png',cc:'erh',fi:'fa-users-cog',ic:'#EC4899'},
-{id:'efh',name:'Finance Hub',desc:'Accounting & Budgets',icon:'https://i.postimg.cc/nLkCKS3J/20260119-1502-Image-Generation-remix-01kfb24hnje88t8jgrmchg3m4w-1-removebg-preview.png',cc:'efh',fi:'fa-chart-pie',ic:'#F59E0B'},
-{id:'efs',name:'Fleet Hub',desc:'Logistics & Shipping',icon:'https://i.postimg.cc/MTYB3K5P/20260119-1531-Image-Generation-remix-01kfb3rnfzfzxt9rhe0336w04w-1-removebg-preview.png',cc:'efs',fi:'fa-truck',ic:'#10B981'},
-{id:'talents',name:'Talents Hub',desc:'HR & Learning',icon:'https://i.postimg.cc/wvFVykC1/20260119-1539-Image-Generation-remix-01kfb488qbfhz9a354vdfwrwva-1-removebg-preview.png',cc:'talents',fi:'fa-graduation-cap',ic:'#F97316'}
+{id:'emh',name:'Sales Hub',desc:'Sales, POS & Analytics',icon:'https://i.postimg.cc/BbZ5c1Tv/20260119-1500-Image-Generation-remix-01kfb1znpceyc8d9dztq9ea0y3-1-removebg-preview-1.png',cc:'emh',fi:'fa-store',ic:'#6B3BC2',url:'emh-workspace.html'},
+{id:'erh',name:'Resource Hub',desc:'HR, Assets & Projects',icon:'https://i.postimg.cc/3rFrpW8P/20260112-1839-Image-Generation-remix-01kesdpw6ce8s88amr0e92g276-removebg-preview-removebg-preview.png',cc:'erh',fi:'fa-users-cog',ic:'#EC4899',url:'erh-workspace.html'},
+{id:'efh',name:'Finance Hub',desc:'Accounting & Budgets',icon:'https://i.postimg.cc/nLkCKS3J/20260119-1502-Image-Generation-remix-01kfb24hnje88t8jgrmchg3m4w-1-removebg-preview.png',cc:'efh',fi:'fa-chart-pie',ic:'#F59E0B',url:'efh-workspace.html'},
+{id:'efs',name:'Fleet Hub',desc:'Logistics & Shipping',icon:'https://i.postimg.cc/MTYB3K5P/20260119-1531-Image-Generation-remix-01kfb3rnfzfzxt9rhe0336w04w-1-removebg-preview.png',cc:'efs',fi:'fa-truck',ic:'#10B981',url:'efs-workspace.html'},
+{id:'talents',name:'Talents Hub',desc:'HR & Learning',icon:'https://i.postimg.cc/wvFVykC1/20260119-1539-Image-Generation-remix-01kfb488qbfhz9a354vdfwrwva-1-removebg-preview.png',cc:'talents',fi:'fa-graduation-cap',ic:'#F97316',url:'talents-workspace.html'},
+{id:'ekazi',name:'E-KAZI',desc:'Freelance Task Platform',icon:'https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png',cc:'ekazi',fi:'fa-tasks',ic:'#3B82F6',url:'ekazi-workspace.html'}
 ];
-const ekazi={id:'ekazi',name:'E-KAZI',desc:'Freelance Tasks',icon:'https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png',cc:'ekazi',fi:'fa-tasks',ic:'#3B82F6'};
 
-// Google Workspace tools - always available, open in new tab
 const googleTools=[
 {id:'gmail',name:'Gmail',desc:'Email & Communications',icon:'https://i.postimg.cc/ZqPwy2Vr/gmail.webp',cc:'gmail',url:'https://mail.google.com'},
 {id:'chat',name:'Google Chat',desc:'Team Messaging',icon:'https://i.postimg.cc/C5nDbfSs/Google-Chat-icon-2023-svg.webp',cc:'chat',url:'https://chat.google.com'},
@@ -206,24 +191,17 @@ window.toggleDropdown=()=>document.getElementById('userDropdown').classList.togg
 document.addEventListener('click',e=>{const d=document.getElementById('userDropdown'),a=document.getElementById('userAvatar');if(d&&a&&!a.contains(e.target)&&!d.contains(e.target))d.classList.remove('active')});
 window.handleSignOut=async()=>{await signOut(auth);location.href='index.html'};
 
-function renderApps(cfg,tid){
+function renderAllApps(tid){
+    // Render business hubs - ALL UNLOCKED
     const g=document.getElementById('appsGrid');
-    let h='';
-    allHubs.forEach(hub=>{
-        const has=cfg.hubs.includes(hub.id),locked=!has;
-        h+=`<a href="${has?`${hub.id}-workspace.html?tenant=${tid}`:'#'}" class="app-tile ${hub.cc}${locked?' locked':''}"${locked?` onclick="alert('${hub.name} requires Pro (KSh 850/mo) or Enterprise');return false"`:''}>
+    g.innerHTML=allHubs.map(hub=>`
+        <a href="${hub.url}?tenant=${tid}" class="app-tile ${hub.cc}">
             <div class="app-icon-wrapper"><img src="${hub.icon}" alt="${hub.name}" onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\\'fas ${hub.fi}\\' style=\\'font-size:1.6rem;color:${hub.ic}\\'></i>'"></div>
             <h3>${hub.name}</h3><p>${hub.desc}</p>
-            ${locked?'<div class="app-status locked-status"><i class="fas fa-lock"></i> Pro Only</div>':'<div class="app-status"><span class="dot"></span> Live</div>'}
-        </a>`;
-    });
-    h+=`<a href="ekazi-workspace.html?tenant=${tid}" class="app-tile ekazi">
-        <div class="app-icon-wrapper"><img src="${ekazi.icon}" alt="${ekazi.name}" onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\\'fas ${ekazi.fi}\\' style=\\'font-size:1.6rem;color:${ekazi.ic}\\'></i>'"></div>
-        <h3>${ekazi.name}</h3><p>${ekazi.desc} • ${cfg.ekaziLimit}</p>
-        <div class="app-status"><span class="dot"></span> Available</div>
-    </a>`;
-    g.innerHTML=h;
-    
+            <div class="app-status"><span class="dot"></span> Live</div>
+        </a>
+    `).join('');
+
     // Render Google Workspace tools
     const gg=document.getElementById('googleAppsGrid');
     gg.innerHTML=googleTools.map(t=>`
@@ -239,7 +217,8 @@ function renderRecent(tid){
     document.getElementById('recentGrid').innerHTML=`
     <a href="emh-workspace.html?tenant=${tid}" class="recent-card"><div class="recent-dot" style="background:#EDE9FE"><i class="fas fa-store" style="color:#6B3BC2"></i></div><div class="recent-info"><h4>Sales Hub</h4><p>Point of Sale & Analytics</p></div><span class="recent-time">→</span></a>
     <a href="erh-workspace.html?tenant=${tid}" class="recent-card"><div class="recent-dot" style="background:#FCE7F3"><i class="fas fa-users-cog" style="color:#EC4899"></i></div><div class="recent-info"><h4>Resource Hub</h4><p>HR & Asset Management</p></div><span class="recent-time">→</span></a>
-    <a href="templates.html?tenant=${tid}" class="recent-card"><div class="recent-dot" style="background:#D1FAE5"><i class="fas fa-file-excel" style="color:#10B981"></i></div><div class="recent-info"><h4>Sheet Templates</h4><p>Ready-to-use templates</p></div><span class="recent-time">→</span></a>`;
+    <a href="templates.html?tenant=${tid}" class="recent-card"><div class="recent-dot" style="background:#D1FAE5"><i class="fas fa-file-excel" style="color:#10B981"></i></div><div class="recent-info"><h4>Sheet Templates</h4><p>Ready-to-use templates</p></div><span class="recent-time">→</span></a>
+    <a href="efh-workspace.html?tenant=${tid}" class="recent-card"><div class="recent-dot" style="background:#FEF3C7"><i class="fas fa-chart-pie" style="color:#F59E0B"></i></div><div class="recent-info"><h4>Finance Hub</h4><p>Accounting & Budgets</p></div><span class="recent-time">→</span></a>`;
 }
 
 onAuthStateChanged(auth,async user=>{
@@ -254,16 +233,11 @@ onAuthStateChanged(auth,async user=>{
     if(activeTenant){
         const ts=await get(ref(db,`tenants/${activeTenant}/info`));
         document.getElementById('tenantBadge').textContent=ts.exists()?ts.val().name:'My Workspace';
-        const ss=await get(ref(db,`tenants/${activeTenant}/subscription`));
-        if(ss.exists()){tenantPlan=ss.val().plan||'free';const b=document.getElementById('planBadge');b.textContent=tenantPlan.toUpperCase();b.className=`plan-badge plan-${tenantPlan}`;if(tenantPlan==='free')document.getElementById('upgradeBanner').style.display='block'}
-        const cfg=tierCfg[tenantPlan]||tierCfg.free;
-        renderApps(cfg,activeTenant);
-        renderRecent(activeTenant);
-    }else{
-        // If no tenant, still render Google tools
-        renderApps(tierCfg.free,'');
-        renderRecent('');
     }
+    
+    // Render all apps regardless of plan
+    renderAllApps(activeTenant||'');
+    renderRecent(activeTenant||'');
 });
 </script>
 </body>
