@@ -76,6 +76,18 @@
         .app-status.external{color:#1A73E8;background:#DBEAFE}
         @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
 
+        /* E-KAZI Fullscreen Modal */
+        .ekazi-modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:9999;animation:fadeIn .2s ease}
+        .ekazi-modal-overlay.active{display:flex;flex-direction:column}
+        @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+        .ekazi-modal-header{background:white;padding:0 1.5rem;height:50px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;border-bottom:1px solid var(--gray-200)}
+        .ekazi-modal-header h3{font-size:14px;font-weight:700;display:flex;align-items:center;gap:8px}
+        .ekazi-modal-header h3 img{width:24px;height:24px;object-fit:contain}
+        .ekazi-close-btn{width:32px;height:32px;border-radius:50%;border:none;background:var(--gray-100);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--gray-600);transition:all .2s}
+        .ekazi-close-btn:hover{background:#FEE2E2;color:var(--danger)}
+        .ekazi-modal-body{flex:1;background:white}
+        .ekazi-modal-body iframe{width:100%;height:100%;border:none}
+
         .recent-section{max-width:1280px;margin:0 auto;padding:0 2rem 2rem}
         .recent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:.6rem}
         .recent-card{background:white;border-radius:10px;padding:.8rem 1rem;border:1px solid var(--gray-200);display:flex;align-items:center;gap:.7rem;cursor:pointer;transition:all .15s;text-decoration:none;color:var(--gray-900)}
@@ -159,6 +171,20 @@
 
 <div class="workspace-footer"><p>&copy; 2026 Jasiri Suite.</p></div>
 
+<!-- E-KAZI Fullscreen Modal -->
+<div class="ekazi-modal-overlay" id="ekaziModal">
+    <div class="ekazi-modal-header">
+        <h3>
+            <img src="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png" alt="E-KAZI" onerror="this.style.display='none'">
+            🔷 E-KAZI Platform
+        </h3>
+        <button class="ekazi-close-btn" onclick="closeEkazi()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="ekazi-modal-body">
+        <iframe id="ekaziIframe" src="" allowfullscreen></iframe>
+    </div>
+</div>
+
 <script type="module">
 import{initializeApp}from"https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import{getAuth,onAuthStateChanged,signOut}from"https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
@@ -169,14 +195,12 @@ const app=initializeApp(fc),auth=getAuth(app),db=getDatabase(app);
 const up=new URLSearchParams(location.search),urlTenant=up.get('tenant');
 let activeTenant=urlTenant||'';
 
-// ALL hubs unlocked for everyone
 const allHubs=[
 {id:'emh',name:'Sales Hub',desc:'Sales, POS & Analytics',icon:'https://i.postimg.cc/BbZ5c1Tv/20260119-1500-Image-Generation-remix-01kfb1znpceyc8d9dztq9ea0y3-1-removebg-preview-1.png',cc:'emh',fi:'fa-store',ic:'#6B3BC2',url:'emh-workspace.html'},
 {id:'erh',name:'Resource Hub',desc:'HR, Assets & Projects',icon:'https://i.postimg.cc/3rFrpW8P/20260112-1839-Image-Generation-remix-01kesdpw6ce8s88amr0e92g276-removebg-preview-removebg-preview.png',cc:'erh',fi:'fa-users-cog',ic:'#EC4899',url:'erh-workspace.html'},
 {id:'efh',name:'Finance Hub',desc:'Accounting & Budgets',icon:'https://i.postimg.cc/nLkCKS3J/20260119-1502-Image-Generation-remix-01kfb24hnje88t8jgrmchg3m4w-1-removebg-preview.png',cc:'efh',fi:'fa-chart-pie',ic:'#F59E0B',url:'efh-workspace.html'},
 {id:'efs',name:'Fleet Hub',desc:'Logistics & Shipping',icon:'https://i.postimg.cc/MTYB3K5P/20260119-1531-Image-Generation-remix-01kfb3rnfzfzxt9rhe0336w04w-1-removebg-preview.png',cc:'efs',fi:'fa-truck',ic:'#10B981',url:'efs-workspace.html'},
-{id:'talents',name:'Talents Hub',desc:'HR & Learning',icon:'https://i.postimg.cc/wvFVykC1/20260119-1539-Image-Generation-remix-01kfb488qbfhz9a354vdfwrwva-1-removebg-preview.png',cc:'talents',fi:'fa-graduation-cap',ic:'#F97316',url:'talents-workspace.html'},
-{id:'ekazi',name:'E-KAZI',desc:'Freelance Task Platform',icon:'https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png',cc:'ekazi',fi:'fa-tasks',ic:'#3B82F6',url:'ekazi-workspace.html'}
+{id:'talents',name:'Talents Hub',desc:'HR & Learning',icon:'https://i.postimg.cc/wvFVykC1/20260119-1539-Image-Generation-remix-01kfb488qbfhz9a354vdfwrwva-1-removebg-preview.png',cc:'talents',fi:'fa-graduation-cap',ic:'#F97316',url:'talents-workspace.html'}
 ];
 
 const googleTools=[
@@ -186,13 +210,26 @@ const googleTools=[
 {id:'drive',name:'Google Drive',desc:'Cloud Storage & Files',icon:'https://i.postimg.cc/9QLd5286/google-drive.webp',cc:'drive',url:'https://drive.google.com'}
 ];
 
+// E-KAZI modal functions
+window.openEkazi=function(tid){
+    document.getElementById('ekaziIframe').src='https://kazinni-staff.vercel.app';
+    document.getElementById('ekaziModal').classList.add('active');
+    document.body.style.overflow='hidden';
+};
+window.closeEkazi=function(){
+    document.getElementById('ekaziModal').classList.remove('active');
+    document.getElementById('ekaziIframe').src='';
+    document.body.style.overflow='';
+};
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeEkazi()});
+
 function sg(n){const h=new Date().getHours();let g='Good ';if(h<12)g+='morning';else if(h<17)g+='afternoon';else g+='evening';document.getElementById('greetingText').textContent=n?`${g}, ${n}`:g}
 window.toggleDropdown=()=>document.getElementById('userDropdown').classList.toggle('active');
 document.addEventListener('click',e=>{const d=document.getElementById('userDropdown'),a=document.getElementById('userAvatar');if(d&&a&&!a.contains(e.target)&&!d.contains(e.target))d.classList.remove('active')});
 window.handleSignOut=async()=>{await signOut(auth);location.href='index.html'};
 
 function renderAllApps(tid){
-    // Render business hubs - ALL UNLOCKED
+    // Business hubs
     const g=document.getElementById('appsGrid');
     g.innerHTML=allHubs.map(hub=>`
         <a href="${hub.url}?tenant=${tid}" class="app-tile ${hub.cc}">
@@ -202,7 +239,15 @@ function renderAllApps(tid){
         </a>
     `).join('');
 
-    // Render Google Workspace tools
+    // E-KAZI tile - opens modal
+    g.innerHTML+=`
+        <a href="#" onclick="openEkazi('${tid}');return false" class="app-tile ekazi">
+            <div class="app-icon-wrapper"><img src="https://i.postimg.cc/rFfXDj3L/kazinni-removebg-preview-1.png" alt="E-KAZI" onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\\'fas fa-tasks\\' style=\\'font-size:1.6rem;color:#3B82F6\\'></i>'"></div>
+            <h3>E-KAZI</h3><p>Freelance Task Platform</p>
+            <div class="app-status"><span class="dot"></span> Available</div>
+        </a>`;
+
+    // Google Workspace tools
     const gg=document.getElementById('googleAppsGrid');
     gg.innerHTML=googleTools.map(t=>`
         <a href="${t.url}" target="_blank" rel="noopener" class="app-tile ${t.cc}">
@@ -234,8 +279,6 @@ onAuthStateChanged(auth,async user=>{
         const ts=await get(ref(db,`tenants/${activeTenant}/info`));
         document.getElementById('tenantBadge').textContent=ts.exists()?ts.val().name:'My Workspace';
     }
-    
-    // Render all apps regardless of plan
     renderAllApps(activeTenant||'');
     renderRecent(activeTenant||'');
 });
